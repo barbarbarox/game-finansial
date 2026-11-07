@@ -78,7 +78,9 @@
       "generatedAt": "2026-11-07",
       "qa": {
         "pass": true
-      }
+      },
+      "frameWidth": 448,
+      "frameHeight": 224
     },
     {
       "id": "bld_rumah_pemain",

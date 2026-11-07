@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Life Journey — Character Sheet & Walk Animation Preview</title>
+  <style>
+    body {
+      background: #121A2E;
+      color: #F7EEDA;
+      font-family: sans-serif;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    h1 { color: #D9A441; margin-bottom: 8px; }
+    .character-card {
+      background: #1F2A44;
+      border: 2px solid #34456B;
+      padding: 16px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .preview-row {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+    }
+    .sprite-frame {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .sprite-box {
+      width: 64px;
+      height: 128px;
+      background: #121A2E;
+      border: 1px solid #44603F;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      overflow: hidden;
+      position: relative;
+    }
+    .sprite-img {
+      width: 64px;
+      height: 128px;
+      image-rendering: pixelated;
+    }
+    .flip-x {
+      transform: scaleX(-1);
+    }
+    /* Tahap A walk bounce animation: vertical bounce ~8Hz, horizontal sway <= 1px */
+    @keyframes walkBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+    .anim-walking {
+      animation: walkBounce 0.25s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <h1>Character Turnaround & Walk Animation (Tahap A)</h1>
+
+  <!-- Male Character -->
+  <div class="character-card">
+    <h2>Protagonis Laki-laki (char_player_m_casual)</h2>
+    <div class="preview-row">
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="m_down" width="32" height="64" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Depan (Down)</span>
+      </div>
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="m_up" width="32" height="64" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Belakang (Up)</span>
+      </div>
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="m_left" width="32" height="64" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Kiri (Left)</span>
+      </div>
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="m_right" width="32" height="64" class="flip-x" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Kanan (Cermin Kiri)</span>
+      </div>
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="m_walk" width="32" height="64" class="anim-walking" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Jalan Tahap A</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Female Character -->
+  <div class="character-card">
+    <h2>Protagonis Perempuan (char_player_f_casual)</h2>
+    <div class="preview-row">
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="f_down" width="32" height="64" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Depan (Down)</span>
+      </div>
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="f_up" width="32" height="64" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Belakang (Up)</span>
+      </div>
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="f_left" width="32" height="64" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Kiri (Left)</span>
+      </div>
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="f_right" width="32" height="64" class="flip-x" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Kanan (Cermin Kiri)</span>
+      </div>
+      <div class="sprite-frame">
+        <div class="sprite-box">
+          <canvas id="f_walk" width="32" height="64" class="anim-walking" style="width:64px; height:128px; image-rendering:pixelated;"></canvas>
+        </div>
+        <span>Jalan Tahap A</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function renderSprite(sheetSrc, frameIndex, canvasId) {
+      const img = new Image();
+      img.onload = () => {
+        const c = document.getElementById(canvasId);
+        const ctx = c.getContext('2d');
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(img, frameIndex * 32, 0, 32, 64, 0, 0, 32, 64);
+      };
+      img.src = sheetSrc;
+    }
+
+    // Male
+    renderSprite('../assets/characters/char_player_m_casual.png', 0, 'm_down');
+    renderSprite('../assets/characters/char_player_m_casual.png', 1, 'm_up');
+    renderSprite('../assets/characters/char_player_m_casual.png', 2, 'm_left');
+    renderSprite('../assets/characters/char_player_m_casual.png', 2, 'm_right');
+    renderSprite('../assets/characters/char_player_m_casual.png', 0, 'm_walk');
+
+    // Female
+    renderSprite('../assets/characters/char_player_f_casual.png', 0, 'f_down');
+    renderSprite('../assets/characters/char_player_f_casual.png', 1, 'f_up');
+    renderSprite('../assets/characters/char_player_f_casual.png', 2, 'f_left');
+    renderSprite('../assets/characters/char_player_f_casual.png', 2, 'f_right');
+    renderSprite('../assets/characters/char_player_f_casual.png', 0, 'f_walk');
+  </script>
+</body>
+</html>
