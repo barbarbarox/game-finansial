@@ -1,0 +1,167 @@
+{
+  "version": 1,
+  "events": [
+    {
+      "id": "E01",
+      "name": "teman_ajak_jajan",
+      "repeatable": true,
+      "triggerWindow": { "dayMin": 2, "dayMax": 28 },
+      "conditions": { "minCash": 5000 },
+      "weight": 3,
+      "text": "Teman kamu ngajak jajan bareng. Harganya Rp5.000. Ikut nggak?",
+      "choices": [
+        { "id": "ikut", "text": "Ikut", "effects": [{ "type": "ledger", "amount": -5000, "categoryId": "jajan", "description": "Jajan bersama teman" }], "feedback": "Senang bersama teman, tapi ingat ini bisa jadi kebiasaan!" },
+        { "id": "tolak", "text": "Tolak dengan sopan", "effects": [], "metrics": ["disiplin"], "feedback": "Disiplin! Pengeluaran kecil yang rutin bisa menumpuk." }
+      ],
+      "learningTag": "pengeluaran kecil berulang"
+    },
+    {
+      "id": "E02",
+      "name": "bensin_menipis",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 1, "dayMax": 30 },
+      "conditions": { "gasolineMax": 20 },
+      "weight": 5,
+      "text": "Bensin motormu hampir habis! Mau isi sekarang atau nanti?",
+      "choices": [
+        { "id": "isi", "text": "Isi bensin sekarang", "effects": [{ "type": "ledger", "amount": -20000, "categoryId": "transportasi", "description": "Isi bensin" }, { "type": "gasoline", "amount": 40 }], "feedback": "Tepat! Mencegah lebih baik daripada mengobati." },
+        { "id": "tunda", "text": "Tunda dulu", "effects": [{ "type": "ledger", "amount": -15000, "categoryId": "transportasi", "description": "Ojek karena motor mogok" }], "feedback": "Motor mogok! Terpaksa naik ojek, malah lebih mahal." }
+      ],
+      "learningTag": "menunda kebutuhan bisa lebih mahal"
+    },
+    {
+      "id": "E03",
+      "name": "iuran_kelas",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 5, "dayMax": 20 },
+      "conditions": {},
+      "weight": 2,
+      "text": "Ada iuran kelas mendadak Rp25.000. Bayar sekarang?",
+      "choices": [
+        { "id": "dari_kas", "text": "Bayar dari kas", "effects": [{ "type": "ledger", "amount": -25000, "categoryId": "sekolah", "description": "Iuran kelas" }], "feedback": "Tanggung jawab yang baik!" },
+        { "id": "dari_tabungan", "text": "Ambil dari tabungan", "effects": [{ "type": "savings_withdraw", "amount": 25000 }, { "type": "ledger", "amount": -25000, "categoryId": "sekolah", "description": "Iuran kelas (dari tabungan)" }], "feedback": "Tabungan untuk keperluan darurat — tapi ingat, isi lagi nanti." },
+        { "id": "tunda", "text": "Minta tunda 1 minggu", "effects": [{ "type": "flag", "key": "iuran_pending", "value": true, "dueDay": 7 }], "feedback": "Minta tunda boleh, tapi jangan lupa bayar!" }
+      ],
+      "learningTag": "dana darurat"
+    },
+    {
+      "id": "E04",
+      "name": "promo_kosmetik",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 8, "dayMax": 25 },
+      "conditions": {},
+      "weight": 2,
+      "text": "Ada diskon 30% skincare! Rp75.000 jadi Rp52.500. Beli?",
+      "choices": [
+        { "id": "beli", "text": "Beli sekarang", "effects": [{ "type": "ledger", "amount": -52500, "categoryId": "perawatanDiri", "description": "Skincare (promo)" }], "feedback": "Diskon itu menggoda — tapi pastikan memang butuh." },
+        { "id": "lewati", "text": "Lewati", "effects": [], "feedback": "Bijak! Diskon bukan alasan untuk membeli yang tak dibutuhkan." },
+        { "id": "tunda", "text": "Tunda sampai akhir bulan", "effects": [{ "type": "flag", "key": "promo_expired", "value": true }], "feedback": "Promo sudah habis saat kamu kembali. Waktu memang terbatas!" }
+      ],
+      "learningTag": "diskon bukan kebutuhan"
+    },
+    {
+      "id": "E05",
+      "name": "ajakan_nonton",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 7, "dayMax": 28 },
+      "conditions": {},
+      "weight": 2,
+      "text": "Teman ajak nonton. Tiketnya Rp40.000. Mau ikut?",
+      "choices": [
+        { "id": "ikut", "text": "Ikut nonton", "effects": [{ "type": "ledger", "amount": -40000, "categoryId": "hiburan", "description": "Nonton film bersama teman" }], "feedback": "Seru! Tapi ingat sisa anggaran hiburanmu." },
+        { "id": "alternatif", "text": "Ajak nongkrong di taman (gratis)", "effects": [], "feedback": "Kreatif! Ada cara seru yang lebih hemat." },
+        { "id": "tolak", "text": "Tolak", "effects": [], "feedback": "Tidak apa-apa menolak. Prioritas keuanganmu yang utama." }
+      ],
+      "learningTag": "alternatif hemat"
+    },
+    {
+      "id": "E06",
+      "name": "kuota_habis",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 10, "dayMax": 28 },
+      "conditions": {},
+      "weight": 3,
+      "text": "Kuota internetmu habis! Mau beli paket apa?",
+      "choices": [
+        { "id": "hemat", "text": "Paket Hemat (Rp15.000)", "effects": [{ "type": "ledger", "amount": -15000, "categoryId": "komunikasi", "description": "Paket kuota hemat" }], "feedback": "Hemat! Cukup untuk kebutuhan sekolah." },
+        { "id": "besar", "text": "Paket Besar (Rp35.000)", "effects": [{ "type": "ledger", "amount": -35000, "categoryId": "komunikasi", "description": "Paket kuota besar" }], "feedback": "Lebih mahal, pertimbangkan apakah benar-benar butuh." },
+        { "id": "wifi", "text": "Pakai WiFi sekolah (gratis, terbatas)", "effects": [], "feedback": "Gratis! WiFi sekolah cukup untuk belajar." }
+      ],
+      "learningTag": "membandingkan opsi"
+    },
+    {
+      "id": "E07",
+      "name": "ulang_tahun_teman",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 12, "dayMax": 25 },
+      "conditions": {},
+      "weight": 1,
+      "text": "Besok ulang tahun temanmu! Mau beri kado apa?",
+      "choices": [
+        { "id": "kado_beli", "text": "Beli kado (Rp30.000)", "effects": [{ "type": "ledger", "amount": -30000, "categoryId": "lainLain", "description": "Kado ulang tahun teman" }], "feedback": "Senang memberi, tapi anggarkan pengeluaran sosialmu." },
+        { "id": "kado_buat", "text": "Buat kado sendiri (Rp10.000)", "effects": [{ "type": "ledger", "amount": -10000, "categoryId": "lainLain", "description": "Bahan kado buatan sendiri" }], "feedback": "Kreatif dan hemat! Teman pasti hargai." },
+        { "id": "tanpa_kado", "text": "Ucapkan langsung saja", "effects": [], "feedback": "Ucapan tulus juga bermakna. Kamu bijak menjaga anggaran." }
+      ],
+      "learningTag": "anggaran sosial"
+    },
+    {
+      "id": "E08",
+      "name": "bonus_nilai",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 15, "dayMax": 20 },
+      "conditions": {},
+      "weight": 1,
+      "text": "Nilai ujianmu bagus! Orang tua beri bonus Rp50.000. Mau diapakan?",
+      "choices": [
+        { "id": "simpan_semua", "text": "Simpan semua ke tabungan", "effects": [{ "type": "income", "amount": 50000, "description": "Bonus nilai dari orang tua" }, { "type": "savings_deposit", "amount": 50000 }], "feedback": "Luar biasa! Uang tambahan langsung ditabung." },
+        { "id": "simpan_setengah", "text": "Simpan setengah, pakai setengah", "effects": [{ "type": "income", "amount": 50000, "description": "Bonus nilai dari orang tua" }, { "type": "savings_deposit", "amount": 25000 }, { "type": "ledger", "amount": -25000, "categoryId": "jajan", "description": "Jajan dari bonus" }], "feedback": "Seimbang! Nikmati sedikit, simpan sisanya." },
+        { "id": "pakai_semua", "text": "Pakai semuanya", "effects": [{ "type": "income", "amount": 50000, "description": "Bonus nilai dari orang tua" }, { "type": "ledger", "amount": -50000, "categoryId": "jajan", "description": "Jajan dari bonus" }], "feedback": "Menyenangkan, tapi uang tambahan adalah kesempatan menabung!" }
+      ],
+      "learningTag": "perilaku saat uang tambahan"
+    },
+    {
+      "id": "E09",
+      "name": "turnamen_game",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 10, "dayMax": 25 },
+      "conditions": {},
+      "weight": 1,
+      "text": "Ada turnamen game! Pendaftaran Rp15.000. Ikut?",
+      "choices": [
+        { "id": "ikut", "text": "Ikut turnamen", "effects": [{ "type": "ledger", "amount": -15000, "categoryId": "hiburan", "description": "Pendaftaran turnamen game" }], "feedback": "Semangat! Hiburan yang terkendali." },
+        { "id": "tonton", "text": "Tonton saja (gratis)", "effects": [], "feedback": "Asyik juga menonton! Hemat tapi tetap seru." }
+      ],
+      "learningTag": "hiburan terkendali"
+    },
+    {
+      "id": "E10",
+      "name": "teman_pinjam",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 5, "dayMax": 25 },
+      "conditions": { "minCash": 20000 },
+      "weight": 2,
+      "text": "Temanmu minta pinjam Rp20.000, janji balik minggu depan. Mau?",
+      "choices": [
+        { "id": "pinjamkan", "text": "Pinjamkan Rp20.000", "effects": [{ "type": "loan_out", "amount": 20000, "returnChance": 0.7, "returnDays": 7 }], "feedback": "Baik hati! Tapi ingat, tidak semua pinjaman kembali." },
+        { "id": "tolak", "text": "Tolak dengan sopan", "effects": [], "feedback": "Wajar menjaga keuanganmu sendiri." },
+        { "id": "beri_setengah", "text": "Beri Rp10.000 saja", "effects": [{ "type": "ledger", "amount": -10000, "categoryId": "lainLain", "description": "Bantu teman" }], "feedback": "Kompromi yang bijak!" }
+      ],
+      "learningTag": "risiko meminjamkan uang"
+    },
+    {
+      "id": "E11",
+      "name": "barang_rusak",
+      "repeatable": false,
+      "triggerWindow": { "dayMin": 8, "dayMax": 28 },
+      "conditions": {},
+      "weight": 2,
+      "text": "Charger HP-mu rusak! Mau bagaimana?",
+      "choices": [
+        { "id": "perbaiki", "text": "Perbaiki di tukang servis (Rp30.000)", "effects": [{ "type": "ledger", "amount": -30000, "categoryId": "lainLain", "description": "Servis charger" }], "feedback": "Memperbaiki sering lebih hemat dari membeli baru!" },
+        { "id": "beli_baru", "text": "Beli charger baru (Rp60.000)", "effects": [{ "type": "ledger", "amount": -60000, "categoryId": "lainLain", "description": "Beli charger baru" }], "feedback": "Barang baru memang nyaman, tapi lebih mahal." },
+        { "id": "tunda", "text": "Tunda, pinjam teman dulu", "effects": [{ "type": "flag", "key": "charger_broken", "value": true }], "feedback": "Merepotkan teman terus juga kurang baik." }
+      ],
+      "learningTag": "pengeluaran tak terduga"
+    }
+  ]
+}

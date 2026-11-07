@@ -1,0 +1,9 @@
+{
+  "name": "life-journey-game",
+  "version": "0.1.0-prototype",
+  "type": "module",
+  "description": "Prototype Fase 1 Kehidupan SMA untuk Life Journey",
+  "scripts": {
+    "test": "node -e \"import('./src/domain/ledger.js')\""
+  }
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Life Journey — Asset Manifest & Status Inspector</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 24px;
+      background: #121A2E;
+      color: #F7EEDA;
+    }
+    h1 { color: #D9A441; }
+    table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+    th, td { border: 1px solid #34456B; padding: 8px 12px; text-align: left; }
+    th { background: #1F2A44; }
+    .status-placeholder { color: #D9A441; font-weight: bold; }
+    .status-ready { color: #A5BE93; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Asset Manifest Inspector</h1>
+  <div id="summary">Memuat manifest...</div>
+  <table>
+    <thead>
+      <tr>
+        <th>ID Aset</th>
+        <th>Tipe</th>
+        <th>Berkas</th>
+        <th>Status</th>
+        <th>Sumber</th>
+      </tr>
+    </thead>
+    <tbody id="tbody"></tbody>
+  </table>
+
+  <script type="module">
+    fetch('../assets/asset-manifest.json')
+      .then(r => r.json())
+      .then(data => {
+        const assets = data.assets || [];
+        const tbody = document.getElementById('tbody');
+        let readyCount = 0;
+        let placeholderCount = 0;
+
+        assets.forEach(a => {
+          if (a.status === 'ready') readyCount++;
+          else placeholderCount++;
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td><code>${a.id}</code></td>
+            <td>${a.type}</td>
+            <td>${a.file}</td>
+            <td class="status-${a.status}">${a.status.toUpperCase()}</td>
+            <td>${a.source || '-'}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        document.getElementById('summary').textContent =
+          `Total Aset Terdaftar: ${assets.length} (Ready: ${readyCount}, Placeholder: ${placeholderCount})`;
+      });
+  </script>
+</body>
+</html>

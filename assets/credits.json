@@ -1,0 +1,23 @@
+{
+  "project": "Life Journey (Prototype Fase 1)",
+  "version": "0.1.0-prototype",
+  "libraries": [
+    {
+      "name": "Phaser",
+      "version": "3.80.1",
+      "license": "MIT",
+      "url": "https://phaser.io"
+    }
+  ],
+  "fonts": [
+    {
+      "name": "System UI & Pixel Fallbacks",
+      "license": "OFL / System"
+    }
+  ],
+  "art": {
+    "style": "Cozy 16-bit RPG Pixel Art",
+    "generator": "Google Gemini Image Generation",
+    "pipeline": "Rule 60 Autonomous Asset Pipeline"
+  }
+}

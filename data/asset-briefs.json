@@ -1,0 +1,803 @@
+{
+ "version": 1,
+ "styleRef": "docs/STYLE-BIBLE.md",
+ "defaults": {
+  "maxRetries": 3,
+  "chromaKey": "#FF00FF",
+  "rawDir": "assets/_raw",
+  "rejectedDir": "assets/_rejected"
+ },
+ "generationOrder": [
+  "style_lock",
+  "buildings:bld_sekolah",
+  "CHECKPOINT_A",
+  "icons",
+  "buildings",
+  "menu",
+  "npc",
+  "props",
+  "panels",
+  "optional"
+ ],
+ "notes": "Prompt akhir = STYLE BLOCK + subject + NEGATIVE BLOCK. Urutan: style_lock dulu, lalu CHECKPOINT A (manusia), baru sisanya. Bangunan pertama (bld_sekolah) = jangkar gaya lingkungan.",
+ "assets": [
+  {
+   "id": "char_player_m_casual",
+   "group": "style_lock",
+   "priority": 1,
+   "kind": "character_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "front",
+    "back",
+    "left"
+   ],
+   "final": {
+    "frameWidth": 32,
+    "frameHeight": 64,
+    "rightView": "mirror_of_left"
+   },
+   "subject": "Character reference sheet of ONE Indonesian high-school boy, about 16 years old, slim, chibi-ish RPG proportion (about 3 heads tall, width to height about 1:2). Short neat dark brown hair (#5E3F2A). Cream t-shirt (#F7EEDA with #E9D8B4 shading), navy trousers (#1F2A44), brown sneakers (#9A6F4C), dark green backpack (#44603F) with visible straps and a small top pocket. Exactly THREE views of the SAME character in one horizontal row, evenly spaced, identical scale, no overlap: front view, back view, left-side view. Standing neutral pose, full body visible, flat solid magenta #FF00FF background. ",
+   "refs": [],
+   "maxRetries": 3,
+   "perViewFallback": "Single full-body {view} view of the exact same character as the reference sheet, identical proportions, colors and pixel size, neutral standing pose, flat solid magenta background.",
+   "qa": {
+    "identityColors": [
+     "hair:#5E3F2A",
+     "shirt:#F7EEDA",
+     "pants:#1F2A44",
+     "shoes:#9A6F4C",
+     "bag:#44603F"
+    ],
+    "viewsHeightTolerance": 0.06
+   }
+  },
+  {
+   "id": "char_player_f_casual",
+   "group": "style_lock",
+   "priority": 1,
+   "kind": "character_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "front",
+    "back",
+    "left"
+   ],
+   "final": {
+    "frameWidth": 32,
+    "frameHeight": 64,
+    "rightView": "mirror_of_left"
+   },
+   "subject": "Character reference sheet of ONE Indonesian high-school girl, about 16 years old, slim, chibi-ish RPG proportion (about 3 heads tall, width to height about 1:2). Shoulder-length dark brown hair (#5E3F2A) with a simple low ponytail. Cream t-shirt (#F7EEDA with #E9D8B4 shading), navy trousers (#1F2A44), brown sneakers (#9A6F4C), dark green backpack (#44603F) with visible straps and a small top pocket. Exactly THREE views of the SAME character in one horizontal row, evenly spaced, identical scale, no overlap: front view, back view, left-side view. Standing neutral pose, full body visible, flat solid magenta #FF00FF background.  Match the art style, pixel size, outline weight, palette and proportions of the reference image exactly.",
+   "refs": [
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "perViewFallback": "Single full-body {view} view of the exact same character as the reference sheet, identical proportions, colors and pixel size, neutral standing pose, flat solid magenta background.",
+   "qa": {
+    "identityColors": [
+     "hair:#5E3F2A",
+     "shirt:#F7EEDA",
+     "pants:#1F2A44",
+     "shoes:#9A6F4C",
+     "bag:#44603F"
+    ],
+    "viewsHeightTolerance": 0.06
+   }
+  },
+  {
+   "id": "char_player_m_school",
+   "group": "optional",
+   "priority": 3,
+   "kind": "character_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "front",
+    "back",
+    "left"
+   ],
+   "final": {
+    "frameWidth": 32,
+    "frameHeight": 64,
+    "rightView": "mirror_of_left"
+   },
+   "subject": "Character reference sheet of ONE Indonesian high-school boy, about 16 years old, slim, chibi-ish RPG proportion (about 3 heads tall, width to height about 1:2). Hair identical to the reference. Cream t-shirt (#F7EEDA with #E9D8B4 shading), navy trousers (#1F2A44), brown sneakers (#9A6F4C), dark green backpack (#44603F) with visible straps and a small top pocket. Exactly THREE views of the SAME character in one horizontal row, evenly spaced, identical scale, no overlap: front view, back view, left-side view. Standing neutral pose, full body visible, flat solid magenta #FF00FF background. Wearing an Indonesian senior high school uniform: white short-sleeve shirt (#FBF6EA) and light grey (#9AA0AA) bottoms; hair, shoes and dark green backpack identical to the reference.",
+   "refs": [
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "perViewFallback": "Single full-body {view} view of the exact same character as the reference sheet, identical proportions, colors and pixel size, neutral standing pose, flat solid magenta background.",
+   "qa": {
+    "identityColors": [
+     "hair:#5E3F2A",
+     "shirt:#F7EEDA",
+     "pants:#1F2A44",
+     "shoes:#9A6F4C",
+     "bag:#44603F"
+    ],
+    "viewsHeightTolerance": 0.06
+   }
+  },
+  {
+   "id": "char_player_f_school",
+   "group": "optional",
+   "priority": 3,
+   "kind": "character_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "front",
+    "back",
+    "left"
+   ],
+   "final": {
+    "frameWidth": 32,
+    "frameHeight": 64,
+    "rightView": "mirror_of_left"
+   },
+   "subject": "Character reference sheet of ONE Indonesian high-school girl, about 16 years old, slim, chibi-ish RPG proportion (about 3 heads tall, width to height about 1:2). Hair identical to the reference. Cream t-shirt (#F7EEDA with #E9D8B4 shading), navy trousers (#1F2A44), brown sneakers (#9A6F4C), dark green backpack (#44603F) with visible straps and a small top pocket. Exactly THREE views of the SAME character in one horizontal row, evenly spaced, identical scale, no overlap: front view, back view, left-side view. Standing neutral pose, full body visible, flat solid magenta #FF00FF background. Wearing an Indonesian senior high school uniform: white short-sleeve shirt (#FBF6EA) and light grey (#9AA0AA) bottoms; hair, shoes and dark green backpack identical to the reference.",
+   "refs": [
+    "char_player_f_casual"
+   ],
+   "maxRetries": 3,
+   "perViewFallback": "Single full-body {view} view of the exact same character as the reference sheet, identical proportions, colors and pixel size, neutral standing pose, flat solid magenta background.",
+   "qa": {
+    "identityColors": [
+     "hair:#5E3F2A",
+     "shirt:#F7EEDA",
+     "pants:#1F2A44",
+     "shoes:#9A6F4C",
+     "bag:#44603F"
+    ],
+    "viewsHeightTolerance": 0.06
+   }
+  },
+  {
+   "id": "npc_sheet_family",
+   "group": "npc",
+   "priority": 2,
+   "kind": "npc_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "npc_ibu",
+    "npc_ayah"
+   ],
+   "final": {
+    "frameWidth": 32,
+    "frameHeight": 64,
+    "views": [
+     "front"
+    ]
+   },
+   "subject": "Two adult NPCs: an Indonesian mother (about 42, hair in a neat bun, cream blouse, terracotta #C0654A apron, navy #34456B skirt) and father (about 45, short black hair, muted green polo #6F9262, brown trousers #5E3F2A). Front view only, full body, standing, evenly spaced in one horizontal row, identical scale, flat solid magenta #FF00FF background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "char_player_m_casual",
+    "char_player_f_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "viewsHeightTolerance": 0.12
+   }
+  },
+  {
+   "id": "npc_sheet_friends",
+   "group": "npc",
+   "priority": 2,
+   "kind": "npc_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "npc_teman_l",
+    "npc_teman_p"
+   ],
+   "final": {
+    "frameWidth": 32,
+    "frameHeight": 64,
+    "views": [
+     "front"
+    ]
+   },
+   "subject": "Two teenage classmates in senior high school uniform (white shirt, light grey bottoms): a boy and a girl with distinct hair styles, backpacks in mustard #D9A441 and navy #34456B. Front view only, full body, standing, evenly spaced in one horizontal row, identical scale, flat solid magenta #FF00FF background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "char_player_m_casual",
+    "char_player_f_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "viewsHeightTolerance": 0.12
+   }
+  },
+  {
+   "id": "npc_sheet_vendors",
+   "group": "npc",
+   "priority": 2,
+   "kind": "npc_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "npc_penjual_kantin",
+    "npc_kasir_minimarket",
+    "npc_penjaga_kosmetik",
+    "npc_petugas_spbu",
+    "npc_penjaga_game"
+   ],
+   "final": {
+    "frameWidth": 32,
+    "frameHeight": 64,
+    "views": [
+     "front"
+    ]
+   },
+   "subject": "Five adult shop NPCs left to right: canteen vendor (apron and head cloth), minimarket cashier (muted green vest), cosmetics shop attendant (cream blouse, ponytail), gas station attendant (navy cap and vest), game center clerk (cream hoodie). No brand marks. Front view only, full body, standing, evenly spaced in one horizontal row, identical scale, flat solid magenta #FF00FF background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "char_player_m_casual",
+    "char_player_f_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "viewsHeightTolerance": 0.12
+   }
+  },
+  {
+   "id": "bld_sekolah",
+   "group": "buildings",
+   "priority": 1,
+   "kind": "building",
+   "generate": {
+    "aspectRatio": "4:3",
+    "background": "#FF00FF"
+   },
+   "final": {
+    "width": 448,
+    "height": 288,
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "footprintHint": "bottom 35% of width, inset 6%",
+    "doorAnchor": "detect_from_image"
+   },
+   "subject": "An Indonesian senior high school building: long single-story with terracotta tile roof, cream walls, green trim, small entrance porch, a tiny red-and-white flag on the roof edge. Single building, front-facing top-down 3/4 RPG view, whole building visible with small margin, door at the bottom center about 64 px tall at final scale, all signboards and windows' labels left completely blank, flat solid magenta #FF00FF background, no ground shadow on the background.",
+   "refs": [
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "dimsMultipleOf": 32
+   }
+  },
+  {
+   "id": "bld_rumah_pemain",
+   "group": "buildings",
+   "priority": 1,
+   "kind": "building",
+   "generate": {
+    "aspectRatio": "4:3",
+    "background": "#FF00FF"
+   },
+   "final": {
+    "width": 288,
+    "height": 224,
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "footprintHint": "bottom 35% of width, inset 6%",
+    "doorAnchor": "detect_from_image"
+   },
+   "subject": "A modest Indonesian family house with terracotta tile roof, cream walls, small front porch, a tiny front garden with potted plants. Single building, front-facing top-down 3/4 RPG view, whole building visible with small margin, door at the bottom center about 64 px tall at final scale, all signboards and windows' labels left completely blank, flat solid magenta #FF00FF background, no ground shadow on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "dimsMultipleOf": 32
+   }
+  },
+  {
+   "id": "bld_minimarket",
+   "group": "buildings",
+   "priority": 1,
+   "kind": "building",
+   "generate": {
+    "aspectRatio": "4:3",
+    "background": "#FF00FF"
+   },
+   "final": {
+    "width": 256,
+    "height": 192,
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "footprintHint": "bottom 35% of width, inset 6%",
+    "doorAnchor": "detect_from_image"
+   },
+   "subject": "A small neighborhood minimarket: flat-roof shop with a green awning, glass front door, blank signboard, stacked generic boxes at the entrance. Single building, front-facing top-down 3/4 RPG view, whole building visible with small margin, door at the bottom center about 64 px tall at final scale, all signboards and windows' labels left completely blank, flat solid magenta #FF00FF background, no ground shadow on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "dimsMultipleOf": 32
+   }
+  },
+  {
+   "id": "bld_toko_kosmetik",
+   "group": "buildings",
+   "priority": 1,
+   "kind": "building",
+   "generate": {
+    "aspectRatio": "4:3",
+    "background": "#FF00FF"
+   },
+   "final": {
+    "width": 224,
+    "height": 192,
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "footprintHint": "bottom 35% of width, inset 6%",
+    "doorAnchor": "detect_from_image"
+   },
+   "subject": "A small cosmetics and self-care shop: pastel cream and muted green facade, striped terracotta awning, display window with generic unlabeled bottles. Single building, front-facing top-down 3/4 RPG view, whole building visible with small margin, door at the bottom center about 64 px tall at final scale, all signboards and windows' labels left completely blank, flat solid magenta #FF00FF background, no ground shadow on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "dimsMultipleOf": 32
+   }
+  },
+  {
+   "id": "bld_spbu",
+   "group": "buildings",
+   "priority": 1,
+   "kind": "building",
+   "generate": {
+    "aspectRatio": "4:3",
+    "background": "#FF00FF"
+   },
+   "final": {
+    "width": 320,
+    "height": 224,
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "footprintHint": "bottom 35% of width, inset 6%",
+    "doorAnchor": "detect_from_image"
+   },
+   "subject": "A tiny gas station: open canopy with navy roof supported by two posts, one generic fuel dispenser, a small kiosk with cream walls. No brand colors or logos. Single building, front-facing top-down 3/4 RPG view, whole building visible with small margin, door at the bottom center about 64 px tall at final scale, all signboards and windows' labels left completely blank, flat solid magenta #FF00FF background, no ground shadow on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "dimsMultipleOf": 32
+   }
+  },
+  {
+   "id": "bld_game_center",
+   "group": "buildings",
+   "priority": 1,
+   "kind": "building",
+   "generate": {
+    "aspectRatio": "4:3",
+    "background": "#FF00FF"
+   },
+   "final": {
+    "width": 256,
+    "height": 192,
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "footprintHint": "bottom 35% of width, inset 6%",
+    "doorAnchor": "detect_from_image"
+   },
+   "subject": "A game center and cafe: two-tone navy and cream facade, a blank neon-free signboard, a retro arcade cabinet visible through the window, small round tables outside. Single building, front-facing top-down 3/4 RPG view, whole building visible with small margin, door at the bottom center about 64 px tall at final scale, all signboards and windows' labels left completely blank, flat solid magenta #FF00FF background, no ground shadow on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "dimsMultipleOf": 32
+   }
+  },
+  {
+   "id": "prop_sheet_nature",
+   "group": "props",
+   "priority": 2,
+   "kind": "prop_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "prop_pohon_mangga",
+    "prop_pohon_palem",
+    "prop_semak",
+    "prop_pot_bunga"
+   ],
+   "final": {
+    "sizes": {
+     "prop_pohon_mangga": [
+      96,
+      128
+     ],
+     "prop_pohon_palem": [
+      64,
+      128
+     ],
+     "prop_semak": [
+      64,
+      32
+     ],
+     "prop_pot_bunga": [
+      32,
+      32
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ]
+   },
+   "subject": "Four nature props: a leafy mango tree, a tall coconut palm, a low green bush, a small terracotta flower pot. Objects arranged left to right, well separated, same scale logic, top-down 3/4 RPG view, flat solid magenta #FF00FF background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {}
+  },
+  {
+   "id": "prop_sheet_street",
+   "group": "props",
+   "priority": 2,
+   "kind": "prop_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "prop_tiang_lampu",
+    "prop_bangku",
+    "prop_tong_sampah",
+    "prop_papan_petunjuk",
+    "prop_pagar"
+   ],
+   "final": {
+    "sizes": {
+     "prop_tiang_lampu": [
+      32,
+      96
+     ],
+     "prop_bangku": [
+      64,
+      32
+     ],
+     "prop_tong_sampah": [
+      32,
+      32
+     ],
+     "prop_papan_petunjuk": [
+      64,
+      64
+     ],
+     "prop_pagar": [
+      64,
+      32
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ]
+   },
+   "subject": "Five street props: a lamp post, a wooden bench, a small trash bin, a blank wooden direction signpost (no text), a low fence segment. Objects arranged left to right, well separated, same scale logic, top-down 3/4 RPG view, flat solid magenta #FF00FF background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {}
+  },
+  {
+   "id": "prop_sheet_misc",
+   "group": "props",
+   "priority": 2,
+   "kind": "prop_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "prop_motor_matic",
+    "prop_gerobak_jajanan",
+    "prop_gerbang_sekolah",
+    "prop_tiang_bendera",
+    "prop_celengan_ayam"
+   ],
+   "final": {
+    "sizes": {
+     "prop_motor_matic": [
+      64,
+      64
+     ],
+     "prop_gerobak_jajanan": [
+      96,
+      64
+     ],
+     "prop_gerbang_sekolah": [
+      160,
+      96
+     ],
+     "prop_tiang_bendera": [
+      32,
+      128
+     ],
+     "prop_celengan_ayam": [
+      32,
+      32
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ]
+   },
+   "subject": "Five props: a parked automatic motorbike seen from the side (no brand marks), a street-food cart with a cream canopy, a school gate arch with two pillars, a flagpole with a small red-and-white flag, a ceramic rooster piggy bank (celengan ayam). Objects arranged left to right, well separated, same scale logic, top-down 3/4 RPG view, flat solid magenta #FF00FF background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {}
+  },
+  {
+   "id": "bg_panel_rumah",
+   "group": "panels",
+   "priority": 2,
+   "kind": "panel_bg",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "none"
+   },
+   "final": {
+    "width": 640,
+    "height": 360,
+    "opaque": true
+   },
+   "subject": "Cutaway interior illustration of a teenager's bedroom and family living room in top-down 3/4 view, front wall removed so the whole room is visible, tidy and cozy, warm light, a bed, a study desk with books, a ceramic rooster piggy bank on a shelf, a family sofa. All signboards and product labels left blank, no characters, no text. 16:9 composition. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "bg_panel_kantin",
+   "group": "panels",
+   "priority": 2,
+   "kind": "panel_bg",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "none"
+   },
+   "final": {
+    "width": 640,
+    "height": 360,
+    "opaque": true
+   },
+   "subject": "Cutaway interior illustration of an Indonesian school canteen in top-down 3/4 view, front wall removed so the whole room is visible, tidy and cozy, warm light, a counter with fried snacks and meatball bowls, iced tea jars, wooden benches. All signboards and product labels left blank, no characters, no text. 16:9 composition. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "bg_panel_minimarket",
+   "group": "panels",
+   "priority": 2,
+   "kind": "panel_bg",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "none"
+   },
+   "final": {
+    "width": 640,
+    "height": 360,
+    "opaque": true
+   },
+   "subject": "Cutaway interior illustration of a small neighborhood minimarket in top-down 3/4 view, front wall removed so the whole room is visible, tidy and cozy, warm light, shelves with generic unlabeled packages, a stationery rack, a cashier counter, a photocopier. All signboards and product labels left blank, no characters, no text. 16:9 composition. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "bg_panel_kosmetik",
+   "group": "panels",
+   "priority": 2,
+   "kind": "panel_bg",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "none"
+   },
+   "final": {
+    "width": 640,
+    "height": 360,
+    "opaque": true
+   },
+   "subject": "Cutaway interior illustration of a small cosmetics and self-care shop in top-down 3/4 view, front wall removed so the whole room is visible, tidy and cozy, warm light, shelves with generic bottles and tubes in muted colors, a mirror, a counter. All signboards and product labels left blank, no characters, no text. 16:9 composition. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "bg_panel_spbu",
+   "group": "panels",
+   "priority": 2,
+   "kind": "panel_bg",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "none"
+   },
+   "final": {
+    "width": 640,
+    "height": 360,
+    "opaque": true
+   },
+   "subject": "Cutaway interior illustration of a tiny gas station seen from the side in top-down 3/4 view, front wall removed so the whole room is visible, tidy and cozy, warm light, one fuel dispenser, a motorbike waiting, a small kiosk, a canopy. All signboards and product labels left blank, no characters, no text. 16:9 composition. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "bg_panel_game_center",
+   "group": "panels",
+   "priority": 2,
+   "kind": "panel_bg",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "none"
+   },
+   "final": {
+    "width": 640,
+    "height": 360,
+    "opaque": true
+   },
+   "subject": "Cutaway interior illustration of a game center and cafe in top-down 3/4 view, front wall removed so the whole room is visible, tidy and cozy, warm light, retro arcade cabinets with blank screens, small round tables, an empty picture frame on the wall. All signboards and product labels left blank, no characters, no text. 16:9 composition. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "bg_mainmenu_town",
+   "group": "menu",
+   "priority": 1,
+   "kind": "key_art",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "none"
+   },
+   "final": {
+    "width": 960,
+    "height": 540,
+    "opaque": true
+   },
+   "subject": "Wide scenic illustration for a game main menu: a cozy small Indonesian town at golden morning light seen from a slightly elevated top-down 3/4 view. A school gate with a flagpole, a row of small shops with terracotta tiled roofs and awnings (all signboards blank), a warung food stall, mango and palm trees, a tidy street with sidewalk, a parked motorbike, gentle hills in the far distance, soft clouds, thin chimney smoke. Leave the upper-center area calm and uncluttered for a logo overlay. No characters. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "logoSafeArea": "upper-center"
+   }
+  },
+  {
+   "id": "logo_emblem",
+   "group": "menu",
+   "priority": 2,
+   "kind": "emblem",
+   "generate": {
+    "aspectRatio": "1:1",
+    "background": "#FF00FF"
+   },
+   "final": {
+    "width": 128,
+    "height": 128
+   },
+   "subject": "A small game emblem icon: a winding path leading from a small house up to a tiny shop, with a golden coin (#D9A441) rising like a sun above it, framed in a simple rounded badge in navy (#1F2A44) and cream. Centered, symmetrical. Absolutely no text or letters.",
+   "refs": [
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "icon_sheet_ui",
+   "group": "icons",
+   "priority": 1,
+   "kind": "icon_sheet",
+   "generate": {
+    "aspectRatio": "1:1",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "icon_coin",
+    "icon_wallet",
+    "icon_celengan",
+    "icon_makanan",
+    "icon_bensin",
+    "icon_buku",
+    "icon_lipstik",
+    "icon_gamepad",
+    "icon_kalender",
+    "icon_jam",
+    "icon_misi",
+    "icon_peringatan",
+    "icon_centang",
+    "icon_silang",
+    "icon_naik",
+    "icon_turun"
+   ],
+   "final": {
+    "grid": [
+     4,
+     4
+    ],
+    "iconSize": 32
+   },
+   "subject": "Icon sheet, exactly 4 columns by 4 rows, 16 separate icons each centered in an equal square cell, flat colors from the palette, 1px dark outline, extremely simple readable silhouettes, in this reading order: gold coin, wallet, ceramic rooster piggy bank, rice bowl, fuel pump, school book, lipstick, game controller, calendar, clock, mission flag, warning triangle, check mark, cross mark, arrow up, arrow down.",
+   "refs": [
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "iconFill": 0.6
+   }
+  }
+ ]
+}

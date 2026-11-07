@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; media-src 'self' blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <title>Life Journey — Simulasi Kehidupan Finansial SMA</title>
+  <link rel="stylesheet" href="src/ui/tokens.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body, html {
+      width: 100%;
+      height: 100%;
+      background-color: var(--navy-950, #121A2E);
+      color: var(--cream-100, #F7EEDA);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #game-container {
+      position: relative;
+      width: 960px;
+      height: 540px;
+      image-rendering: pixelated;
+    }
+    #ui-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 100;
+    }
+    #ui-container > * {
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+  <div id="game-container"></div>
+  <div id="ui-container"></div>
+
+  <script src="vendor/phaser.min.js"></script>
+  <script type="module" src="src/game/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Life Journey — Accounting Self-Test (6 Invariants)</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 24px;
+      background: #121A2E;
+      color: #F7EEDA;
+    }
+    h1 { color: #D9A441; margin-bottom: 16px; }
+    .test-card {
+      background: #1F2A44;
+      border: 1px solid #34456B;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      border-radius: 4px;
+    }
+    .pass { color: #A5BE93; font-weight: bold; }
+    .fail { color: #C0654A; font-weight: bold; }
+    #summary {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 4px;
+    }
+    .summary-pass { background: #44603F; color: #F7EEDA; }
+    .summary-fail { background: #9E4A33; color: #F7EEDA; }
+  </style>
+</head>
+<body>
+  <h1>Life Journey · Self-Test Invarian Keuangan</h1>
+  <div id="results"></div>
+  <div id="summary">Menjalankan pengujian...</div>
+
+  <script type="module">
+    import {
+      createLedger,
+      addEntry,
+      getCash,
+      getSavings,
+      getTotalIncome,
+      getTotalExpense,
+      createAllowanceEntry,
+      createExpenseEntry,
+      createSavingsDepositEntry,
+      createSavingsWithdrawEntry,
+      runInvariants
+    } from '../src/domain/ledger.js';
+
+    import { saveGame, loadGame, resetSave } from '../src/state/persistence.js';
+
+    const results = [];
+    const container = document.getElementById('results');
+
+    function assert(name, condition, details = '') {
+      results.push({ name, pass: Boolean(condition), details });
+      const card = document.createElement('div');
+      card.className = 'test-card';
+      card.innerHTML = `<strong>${condition ? '<span class="pass">[LULUS]</span>' : '<span class="fail">[GAGAL]</span>'}</strong> ${name} ${details ? `<br><small>${details}</small>` : ''}`;
+      container.appendChild(card);
+    }
+
+    try {
+      // Setup Base Ledger
+      let ledger = createLedger();
+
+      // INVARIANT 1: Entry Balance (D = K)
+      const allowance = createAllowanceEntry(1, 1);
+      const res1 = addEntry(ledger, allowance);
+      ledger = res1.ledger;
+      const invCheck1 = runInvariants(ledger);
+      assert('Invarian 1: Σ debit = Σ kredit (Entry & Total Seimbang)', invCheck1.pass && !res1.error);
+
+      // INVARIANT 2: Kas HUD = saldo akun Kas dari ledger
+      const kasAwal = getCash(ledger);
+      assert('Invarian 2: Kas HUD merefleksikan saldo buku Kas (Rp1.000.000)', kasAwal === 1000000);
+
+      // Add expense and savings
+      const exp1 = createExpenseEntry(1, 1, 'jajan', 15000, 'Makan siang kantin');
+      ledger = addEntry(ledger, exp1).ledger;
+
+      const sav1 = createSavingsDepositEntry(1, 1, 100000);
+      ledger = addEntry(ledger, sav1).ledger;
+
+      // INVARIANT 3: Total pemasukan - total pengeluaran - tabungan neto = perubahan Kas
+      const income = getTotalIncome(ledger);
+      const expense = getTotalExpense(ledger);
+      const savings = getSavings(ledger);
+      const kasSekarang = getCash(ledger);
+      const expectedKas = income - expense - savings;
+      assert(
+        'Invarian 3: Pemasukan (' + income + ') - Pengeluaran (' + expense + ') - Tabungan (' + savings + ') = Kas (' + kasSekarang + ')',
+        kasSekarang === expectedKas
+      );
+
+      // INVARIANT 4: Tolak pembelian melebihi saldo & Kas tidak negatif
+      const hugeExp = createExpenseEntry(1, 1, 'hiburan', 2000000, 'Beli tiket konser mewah');
+      const failRes = addEntry(ledger, hugeExp);
+      assert('Invarian 4: Pembelian melebihi saldo kas ditolak secara otomatis', failRes.error !== null && getCash(ledger) >= 0);
+
+      // INVARIANT 5: Round-trip LocalStorage menghasilkan state identik
+      const testState = {
+        schemaVersion: 1,
+        character: { name: 'TestUser', gender: 'm' },
+        clock: { day: 5, month: 1 },
+        ledger: ledger,
+        gasoline: 85,
+        budget: { jajan: 200000 },
+        missions: [],
+        flags: {},
+        seed: 42
+      };
+      saveGame(testState);
+      const loaded = loadGame();
+      const roundTripPass = loaded.success &&
+        loaded.state.character.name === 'TestUser' &&
+        getCash(loaded.state.ledger) === getCash(ledger);
+      assert('Invarian 5: Muat-ulang state dari LocalStorage identik (Round-trip integrity)', roundTripPass);
+
+      // INVARIANT 6: Skenario acak ±30 transaksi lulus seluruh invarian
+      let simLedger = createLedger();
+      simLedger = addEntry(simLedger, createAllowanceEntry(1, 1)).ledger;
+      let simPass = true;
+
+      for (let i = 0; i < 30; i++) {
+        const coin = i % 3;
+        if (coin === 0 && getCash(simLedger) >= 20000) {
+          simLedger = addEntry(simLedger, createExpenseEntry(1, 1, 'jajan', 10000, 'Jajan ' + i)).ledger;
+        } else if (coin === 1 && getCash(simLedger) >= 30000) {
+          simLedger = addEntry(simLedger, createSavingsDepositEntry(1, 1, 10000)).ledger;
+        } else if (coin === 2 && getSavings(simLedger) >= 10000) {
+          simLedger = addEntry(simLedger, createSavingsWithdrawEntry(1, 1, 10000)).ledger;
+        }
+        const inv = runInvariants(simLedger);
+        if (!inv.pass) {
+          simPass = false;
+          break;
+        }
+      }
+      assert('Invarian 6: Stabilitas 30 transaksi acak mempertahankan seluruh invarian', simPass);
+
+      // Summary
+      const allPass = results.every(r => r.pass);
+      const summary = document.getElementById('summary');
+      if (allPass) {
+        summary.className = 'summary-pass';
+        summary.textContent = 'SEMUA 6 INVARIAN AKUNTANSI LULUS PENGUJIAN!';
+      } else {
+        summary.className = 'summary-fail';
+        summary.textContent = 'BEBERAPA PENGUJIAN GAGAL. PERIKSA LOG.';
+      }
+    } catch (err) {
+      assert('Exception Handler', false, err.message);
+    }
+  </script>
+</body>
+</html>

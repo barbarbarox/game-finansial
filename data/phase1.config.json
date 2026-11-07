@@ -1,0 +1,79 @@
+{
+  "debugEnabled": false,
+  "tileSize": 32,
+  "canvasWidth": 960,
+  "canvasHeight": 540,
+  "dayDurationSeconds": 12,
+  "monthDays": 30,
+  "months": 2,
+  "allowanceMontly": 1000000,
+  "gasolineStartPercent": 100,
+  "gasolineDrainPerDay": 5,
+  "gasolineFillAmount": 40,
+  "gasolineFillCost": 20000,
+  "gasolineLowThreshold": 20,
+  "purchaseMultiple": 5000,
+  "savingsMultiple": 10000,
+  "savingsRateThresholds": {
+    "great": 0.15,
+    "good": 0.08
+  },
+  "savingsRateLabels": {
+    "great": "Sangat Baik",
+    "good": "Cukup Baik",
+    "poor": "Perlu Berlatih"
+  },
+  "budgetSuggestion": {
+    "tabungan": 100000,
+    "jajan": 250000,
+    "bensin": 100000,
+    "sekolah": 100000,
+    "perawatanDiri": 100000,
+    "hiburan": 150000,
+    "cadangan": 200000
+  },
+  "maxSaveSize": 524288,
+  "locations": {
+    "rumah": { "name": "Rumah", "panelBg": "bg_panel_rumah" },
+    "kantin": { "name": "Kantin Sekolah", "panelBg": "bg_panel_kantin" },
+    "minimarket": { "name": "Mini Mart Harapan", "panelBg": "bg_panel_minimarket" },
+    "kosmetik": { "name": "Toko Cantik Sari", "panelBg": "bg_panel_kosmetik" },
+    "spbu": { "name": "SPBU Mini", "panelBg": "bg_panel_spbu" },
+    "gamecenter": { "name": "Game Center", "panelBg": "bg_panel_game_center" }
+  },
+  "shopItems": {
+    "kantin": [
+      { "id": "makan_siang", "name": "Makan Siang", "price": 10000, "categoryId": "jajan", "isNeed": true },
+      { "id": "jajan_kantin", "name": "Jajan", "price": 5000, "categoryId": "jajan", "isNeed": false },
+      { "id": "minuman", "name": "Minuman", "price": 5000, "categoryId": "jajan", "isNeed": false }
+    ],
+    "minimarket": [
+      { "id": "alat_tulis", "name": "Alat Tulis", "price": 15000, "categoryId": "sekolah", "isNeed": true },
+      { "id": "fotokopi", "name": "Fotokopi", "price": 5000, "categoryId": "sekolah", "isNeed": true },
+      { "id": "kuota_hemat", "name": "Paket Kuota Hemat", "price": 15000, "categoryId": "komunikasi", "isNeed": true },
+      { "id": "kuota_besar", "name": "Paket Kuota Besar", "price": 35000, "categoryId": "komunikasi", "isNeed": false },
+      { "id": "camilan", "name": "Camilan", "price": 8000, "categoryId": "jajan", "isNeed": false }
+    ],
+    "kosmetik": [
+      { "id": "lip_tint", "name": "Lip Tint", "price": 35000, "categoryId": "perawatanDiri", "isNeed": false },
+      { "id": "skincare", "name": "Skincare", "price": 75000, "categoryId": "perawatanDiri", "isNeed": false }
+    ],
+    "spbu": [
+      { "id": "bensin", "name": "Isi Bensin", "price": 20000, "categoryId": "transportasi", "isNeed": true }
+    ],
+    "gamecenter": [
+      { "id": "game_1jam", "name": "Main Game 1 Jam", "price": 10000, "categoryId": "hiburan", "isNeed": false },
+      { "id": "nonton", "name": "Nonton Film", "price": 40000, "categoryId": "hiburan", "isNeed": false },
+      { "id": "nongkrong", "name": "Nongkrong", "price": 30000, "categoryId": "hiburan", "isNeed": false }
+    ]
+  },
+  "categories": {
+    "jajan": "Jajan",
+    "transportasi": "Transportasi",
+    "sekolah": "Kebutuhan Sekolah",
+    "perawatanDiri": "Perawatan Diri",
+    "hiburan": "Hiburan",
+    "komunikasi": "Komunikasi",
+    "lainLain": "Lain-lain"
+  }
+}

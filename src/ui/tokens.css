@@ -1,0 +1,233 @@
+/**
+ * tokens.css — Design token variables for Life Journey.
+ * All 14 primary color tokens + extended palette.
+ * Based on STYLE-BIBLE.md palette.
+ */
+
+:root {
+  /* === Primary palette tokens === */
+  --color-cream-light:    #F7EEDA;
+  --color-cream-mid:      #E9D8B4;
+  --color-green-light:    #A5BE93;
+  --color-green-mid:      #6F9262;
+  --color-green-dark:     #44603F;
+  --color-brown-light:    #C9A27A;
+  --color-brown-mid:      #9A6F4C;
+  --color-brown-dark:     #5E3F2A;
+  --color-navy-mid:       #34456B;
+  --color-navy-dark:      #1F2A44;
+  --color-navy-deepest:   #121A2E;
+  --color-terracotta:     #C0654A;
+  --color-terracotta-dark:#9E4A33;
+  --color-gold:           #D9A441;
+
+  /* === Extended palette === */
+  --color-grey-light:     #9AA0AA;
+  --color-dark-brown:     #2A1F1A;
+  --color-off-white:      #FBF6EA;
+  --color-tan:            #B8A88A;
+  --color-dark-green:     #3D5236;
+  --color-deep-navy:      #28344F;
+  --color-burnt:          #8B4A36;
+  --color-amber:          #C4832E;
+  --color-grey-blue:      #7A8090;
+  --color-parchment:      #F0E4C8;
+  --color-forest:         #4A6B40;
+  --color-midnight:       #162038;
+  --color-sand:           #E8C9A8;
+  --color-sienna:         #6B4A30;
+  --color-sage:           #8B9680;
+  --color-wheat:          #D4B890;
+  --color-khaki:          #A09060;
+  --color-slate:          #505860;
+
+  /* === Semantic tokens === */
+  --color-bg-primary:     var(--color-navy-deepest);
+  --color-bg-panel:       var(--color-navy-dark);
+  --color-bg-card:        var(--color-navy-mid);
+  --color-text-primary:   var(--color-off-white);
+  --color-text-secondary: var(--color-cream-light);
+  --color-text-muted:     var(--color-tan);
+  --color-text-disabled:  var(--color-grey-light);
+  --color-accent:         var(--color-gold);
+  --color-accent-hover:   var(--color-amber);
+  --color-danger:         var(--color-terracotta);
+  --color-success:        var(--color-green-mid);
+  --color-warning:        var(--color-gold);
+  --color-border:         var(--color-navy-mid);
+
+  /* === Spacing === */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+
+  /* === Font === */
+  --font-ui:   'Nunito', system-ui, sans-serif;
+  --font-mono: 'Courier New', monospace;
+
+  /* === Radius === */
+  --radius-sm:  4px;
+  --radius-md:  8px;
+  --radius-lg: 16px;
+
+  /* === Transitions === */
+  --transition-fast: 120ms ease;
+  --transition-mid:  240ms ease;
+}
+
+/* === Global reset === */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-ui);
+  overflow: hidden;
+}
+
+/* === Panel base === */
+.lj-panel {
+  position: fixed;
+  background: var(--color-bg-panel);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  z-index: 100;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+  color: var(--color-text-primary);
+}
+
+.lj-panel h2 {
+  color: var(--color-accent);
+  margin: 0 0 var(--space-md) 0;
+  font-size: 1.1rem;
+}
+
+.lj-panel .close-btn {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  background: var(--color-bg-card);
+  border: none;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  padding: 2px 8px;
+  font-size: 1rem;
+}
+
+.lj-panel .close-btn:hover {
+  background: var(--color-danger);
+}
+
+/* === Button === */
+.lj-btn {
+  display: inline-block;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-accent);
+  color: var(--color-text-primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-ui);
+  font-size: 0.875rem;
+  transition: background var(--transition-fast);
+}
+
+.lj-btn:hover {
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+}
+
+.lj-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.lj-btn.primary {
+  background: var(--color-accent);
+  color: var(--color-bg-primary);
+  font-weight: bold;
+}
+
+.lj-btn.primary:hover {
+  background: var(--color-amber);
+}
+
+.lj-btn.danger {
+  border-color: var(--color-danger);
+}
+
+.lj-btn.danger:hover {
+  background: var(--color-danger);
+}
+
+/* === Currency display === */
+.lj-currency {
+  font-variant-numeric: tabular-nums;
+  color: var(--color-gold);
+  font-weight: bold;
+}
+
+.lj-currency.negative {
+  color: var(--color-danger);
+}
+
+/* === Progress bar === */
+.lj-bar {
+  height: 10px;
+  background: var(--color-bg-card);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.lj-bar__fill {
+  height: 100%;
+  background: var(--color-accent);
+  transition: width var(--transition-mid);
+  border-radius: 5px;
+}
+
+.lj-bar__fill.low {
+  background: var(--color-danger);
+}
+
+/* === Table === */
+.lj-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.lj-table th, .lj-table td {
+  padding: var(--space-xs) var(--space-sm);
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.lj-table th {
+  color: var(--color-text-muted);
+  font-weight: normal;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+/* === HUD overlay === */
+#lj-hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  pointer-events: none;
+}
+
+#lj-hud > * {
+  pointer-events: auto;
+}

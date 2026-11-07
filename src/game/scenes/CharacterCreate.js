@@ -1,0 +1,63 @@
+/**
+ * CharacterCreate.js — Scene for character creation.
+ * Opens DOM character creation modal. Once done, initializes store and starts World scene.
+ */
+
+import { createCharacterModal } from '../../ui/characterCreate.js';
+import { createStore } from '../../state/store.js';
+import { createLedger, createAllowanceEntry, addEntry } from '../../domain/ledger.js';
+import { saveGame } from '../../state/persistence.js';
+
+export class CharacterCreate extends Phaser.Scene {
+  constructor() {
+    super({ key: 'CharacterCreate' });
+  }
+
+  create() {
+    const config = this.cache.json.get('phase1config') || {};
+    const container = document.getElementById('ui-container') || document.body;
+
+    createCharacterModal(container, (charData) => {
+      // Initialize new game state
+      let ledger = createLedger();
+
+      // Day 1 allowance: Rp 1.000.000
+      const allowanceEntry = createAllowanceEntry(1, 1);
+      const res = addEntry(ledger, allowanceEntry);
+      if (!res.error) {
+        ledger = res.ledger;
+      }
+
+      const initialMissions = [
+        { id: 'M1', title: 'Terima Uang Saku & Lihat Buku Kas', completed: false },
+        { id: 'M2', title: 'Susun Anggaran Bulan Ini', completed: false },
+        { id: 'M3', title: 'Isi Bensin Sebelum 20%', completed: false },
+        { id: 'M4', title: 'Tabung Minimal Rp100.000 Bulan Ini', completed: false },
+        { id: 'M5', title: 'Hadapi Satu Ajakan Teman', completed: false },
+        { id: 'M6', title: 'Pertahankan Kas > Rp0 Sampai Akhir Bulan', completed: false },
+        { id: 'M7', title: 'Tinjau Ringkasan Akhir Bulan', completed: false },
+      ];
+
+      const gameState = {
+        schemaVersion: 1,
+        character: charData,
+        clock: { day: 1, month: 1, timeOfDay: 8 * 60 },
+        ledger: ledger,
+        gasoline: config.gasolineStartPercent || 100,
+        budget: {},
+        missions: initialMissions,
+        flags: {},
+        seed: 12345
+      };
+
+      // Save initial state
+      saveGame(gameState);
+
+      // Register state in game registry or global store
+      this.game.registry.set('gameState', gameState);
+
+      // Transition to World scene
+      this.scene.start('World');
+    });
+  }
+}

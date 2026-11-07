@@ -1,0 +1,4 @@
+assets/_raw/
+assets/_rejected/
+*.log
+node_modules/
