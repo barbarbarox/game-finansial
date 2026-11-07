@@ -81,3 +81,4 @@ if __name__ == '__main__':
     rep = validate(sys.argv[1], brief)
     print(json.dumps(rep, indent=2))
     sys.exit(0 if rep["pass"] else 1)
+

@@ -57,3 +57,4 @@ if __name__ == '__main__':
     for i, s in enumerate(subs):
         s.save(f"{sys.argv[2]}_{i}.png")
     print(f"Sliced into {len(subs)} images.")
+

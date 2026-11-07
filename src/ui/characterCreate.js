@@ -105,3 +105,4 @@ export function createCharacterModal(container, onComplete) {
   backdrop.appendChild(modal);
   container.appendChild(backdrop);
 }
+

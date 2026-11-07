@@ -55,3 +55,4 @@ export function createProceduralTiles(scene, tileSize = 32) {
   yctx.fillRect(22, 16, 2, 2);
   scene.textures.addCanvas('tile_halaman', yardCanvas);
 }
+

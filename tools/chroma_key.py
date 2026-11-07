@@ -46,3 +46,4 @@ if __name__ == '__main__':
     tol = int(sys.argv[3]) if len(sys.argv) > 3 else 60
     rem = remove_magenta_background(sys.argv[1], sys.argv[2], tol)
     print(f"Chroma key complete. Remaining magenta pixels: {rem}")
+

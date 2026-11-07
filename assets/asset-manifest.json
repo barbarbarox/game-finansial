@@ -8,11 +8,25 @@
       "type": "spritesheet",
       "frameWidth": 32,
       "frameHeight": 64,
-      "frames": { "idle_down": 0, "idle_up": 1, "idle_left": 2, "idle_right": { "mirrorOf": "idle_left" } },
-      "anchor": [0.5, 1],
-      "status": "placeholder",
+      "frames": {
+        "idle_down": 0,
+        "idle_up": 1,
+        "idle_left": 2,
+        "idle_right": {
+          "mirrorOf": "idle_left"
+        }
+      },
+      "anchor": [
+        0.5,
+        1
+      ],
+      "status": "ready",
       "source": "ai-generated",
-      "tool": "Gemini Image Generator"
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-07",
+      "qa": {
+        "pass": true
+      }
     },
     {
       "id": "char_player_f_casual",
@@ -20,30 +34,70 @@
       "type": "spritesheet",
       "frameWidth": 32,
       "frameHeight": 64,
-      "frames": { "idle_down": 0, "idle_up": 1, "idle_left": 2, "idle_right": { "mirrorOf": "idle_left" } },
-      "anchor": [0.5, 1],
-      "status": "placeholder",
+      "frames": {
+        "idle_down": 0,
+        "idle_up": 1,
+        "idle_left": 2,
+        "idle_right": {
+          "mirrorOf": "idle_left"
+        }
+      },
+      "anchor": [
+        0.5,
+        1
+      ],
+      "status": "ready",
       "source": "ai-generated",
-      "tool": "Gemini Image Generator"
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-07",
+      "qa": {
+        "pass": true
+      }
     },
     {
       "id": "bld_sekolah",
       "file": "assets/buildings/bld_sekolah.png",
       "type": "image",
-      "anchor": [0.5, 1],
-      "footprint": { "x": 0.06, "y": 0.65, "w": 0.88, "h": 0.35 },
-      "doorAnchor": { "x": 0.5, "y": 1.0 },
-      "status": "placeholder",
+      "anchor": [
+        0.5,
+        1
+      ],
+      "footprint": {
+        "x": 0.06,
+        "y": 0.65,
+        "w": 0.88,
+        "h": 0.35
+      },
+      "doorAnchor": {
+        "x": 0.5,
+        "y": 1.0
+      },
+      "status": "ready",
       "source": "ai-generated",
-      "tool": "Gemini Image Generator"
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-07",
+      "qa": {
+        "pass": true
+      }
     },
     {
       "id": "bld_rumah_pemain",
       "file": "assets/buildings/bld_rumah_pemain.png",
       "type": "image",
-      "anchor": [0.5, 1],
-      "footprint": { "x": 0.06, "y": 0.65, "w": 0.88, "h": 0.35 },
-      "doorAnchor": { "x": 0.5, "y": 1.0 },
+      "anchor": [
+        0.5,
+        1
+      ],
+      "footprint": {
+        "x": 0.06,
+        "y": 0.65,
+        "w": 0.88,
+        "h": 0.35
+      },
+      "doorAnchor": {
+        "x": 0.5,
+        "y": 1.0
+      },
       "status": "placeholder",
       "source": "ai-generated",
       "tool": "Gemini Image Generator"
@@ -52,9 +106,20 @@
       "id": "bld_minimarket",
       "file": "assets/buildings/bld_minimarket.png",
       "type": "image",
-      "anchor": [0.5, 1],
-      "footprint": { "x": 0.06, "y": 0.65, "w": 0.88, "h": 0.35 },
-      "doorAnchor": { "x": 0.5, "y": 1.0 },
+      "anchor": [
+        0.5,
+        1
+      ],
+      "footprint": {
+        "x": 0.06,
+        "y": 0.65,
+        "w": 0.88,
+        "h": 0.35
+      },
+      "doorAnchor": {
+        "x": 0.5,
+        "y": 1.0
+      },
       "status": "placeholder",
       "source": "ai-generated",
       "tool": "Gemini Image Generator"
@@ -63,9 +128,20 @@
       "id": "bld_toko_kosmetik",
       "file": "assets/buildings/bld_toko_kosmetik.png",
       "type": "image",
-      "anchor": [0.5, 1],
-      "footprint": { "x": 0.06, "y": 0.65, "w": 0.88, "h": 0.35 },
-      "doorAnchor": { "x": 0.5, "y": 1.0 },
+      "anchor": [
+        0.5,
+        1
+      ],
+      "footprint": {
+        "x": 0.06,
+        "y": 0.65,
+        "w": 0.88,
+        "h": 0.35
+      },
+      "doorAnchor": {
+        "x": 0.5,
+        "y": 1.0
+      },
       "status": "placeholder",
       "source": "ai-generated",
       "tool": "Gemini Image Generator"
@@ -74,9 +150,20 @@
       "id": "bld_spbu",
       "file": "assets/buildings/bld_spbu.png",
       "type": "image",
-      "anchor": [0.5, 1],
-      "footprint": { "x": 0.06, "y": 0.65, "w": 0.88, "h": 0.35 },
-      "doorAnchor": { "x": 0.5, "y": 1.0 },
+      "anchor": [
+        0.5,
+        1
+      ],
+      "footprint": {
+        "x": 0.06,
+        "y": 0.65,
+        "w": 0.88,
+        "h": 0.35
+      },
+      "doorAnchor": {
+        "x": 0.5,
+        "y": 1.0
+      },
       "status": "placeholder",
       "source": "ai-generated",
       "tool": "Gemini Image Generator"
@@ -85,9 +172,20 @@
       "id": "bld_game_center",
       "file": "assets/buildings/bld_game_center.png",
       "type": "image",
-      "anchor": [0.5, 1],
-      "footprint": { "x": 0.06, "y": 0.65, "w": 0.88, "h": 0.35 },
-      "doorAnchor": { "x": 0.5, "y": 1.0 },
+      "anchor": [
+        0.5,
+        1
+      ],
+      "footprint": {
+        "x": 0.06,
+        "y": 0.65,
+        "w": 0.88,
+        "h": 0.35
+      },
+      "doorAnchor": {
+        "x": 0.5,
+        "y": 1.0
+      },
       "status": "placeholder",
       "source": "ai-generated",
       "tool": "Gemini Image Generator"

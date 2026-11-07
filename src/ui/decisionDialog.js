@@ -55,3 +55,4 @@ export function createDecisionModal(container, eventData, onSelectChoice) {
   backdrop.appendChild(modal);
   container.appendChild(backdrop);
 }
+

@@ -49,3 +49,4 @@ if __name__ == '__main__':
     out = normalize_sprite(sys.argv[1], tw, th)
     out.save(sys.argv[2])
     print(f"Normalized to {tw}x{th}.")
+

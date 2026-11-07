@@ -181,3 +181,4 @@ export function createShopModal(container, store, locationId, config, onClose) {
   backdrop.appendChild(modal);
   container.appendChild(backdrop);
 }
+

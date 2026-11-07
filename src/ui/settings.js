@@ -75,3 +75,4 @@ export function createSettingsModal(container, onClose, onOpenCredits) {
   backdrop.appendChild(modal);
   container.appendChild(backdrop);
 }
+

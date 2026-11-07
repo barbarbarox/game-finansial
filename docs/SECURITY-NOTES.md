@@ -14,3 +14,4 @@ Penerapan prinsip keamanan OWASP Top 10 (2021) pada Life Journey:
 
 ## 2. Checksum Vendor
 - `vendor/phaser.min.js` (Phaser v3.80.1): `62081f6a1b51d040473f919ffedef9009953c20833518e146da5a8d1c9405ea8`
+

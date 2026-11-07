@@ -69,3 +69,4 @@ export function createCreditsModal(container, onClose) {
   backdrop.appendChild(modal);
   container.appendChild(backdrop);
 }
+

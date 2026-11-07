@@ -127,3 +127,4 @@ export function createBudgetModal(container, store, config, onClose) {
   backdrop.appendChild(modal);
   container.appendChild(backdrop);
 }
+

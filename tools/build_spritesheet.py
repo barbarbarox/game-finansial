@@ -24,3 +24,4 @@ if __name__ == '__main__':
     frames = [Image.open(p) for p in frame_paths]
     build_horizontal_sheet(frames, fw, fh, out_path)
     print(f"Spritesheet saved to {out_path} with {len(frames)} frames.")
+

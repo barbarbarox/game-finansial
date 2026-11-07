@@ -120,3 +120,4 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget) {
 
   return hudElement;
 }
+

@@ -135,3 +135,4 @@ export function createCashbookModal(container, store, onClose) {
   backdrop.appendChild(modal);
   container.appendChild(backdrop);
 }
+

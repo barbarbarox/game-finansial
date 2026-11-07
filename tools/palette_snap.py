@@ -51,3 +51,4 @@ if __name__ == '__main__':
         sys.exit(1)
     snap_to_palette(sys.argv[1], sys.argv[2], sys.argv[3])
     print("Palette snap complete.")
+

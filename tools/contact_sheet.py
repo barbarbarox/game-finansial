@@ -35,3 +35,4 @@ if __name__ == '__main__':
         sys.exit(1)
     make_contact_sheet(sys.argv[2:], sys.argv[1])
     print(f"Contact sheet saved to {sys.argv[1]}")
+
