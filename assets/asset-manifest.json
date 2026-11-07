@@ -234,7 +234,7 @@
       "type": "spritesheet",
       "frameWidth": 32,
       "frameHeight": 32,
-      "status": "placeholder",
+      "status": "ready",
       "source": "ai-generated",
       "tool": "Gemini Image Generator"
     }

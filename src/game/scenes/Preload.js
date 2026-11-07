@@ -1,6 +1,6 @@
 /**
  * Preload.js — Preload scene for Life Journey.
- * Loads all assets and shows a loading bar.
+ * Loads all assets and configs, showing an animated loading bar.
  */
 
 import { loadAssets, createPlaceholders } from '../assetLoader.js';
@@ -13,22 +13,19 @@ export class Preload extends Phaser.Scene {
   preload() {
     const { width, height } = this.scale;
 
-    // Loading bar background
-    const barBg = this.add.rectangle(width / 2, height / 2, 400, 24, 0x34456B);
+    // Loading UI
+    const barBg = this.add.rectangle(width / 2, height / 2, 400, 24, 0x1F2A44);
     barBg.setOrigin(0.5);
 
-    // Loading bar fill
     const bar = this.add.rectangle(width / 2 - 200, height / 2, 0, 20, 0xD9A441);
     bar.setOrigin(0, 0.5);
 
-    // Loading text
-    const loadText = this.add.text(width / 2, height / 2 - 24, 'Memuat...', {
+    const loadText = this.add.text(width / 2, height / 2 - 28, 'Memuat aset Life Journey...', {
       font: '16px sans-serif',
-      fill: '#FBF6EA',
+      fill: '#F7EEDA',
     });
     loadText.setOrigin(0.5);
 
-    // Update bar on progress
     this.load.on('progress', (value) => {
       bar.width = 400 * value;
     });
@@ -38,32 +35,30 @@ export class Preload extends Phaser.Scene {
       bar.width = 400;
     });
 
-    // Load JSON configs
+    // Load JSON data
     this.load.json('phase1config', 'data/phase1.config.json');
     this.load.json('eventsData', 'data/events.phase1.json');
-    this.load.json('assetManifest', 'assets/asset-manifest.json');
     this.load.json('townLayout', 'data/maps/town_hub.layout.json');
     this.load.json('credits', 'assets/credits.json');
     this.load.json('palette', 'assets/palette.json');
+
+    // Retrieve asset manifest loaded in Boot scene
+    const manifest = this.cache.json.get('assetManifest');
+    const assets = manifest?.assets || [];
+
+    // Queue ready assets for loading
+    loadAssets(this, assets);
   }
 
   create() {
     const manifest = this.cache.json.get('assetManifest');
-    const assets = manifest?.assets ?? [];
+    const assets = manifest?.assets || [];
 
-    // Create placeholder textures for all placeholder assets
+    // Create canvas textures for any placeholder assets
     createPlaceholders(this, assets);
 
-    // Load any ready assets (spritesheet setup, etc.)
-    // For now all are placeholder; we still register them
-    for (const entry of assets) {
-      if (entry.status === 'ready') {
-        // Would be loaded in preload, placeholder already handled
-      }
-    }
-
-    // Short delay then go to MainMenu
-    this.time.delayedCall(300, () => {
+    // Short delay before transitioning to MainMenu
+    this.time.delayedCall(200, () => {
       this.scene.start('MainMenu');
     });
   }

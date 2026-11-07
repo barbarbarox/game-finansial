@@ -109,7 +109,7 @@ export function createCashbookModal(container, store, onClose) {
 
       const tdAmount = document.createElement('td');
       tdAmount.className = 'text-right tabular-nums';
-      const kasLine = entry.lines.find(l => l.accountId === 'kas_pribadi');
+      const kasLine = entry.lines.find(l => l.accountId === 'KAS_PRIBADI' || l.accountId === 'kas_pribadi');
       if (kasLine) {
         const isDebit = kasLine.side === 'D';
         tdAmount.textContent = `${isDebit ? '+' : '-'}${rupiah.format(kasLine.amount)}`;

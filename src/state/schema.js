@@ -7,21 +7,22 @@ export const SCHEMA_VERSION = 1;
 
 /**
  * Whitelist of allowed top-level keys and their types.
- * type: 'string' | 'number' | 'boolean' | 'object' | 'array'
  */
 export const SAVE_SCHEMA = {
   schemaVersion: { type: 'number', required: true },
-  playerName: { type: 'string', required: true, maxLen: 20 },
+  playerName: { type: 'string', required: false, maxLen: 20 },
   fatherName: { type: 'string', required: false, maxLen: 20 },
   motherName: { type: 'string', required: false, maxLen: 20 },
-  gender: { type: 'string', required: true, enum: ['m', 'f'] },
+  gender: { type: 'string', required: false, enum: ['m', 'f'] },
+  character: { type: 'object', required: false },
   ledger: { type: 'object', required: true },
   clock: { type: 'object', required: true },
-  budget: { type: 'object', required: true },
-  missions: { type: 'array', required: true },
-  gasoline: { type: 'number', required: true, min: 0, max: 100 },
+  budget: { type: 'object', required: false },
+  missions: { type: 'array', required: false },
+  gasoline: { type: 'number', required: false, min: 0, max: 100 },
   eventEngine: { type: 'object', required: false },
   flags: { type: 'object', required: false },
+  seed: { type: 'number', required: false },
   eventsResolved: { type: 'number', required: false, min: 0 },
   savingsEver: { type: 'boolean', required: false },
   budgetSet: { type: 'boolean', required: false },
@@ -55,24 +56,34 @@ export function validateSave(data) {
     errors.push('schemaVersion tidak valid.');
   }
 
+  // Ensure character info exists either in character object or top-level fields
+  const hasCharName = (typeof data.playerName === 'string' && data.playerName.length > 0) ||
+                      (data.character && typeof data.character.name === 'string');
+  if (!hasCharName) {
+    errors.push('Nama karakter tidak ditemukan.');
+  }
+
+  const hasGender = (typeof data.gender === 'string') ||
+                    (data.character && typeof data.character.gender === 'string');
+  if (!hasGender) {
+    errors.push('Gender karakter tidak ditemukan.');
+  }
+
   // Validate each known field
   for (const [key, def] of Object.entries(SAVE_SCHEMA)) {
     const value = data[key];
 
     if (value === undefined || value === null) {
       if (def.required) {
-        errors.push(`Field wajib tidak ada: ${key}`);
+        errors.push(`Field wajib hilang: ${key}`);
       }
       continue;
     }
 
     // Type check
-    if (def.type === 'array') {
-      if (!Array.isArray(value)) {
-        errors.push(`Field ${key} harus berupa array.`);
-      }
-    } else if (typeof value !== def.type) {
-      errors.push(`Field ${key} harus bertipe ${def.type}, ditemukan ${typeof value}.`);
+    const actualType = Array.isArray(value) ? 'array' : typeof value;
+    if (actualType !== def.type) {
+      errors.push(`Field ${key} bertipe ${actualType}, diharapkan ${def.type}`);
       continue;
     }
 
@@ -110,7 +121,6 @@ export function validateSave(data) {
  * @returns {object} migrated data
  */
 export function migrateSave(data) {
-  // Create clean object (no prototype pollution)
   const clean = Object.create(null);
 
   // Copy only whitelisted fields
@@ -121,16 +131,27 @@ export function migrateSave(data) {
     }
   }
 
-  // Set current schema version
   clean.schemaVersion = SCHEMA_VERSION;
 
-  // Migration: v0 → v1 (add missing fields with defaults)
+  // Defaults
   clean.eventsResolved = clean.eventsResolved ?? 0;
   clean.savingsEver = clean.savingsEver ?? false;
   clean.budgetSet = clean.budgetSet ?? false;
   clean.month1NoBroke = clean.month1NoBroke ?? false;
   clean.flags = clean.flags ?? {};
   clean.gasoline = clean.gasoline ?? 100;
+  clean.missions = clean.missions ?? [];
+  clean.budget = clean.budget ?? {};
+
+  // Standardize character
+  if (!clean.character && clean.playerName) {
+    clean.character = {
+      name: clean.playerName,
+      gender: clean.gender || 'm',
+      fatherName: clean.fatherName || 'Ayah',
+      motherName: clean.motherName || 'Ibu'
+    };
+  }
 
   return clean;
 }

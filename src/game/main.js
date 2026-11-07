@@ -11,7 +11,9 @@ import { World } from './scenes/World.js';
 import { createSettingsModal } from '../ui/settings.js';
 import { createCreditsModal } from '../ui/credits.js';
 
-window.addEventListener('DOMContentLoaded', () => {
+function initGame() {
+  if (window.__GAME__) return;
+
   const config = {
     type: Phaser.AUTO,
     parent: 'game-container',
@@ -35,6 +37,7 @@ window.addEventListener('DOMContentLoaded', () => {
   };
 
   const game = new Phaser.Game(config);
+  window.__GAME__ = game;
 
   // Global UI event listener for DOM overlays
   document.addEventListener('lj:openPanel', (e) => {
@@ -49,5 +52,10 @@ window.addEventListener('DOMContentLoaded', () => {
       createCreditsModal(uiContainer, null);
     }
   });
-});
+}
 
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initGame);
+} else {
+  initGame();
+}

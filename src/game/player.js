@@ -1,38 +1,41 @@
 /**
  * player.js — Player controller for Life Journey.
- * WASD/arrow key movement, 4-direction animation, collision, gasoline drain.
+ * WASD/arrow key movement, 4-direction animation using character spritesheet,
+ * Tahap A walking bounce animation, collision, and gasoline drain.
  */
 
 export class PlayerController {
-  /**
-   * @param {Phaser.Scene} scene
-   * @param {number} x
-   * @param {number} y
-   * @param {object} config
-   */
   constructor(scene, x, y, config) {
     this.scene = scene;
-    this.config = config ?? {};
-    this.speed = 2 * (config?.tileSize ?? 32); // 64 px/s
+    this.config = config || {};
+    this.speed = 3 * (config?.tileSize || 32); // 96 px/s smooth walking
 
-    // Sprite (placeholder rectangle if no texture)
-    this.sprite = scene.add.rectangle(x, y, 20, 32, 0x34456B);
-    this.sprite.setDepth(500);
+    this._store = scene.game.registry.get('store');
+    const state = this._store ? this._store.getState() : null;
+    const gender = state?.character?.gender || 'm';
+    this.textureKey = gender === 'f' ? 'char_player_f_casual' : 'char_player_m_casual';
 
-    // Shadow
-    this.shadow = scene.add.ellipse(x, y + 14, 18, 8, 0x000000, 0.3);
-    this.shadow.setDepth(499);
+    // Shadow at feet
+    this.shadow = scene.add.ellipse(x, y, 22, 10, 0x121A2E, 0.4);
+    this.shadow.setOrigin(0.5, 0.5);
 
-    // Direction indicator
-    this.dirIndicator = scene.add.triangle(x, y - 20, 0, 10, 10, -10, -10, -10, 0xD9A441);
-    this.dirIndicator.setDepth(501);
+    // Sprite (using real spritesheet if loaded, otherwise fallback rectangle)
+    if (scene.textures.exists(this.textureKey)) {
+      this.sprite = scene.add.sprite(x, y, this.textureKey, 0);
+      this.sprite.setOrigin(0.5, 1.0); // anchor at feet
+      this.hasTexture = true;
+    } else {
+      this.sprite = scene.add.rectangle(x, y, 24, 48, 0x34456B);
+      this.sprite.setOrigin(0.5, 1.0);
+      this.hasTexture = false;
+    }
 
-    // Input
+    // Input keys
     this.cursors = scene.input.keyboard.createCursorKeys();
     this.wasd = scene.input.keyboard.addKeys({
-      up:    Phaser.Input.Keyboard.KeyCodes.W,
-      down:  Phaser.Input.Keyboard.KeyCodes.S,
-      left:  Phaser.Input.Keyboard.KeyCodes.A,
+      up: Phaser.Input.Keyboard.KeyCodes.W,
+      down: Phaser.Input.Keyboard.KeyCodes.S,
+      left: Phaser.Input.Keyboard.KeyCodes.A,
       right: Phaser.Input.Keyboard.KeyCodes.D,
     });
 
@@ -41,20 +44,12 @@ export class PlayerController {
     this.vy = 0;
     this.facing = 'down';
     this.moving = false;
-    this.bounceTimer = 0;
+    this.walkTimer = 0;
 
-    // Gasoline drain (per real second, converted from per game-day)
-    // dayDurationSeconds * gasolineDrainPerDay gives % per real second
-    this.gasolineDrainRate = 0; // set by store subscription
-    this._store = scene.game.registry.get('store');
-    if (this._store) {
-      const cfg = this.config;
-      const dayDurSec = cfg.dayDurationSeconds ?? 12;
-      this.gasolineDrainRate = (cfg.gasolineDrainPerDay ?? 5) / (dayDurSec * 1000); // %/ms
-    }
+    const dayDurSec = this.config.dayDurationSeconds || 12;
+    this.gasolineDrainRate = (this.config.gasolineDrainPerDay || 5) / (dayDurSec * 1000);
   }
 
-  /** @param {number} delta - ms since last frame */
   update(delta, colliders) {
     this._handleInput(delta, colliders);
     this._drainGasoline(delta);
@@ -75,7 +70,6 @@ export class PlayerController {
     if (up)    { this.vy = -this.speed; this.facing = 'up'; }
     if (down)  { this.vy =  this.speed; this.facing = 'down'; }
 
-    // Normalize diagonal
     if (this.vx !== 0 && this.vy !== 0) {
       const factor = 1 / Math.SQRT2;
       this.vx *= factor;
@@ -83,33 +77,31 @@ export class PlayerController {
     }
 
     this.moving = this.vx !== 0 || this.vy !== 0;
-
     if (!this.moving) return;
 
-    const dt = delta / 1000; // seconds
+    const dt = delta / 1000;
     const nx = this.sprite.x + this.vx * dt;
     const ny = this.sprite.y + this.vy * dt;
 
-    // Collision check
-    const halfW = 10;
-    const halfH = 12;
+    // Feet collision box (16x10 px at bottom)
+    const hw = 10;
+    const hh = 6;
 
-    const canX = !this._collidesAt(nx, this.sprite.y, halfW, halfH, colliders);
-    const canY = !this._collidesAt(this.sprite.x, ny, halfW, halfH, colliders);
+    const canX = !this._collidesAt(nx, this.sprite.y, hw, hh, colliders);
+    const canY = !this._collidesAt(this.sprite.x, ny, hw, hh, colliders);
 
     if (canX) {
       this.sprite.x = nx;
       this.shadow.x = nx;
-      this.dirIndicator.x = nx;
     }
     if (canY) {
       this.sprite.y = ny;
-      this.shadow.y = ny + 14;
-      this.dirIndicator.y = ny - 20;
+      this.shadow.y = ny;
     }
 
-    // Depth sort by Y
-    this.sprite.setDepth(500 + this.sprite.y / 1000);
+    // Depth sort: lower Y = in front
+    this.sprite.setDepth(this.sprite.y);
+    this.shadow.setDepth(this.sprite.y - 1);
   }
 
   _collidesAt(x, y, hw, hh, colliders) {
@@ -118,6 +110,7 @@ export class PlayerController {
     const top    = y - hh;
     const bottom = y + hh;
 
+    if (!colliders) return false;
     for (const c of colliders) {
       if (right > c.x && left < c.x + c.w &&
           bottom > c.y && top < c.y + c.h) {
@@ -132,22 +125,39 @@ export class PlayerController {
     const state = this._store.getState();
     const gasoline = state.gasoline ?? 100;
     const newGas = Math.max(0, gasoline - this.gasolineDrainRate * delta);
-    if (Math.abs(newGas - gasoline) > 0.01) {
+    if (Math.abs(newGas - gasoline) > 0.05) {
       this._store.setState({ gasoline: newGas });
     }
   }
 
   _animate(delta) {
-    if (!this.moving) return;
+    if (!this.hasTexture) return;
 
-    // Bounce animation: vertical sine wave
-    this.bounceTimer = (this.bounceTimer + delta * 0.01) % (Math.PI * 2);
-    const bounceY = Math.sin(this.bounceTimer * 4) * 2;
-    this.sprite.y += bounceY / 20; // subtle
+    // Set correct frame according to facing direction
+    // Frame 0: down, 1: up, 2: left
+    if (this.facing === 'down') {
+      this.sprite.setFrame(0);
+      this.sprite.setFlipX(false);
+    } else if (this.facing === 'up') {
+      this.sprite.setFrame(1);
+      this.sprite.setFlipX(false);
+    } else if (this.facing === 'left') {
+      this.sprite.setFrame(2);
+      this.sprite.setFlipX(false);
+    } else if (this.facing === 'right') {
+      this.sprite.setFrame(2);
+      this.sprite.setFlipX(true); // Mirrored left
+    }
 
-    // Rotate direction indicator
-    const angles = { down: 90, up: -90, left: 180, right: 0 };
-    this.dirIndicator.setAngle(angles[this.facing] ?? 90);
+    // Tahap A walk bounce: vertical oscillation when moving (~8Hz)
+    if (this.moving) {
+      this.walkTimer += delta * 0.018; // approx 8 Hz
+      const bounceOffset = Math.abs(Math.sin(this.walkTimer)) * 3;
+      this.sprite.setDisplayOrigin(0.5, 64 + bounceOffset);
+    } else {
+      this.walkTimer = 0;
+      this.sprite.setDisplayOrigin(0.5, 64);
+    }
   }
 
   get x() { return this.sprite.x; }

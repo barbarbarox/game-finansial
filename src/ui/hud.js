@@ -104,8 +104,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget) {
     maximumFractionDigits: 0
   });
 
-  // Subscribe to store updates
-  store.subscribe((state) => {
+  function updateUI(state) {
     if (!state) return;
     const cash = getCash(state.ledger);
     const savings = getSavings(state.ledger);
@@ -116,8 +115,13 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget) {
 
     const activeM = state.missions?.find(m => !m.completed);
     missionTitle.textContent = activeM ? `Misi: ${activeM.title}` : 'Semua Misi Selesai!';
-  });
+  }
+
+  // Initial render
+  if (store) {
+    updateUI(store.getState());
+    store.subscribe(updateUI);
+  }
 
   return hudElement;
 }
-
