@@ -1,10 +1,10 @@
 /**
  * hud.js — HUD DOM overlay untuk Life Journey
  * Mengimplementasikan UI Design Rules (docs/UI-DESIGN-RULES.md):
- * - Status finansial (Kas, Tabungan) dengan icon
- * - Status bensin dengan visual bar
+ * - Status finansial (Kas, Tabungan) tanpa emote/emoji
+ * - Status bensin dengan visual bar persentase
  * - Status waktu & misi aktif
- * - Tombol navigasi Buku Kas, Anggaran, & Menu Pengaturan
+ * - Tombol navigasi Buku Kas, Anggaran, & Pengaturan (bersih tanpa emote)
  * Anti-XSS: textContent only, no innerHTML.
  */
 
@@ -23,41 +23,33 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   // Kas Badge
   const cashBadge = document.createElement('div');
   cashBadge.className = 'hud-badge cash-badge';
-  const cashIcon = document.createElement('span');
-  cashIcon.className = 'hud-icon';
-  cashIcon.textContent = '💰';
-  const cashLabel = document.createElement('span');
-  cashLabel.className = 'hud-label';
-  cashLabel.textContent = 'Kas:';
+  const cashTag = document.createElement('span');
+  cashTag.className = 'hud-tag tag-cash';
+  cashTag.textContent = 'KAS';
   const cashValue = document.createElement('span');
   cashValue.className = 'hud-val hud-val-cash';
   cashValue.textContent = 'Rp0';
-  cashBadge.appendChild(cashIcon);
-  cashBadge.appendChild(cashLabel);
+  cashBadge.appendChild(cashTag);
   cashBadge.appendChild(cashValue);
 
   // Tabungan Badge
   const savingsBadge = document.createElement('div');
   savingsBadge.className = 'hud-badge savings-badge';
-  const savingsIcon = document.createElement('span');
-  savingsIcon.className = 'hud-icon';
-  savingsIcon.textContent = '🏦';
-  const savingsLabel = document.createElement('span');
-  savingsLabel.className = 'hud-label';
-  savingsLabel.textContent = 'Tabungan:';
+  const savingsTag = document.createElement('span');
+  savingsTag.className = 'hud-tag tag-savings';
+  savingsTag.textContent = 'TABUNGAN';
   const savingsValue = document.createElement('span');
   savingsValue.className = 'hud-val hud-val-savings';
   savingsValue.textContent = 'Rp0';
-  savingsBadge.appendChild(savingsIcon);
-  savingsBadge.appendChild(savingsLabel);
+  savingsBadge.appendChild(savingsTag);
   savingsBadge.appendChild(savingsValue);
 
   // Bensin Badge dengan Visual Bar
   const gasBadge = document.createElement('div');
   gasBadge.className = 'hud-badge gas-badge';
-  const gasIcon = document.createElement('span');
-  gasIcon.className = 'hud-icon';
-  gasIcon.textContent = '⛽';
+  const gasTag = document.createElement('span');
+  gasTag.className = 'hud-tag tag-gas';
+  gasTag.textContent = 'BENSIN';
   const gasContainer = document.createElement('div');
   gasContainer.className = 'hud-gas-container';
   const gasBar = document.createElement('div');
@@ -69,7 +61,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const gasValue = document.createElement('span');
   gasValue.className = 'hud-val hud-val-gas';
   gasValue.textContent = '100%';
-  gasBadge.appendChild(gasIcon);
+  gasBadge.appendChild(gasTag);
   gasBadge.appendChild(gasContainer);
   gasBadge.appendChild(gasValue);
 
@@ -84,65 +76,50 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   // Clock
   const clockBadge = document.createElement('div');
   clockBadge.className = 'hud-badge clock-badge';
-  const clockIcon = document.createElement('span');
-  clockIcon.className = 'hud-icon';
-  clockIcon.textContent = '📅';
+  const clockTag = document.createElement('span');
+  clockTag.className = 'hud-tag tag-clock';
+  clockTag.textContent = 'WAKTU';
   const clockText = document.createElement('span');
   clockText.className = 'hud-val hud-val-clock';
   clockText.textContent = 'Bulan 1 · Hari 1';
-  clockBadge.appendChild(clockIcon);
+  clockBadge.appendChild(clockTag);
   clockBadge.appendChild(clockText);
 
   // Misi
   const missionBadge = document.createElement('div');
   missionBadge.className = 'hud-badge mission-badge';
-  const missionIcon = document.createElement('span');
-  missionIcon.className = 'hud-icon';
-  missionIcon.textContent = '🎯';
+  const missionTag = document.createElement('span');
+  missionTag.className = 'hud-tag tag-mission';
+  missionTag.textContent = 'MISI';
   const missionTitle = document.createElement('span');
   missionTitle.className = 'hud-val-mission';
-  missionTitle.textContent = 'Misi: ...';
-  missionBadge.appendChild(missionIcon);
+  missionTitle.textContent = '...';
+  missionBadge.appendChild(missionTag);
   missionBadge.appendChild(missionTitle);
 
   centerGroup.appendChild(clockBadge);
   centerGroup.appendChild(missionBadge);
 
-  // ================= KANAN: TOMBOL NAVIGASI & MENU =================
+  // ================= KANAN: TOMBOL NAVIGASI & MENU (TANPA EMOTE) =================
   const navGroup = document.createElement('div');
   navGroup.className = 'hud-group hud-nav';
 
   const cashbookBtn = document.createElement('button');
   cashbookBtn.type = 'button';
-  cashbookBtn.className = 'lj-btn secondary btn-sm';
-  const cashbookIcon = document.createElement('span');
-  cashbookIcon.textContent = '📒';
-  const cashbookText = document.createElement('span');
-  cashbookText.textContent = 'Buku Kas';
-  cashbookBtn.appendChild(cashbookIcon);
-  cashbookBtn.appendChild(cashbookText);
+  cashbookBtn.className = 'lj-btn secondary btn-sm hud-btn';
+  cashbookBtn.textContent = 'Buku Kas';
   cashbookBtn.addEventListener('click', onOpenCashbook);
 
   const budgetBtn = document.createElement('button');
   budgetBtn.type = 'button';
-  budgetBtn.className = 'lj-btn secondary btn-sm';
-  const budgetIcon = document.createElement('span');
-  budgetIcon.textContent = '📊';
-  const budgetText = document.createElement('span');
-  budgetText.textContent = 'Anggaran';
-  budgetBtn.appendChild(budgetIcon);
-  budgetBtn.appendChild(budgetText);
+  budgetBtn.className = 'lj-btn secondary btn-sm hud-btn';
+  budgetBtn.textContent = 'Anggaran';
   budgetBtn.addEventListener('click', onOpenBudget);
 
   const settingsBtn = document.createElement('button');
   settingsBtn.type = 'button';
-  settingsBtn.className = 'lj-btn secondary btn-sm';
-  const settingsIcon = document.createElement('span');
-  settingsIcon.textContent = '⚙️';
-  const settingsText = document.createElement('span');
-  settingsText.textContent = 'Menu';
-  settingsBtn.appendChild(settingsIcon);
-  settingsBtn.appendChild(settingsText);
+  settingsBtn.className = 'lj-btn secondary btn-sm hud-btn';
+  settingsBtn.textContent = 'Pengaturan';
   if (onOpenSettings) {
     settingsBtn.addEventListener('click', onOpenSettings);
   }
@@ -182,7 +159,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
     clockText.textContent = `Bulan ${state.clock?.month || 1} · Hari ${state.clock?.day || 1}`;
 
     const activeM = state.missions?.find(m => !m.completed);
-    missionTitle.textContent = activeM ? `Misi: ${activeM.title}` : 'Semua Misi Selesai!';
+    missionTitle.textContent = activeM ? activeM.title : 'Semua Selesai';
   }
 
   // Initial render

@@ -106,13 +106,13 @@ async def run_npc_suite():
             print("2. Tombol Navigasi HUD:", buttons)
             assert any('Buku Kas' in b for b in buttons), "Tombol Buku Kas hilang!"
             assert any('Anggaran' in b for b in buttons), "Tombol Anggaran hilang!"
-            assert any('Menu' in b for b in buttons), "Tombol Menu hilang!"
+            assert any(('Pengaturan' in b or 'Menu' in b) for b in buttons), "Tombol Pengaturan/Menu hilang!"
 
-            # Test 2: Click Menu button to verify Settings opens
+            # Test 2: Click Menu/Pengaturan button to verify Settings opens
             await evaluate_js(ws, """
             (() => {
                 const btns = Array.from(document.querySelectorAll('.hud-nav button'));
-                const menuBtn = btns.find(b => b.textContent.includes('Menu'));
+                const menuBtn = btns.find(b => b.textContent.includes('Pengaturan') || b.textContent.includes('Menu'));
                 if (menuBtn) menuBtn.click();
             })()
             """, 5)
@@ -122,13 +122,43 @@ async def run_npc_suite():
             print("3. Buka Menu Pengaturan dari HUD:", settings_title)
             assert 'Pengaturan' in (settings_title or ''), "Modal Pengaturan gagal terbuka!"
 
+            # Test Simpan Permainan inside settings
+            await evaluate_js(ws, """
+            (() => {
+                const btns = Array.from(document.querySelectorAll('.settings-section button'));
+                const saveBtn = btns.find(b => b.textContent.includes('Simpan Permainan'));
+                if (saveBtn) saveBtn.click();
+            })()
+            """, 7)
+            await asyncio.sleep(0.3)
+            toast_txt = await evaluate_js(ws, "document.querySelector('.settings-toast')?.textContent", 8)
+            print("   Feedback Simpan Permainan:", toast_txt)
+            assert 'berhasil disimpan' in (toast_txt or ''), "Toast simpan permainan gagal muncul!"
+
             # Close Settings
-            await evaluate_js(ws, "document.querySelector('.settings-panel .btn-close')?.click()", 7)
+            await evaluate_js(ws, "document.querySelector('.settings-panel .btn-close')?.click()", 9)
             await asyncio.sleep(0.5)
+
+            # Test Texture Loading: Check that new buildings and props textures exist in Phaser
+            textures_loaded = await evaluate_js(ws, """
+            (() => {
+                const keys = [
+                    'bld_rumah_pemain', 'bld_minimarket', 'bld_toko_kosmetik', 'bld_spbu', 'bld_game_center',
+                    'npc_sheet_family', 'npc_sheet_friends', 'npc_sheet_vendors',
+                    'prop_tree_large', 'prop_tree_small', 'prop_street_lamp', 'prop_bench', 'prop_bush'
+                ];
+                const scene = window.__GAME__.scene.getScene('World');
+                return keys.map(k => ({ key: k, exists: scene.textures.exists(k) }));
+            })()
+            """, 10)
+            print("4. Status Tekstur Baru di Phaser:")
+            for t in textures_loaded:
+                print(f"   - {t['key']}: {'OK' if t['exists'] else 'MISSING'}")
+                assert t['exists'], f"Tekstur {t['key']} tidak ditemukan di Phaser!"
 
             # Test 3: NPC Proximity.
             # Teleport/move player right next to npc_ibu (at tile x: 8, y: 20 -> px: 256, py: 640)
-            print("4. Mendekatkan karakter player ke NPC Ibu (x: 256, y: 640)...")
+            print("5. Mendekatkan karakter player ke NPC Ibu (x: 256, y: 640)...")
             await evaluate_js(ws, """
             (() => {
                 const player = window.__LJ__.getPlayer();
@@ -206,3 +236,4 @@ async def run_npc_suite():
 
 if __name__ == "__main__":
     asyncio.run(run_npc_suite())
+

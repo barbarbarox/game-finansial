@@ -131,5 +131,37 @@
         }
       ]
     }
+  ],
+  "props": [
+    { "id": "tree_sch_1", "assetId": "prop_tree_large", "x": 2, "y": 6 },
+    { "id": "tree_sch_2", "assetId": "prop_tree_large", "x": 18, "y": 6 },
+    { "id": "tree_sch_3", "assetId": "prop_tree_small", "x": 18, "y": 10 },
+    { "id": "tree_home_1", "assetId": "prop_tree_large", "x": 2, "y": 21 },
+    { "id": "tree_home_2", "assetId": "prop_tree_small", "x": 12, "y": 21 },
+    { "id": "tree_mall_1", "assetId": "prop_tree_large", "x": 24, "y": 6 },
+    { "id": "tree_mall_2", "assetId": "prop_tree_small", "x": 39, "y": 6 },
+    { "id": "tree_park_1", "assetId": "prop_tree_large", "x": 25, "y": 21 },
+    { "id": "tree_park_2", "assetId": "prop_tree_small", "x": 37, "y": 21 },
+
+    { "id": "lamp_1", "assetId": "prop_street_lamp", "x": 7, "y": 14 },
+    { "id": "lamp_2", "assetId": "prop_street_lamp", "x": 14, "y": 14 },
+    { "id": "lamp_3", "assetId": "prop_street_lamp", "x": 25, "y": 14 },
+    { "id": "lamp_4", "assetId": "prop_street_lamp", "x": 32, "y": 14 },
+
+    { "id": "bench_1", "assetId": "prop_bench", "x": 10, "y": 14 },
+    { "id": "bench_2", "assetId": "prop_bench", "x": 28, "y": 14 },
+
+    { "id": "bush_1", "assetId": "prop_bush", "x": 4, "y": 14 },
+    { "id": "bush_2", "assetId": "prop_bush", "x": 16, "y": 14 },
+    { "id": "bush_3", "assetId": "prop_bush", "x": 22, "y": 14 },
+    { "id": "bush_4", "assetId": "prop_bush", "x": 35, "y": 14 },
+
+    { "id": "trash_1", "assetId": "prop_trashcan", "x": 12, "y": 9 },
+    { "id": "trash_2", "assetId": "prop_trashcan", "x": 29, "y": 8 },
+
+    { "id": "pot_1", "assetId": "prop_flowerpot", "x": 4, "y": 21 },
+    { "id": "pot_2", "assetId": "prop_flowerpot", "x": 9, "y": 21 },
+    { "id": "pot_3", "assetId": "prop_flowerpot", "x": 25, "y": 8 },
+    { "id": "pot_4", "assetId": "prop_flowerpot", "x": 33, "y": 8 }
   ]
 }

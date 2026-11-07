@@ -50,6 +50,9 @@ export class World extends Phaser.Scene {
     // 2. Draw buildings
     this._drawBuildings(layout);
 
+    // 2b. Draw environment props (trees, street lamps, benches, bushes)
+    this._drawProps(layout);
+
     // 3. Build colliders
     this._buildColliders(layout);
 
@@ -88,7 +91,7 @@ export class World extends Phaser.Scene {
         store,
         () => createCashbookModal(uiContainer, store),
         () => createBudgetModal(uiContainer, store, config),
-        () => createSettingsModal(uiContainer, null, () => createCreditsModal(uiContainer))
+        () => createSettingsModal(uiContainer, null, () => createCreditsModal(uiContainer), () => this._exitToMainMenu(), store)
       );
 
       // Auto-save on state change
@@ -170,6 +173,22 @@ export class World extends Phaser.Scene {
     }
   }
 
+  _drawProps(layout) {
+    const ts = this._tileSize;
+    const props = layout?.props || [];
+
+    for (const p of props) {
+      const x = p.x * ts + ts / 2;
+      const y = p.y * ts + ts;
+
+      if (this.textures.exists(p.assetId)) {
+        const img = this.add.image(x, y, p.assetId);
+        img.setOrigin(0.5, 1.0);
+        img.setDepth(y);
+      }
+    }
+  }
+
   _buildColliders(layout) {
     const ts = this._tileSize;
     this._colliders = [];
@@ -195,6 +214,22 @@ export class World extends Phaser.Scene {
           w: fw,
           h: fh
         });
+      }
+    }
+
+    // Large trees colliders
+    if (layout?.props) {
+      for (const p of layout.props) {
+        if (p.assetId === 'prop_tree_large') {
+          const x = p.x * ts + ts / 2;
+          const y = p.y * ts + ts;
+          this._colliders.push({
+            x: x - 14,
+            y: y - 18,
+            w: 28,
+            h: 18
+          });
+        }
       }
     }
   }
@@ -238,6 +273,19 @@ export class World extends Phaser.Scene {
     if (int.locationId) {
       createShopModal(uiContainer, store, int.locationId, config, null);
     }
+  }
+
+  _exitToMainMenu() {
+    if (this._hudElement) {
+      this._hudElement.remove();
+      this._hudElement = null;
+    }
+    const uiContainer = document.getElementById('ui-container');
+    if (uiContainer) {
+      uiContainer.replaceChildren();
+    }
+    this.scene.stop('World');
+    this.scene.start('MainMenu');
   }
 
   _setupDebug(config) {

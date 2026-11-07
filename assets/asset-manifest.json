@@ -80,7 +80,9 @@
         "pass": true
       },
       "frameWidth": 448,
-      "frameHeight": 224
+      "frameHeight": 224,
+      "width": 448,
+      "height": 224
     },
     {
       "id": "bld_rumah_pemain",
@@ -100,9 +102,13 @@
         "x": 0.5,
         "y": 1.0
       },
-      "status": "placeholder",
+      "status": "ready",
       "source": "ai-generated",
-      "tool": "Gemini Image Generator"
+      "tool": "Gemini Image Generator",
+      "frameWidth": 288,
+      "frameHeight": 160,
+      "width": 288,
+      "height": 224
     },
     {
       "id": "bld_minimarket",
@@ -122,9 +128,13 @@
         "x": 0.5,
         "y": 1.0
       },
-      "status": "placeholder",
+      "status": "ready",
       "source": "ai-generated",
-      "tool": "Gemini Image Generator"
+      "tool": "Gemini Image Generator",
+      "frameWidth": 256,
+      "frameHeight": 160,
+      "width": 256,
+      "height": 192
     },
     {
       "id": "bld_toko_kosmetik",
@@ -144,9 +154,13 @@
         "x": 0.5,
         "y": 1.0
       },
-      "status": "placeholder",
+      "status": "ready",
       "source": "ai-generated",
-      "tool": "Gemini Image Generator"
+      "tool": "Gemini Image Generator",
+      "frameWidth": 224,
+      "frameHeight": 160,
+      "width": 224,
+      "height": 192
     },
     {
       "id": "bld_spbu",
@@ -166,9 +180,13 @@
         "x": 0.5,
         "y": 1.0
       },
-      "status": "placeholder",
+      "status": "ready",
       "source": "ai-generated",
-      "tool": "Gemini Image Generator"
+      "tool": "Gemini Image Generator",
+      "frameWidth": 320,
+      "frameHeight": 160,
+      "width": 320,
+      "height": 160
     },
     {
       "id": "bld_game_center",
@@ -188,9 +206,13 @@
         "x": 0.5,
         "y": 1.0
       },
-      "status": "placeholder",
+      "status": "ready",
       "source": "ai-generated",
-      "tool": "Gemini Image Generator"
+      "tool": "Gemini Image Generator",
+      "frameWidth": 256,
+      "frameHeight": 160,
+      "width": 256,
+      "height": 160
     },
     {
       "id": "npc_sheet_family",
@@ -198,7 +220,7 @@
       "type": "spritesheet",
       "frameWidth": 32,
       "frameHeight": 64,
-      "status": "placeholder",
+      "status": "ready",
       "source": "ai-generated",
       "tool": "Gemini Image Generator"
     },
@@ -208,7 +230,7 @@
       "type": "spritesheet",
       "frameWidth": 32,
       "frameHeight": 64,
-      "status": "placeholder",
+      "status": "ready",
       "source": "ai-generated",
       "tool": "Gemini Image Generator"
     },
@@ -237,6 +259,100 @@
       "status": "ready",
       "source": "ai-generated",
       "tool": "Gemini Image Generator"
+    },
+    {
+      "id": "npc_sheet_vendors",
+      "file": "assets/npcs/npc_sheet_vendors.png",
+      "type": "spritesheet",
+      "frameWidth": 32,
+      "frameHeight": 64,
+      "status": "ready",
+      "source": "pixel-crafted",
+      "tool": "16-bit Pixel Generator"
+    },
+    {
+      "id": "prop_tree_large",
+      "file": "assets/props/prop_tree_large.png",
+      "type": "image",
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "width": 64,
+      "height": 96
+    },
+    {
+      "id": "prop_tree_small",
+      "file": "assets/props/prop_tree_small.png",
+      "type": "image",
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "width": 64,
+      "height": 64
+    },
+    {
+      "id": "prop_bush",
+      "file": "assets/props/prop_bush.png",
+      "type": "image",
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "prop_street_lamp",
+      "file": "assets/props/prop_street_lamp.png",
+      "type": "image",
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "width": 32,
+      "height": 64
+    },
+    {
+      "id": "prop_bench",
+      "file": "assets/props/prop_bench.png",
+      "type": "image",
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "width": 64,
+      "height": 32
+    },
+    {
+      "id": "prop_trashcan",
+      "file": "assets/props/prop_trashcan.png",
+      "type": "image",
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "width": 32,
+      "height": 32
+    },
+    {
+      "id": "prop_flowerpot",
+      "file": "assets/props/prop_flowerpot.png",
+      "type": "image",
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "width": 32,
+      "height": 32
     }
   ]
 }

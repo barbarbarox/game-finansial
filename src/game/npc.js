@@ -31,17 +31,21 @@ export class NPCManager {
     const shadow = scene.add.ellipse(x, y + 14, 20, 8, 0x121A2E, 0.5);
     shadow.setDepth(490);
 
-    // NPC Body Container
-    const body = scene.add.container(x, y);
-    body.setDepth(500 + y / 1000);
-
-    // Visual placeholder figure
-    const torso = scene.add.rectangle(0, 0, 18, 26, def.color ?? 0xC9A27A);
-    const head = scene.add.circle(0, -18, 8, def.color ?? 0xC9A27A);
-    const outline = scene.add.rectangle(0, 0, 20, 28);
-    outline.setStrokeStyle(1, 0x121A2E);
-
-    body.add([torso, head, outline]);
+    // NPC Sprite or Figure Container
+    let body;
+    if (scene.textures.exists(def.assetId)) {
+      body = scene.add.sprite(x, y + 4, def.assetId, 0);
+      body.setOrigin(0.5, 0.95);
+      body.setDepth(500 + y / 1000);
+    } else {
+      body = scene.add.container(x, y);
+      body.setDepth(500 + y / 1000);
+      const torso = scene.add.rectangle(0, 0, 18, 26, def.color ?? 0xC9A27A);
+      const head = scene.add.circle(0, -18, 8, def.color ?? 0xC9A27A);
+      const outline = scene.add.rectangle(0, 0, 20, 28);
+      outline.setStrokeStyle(1, 0x121A2E);
+      body.add([torso, head, outline]);
+    }
 
     // Name label
     const displayName = def.name || def.id || 'NPC';
