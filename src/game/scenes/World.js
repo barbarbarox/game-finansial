@@ -11,6 +11,8 @@ import { createCashbookModal } from '../../ui/cashbook.js';
 import { createBudgetModal } from '../../ui/budgetPanel.js';
 import { createShopModal } from '../../ui/shopPanel.js';
 import { createDecisionModal } from '../../ui/decisionDialog.js';
+import { createSettingsModal } from '../../ui/settings.js';
+import { createCreditsModal } from '../../ui/credits.js';
 import { createProceduralTiles } from '../../assets-gen/groundTiles.js';
 import { saveGame } from '../../state/persistence.js';
 
@@ -85,7 +87,8 @@ export class World extends Phaser.Scene {
         uiContainer,
         store,
         () => createCashbookModal(uiContainer, store),
-        () => createBudgetModal(uiContainer, store, config)
+        () => createBudgetModal(uiContainer, store, config),
+        () => createSettingsModal(uiContainer, null, () => createCreditsModal(uiContainer))
       );
 
       // Auto-save on state change
@@ -102,6 +105,9 @@ export class World extends Phaser.Scene {
     if (this._player) {
       this._player.update(delta, this._colliders);
       this._checkInteractables();
+      if (this._npcManager) {
+        this._npcManager.update(time, this._player);
+      }
     }
   }
 

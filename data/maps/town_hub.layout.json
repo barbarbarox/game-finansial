@@ -40,8 +40,96 @@
     { "id": "int_gamecenter", "type": "door", "locationId": "gamecenter", "x": 30, "y": 21, "w": 2, "h": 2, "prompt": "Tekan [E] Masuk Game Center", "panel": "gamecenter" }
   ],
   "npcs": [
-    { "id": "npc_ibu", "assetId": "npc_sheet_family", "x": 8, "y": 20, "dialog": "Jangan lupa sarapan dan bijak menggunakan uang sakumu, nak." },
-    { "id": "npc_teman", "assetId": "npc_sheet_friends", "x": 18, "y": 14, "dialog": "Hai! Yuk berangkat bareng ke sekolah." }
+    {
+      "id": "npc_ibu",
+      "name": "Ibu",
+      "role": "Orang Tua di Rumah",
+      "assetId": "npc_sheet_family",
+      "color": 14197368,
+      "x": 8,
+      "y": 20,
+      "dialog": "Jangan lupa sarapan dan bijak menggunakan uang sakumu hari ini ya, nak.",
+      "choices": [
+        {
+          "id": "advice",
+          "label": "💡 Minta Nasihat Menabung",
+          "reply": "Sisihkan minimal 20% uang sakumu ke Celengan Ayam di rumah setiap awal bulan sebelum kamu mulai jajan!"
+        },
+        {
+          "id": "allowance",
+          "label": "💰 Tanya Uang Saku",
+          "reply": "Uang saku bulananmu Rp300.000 sudah Ibu berikan di awal bulan. Selalu pantau saldomu di Buku Kas ya!"
+        },
+        {
+          "id": "sarapan",
+          "label": "🍳 Mau Sarapan di Rumah",
+          "reply": "Sarapan di rumah jauh lebih sehat dan hemat daripada selalu beli makanan di luar!"
+        },
+        {
+          "id": "bye",
+          "label": "🚶 Pamit Berangkat",
+          "reply": "Hati-hati di jalan ya nak! Selalu perhatikan persentase bensin motormu."
+        }
+      ]
+    },
+    {
+      "id": "npc_teman",
+      "name": "Budi",
+      "role": "Teman Sekelas",
+      "assetId": "npc_sheet_friends",
+      "color": 7288674,
+      "x": 18,
+      "y": 14,
+      "dialog": "Hai! Mau berangkat bareng ke sekolah atau mampir ke kantin dulu?",
+      "choices": [
+        {
+          "id": "kantin",
+          "label": "🍔 Ajak ke Kantin Sekolah",
+          "reply": "Ayo! Di kantin ada nasi uduk enak seharga Rp8.000, pas dan hemat buat sarapan."
+        },
+        {
+          "id": "gamecenter",
+          "label": "🎮 Ajak ke Game Center Sore Nanti",
+          "reply": "Boleh aja sesekali refreshing main game, tapi ingat anggaramu jangan sampai jebol ya!"
+        },
+        {
+          "id": "budget",
+          "label": "📊 Tanya Tips Anggaran",
+          "reply": "Buka menu Anggaran di HUD atas, buat pos batas jajan biar nggak bokek sebelum akhir bulan!"
+        },
+        {
+          "id": "bye",
+          "label": "🚶 Sampai Ketemu di Kelas",
+          "reply": "Siap bro, sampai ketemu di kelas!"
+        }
+      ]
+    },
+    {
+      "id": "npc_pak_anto",
+      "name": "Pak Anto",
+      "role": "Warga & Penjaga Lingkungan",
+      "assetId": "npc_sheet_vendors",
+      "color": 10100780,
+      "x": 33,
+      "y": 14,
+      "dialog": "Halo nak! Mau isi bensin di SPBU atau belanja kebutuhan di Minimarket?",
+      "choices": [
+        {
+          "id": "spbu",
+          "label": "⛽ Tanya Lokasi SPBU",
+          "reply": "SPBU ada tepat di sebelah timur. Segera isi bensin bila bar di HUD menunjukkan warna kuning atau merah!"
+        },
+        {
+          "id": "minimarket",
+          "label": "🏪 Tips Belanja di Minimarket",
+          "reply": "Minimarket ada di seberang jalan. Belilah barang sesuai kebutuhan pokok, hindari godaan diskon barang yang tidak perlu."
+        },
+        {
+          "id": "bye",
+          "label": "🚶 Terima kasih Pak Anto!",
+          "reply": "Sama-sama nak, hati-hati menyeberang jalan!"
+        }
+      ]
+    }
   ]
 }
-
