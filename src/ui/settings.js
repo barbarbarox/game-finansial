@@ -59,35 +59,53 @@ export function createSettingsModal(container, onClose, onOpenCredits, onExitToM
   saveBtn.type = 'button';
   saveBtn.className = 'btn btn-primary';
   saveBtn.textContent = 'Simpan Permainan';
-  saveBtn.addEventListener('click', () => {
-    if (store) {
+  if (store) {
+    saveBtn.addEventListener('click', () => {
       saveGame(store.getState());
       statusToast.textContent = '✓ Progres permainan berhasil disimpan!';
       statusToast.className = 'settings-toast success';
       statusToast.style.display = 'block';
       setTimeout(() => { statusToast.style.display = 'none'; }, 2500);
-    }
-  });
+    });
+  } else {
+    saveBtn.disabled = true;
+    saveBtn.style.opacity = '0.5';
+    saveBtn.title = 'Hanya dapat disimpan saat dalam sesi permainan aktif';
+  }
 
   const exitBtn = document.createElement('button');
   exitBtn.type = 'button';
   exitBtn.className = 'btn btn-secondary';
   exitBtn.textContent = 'Keluar ke Menu Utama';
-  exitBtn.addEventListener('click', () => {
-    if (store) {
+  if (store) {
+    exitBtn.addEventListener('click', () => {
       saveGame(store.getState());
-    }
-    backdrop.remove();
-    if (onExitToMainMenu) {
-      onExitToMainMenu();
-    } else {
-      window.location.reload();
-    }
-  });
+      backdrop.remove();
+      if (onExitToMainMenu) {
+        onExitToMainMenu();
+      } else {
+        window.location.reload();
+      }
+    });
+  } else {
+    exitBtn.style.display = 'none';
+  }
 
   saveGroup.appendChild(saveBtn);
-  saveGroup.appendChild(exitBtn);
+  if (store) {
+    saveGroup.appendChild(exitBtn);
+  }
   saveSection.appendChild(saveGroup);
+
+  if (!store) {
+    const infoNote = document.createElement('p');
+    infoNote.style.fontSize = '11px';
+    infoNote.style.color = 'var(--color-text-muted)';
+    infoNote.style.marginTop = '6px';
+    infoNote.textContent = 'Mode Menu Utama: Mulai atau lanjutkan permainan untuk menyimpan progres.';
+    saveSection.appendChild(infoNote);
+  }
+
   body.appendChild(saveSection);
 
   // Section 2: Pengaturan Audio & Tampilan (Statis & Interaktif)
@@ -180,6 +198,15 @@ export function createSettingsModal(container, onClose, onOpenCredits, onExitToM
   modal.appendChild(body);
   backdrop.appendChild(modal);
   container.appendChild(backdrop);
+
+  // Klik backdrop untuk menutup modal
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) {
+      backdrop.remove();
+      if (onClose) onClose();
+      window.removeEventListener('keydown', handleKeydown);
+    }
+  });
 
   // Keyboard shortcut [Esc] untuk menutup
   const handleKeydown = (e) => {

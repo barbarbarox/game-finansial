@@ -353,6 +353,150 @@
       "status": "ready",
       "width": 32,
       "height": 32
+    },
+    {
+      "id": "icon_coin",
+      "type": "image",
+      "file": "assets/icons/icon_coin.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_wallet",
+      "type": "image",
+      "file": "assets/icons/icon_wallet.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_celengan",
+      "type": "image",
+      "file": "assets/icons/icon_celengan.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_makanan",
+      "type": "image",
+      "file": "assets/icons/icon_makanan.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_bensin",
+      "type": "image",
+      "file": "assets/icons/icon_bensin.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_buku",
+      "type": "image",
+      "file": "assets/icons/icon_buku.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_lipstik",
+      "type": "image",
+      "file": "assets/icons/icon_lipstik.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_gamepad",
+      "type": "image",
+      "file": "assets/icons/icon_gamepad.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_kalender",
+      "type": "image",
+      "file": "assets/icons/icon_kalender.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_jam",
+      "type": "image",
+      "file": "assets/icons/icon_jam.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_misi",
+      "type": "image",
+      "file": "assets/icons/icon_misi.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_peringatan",
+      "type": "image",
+      "file": "assets/icons/icon_peringatan.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_centang",
+      "type": "image",
+      "file": "assets/icons/icon_centang.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_silang",
+      "type": "image",
+      "file": "assets/icons/icon_silang.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_naik",
+      "type": "image",
+      "file": "assets/icons/icon_naik.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
+    },
+    {
+      "id": "icon_turun",
+      "type": "image",
+      "file": "assets/icons/icon_turun.png",
+      "status": "ready",
+      "width": 32,
+      "height": 32,
+      "kind": "icon"
     }
   ]
 }

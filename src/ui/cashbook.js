@@ -46,22 +46,36 @@ export function createCashbookModal(container, store, onClose) {
   const expense = getTotalExpense(state.ledger);
 
   const stats = [
-    { label: 'Saldo Kas', value: rupiah.format(cash), color: 'text-primary' },
-    { label: 'Tabungan', value: rupiah.format(savings), color: 'text-positive' },
-    { label: 'Total Pemasukan', value: rupiah.format(income), color: 'text-positive' },
-    { label: 'Total Pengeluaran', value: rupiah.format(expense), color: 'text-negative' }
+    { label: 'Saldo Kas', value: rupiah.format(cash), color: 'text-primary', icon: 'assets/icons/icon_coin.png' },
+    { label: 'Tabungan', value: rupiah.format(savings), color: 'text-positive', icon: 'assets/icons/icon_celengan.png' },
+    { label: 'Total Pemasukan', value: rupiah.format(income), color: 'text-positive', icon: 'assets/icons/icon_naik.png' },
+    { label: 'Total Pengeluaran', value: rupiah.format(expense), color: 'text-negative', icon: 'assets/icons/icon_turun.png' }
   ];
 
   stats.forEach(st => {
     const card = document.createElement('div');
     card.className = 'summary-card';
+    const topRow = document.createElement('div');
+    topRow.style.display = 'flex';
+    topRow.style.alignItems = 'center';
+    topRow.style.gap = '6px';
+
+    const ic = document.createElement('img');
+    ic.className = 'card-icon-img';
+    ic.src = st.icon;
+    ic.alt = '';
+
     const l = document.createElement('span');
     l.className = 'card-label';
     l.textContent = st.label;
+
+    topRow.appendChild(ic);
+    topRow.appendChild(l);
+
     const v = document.createElement('strong');
     v.className = `card-val ${st.color}`;
     v.textContent = st.value;
-    card.appendChild(l);
+    card.appendChild(topRow);
     card.appendChild(v);
     summaryGrid.appendChild(card);
   });

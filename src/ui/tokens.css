@@ -138,6 +138,30 @@ body {
   line-height: 1;
 }
 
+.hud-icon-img {
+  width: 20px;
+  height: 20px;
+  image-rendering: pixelated;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.btn-icon-img {
+  width: 16px;
+  height: 16px;
+  image-rendering: pixelated;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
+.card-icon-img {
+  width: 18px;
+  height: 18px;
+  image-rendering: pixelated;
+  vertical-align: middle;
+  flex-shrink: 0;
+}
+
 .hud-tag {
   font-size: 9px;
   font-weight: 800;

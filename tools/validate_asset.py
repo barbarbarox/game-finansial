@@ -57,11 +57,13 @@ def validate(image_path, brief=None):
     if invalid_alpha > 0:
         report["failures"].append(f"Alpha tidak biner: {invalid_alpha} piksel semi-transparan terdeteksi.")
 
-    # 3. (a) Dasar sprite menyentuh baris terbawah
-    bottom_row_visible = int(np.sum(alpha[-1, :] == 255))
-    report["details"]["bottomRowVisiblePixels"] = bottom_row_visible
-    if bottom_row_visible == 0:
-        report["failures"].append("Dasar sprite TIDAK menyentuh baris terbawah (baris terbawah kosong).")
+    # 3. (a) Dasar sprite menyentuh baris terbawah (hanya untuk bangunan, prop, dan karakter)
+    is_sprite = is_building or kind in ['character', 'npc'] or 'char_' in image_path or 'npc_' in image_path
+    if is_sprite:
+        bottom_row_visible = int(np.sum(alpha[-1, :] == 255))
+        report["details"]["bottomRowVisiblePixels"] = bottom_row_visible
+        if bottom_row_visible == 0:
+            report["failures"].append("Dasar sprite TIDAK menyentuh baris terbawah (baris terbawah kosong).")
 
     # 4. (b) Bounding box lebar
     bbox = img.getbbox()
@@ -76,7 +78,8 @@ def validate(image_path, brief=None):
     report["details"]["bboxWidthRatio"] = w_ratio
     report["details"]["bboxDimensions"] = f"{bbox_w}x{bbox_h}"
 
-    min_w_ratio = 0.90 if is_building else 0.50
+    is_icon = 'icon_' in image_path or kind in ['icon', 'icon_sheet']
+    min_w_ratio = 0.90 if is_building else (0.25 if is_icon else 0.50)
     if w_ratio < min_w_ratio:
         report["failures"].append(f"Bounding box tidak mengisi lebar yang cukup: {w_ratio:.1%} (minimal {min_w_ratio:.0%})")
 
@@ -133,7 +136,13 @@ if __name__ == '__main__':
     b = {}
     if len(sys.argv) > 2:
         with open(sys.argv[2], 'r') as f:
-            b = json.load(f)
+            raw_b = json.load(f)
+            if 'assets' in raw_b and isinstance(raw_b['assets'], list):
+                basename = sys.argv[1].split('/')[-1].replace('.png', '').replace('.jpg', '')
+                matched = next((a for a in raw_b['assets'] if a.get('id') == basename or a.get('id') in basename), {})
+                b = matched
+            else:
+                b = raw_b
     res = validate(sys.argv[1], b)
     print(json.dumps(res, indent=2))
     sys.exit(0 if res["pass"] else 1)

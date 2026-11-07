@@ -10,6 +10,22 @@
 
 import { getCash, getSavings } from '../domain/ledger.js';
 
+function makeIcon(src, alt = '') {
+  const img = document.createElement('img');
+  img.className = 'hud-icon-img';
+  img.src = src;
+  img.alt = alt;
+  return img;
+}
+
+function makeBtnIcon(src) {
+  const img = document.createElement('img');
+  img.className = 'btn-icon-img';
+  img.src = src;
+  img.alt = '';
+  return img;
+}
+
 export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpenSettings) {
   const hudElement = document.createElement('header');
   hudElement.className = 'lj-hud';
@@ -20,7 +36,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const statsGroup = document.createElement('div');
   statsGroup.className = 'hud-group hud-stats';
 
-  // Kas Badge
+  // Kas Badge (Icon Koin Pixel Art)
   const cashBadge = document.createElement('div');
   cashBadge.className = 'hud-badge cash-badge';
   const cashTag = document.createElement('span');
@@ -29,10 +45,11 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const cashValue = document.createElement('span');
   cashValue.className = 'hud-val hud-val-cash';
   cashValue.textContent = 'Rp0';
+  cashBadge.appendChild(makeIcon('assets/icons/icon_coin.png', 'Kas'));
   cashBadge.appendChild(cashTag);
   cashBadge.appendChild(cashValue);
 
-  // Tabungan Badge
+  // Tabungan Badge (Icon Celengan Ayam Pixel Art)
   const savingsBadge = document.createElement('div');
   savingsBadge.className = 'hud-badge savings-badge';
   const savingsTag = document.createElement('span');
@@ -41,10 +58,11 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const savingsValue = document.createElement('span');
   savingsValue.className = 'hud-val hud-val-savings';
   savingsValue.textContent = 'Rp0';
+  savingsBadge.appendChild(makeIcon('assets/icons/icon_celengan.png', 'Tabungan'));
   savingsBadge.appendChild(savingsTag);
   savingsBadge.appendChild(savingsValue);
 
-  // Bensin Badge dengan Visual Bar
+  // Bensin Badge dengan Visual Bar (Icon Pompa Bensin Pixel Art)
   const gasBadge = document.createElement('div');
   gasBadge.className = 'hud-badge gas-badge';
   const gasTag = document.createElement('span');
@@ -61,6 +79,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const gasValue = document.createElement('span');
   gasValue.className = 'hud-val hud-val-gas';
   gasValue.textContent = '100%';
+  gasBadge.appendChild(makeIcon('assets/icons/icon_bensin.png', 'Bensin'));
   gasBadge.appendChild(gasTag);
   gasBadge.appendChild(gasContainer);
   gasBadge.appendChild(gasValue);
@@ -73,7 +92,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const centerGroup = document.createElement('div');
   centerGroup.className = 'hud-group hud-center';
 
-  // Clock
+  // Clock (Icon Jam Pixel Art)
   const clockBadge = document.createElement('div');
   clockBadge.className = 'hud-badge clock-badge';
   const clockTag = document.createElement('span');
@@ -82,10 +101,11 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const clockText = document.createElement('span');
   clockText.className = 'hud-val hud-val-clock';
   clockText.textContent = 'Bulan 1 · Hari 1';
+  clockBadge.appendChild(makeIcon('assets/icons/icon_jam.png', 'Waktu'));
   clockBadge.appendChild(clockTag);
   clockBadge.appendChild(clockText);
 
-  // Misi
+  // Misi (Icon Bendera Misi Pixel Art)
   const missionBadge = document.createElement('div');
   missionBadge.className = 'hud-badge mission-badge';
   const missionTag = document.createElement('span');
@@ -94,32 +114,41 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const missionTitle = document.createElement('span');
   missionTitle.className = 'hud-val-mission';
   missionTitle.textContent = '...';
+  missionBadge.appendChild(makeIcon('assets/icons/icon_misi.png', 'Misi'));
   missionBadge.appendChild(missionTag);
   missionBadge.appendChild(missionTitle);
 
   centerGroup.appendChild(clockBadge);
   centerGroup.appendChild(missionBadge);
 
-  // ================= KANAN: TOMBOL NAVIGASI & MENU (TANPA EMOTE) =================
+  // ================= KANAN: TOMBOL NAVIGASI & MENU (DENGAN IKON PIXEL ART, TANPA EMOTE) =================
   const navGroup = document.createElement('div');
   navGroup.className = 'hud-group hud-nav';
 
   const cashbookBtn = document.createElement('button');
   cashbookBtn.type = 'button';
   cashbookBtn.className = 'lj-btn secondary btn-sm hud-btn';
-  cashbookBtn.textContent = 'Buku Kas';
+  cashbookBtn.appendChild(makeBtnIcon('assets/icons/icon_buku.png'));
+  const cbLabel = document.createElement('span');
+  cbLabel.textContent = 'Buku Kas';
+  cashbookBtn.appendChild(cbLabel);
   cashbookBtn.addEventListener('click', onOpenCashbook);
 
   const budgetBtn = document.createElement('button');
   budgetBtn.type = 'button';
   budgetBtn.className = 'lj-btn secondary btn-sm hud-btn';
-  budgetBtn.textContent = 'Anggaran';
+  budgetBtn.appendChild(makeBtnIcon('assets/icons/icon_wallet.png'));
+  const bgLabel = document.createElement('span');
+  bgLabel.textContent = 'Anggaran';
+  budgetBtn.appendChild(bgLabel);
   budgetBtn.addEventListener('click', onOpenBudget);
 
   const settingsBtn = document.createElement('button');
   settingsBtn.type = 'button';
   settingsBtn.className = 'lj-btn secondary btn-sm hud-btn';
-  settingsBtn.textContent = 'Pengaturan';
+  const stLabel = document.createElement('span');
+  stLabel.textContent = 'Pengaturan';
+  settingsBtn.appendChild(stLabel);
   if (onOpenSettings) {
     settingsBtn.addEventListener('click', onOpenSettings);
   }
