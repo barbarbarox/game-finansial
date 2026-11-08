@@ -226,35 +226,46 @@ export class MapManager {
 
     this._groundLayer = gfx;
 
-    // 2. Render Furniture (labeled pixel art placeholders or sprites)
+    // 2. Render Furniture (pixel art sprites if available, or labeled placeholders)
     const furniture = layout.furniture || [];
     for (const f of furniture) {
       const container = this.scene.add.container(f.x * tileSize, f.y * tileSize);
       container.setDepth(f.y + f.h);
 
-      const fGfx = this.scene.add.graphics();
-      // 3/4 box perspective
-      fGfx.fillStyle(0x1F2A44, 0.95);
-      fGfx.fillRect(0, 0, f.w * tileSize, f.h * tileSize);
-      fGfx.lineStyle(2, 0xD9A441, 1.0);
-      fGfx.strokeRect(0, 0, f.w * tileSize, f.h * tileSize);
+      const textureKey = f.assetId || `furn_${f.type}`;
+      if (this.scene.textures.exists(textureKey)) {
+        const sprite = this.scene.add.sprite(
+          (f.w * tileSize) / 2,
+          f.h * tileSize,
+          textureKey
+        );
+        sprite.setOrigin(0.5, 1.0);
+        container.add(sprite);
+      } else {
+        const fGfx = this.scene.add.graphics();
+        // 3/4 box perspective
+        fGfx.fillStyle(0x1F2A44, 0.95);
+        fGfx.fillRect(0, 0, f.w * tileSize, f.h * tileSize);
+        fGfx.lineStyle(2, 0xD9A441, 1.0);
+        fGfx.strokeRect(0, 0, f.w * tileSize, f.h * tileSize);
 
-      // Label
-      const label = this.scene.add.text(
-        (f.w * tileSize) / 2,
-        (f.h * tileSize) / 2,
-        f.label || f.type,
-        {
-          fontSize: '9px',
-          fontFamily: 'monospace',
-          color: '#F7EEDA',
-          align: 'center',
-          wordWrap: { width: f.w * tileSize - 4 }
-        }
-      ).setOrigin(0.5);
+        // Label
+        const label = this.scene.add.text(
+          (f.w * tileSize) / 2,
+          (f.h * tileSize) / 2,
+          f.label || f.type,
+          {
+            fontSize: '9px',
+            fontFamily: 'monospace',
+            color: '#F7EEDA',
+            align: 'center',
+            wordWrap: { width: f.w * tileSize - 4 }
+          }
+        ).setOrigin(0.5);
 
-      container.add(fGfx);
-      container.add(label);
+        container.add(fGfx);
+        container.add(label);
+      }
       this.furnitureObjects.push(container);
 
       // Collider for furniture

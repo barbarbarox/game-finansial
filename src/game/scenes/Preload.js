@@ -51,6 +51,16 @@ export class Preload extends Phaser.Scene {
     this.load.json('credits', 'assets/credits.json');
     this.load.json('palette', 'assets/palette.json');
 
+    // Load E4 furniture and portraits
+    this.load.image('furn_kasur_single', 'assets/furniture/kamar_pemain/furn_kasur_single.png');
+    this.load.image('furn_meja_belajar', 'assets/furniture/kamar_pemain/furn_meja_belajar.png');
+    this.load.image('furn_kursi_belajar', 'assets/furniture/kamar_pemain/furn_kursi_belajar.png');
+    this.load.image('furn_lemari_pakaian', 'assets/furniture/kamar_pemain/furn_lemari_pakaian.png');
+    this.load.image('furn_rak_buku', 'assets/furniture/kamar_pemain/furn_rak_buku.png');
+    this.load.image('furn_nakas_lampu', 'assets/furniture/kamar_pemain/furn_nakas_lampu.png');
+    this.load.image('portrait_player_m', 'assets/portraits/portrait_player_m.png');
+    this.load.image('portrait_player_f', 'assets/portraits/portrait_player_f.png');
+
     // Retrieve asset manifest loaded in Boot scene
     const manifest = this.cache.json.get('assetManifest');
     const assets = manifest?.assets || [];

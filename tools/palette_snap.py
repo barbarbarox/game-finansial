@@ -13,12 +13,15 @@ def hex_to_rgb(hex_str):
     hex_str = hex_str.lstrip('#')
     return [int(hex_str[i:i+2], 16) for i in (0, 2, 4)]
 
-def snap_to_palette(image_path, palette_path, output_path):
+def snap_to_palette(image_or_path, palette_path, output_path=None):
     with open(palette_path, 'r') as f:
         pdata = json.load(f)
     palette_colors = np.array([hex_to_rgb(c) for c in pdata['colors']], dtype=np.float32)
 
-    img = Image.open(image_path).convert('RGBA')
+    if isinstance(image_or_path, Image.Image):
+        img = image_or_path.convert('RGBA')
+    else:
+        img = Image.open(image_or_path).convert('RGBA')
     arr = np.array(img, dtype=np.float32)
 
     rgb = arr[:, :, :3]
@@ -42,7 +45,8 @@ def snap_to_palette(image_path, palette_path, output_path):
 
     out_arr = np.dstack((snapped_rgb, clean_alpha))
     out_img = Image.fromarray(out_arr, 'RGBA')
-    out_img.save(output_path, 'PNG')
+    if output_path:
+        out_img.save(output_path, 'PNG')
     return out_img
 
 if __name__ == '__main__':

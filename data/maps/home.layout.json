@@ -8,8 +8,8 @@
     "heightTiles": 20,
     "tileSize": 32,
     "spawns": {
-      "default": { "x": 5, "y": 5 },
-      "kamar_tidur": { "x": 5, "y": 5 },
+      "default": { "x": 5, "y": 6 },
+      "kamar_tidur": { "x": 5, "y": 6 },
       "from_hub": { "x": 7, "y": 17 }
     }
   },
@@ -51,21 +51,67 @@
     {
       "id": "fur_kasur_single",
       "type": "kasur_single",
+      "assetId": "furn_kasur_single",
       "label": "Kasur Single",
-      "x": 3,
+      "x": 2,
       "y": 3,
       "w": 2,
-      "h": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "fur_nakas_lampu",
+      "type": "nakas_lampu",
+      "assetId": "furn_nakas_lampu",
+      "label": "Nakas & Lampu",
+      "x": 4,
+      "y": 3,
+      "w": 1,
+      "h": 1,
       "collidable": true
     },
     {
       "id": "fur_meja_belajar",
       "type": "meja_belajar",
+      "assetId": "furn_meja_belajar",
       "label": "Meja Belajar",
       "x": 6,
       "y": 3,
-      "w": 2,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_kursi_belajar",
+      "type": "kursi_belajar",
+      "assetId": "furn_kursi_belajar",
+      "label": "Kursi Belajar",
+      "x": 7,
+      "y": 5,
+      "w": 1,
       "h": 1,
+      "collidable": false
+    },
+    {
+      "id": "fur_lemari_baju",
+      "type": "lemari_pakaian",
+      "assetId": "furn_lemari_pakaian",
+      "label": "Lemari Pakaian",
+      "x": 2,
+      "y": 6,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "fur_rak_buku",
+      "type": "rak_buku",
+      "assetId": "furn_rak_buku",
+      "label": "Rak Buku",
+      "x": 9,
+      "y": 3,
+      "w": 2,
+      "h": 3,
       "collidable": true
     },
     {
@@ -76,27 +122,7 @@
       "y": 3,
       "w": 1,
       "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_lemari_baju",
-      "type": "lemari_pakaian",
-      "label": "Lemari Pakaian",
-      "x": 3,
-      "y": 6,
-      "w": 2,
-      "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_rak_buku",
-      "type": "rak_buku",
-      "label": "Rak Buku",
-      "x": 9,
-      "y": 5,
-      "w": 1,
-      "h": 2,
-      "collidable": true
+      "collidable": false
     },
     {
       "id": "fur_kasur_ortu",
@@ -194,7 +220,7 @@
       "id": "int_kasur",
       "type": "activity",
       "activityId": "tidur_malam",
-      "x": 3,
+      "x": 2,
       "y": 4,
       "w": 2,
       "h": 1,

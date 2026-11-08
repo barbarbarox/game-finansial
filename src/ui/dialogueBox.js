@@ -452,7 +452,35 @@ export async function startDialogue(dialogueOrId, npcId = null, onClose = null) 
 
   // Set NPC placeholder label
   const npcPlaceholder = document.getElementById('dlg-npc-placeholder');
-  npcPlaceholder.textContent = (dialogue.npcName || npcId || 'NPC').toUpperCase();
+  if (npcPlaceholder) {
+    npcPlaceholder.textContent = (dialogue.npcName || npcId || 'NPC').toUpperCase();
+  }
+
+  // Set Player portrait
+  const playerImg = document.querySelector('#dlg-player-portrait .portrait-img');
+  const playerPlaceholder = document.querySelector('#dlg-player-portrait .portrait-img-placeholder');
+  const store = window.__LJ__?.getStore?.();
+  const state = store?.getState?.() || {};
+  const isFemale = state.character?.gender === 'female';
+  const playerPortraitSrc = isFemale ? 'assets/portraits/portrait_player_f.png' : 'assets/portraits/portrait_player_m.png';
+  if (playerImg) {
+    playerImg.src = playerPortraitSrc;
+    playerImg.classList.remove('hidden');
+    if (playerPlaceholder) playerPlaceholder.classList.add('hidden');
+  }
+
+  // Set NPC portrait if available
+  const npcImg = document.querySelector('#dlg-npc-portrait .portrait-img');
+  if (dialogue.portrait) {
+    if (npcImg) {
+      npcImg.src = dialogue.portrait;
+      npcImg.classList.remove('hidden');
+      if (npcPlaceholder) npcPlaceholder.classList.add('hidden');
+    }
+  } else {
+    if (npcImg) npcImg.classList.add('hidden');
+    if (npcPlaceholder) npcPlaceholder.classList.remove('hidden');
+  }
 
   // Show dialogue overlay
   dialogueContainer.classList.remove('hidden');
