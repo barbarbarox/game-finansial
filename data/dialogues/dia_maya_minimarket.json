@@ -1,0 +1,89 @@
+{
+  "id": "dia_maya_minimarket",
+  "npcId": "npc_kasir_minimarket",
+  "npcName": "Mbak Maya",
+  "portrait": "assets/portraits/portrait_kasir_minimarket.png",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Selamat datang di Minimarket Harmoni! Mau belanja cemilan, alat tulis, atau fotokopi tugas sekolah dek?",
+      "choices": [
+        {
+          "text": "Beli Roti & Air Mineral (Rp8.000)",
+          "requires": { "minCash": 8000 },
+          "disabledReason": "Uang kas tidak cukup (butuh Rp8.000)",
+          "next": "buy_snack",
+          "effects": [
+            {
+              "type": "ledger_expense",
+              "categoryId": "BEBAN_JAJAN",
+              "amount": 8000,
+              "description": "Beli roti dan air mineral di minimarket"
+            },
+            {
+              "type": "start_activity",
+              "activityId": "beli_snack_mini"
+            }
+          ]
+        },
+        {
+          "text": "Beli Buku Tulis & Pulpen (Rp7.500)",
+          "requires": { "minCash": 7500 },
+          "disabledReason": "Uang kas tidak cukup (butuh Rp7.500)",
+          "next": "buy_stationery",
+          "effects": [
+            {
+              "type": "ledger_expense",
+              "categoryId": "BEBAN_PENDIDIKAN",
+              "amount": 7500,
+              "description": "Beli buku tulis & pulpen"
+            }
+          ]
+        },
+        {
+          "text": "Fotokopi Catatan Pelajaran (Rp2.000)",
+          "requires": { "minCash": 2000 },
+          "disabledReason": "Uang kas tidak cukup (butuh Rp2.000)",
+          "next": "photocopy",
+          "effects": [
+            {
+              "type": "ledger_expense",
+              "categoryId": "BEBAN_PENDIDIKAN",
+              "amount": 2000,
+              "description": "Fotokopi catatan sekolah"
+            }
+          ]
+        },
+        {
+          "text": "Hanya melihat-lihat dulu Mbak, terima kasih.",
+          "next": "just_browsing"
+        }
+      ]
+    },
+    "buy_snack": {
+      "id": "buy_snack",
+      "speaker": "npc",
+      "text": "Ini roti dan air mineralnya ya. Terima kasih sudah belanja bijak di Minimarket Harmoni!",
+      "next": null
+    },
+    "buy_stationery": {
+      "id": "buy_stationery",
+      "speaker": "npc",
+      "text": "Ini buku dan pulpennya. Semangat terus belajarnya ya dek!",
+      "next": null
+    },
+    "photocopy": {
+      "id": "photocopy",
+      "speaker": "npc",
+      "text": "Fotokopinya sudah selesai dan rapi. Semoga nilai ujiannya bagus ya!",
+      "next": null
+    },
+    "just_browsing": {
+      "id": "just_browsing",
+      "speaker": "npc",
+      "text": "Silakan dek, kasir selalu siap melayani kalau sudah selesai memilih.",
+      "next": null
+    }
+  }
+}

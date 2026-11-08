@@ -1,21 +1,24 @@
 /**
  * World.js — Main gameplay world scene for Life Journey.
- * Renders procedural ground, buildings, player, NPCs, and interactable doors.
+ *
+ * ARCHITECTURE (v2):
+ * World.js only bootstraps the Phaser scene (player, camera, HUD, lighting).
+ * ALL map rendering (ground, walls, buildings, furniture, NPCs) is exclusively
+ * handled by MapManager.  World.js keeps NO parallel drawing code for maps.
+ * This prevents the interior-over-exterior bleed that occurred before.
  */
 
 import { PlayerController } from '../player.js';
 import { NPCManager } from '../npc.js';
-import { InteractableManager } from '../interactables.js';
 import { createHUD } from '../../ui/hud.js';
 import { createCashbookModal } from '../../ui/cashbook.js';
 import { createBudgetModal } from '../../ui/budgetPanel.js';
 import { createShopModal } from '../../ui/shopPanel.js';
-import { createDecisionModal } from '../../ui/decisionDialog.js';
 import { createSettingsModal } from '../../ui/settings.js';
 import { createCreditsModal } from '../../ui/credits.js';
 import { createProceduralTiles } from '../../assets-gen/groundTiles.js';
 import { saveGame } from '../../state/persistence.js';
-import { addEntry, createAllowanceEntry, createExpenseEntry } from '../../domain/ledger.js';
+import { addEntry, createAllowanceEntry } from '../../domain/ledger.js';
 import { advanceTime, isLocationOpen, formatClock, getTimeUntilWakeup, DEFAULT_OPENING_HOURS } from '../../domain/clock.js';
 import { MapManager } from '../mapManager.js';
 import { showTimeSkip } from '../../ui/timeSkip.js';
@@ -26,56 +29,38 @@ export class World extends Phaser.Scene {
     super({ key: 'World' });
     this._player = null;
     this._npcManager = null;
-    this._interactables = null;
+    this._interactables = [];
     this._hudElement = null;
-    this._colliders = [];
     this._tileSize = 32;
     this._promptText = null;
     this._currentInteractable = null;
     this._clockTimerMs = 0;
+    this._mapManager = null;
+    this._feedbackUntil = 0;
   }
 
   create() {
-    const layout = this.cache.json.get('townLayout');
     const config = this.cache.json.get('phase1config') || {};
     const store = this.game.registry.get('store');
 
-    this._tileSize = layout?.world?.tileSize || config?.tileSize || 32;
-    const mapW = (layout?.world?.widthTiles || 40) * this._tileSize;
-    const mapH = (layout?.world?.heightTiles || 24) * this._tileSize;
+    this._tileSize = config?.tileSize || 32;
 
-    // Generate procedural tile textures
+    // Generate procedural tile textures once
     createProceduralTiles(this, this._tileSize);
 
-    // Camera
-    this.cameras.main.setBounds(0, 0, mapW, mapH);
+    // Initial camera size (will be updated when map loads)
+    this.cameras.main.setBounds(0, 0, 1280, 768);
 
-    // 1. Draw ground layer
-    this._drawGround(layout);
-
-    // 2. Draw buildings
-    this._drawBuildings(layout);
-
-    // 2b. Draw environment props (trees, street lamps, benches, bushes)
-    this._drawProps(layout);
-
-    // 3. Build colliders
-    this._buildColliders(layout);
-
-    // 4. Spawn Player
-    const spawnX = (layout?.world?.spawn?.x || 6) * this._tileSize;
-    const spawnY = (layout?.world?.spawn?.y || 18) * this._tileSize;
-    this._player = new PlayerController(this, spawnX, spawnY, config);
-
+    // 1. Spawn Player at a temporary position (MapManager will reposition on load)
+    const tmpX = 6 * this._tileSize;
+    const tmpY = 10 * this._tileSize;
+    this._player = new PlayerController(this, tmpX, tmpY, config);
     this.cameras.main.startFollow(this._player.sprite, true, 0.1, 0.1);
 
-    // 5. Spawn NPCs
-    this._npcManager = new NPCManager(this, layout?.npcs || []);
+    // 2. NPC Manager (empty until map loads)
+    this._npcManager = new NPCManager(this, []);
 
-    // 6. Interactables (Doors, etc.)
-    this._interactables = layout?.interactables || [];
-
-    // Interaction prompt text
+    // 3. Interaction prompt text (fixed to camera)
     this._promptText = this.add.text(0, 0, '', {
       font: 'bold 13px sans-serif',
       fill: '#D9A441',
@@ -83,41 +68,40 @@ export class World extends Phaser.Scene {
       strokeThickness: 3,
       backgroundColor: '#1F2A44',
       padding: { x: 8, y: 4 }
-    }).setOrigin(0.5, 1.0).setDepth(2000).setVisible(false);
+    }).setOrigin(0.5, 1.0).setDepth(2000).setScrollFactor(0).setVisible(false);
 
-    // E key for interaction
+    // 4. Keyboard input
     this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-    // 6b. Ambient Day-Night Lighting Overlay (layar penuh, mengikuti kamera)
+    // 5. Ambient Day-Night Lighting Overlay
     const viewW = this.cameras.main.width || 960;
     const viewH = this.cameras.main.height || 540;
     this._ambientLight = this.add.rectangle(0, 0, viewW, viewH, 0x000000, 0);
     this._ambientLight.setOrigin(0, 0).setScrollFactor(0).setDepth(4500);
-
     const initialTime = store?.getState()?.clock?.timeOfDay ?? (8 * 60);
     this._updateAmbientLight(initialTime);
 
-    // 6c. Initialize MapManager
+    // 6. Initialize MapManager — this is the ONLY thing that draws maps
     const mapsIndex = this.cache.json.get('mapsIndex') || {
       maps: [
-        { id: 'town_hub', file: 'data/maps/town_hub.layout.json' },
-        { id: 'home', file: 'data/maps/home.layout.json' },
-        { id: 'school', file: 'data/maps/school.layout.json' },
-        { id: 'minimarket', file: 'data/maps/minimarket.layout.json' },
+        { id: 'town_hub',      file: 'data/maps/town_hub.layout.json' },
+        { id: 'home',          file: 'data/maps/home.layout.json' },
+        { id: 'school',        file: 'data/maps/school.layout.json' },
+        { id: 'minimarket',    file: 'data/maps/minimarket.layout.json' },
         { id: 'toko_kosmetik', file: 'data/maps/toko_kosmetik.layout.json' },
-        { id: 'spbu', file: 'data/maps/spbu.layout.json' },
-        { id: 'game_center', file: 'data/maps/game_center.layout.json' }
+        { id: 'spbu',          file: 'data/maps/spbu.layout.json' },
+        { id: 'game_center',   file: 'data/maps/game_center.layout.json' }
       ]
     };
     this._mapManager = new MapManager(this, mapsIndex);
 
-    // Initial map: check saved currentMap (default 'home' for new game)
+    // Load initial map: saved map first, then 'home' for new game, then town_hub
     const savedMap = store?.getState()?.currentMap;
-    const savedPos = store?.getState()?.playerPos;
-    if (savedMap && savedMap !== 'town_hub') {
-      this._mapManager.loadMap(savedMap, savedPos ? 'saved' : 'default');
-    }
+    const savedPos  = store?.getState()?.playerPos;
+    const startMap  = savedMap || 'home';
+    const startSpawn = (savedMap && savedPos) ? 'saved' : 'default';
+    this._mapManager.loadMap(startMap, startSpawn);
 
     // 7. Mount DOM HUD
     const uiContainer = document.getElementById('ui-container') || document.body;
@@ -142,7 +126,7 @@ export class World extends Phaser.Scene {
 
   update(time, delta) {
     if (this._player) {
-      this._player.update(delta, this._colliders);
+      this._player.update(delta, []);    // colliders managed by MapManager
       this._checkInteractables();
       if (this._npcManager) {
         this._npcManager.update(time, this._player);
@@ -212,133 +196,13 @@ export class World extends Phaser.Scene {
     }
   }
 
-  _drawGround(layout) {
-    const ts = this._tileSize;
-    const mapW = layout?.world?.widthTiles || 40;
-    const mapH = layout?.world?.heightTiles || 24;
-
-    // Base grass fill
-    for (let tx = 0; tx < mapW; tx++) {
-      for (let ty = 0; ty < mapH; ty++) {
-        this.add.image(tx * ts, ty * ts, 'tile_rumput').setOrigin(0, 0).setDepth(0);
-      }
-    }
-
-    // Specific zones from layout
-    if (layout?.ground) {
-      for (const zone of layout.ground) {
-        const tex = `tile_${zone.type}`;
-        if (this.textures.exists(tex)) {
-          for (let x = zone.x; x < zone.x + zone.w; x++) {
-            for (let y = zone.y; y < zone.y + zone.h; y++) {
-              this.add.image(x * ts, y * ts, tex).setOrigin(0, 0).setDepth(1);
-            }
-          }
-        }
-      }
-    }
-  }
-
-  _drawBuildings(layout) {
-    const ts = this._tileSize;
-    const objects = layout?.objects || [];
-
-    for (const obj of objects) {
-      const x = obj.x * ts;
-      const y = obj.y * ts;
-      const w = (obj.footprint?.w || 4) * ts;
-      const h = (obj.footprint?.h || 3) * ts;
-
-      if (this.textures.exists(obj.assetId)) {
-        // Image asset exists: place with anchor at bottom center
-        const img = this.add.image(x, y, obj.assetId);
-        img.setOrigin(0.5, 1.0);
-        img.setDepth(y);
-      } else {
-        // Labeled placeholder box
-        const gfx = this.add.graphics();
-        gfx.fillStyle(0x34456B, 1);
-        gfx.fillRect(x - w / 2, y - h, w, h);
-        gfx.lineStyle(2, 0xD9A441, 1);
-        gfx.strokeRect(x - w / 2, y - h, w, h);
-        gfx.setDepth(y);
-
-        const lbl = this.add.text(x, y - h / 2, obj.id, {
-          font: 'bold 11px sans-serif',
-          fill: '#F7EEDA'
-        }).setOrigin(0.5).setDepth(y + 1);
-      }
-    }
-  }
-
-  _drawProps(layout) {
-    const ts = this._tileSize;
-    const props = layout?.props || [];
-
-    for (const p of props) {
-      const x = p.x * ts + ts / 2;
-      const y = p.y * ts + ts;
-
-      if (this.textures.exists(p.assetId)) {
-        const img = this.add.image(x, y, p.assetId);
-        img.setOrigin(0.5, 1.0);
-        img.setDepth(y);
-      }
-    }
-  }
-
-  _buildColliders(layout) {
-    const ts = this._tileSize;
-    this._colliders = [];
-
-    // Outer boundary walls
-    const mapW = (layout?.world?.widthTiles || 40) * ts;
-    const mapH = (layout?.world?.heightTiles || 24) * ts;
-    this._colliders.push({ x: -ts, y: 0, w: ts, h: mapH });
-    this._colliders.push({ x: mapW, y: 0, w: ts, h: mapH });
-    this._colliders.push({ x: 0, y: -ts, w: mapW, h: ts });
-    this._colliders.push({ x: 0, y: mapH, w: mapW, h: ts });
-
-    // Object footprints as colliders
-    if (layout?.objects) {
-      for (const obj of layout.objects) {
-        const x = obj.x * ts;
-        const y = obj.y * ts;
-        const fw = (obj.footprint?.w || 4) * ts;
-        const fh = (obj.footprint?.h || 2) * ts;
-        this._colliders.push({
-          x: x - fw / 2,
-          y: y - fh,
-          w: fw,
-          h: fh
-        });
-      }
-    }
-
-    // Large trees colliders
-    if (layout?.props) {
-      for (const p of layout.props) {
-        if (p.assetId === 'prop_tree_large') {
-          const x = p.x * ts + ts / 2;
-          const y = p.y * ts + ts;
-          this._colliders.push({
-            x: x - 14,
-            y: y - 18,
-            w: 28,
-            h: 18
-          });
-        }
-      }
-    }
-  }
-
   showPromptFeedback(text, durationMs = 2500) {
     if (this._promptText) {
       this._promptText.setText(text);
+      const camW = this.cameras.main.width || 960;
+      const camH = this.cameras.main.height || 540;
+      this._promptText.setPosition(camW / 2, camH - 20);
       this._promptText.setVisible(true);
-      if (this._player) {
-        this._promptText.setPosition(this._player.x, this._player.y - 70);
-      }
       this._feedbackUntil = Date.now() + durationMs;
       setTimeout(() => {
         if (Date.now() >= this._feedbackUntil && this._promptText) {
@@ -356,9 +220,11 @@ export class World extends Phaser.Scene {
     const px = this._player.x;
     const py = this._player.y;
     const ts = this._tileSize;
+    const camW = this.cameras.main.width || 960;
+    const camH = this.cameras.main.height || 540;
 
     let nearby = null;
-    for (const int of this._interactables) {
+    for (const int of (this._interactables || [])) {
       const ix = (int.x || 0) * ts;
       const iy = (int.y || 0) * ts;
       const dist = Phaser.Math.Distance.Between(px, py, ix, iy);
@@ -370,7 +236,8 @@ export class World extends Phaser.Scene {
 
     if (nearby) {
       this._currentInteractable = nearby;
-      this._promptText.setPosition(this._player.x, this._player.y - 70);
+      // Prompt sits at bottom-center of screen (scrollFactor=0 text)
+      this._promptText.setPosition(camW / 2, camH - 20);
       this._promptText.setText(nearby.prompt || 'Tekan [E]');
       this._promptText.setVisible(true);
 

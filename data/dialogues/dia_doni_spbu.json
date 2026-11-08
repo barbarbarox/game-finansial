@@ -1,0 +1,65 @@
+{
+  "id": "dia_doni_spbu",
+  "npcId": "npc_doni",
+  "npcName": "Mas Doni",
+  "portrait": "assets/portraits/portrait_petugas_spbu.png",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Selamat datang di SPBU Harmoni! Mulai dari nol ya dek. Mau isi bensin atau cek ban motor?",
+      "choices": [
+        {
+          "text": "Isi Bensin Pertalite 2 Liter (Rp20.000)",
+          "requires": { "minCash": 20000 },
+          "disabledReason": "Uang kas tidak cukup (butuh Rp20.000)",
+          "next": "fill_gas",
+          "effects": [
+            {
+              "type": "ledger_expense",
+              "categoryId": "BEBAN_TRANSPORT",
+              "amount": 20000,
+              "description": "Isi bensin motor 2 liter di SPBU"
+            },
+            {
+              "type": "start_activity",
+              "activityId": "isi_bensin_motor"
+            }
+          ]
+        },
+        {
+          "text": "Cek Tekanan & Pompa Angin Ban (Gratis)",
+          "next": "pump_air",
+          "effects": [
+            {
+              "type": "start_activity",
+              "activityId": "pompa_angin_ban"
+            }
+          ]
+        },
+        {
+          "text": "Bensin masih cukup Mas Doni, terima kasih.",
+          "next": "just_passing"
+        }
+      ]
+    },
+    "fill_gas": {
+      "id": "fill_gas",
+      "speaker": "npc",
+      "text": "Tangki bensin sudah penuh 100%! Selalu patuhi rambu lalu lintas dan helm standar ya dek.",
+      "next": null
+    },
+    "pump_air": {
+      "id": "pump_air",
+      "speaker": "npc",
+      "text": "Tekanan ban depan dan belakang sudah pas 30 psi. Ban yang terawat bikin bensin makin hemat!",
+      "next": null
+    },
+    "just_passing": {
+      "id": "just_passing",
+      "speaker": "npc",
+      "text": "Hati-hati di jalan ya dek, berkendara aman dan utamakan keselamatan!",
+      "next": null
+    }
+  }
+}

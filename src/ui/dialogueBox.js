@@ -495,10 +495,14 @@ export async function startDialogue(dialogueOrId, npcId = null, onClose = null) 
       'npc_kantin': 'assets/portraits/portrait_penjual_kantin.png',
       'npc_penjual': 'assets/portraits/portrait_penjual_kantin.png',
       'npc_kasir_minimarket': 'assets/portraits/portrait_kasir_minimarket.png',
+      'npc_kasir': 'assets/portraits/portrait_kasir_minimarket.png',
       'npc_cindy': 'assets/portraits/portrait_penjaga_kosmetik.png',
+      'npc_penjaga_kosmetik': 'assets/portraits/portrait_penjaga_kosmetik.png',
       'npc_doni': 'assets/portraits/portrait_petugas_spbu.png',
+      'npc_petugas_spbu': 'assets/portraits/portrait_petugas_spbu.png',
       'npc_pak_anto': 'assets/portraits/portrait_petugas_spbu.png',
-      'npc_riko': 'assets/portraits/portrait_penjaga_game.png'
+      'npc_riko': 'assets/portraits/portrait_penjaga_game.png',
+      'npc_penjaga_game': 'assets/portraits/portrait_penjaga_game.png'
     };
     portraitSrc = portraitMap[npcId] || portraitMap[dialogue.npcId];
   }

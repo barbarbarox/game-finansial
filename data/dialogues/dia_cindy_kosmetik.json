@@ -1,0 +1,65 @@
+{
+  "id": "dia_cindy_kosmetik",
+  "npcId": "npc_cindy",
+  "npcName": "Kak Cindy",
+  "portrait": "assets/portraits/portrait_penjaga_kosmetik.png",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Hai! Selamat datang di Toko Kosmetik Cantik. Ada perawatan kulit dan pelembab harian ramah kantong siswa lho.",
+      "choices": [
+        {
+          "text": "Beli Lip Balm & Sunscreen Remaja (Rp25.000)",
+          "requires": { "minCash": 25000 },
+          "disabledReason": "Uang kas tidak cukup (butuh Rp25.000)",
+          "next": "buy_skincare",
+          "effects": [
+            {
+              "type": "ledger_expense",
+              "categoryId": "BEBAN_PRIBADI",
+              "amount": 25000,
+              "description": "Beli lip balm & sunscreen remaja"
+            },
+            {
+              "type": "start_activity",
+              "activityId": "konsultasi_skincare"
+            }
+          ]
+        },
+        {
+          "text": "Coba Tester Pelembab Kulit (Gratis)",
+          "next": "test_product",
+          "effects": [
+            {
+              "type": "start_activity",
+              "activityId": "konsultasi_skincare"
+            }
+          ]
+        },
+        {
+          "text": "Cuma lihat-lihat etalase dulu Kak Cindy.",
+          "next": "just_browsing"
+        }
+      ]
+    },
+    "buy_skincare": {
+      "id": "buy_skincare",
+      "speaker": "npc",
+      "text": "Pilihan tepat! Melindungi kulit dari matahari sejak muda itu investasi kesehatan jangka panjang.",
+      "next": null
+    },
+    "test_product": {
+      "id": "test_product",
+      "speaker": "npc",
+      "text": "Silakan dicoba di punggung tangan! Kulit tetap lembab tanpa harus beli mahal.",
+      "next": null
+    },
+    "just_browsing": {
+      "id": "just_browsing",
+      "speaker": "npc",
+      "text": "Santai saja, boleh keliling lihat-lihat varian aroma dan produk lainnya ya!",
+      "next": null
+    }
+  }
+}

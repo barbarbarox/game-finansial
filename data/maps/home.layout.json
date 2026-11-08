@@ -17,7 +17,8 @@
     { "type": "lantai_kayu_kamar", "x": 2, "y": 2, "w": 9, "h": 8 },
     { "type": "lantai_kayu_kamar", "x": 12, "y": 2, "w": 9, "h": 8 },
     { "type": "keramik_kamar_mandi", "x": 22, "y": 2, "w": 6, "h": 8 },
-    { "type": "keramik_ruang_tamu", "x": 2, "y": 10, "w": 12, "h": 9 },
+    { "type": "keramik_ruang_tamu", "x": 2, "y": 10, "w": 11, "h": 9 },
+    { "type": "lantai_koridor", "x": 13, "y": 10, "w": 1, "h": 9 },
     { "type": "keramik_dapur", "x": 14, "y": 10, "w": 14, "h": 9 }
   ],
   "walls": [
@@ -25,13 +26,14 @@
     { "x": 1, "y": 1, "w": 1, "h": 18 },
     { "x": 28, "y": 1, "w": 1, "h": 18 },
     { "x": 1, "y": 19, "w": 28, "h": 1 },
-    { "x": 1, "y": 9, "w": 5, "h": 1 },
+    { "x": 1, "y": 9, "w": 4, "h": 1 },
     { "x": 7, "y": 9, "w": 4, "h": 1 },
     { "x": 11, "y": 1, "w": 1, "h": 9 },
     { "x": 11, "y": 9, "w": 5, "h": 1 },
-    { "x": 17, "y": 9, "w": 4, "h": 1 },
+    { "x": 18, "y": 9, "w": 3, "h": 1 },
     { "x": 21, "y": 1, "w": 1, "h": 9 },
-    { "x": 21, "y": 9, "w": 5, "h": 1 },
+    { "x": 21, "y": 9, "w": 2, "h": 1 },
+    { "x": 25, "y": 9, "w": 4, "h": 1 },
     { "x": 13, "y": 10, "w": 1, "h": 9 }
   ],
   "colliders": [
@@ -39,22 +41,33 @@
     { "name": "batas_luar_bawah", "x": 0, "y": 19, "w": 30, "h": 1 },
     { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 20 },
     { "name": "batas_luar_kanan", "x": 28, "y": 0, "w": 2, "h": 20 },
-    { "name": "dinding_kamar_bawah_kiri", "x": 2, "y": 9, "w": 4, "h": 1 },
-    { "name": "dinding_kamar_bawah_kanan", "x": 7, "y": 9, "w": 4, "h": 1 },
+    { "name": "dinding_kamar_pemain_bawah_kiri", "x": 2, "y": 9, "w": 3, "h": 1 },
+    { "name": "dinding_kamar_pemain_bawah_kanan", "x": 7, "y": 9, "w": 4, "h": 1 },
     { "name": "dinding_pemisah_kamar1_2", "x": 11, "y": 2, "w": 1, "h": 8 },
-    { "name": "dinding_kamar2_bawah", "x": 12, "y": 9, "w": 4, "h": 1 },
+    { "name": "dinding_kamar2_bawah_kiri", "x": 12, "y": 9, "w": 4, "h": 1 },
     { "name": "dinding_pemisah_kamar2_wc", "x": 21, "y": 2, "w": 1, "h": 8 },
-    { "name": "dinding_wc_bawah", "x": 22, "y": 9, "w": 4, "h": 1 },
-    { "name": "sekat_tamu_dapur", "x": 13, "y": 10, "w": 1, "h": 5 }
+    { "name": "dinding_wc_bawah_kanan", "x": 25, "y": 9, "w": 3, "h": 1 },
+    { "name": "sekat_tamu_dapur", "x": 13, "y": 10, "w": 1, "h": 6 }
   ],
   "furniture": [
+    {
+      "id": "fur_lemari_baju",
+      "type": "lemari_pakaian",
+      "assetId": "furn_lemari_pakaian",
+      "label": "Lemari Pakaian",
+      "x": 2,
+      "y": 2,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
     {
       "id": "fur_kasur_single",
       "type": "kasur_single",
       "assetId": "furn_kasur_single",
       "label": "Kasur Single",
       "x": 2,
-      "y": 3,
+      "y": 6,
       "w": 2,
       "h": 3,
       "collidable": true
@@ -65,7 +78,7 @@
       "assetId": "furn_nakas_lampu",
       "label": "Nakas & Lampu",
       "x": 4,
-      "y": 3,
+      "y": 6,
       "w": 1,
       "h": 1,
       "collidable": true
@@ -82,6 +95,16 @@
       "collidable": true
     },
     {
+      "id": "fur_celengan_ayam",
+      "type": "celengan_ayam",
+      "label": "Celengan Ayam",
+      "x": 8,
+      "y": 3,
+      "w": 1,
+      "h": 1,
+      "collidable": false
+    },
+    {
       "id": "fur_kursi_belajar",
       "type": "kursi_belajar",
       "assetId": "furn_kursi_belajar",
@@ -93,43 +116,33 @@
       "collidable": false
     },
     {
-      "id": "fur_lemari_baju",
-      "type": "lemari_pakaian",
-      "assetId": "furn_lemari_pakaian",
-      "label": "Lemari Pakaian",
-      "x": 2,
-      "y": 6,
-      "w": 2,
-      "h": 3,
-      "collidable": true
-    },
-    {
       "id": "fur_rak_buku",
       "type": "rak_buku",
       "assetId": "furn_rak_buku",
       "label": "Rak Buku",
       "x": 9,
-      "y": 3,
+      "y": 4,
       "w": 2,
       "h": 3,
       "collidable": true
     },
     {
-      "id": "fur_celengan_ayam",
-      "type": "celengan_ayam",
-      "label": "Celengan Ayam",
-      "x": 8,
+      "id": "fur_meja_rias",
+      "type": "meja_rias",
+      "assetId": "furn_meja_rias",
+      "label": "Meja Rias",
+      "x": 12,
       "y": 3,
-      "w": 1,
-      "h": 1,
-      "collidable": false
+      "w": 2,
+      "h": 2,
+      "collidable": true
     },
     {
       "id": "fur_kasur_ortu",
       "type": "kasur_besar",
       "assetId": "furn_kasur_besar",
       "label": "Kasur Orang Tua",
-      "x": 14,
+      "x": 15,
       "y": 3,
       "w": 3,
       "h": 3,
@@ -140,10 +153,65 @@
       "type": "lemari_besar",
       "assetId": "furn_lemari_besar",
       "label": "Lemari Pakaian Ortu",
-      "x": 18,
+      "x": 19,
       "y": 3,
       "w": 2,
       "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "fur_kipas_ortu",
+      "type": "kipas_berdiri",
+      "assetId": "furn_kipas_berdiri",
+      "label": "Kipas Angin",
+      "x": 12,
+      "y": 6,
+      "w": 1,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_bak_mandi",
+      "type": "bak_mandi",
+      "assetId": "furn_bak_mandi",
+      "label": "Bak Mandi",
+      "x": 22,
+      "y": 3,
+      "w": 2,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_toilet",
+      "type": "toilet",
+      "assetId": "furn_toilet",
+      "label": "Toilet",
+      "x": 26,
+      "y": 3,
+      "w": 1,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_rak_handuk",
+      "type": "rak_handuk",
+      "assetId": "furn_rak_handuk",
+      "label": "Rak Handuk",
+      "x": 22,
+      "y": 6,
+      "w": 1,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_wastafel_cermin",
+      "type": "wastafel_cermin",
+      "assetId": "furn_wastafel_cermin",
+      "label": "Wastafel",
+      "x": 25,
+      "y": 6,
+      "w": 2,
+      "h": 2,
       "collidable": true
     },
     {
@@ -151,18 +219,29 @@
       "type": "sofa_3dudukan",
       "assetId": "furn_sofa_3dudukan",
       "label": "Sofa Ruang Tamu",
-      "x": 4,
+      "x": 3,
       "y": 12,
       "w": 4,
       "h": 2,
       "collidable": true
     },
     {
+      "id": "fur_karpet_tamu",
+      "type": "karpet_tamu",
+      "assetId": "furn_karpet_tamu",
+      "label": "Karpet",
+      "x": 3,
+      "y": 14,
+      "w": 4,
+      "h": 3,
+      "collidable": false
+    },
+    {
       "id": "fur_meja_tamu",
       "type": "meja_tamu",
       "assetId": "furn_meja_tamu",
       "label": "Meja Tamu",
-      "x": 5,
+      "x": 4,
       "y": 15,
       "w": 2,
       "h": 1,
@@ -180,11 +259,33 @@
       "collidable": true
     },
     {
+      "id": "fur_rak_pajangan",
+      "type": "rak_pajangan",
+      "assetId": "furn_rak_pajangan",
+      "label": "Rak Pajangan",
+      "x": 10,
+      "y": 15,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
       "id": "fur_kitchen",
       "type": "kompor_counter",
       "assetId": "furn_kompor_counter",
       "label": "Dapur & Kompor",
-      "x": 16,
+      "x": 15,
+      "y": 11,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_wastafel_dapur",
+      "type": "wastafel_dapur",
+      "assetId": "furn_wastafel_dapur",
+      "label": "Wastafel Cuci Piring",
+      "x": 19,
       "y": 11,
       "w": 3,
       "h": 2,
@@ -195,7 +296,7 @@
       "type": "kulkas",
       "assetId": "furn_kulkas",
       "label": "Kulkas",
-      "x": 20,
+      "x": 23,
       "y": 11,
       "w": 2,
       "h": 3,
@@ -206,33 +307,33 @@
       "type": "meja_makan",
       "assetId": "furn_meja_makan",
       "label": "Meja Makan",
-      "x": 17,
+      "x": 18,
       "y": 15,
       "w": 3,
       "h": 2,
       "collidable": true
     },
     {
-      "id": "fur_bak_mandi",
-      "type": "bak_mandi",
-      "assetId": "furn_bak_mandi",
-      "label": "Bak Mandi",
-      "x": 23,
-      "y": 3,
-      "w": 2,
-      "h": 2,
-      "collidable": true
+      "id": "fur_kursi_makan_1",
+      "type": "kursi_makan",
+      "assetId": "furn_kursi_makan",
+      "label": "Kursi Makan",
+      "x": 17,
+      "y": 15,
+      "w": 1,
+      "h": 1,
+      "collidable": false
     },
     {
-      "id": "fur_toilet",
-      "type": "toilet",
-      "assetId": "furn_toilet",
-      "label": "Toilet",
-      "x": 26,
-      "y": 3,
+      "id": "fur_kursi_makan_2",
+      "type": "kursi_makan",
+      "assetId": "furn_kursi_makan",
+      "label": "Kursi Makan",
+      "x": 21,
+      "y": 15,
       "w": 1,
-      "h": 2,
-      "collidable": true
+      "h": 1,
+      "collidable": false
     }
   ],
   "interactables": [
@@ -241,7 +342,7 @@
       "type": "activity",
       "activityId": "tidur",
       "x": 2,
-      "y": 4,
+      "y": 7,
       "w": 2,
       "h": 1,
       "prompt": "Tekan [E] Tidur / Istirahat",
@@ -272,7 +373,7 @@
       "id": "int_tv",
       "type": "activity",
       "activityId": "nonton_tv",
-      "x": 8,
+      "x": 9,
       "y": 14,
       "w": 2,
       "h": 1,
@@ -284,7 +385,7 @@
       "type": "activity",
       "activityId": "makan_rumah",
       "x": 18,
-      "y": 17,
+      "y": 16,
       "w": 3,
       "h": 1,
       "prompt": "Tekan [E] Sarapan di Rumah (Hemat)",
@@ -294,7 +395,7 @@
       "id": "int_bak_mandi",
       "type": "activity",
       "activityId": "mandi",
-      "x": 23,
+      "x": 22,
       "y": 5,
       "w": 2,
       "h": 1,
@@ -321,8 +422,8 @@
       "role": "Ibu Rumah Tangga",
       "assetId": "npc_sheet_family",
       "color": 14197368,
-      "x": 23,
-      "y": 14,
+      "x": 16,
+      "y": 13,
       "dialogId": "dia_ibu_home"
     },
     {
@@ -331,10 +432,9 @@
       "role": "Kepala Keluarga",
       "assetId": "npc_sheet_family",
       "color": 4479836,
-      "x": 9,
+      "x": 8,
       "y": 15,
       "dialogId": "dia_ayah_home"
     }
   ]
 }
-

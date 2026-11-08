@@ -1,10 +1,39 @@
 /**
  * mapManager.js — Map management, interior rendering, and transition system.
  * Complies with Rule 70 (Interior Maps & Buildings) and Rule 72 (Time Integration).
+ *
+ * ARCHITECTURE NOTE:
+ * MapManager is the SOLE owner of all visual layers (ground, walls, furniture, NPCs).
+ * World.js bootstraps once and delegates ALL map rendering to MapManager.
+ * clearCurrentMap() destroys every Phaser game object created by this manager
+ * before renderCurrentMap() builds the new one — no overlap possible.
  */
 
 import { isLocationOpen, DEFAULT_OPENING_HOURS } from '../domain/clock.js';
-import { createProceduralTiles } from '../assets-gen/groundTiles.js';
+
+/** Floor colour palette for interior tiles */
+const FLOOR_COLORS = {
+  lantai_kayu_kamar:        { base: 0x8D6346, line: 0x6E4C33 },
+  keramik_kamar_mandi:      { base: 0x4A88B8, line: 0x34658B },
+  keramik_ruang_tamu:       { base: 0xC8B898, line: 0xA89878 },
+  keramik_dapur:            { base: 0x98A8A0, line: 0x788880 },
+  lantai_koridor:           { base: 0xB0A088, line: 0x887860 },
+  lantai_kelas:             { base: 0x7C5C43, line: 0x5C3E28 },
+  lantai_kantin:            { base: 0xA89878, line: 0x887858 },
+  keramik_minimarket:       { base: 0xE0E0D8, line: 0xB8B8B0 },
+  keramik_kosmetik_pastel:  { base: 0xD8B8C8, line: 0xB898A8 },
+  lantai_kios_spbu:         { base: 0x888890, line: 0x686870 },
+  lantai_arcade_neon:       { base: 0x221833, line: 0x3D2855 },
+};
+
+/** Exterior ground colour palette */
+const GROUND_COLORS = {
+  rumput:  0x4A6B3E,
+  jalan:   0x2C3A54,
+  tanah:   0x7E7259,
+  trotoar: 0xA89878,
+  pasir:   0xC8B080,
+};
 
 export class MapManager {
   /**
@@ -16,21 +45,28 @@ export class MapManager {
     this.indexData = indexData;
     this.currentMapId = null;
     this.currentLayout = null;
-    this.furnitureObjects = [];
-    this.colliders = [];
+
+    // All Phaser game objects created for the current map are tracked here
+    // so clearCurrentMap() can destroy them all cleanly.
+    this._mapObjects = [];   // generic displayObjects
+    this._colliderBodies = []; // physics rectangles
     this.isTransitioning = false;
   }
 
+  // ─── Public API ───────────────────────────────────────────────────────────
+
   /**
-   * Initialize and load a map layout.
+   * Initialise and load a map layout (no transition animation).
    * @param {string} mapId
    * @param {string|number[]} [spawnTarget='default']
    */
   async loadMap(mapId, spawnTarget = 'default') {
     this.currentMapId = mapId;
-    const mapMeta = this.indexData.maps.find(m => m.id === mapId) || this.indexData.maps[0];
 
-    // Fetch layout if not in Phaser cache
+    const mapMeta = this.indexData.maps.find(m => m.id === mapId)
+      || { id: mapId, file: `data/maps/${mapId}.layout.json` };
+
+    // Fetch layout (use cache if available)
     let layout = this.scene.cache.json.get(`layout_${mapId}`);
     if (!layout) {
       try {
@@ -38,49 +74,24 @@ export class MapManager {
         layout = await res.json();
         this.scene.cache.json.add(`layout_${mapId}`, layout);
       } catch (err) {
-        console.error(`[MapManager] Gagal memuat file peta: ${mapMeta.file}`, err);
+        console.error(`[MapManager] Failed to load map: ${mapMeta.file}`, err);
         return;
       }
     }
 
     this.currentLayout = layout;
-    this.renderCurrentMap();
 
-    // Determine spawn position
-    let spawnX = 5;
-    let spawnY = 5;
+    // Destroy everything from the previous map first
+    this.clearCurrentMap();
 
-    if (Array.isArray(spawnTarget) && spawnTarget.length >= 2) {
-      spawnX = spawnTarget[0];
-      spawnY = spawnTarget[1];
-    } else if (typeof spawnTarget === 'string' && layout.world?.spawns?.[spawnTarget]) {
-      const sp = layout.world.spawns[spawnTarget];
-      spawnX = sp.x;
-      spawnY = sp.y;
-    } else if (layout.world?.spawns?.default) {
-      spawnX = layout.world.spawns.default.x;
-      spawnY = layout.world.spawns.default.y;
-    } else if (layout.world?.spawn) {
-      spawnX = layout.world.spawn.x;
-      spawnY = layout.world.spawn.y;
-    }
+    // Build the new map
+    this._renderMap(layout);
 
-    // Position player
-    const store = this.scene.game.registry.get('store');
-    const savedPos = store?.getState()?.playerPos;
+    // Position player at spawn
+    this._positionPlayer(layout, spawnTarget);
 
-    if (spawnTarget === 'saved' && savedPos && savedPos.x && savedPos.y && this.scene._player) {
-      this.scene._player.sprite.x = savedPos.x;
-      this.scene._player.sprite.y = savedPos.y;
-    } else {
-      const tileSize = layout.world?.tileSize || 32;
-      if (this.scene._player) {
-        this.scene._player.sprite.x = (spawnX + 0.5) * tileSize;
-        this.scene._player.sprite.y = (spawnY + 0.5) * tileSize;
-      }
-    }
-
-    // Set camera bounds
+    // Update camera bounds
+    const tileSize = layout.world?.tileSize || 32;
     const mapW = (layout.world?.widthTiles || 40) * tileSize;
     const mapH = (layout.world?.heightTiles || 24) * tileSize;
     this.scene.cameras.main.setBounds(0, 0, mapW, mapH);
@@ -88,35 +99,30 @@ export class MapManager {
       this.scene.cameras.main.startFollow(this.scene._player.sprite, true, 0.1, 0.1);
     }
 
-    // Update store state with currentMap
-    if (store) {
-      store.setState({ currentMap: mapId });
-    }
+    // Persist current map in store
+    const store = this.scene.game.registry.get('store');
+    if (store) store.setState({ currentMap: mapId });
   }
 
   /**
-   * Transition to another map with 200ms fade.
+   * Transition to another map with a 200 ms fade.
    * @param {string} targetMapId
-   * @param {string|number[]} [spawnTarget='default']
-   * @param {string} [openingHoursId]
+   * @param {string|number[]} [targetSpawn='default']
+   * @param {string|null} [openingHoursId]
    */
   transitionTo(targetMapId, targetSpawn = 'default', openingHoursId = null) {
     if (this.isTransitioning) return;
 
-    // Check opening hours if target is an interior with schedule
+    // Opening-hours guard (skip for hub and home)
     const store = this.scene.game.registry.get('store');
     const clock = store?.getState()?.clock || {};
-    const checkId = openingHoursId || (targetMapId === 'home' ? 'home' : targetMapId);
+    const checkId = openingHoursId || targetMapId;
 
-    if (targetMapId !== 'town_hub' && DEFAULT_OPENING_HOURS[checkId]) {
+    if (targetMapId !== 'town_hub' && targetMapId !== 'home' && DEFAULT_OPENING_HOURS[checkId]) {
       const status = isLocationOpen(checkId, clock);
       if (!status.open) {
-        // Show door closed feedback
         if (this.scene.showPromptFeedback) {
           this.scene.showPromptFeedback(`[TUTUP] ${status.reason}`);
-        } else if (this.scene._promptText) {
-          this.scene._promptText.setText(`[TUTUP] ${status.reason}`);
-          this.scene._promptText.setVisible(true);
         }
         return;
       }
@@ -124,212 +130,383 @@ export class MapManager {
 
     this.isTransitioning = true;
 
-    // Use setTimeout instead of scene.time.delayedCall to ensure it fires even
-    // when Phaser's game loop is throttled (e.g., headless testing).
-    try {
-      this.scene.cameras.main.fadeOut(200, 10, 15, 26);
-    } catch (_) { /* camera may not be ready */ }
+    try { this.scene.cameras.main.fadeOut(200, 10, 15, 26); } catch (_) {}
 
-    // Failsafe: always clear isTransitioning after 3 seconds max
-    const failsafeTimer = setTimeout(() => {
-      this.isTransitioning = false;
-    }, 3000);
+    const failsafe = setTimeout(() => { this.isTransitioning = false; }, 3000);
 
     setTimeout(async () => {
-      // Clear previous map objects
-      this.clearCurrentMap();
-
       try {
         await this.loadMap(targetMapId, targetSpawn);
       } catch (err) {
-        console.error('[MapManager] Error loading map during transition:', err);
+        console.error('[MapManager] Error during transition:', err);
       }
-
-      try {
-        this.scene.cameras.main.fadeIn(200, 10, 15, 26);
-      } catch (_) { /* ignore */ }
-
+      try { this.scene.cameras.main.fadeIn(200, 10, 15, 26); } catch (_) {}
       setTimeout(() => {
-        clearTimeout(failsafeTimer);
+        clearTimeout(failsafe);
         this.isTransitioning = false;
       }, 250);
     }, 200);
   }
 
   /**
-   * Clear old map objects, furniture, and colliders.
+   * Destroy every Phaser game object owned by this manager.
+   * Must be called before rendering a new map.
    */
   clearCurrentMap() {
-    for (const c of this.colliders) {
-      if (c && c.destroy) c.destroy();
+    for (const obj of this._mapObjects) {
+      if (obj && !obj.destroyed) {
+        try { obj.destroy(); } catch (_) {}
+      }
     }
-    this.colliders = [];
+    this._mapObjects = [];
 
-    for (const f of this.furnitureObjects) {
-      if (f && f.destroy) f.destroy();
+    for (const body of this._colliderBodies) {
+      if (body && !body.destroyed) {
+        try { body.destroy(); } catch (_) {}
+      }
     }
-    this.furnitureObjects = [];
+    this._colliderBodies = [];
+  }
 
-    if (this._groundLayer && this._groundLayer.destroy) {
-      this._groundLayer.destroy();
+  // ─── Internals ────────────────────────────────────────────────────────────
+
+  /** Spawn player at the correct tile position for spawnTarget */
+  _positionPlayer(layout, spawnTarget) {
+    const tileSize = layout.world?.tileSize || 32;
+    let spawnX = 5;
+    let spawnY = 5;
+
+    if (Array.isArray(spawnTarget) && spawnTarget.length >= 2) {
+      [spawnX, spawnY] = spawnTarget;
+    } else if (typeof spawnTarget === 'string' && layout.world?.spawns?.[spawnTarget]) {
+      ({ x: spawnX, y: spawnY } = layout.world.spawns[spawnTarget]);
+    } else if (layout.world?.spawns?.default) {
+      ({ x: spawnX, y: spawnY } = layout.world.spawns.default);
+    } else if (layout.world?.spawn) {
+      ({ x: spawnX, y: spawnY } = layout.world.spawn);
+    }
+
+    const store = this.scene.game.registry.get('store');
+    const savedPos = store?.getState()?.playerPos;
+
+    if (spawnTarget === 'saved' && savedPos?.x && savedPos?.y && this.scene._player) {
+      this.scene._player.sprite.x = savedPos.x;
+      this.scene._player.sprite.y = savedPos.y;
+    } else if (this.scene._player) {
+      this.scene._player.sprite.x = (spawnX + 0.5) * tileSize;
+      this.scene._player.sprite.y = (spawnY + 0.5) * tileSize;
     }
   }
 
-  /**
-   * Render current map (floors, walls, furniture, colliders).
-   */
-  renderCurrentMap() {
-    const layout = this.currentLayout;
-    if (!layout) return;
+  /** Master render routine */
+  _renderMap(layout) {
+    if (layout.type === 'interior') {
+      this._renderInterior(layout);
+    } else {
+      this._renderExterior(layout);
+    }
+    this._renderFurniture(layout);
+    this._buildColliders(layout);
+    this._spawnNPCs(layout);
+    this._registerInteractables(layout);
+  }
 
+  // ── Interior rendering ───────────────────────────────────────────────────
+
+  _renderInterior(layout) {
+    const tileSize = layout.world?.tileSize || 32;
+    const mapW = (layout.world?.widthTiles || 24) * tileSize;
+    const mapH = (layout.world?.heightTiles || 18) * tileSize;
+
+    // Full void background — covers any exterior tiles underneath
+    const bg = this.scene.add.graphics();
+    bg.fillStyle(0x0a0f1a, 1.0);
+    bg.fillRect(0, 0, mapW, mapH);
+    bg.setDepth(-200);
+    this._mapObjects.push(bg);
+
+    const gfx = this.scene.add.graphics();
+    gfx.setDepth(-10);
+    this._mapObjects.push(gfx);
+
+    // Floor tiles
+    for (const fl of layout.floors || []) {
+      const theme = FLOOR_COLORS[fl.type] || { base: 0x8D6346, line: 0x6E4C33 };
+      gfx.fillStyle(theme.base, 1.0);
+      gfx.fillRect(fl.x * tileSize, fl.y * tileSize, fl.w * tileSize, fl.h * tileSize);
+      gfx.lineStyle(1, theme.line, 0.4);
+      for (let x = fl.x; x <= fl.x + fl.w; x++) {
+        gfx.lineBetween(x * tileSize, fl.y * tileSize, x * tileSize, (fl.y + fl.h) * tileSize);
+      }
+      for (let y = fl.y; y <= fl.y + fl.h; y++) {
+        gfx.lineBetween(fl.x * tileSize, y * tileSize, (fl.x + fl.w) * tileSize, y * tileSize);
+      }
+    }
+
+    // Walls
+    for (const w of layout.walls || []) {
+      gfx.fillStyle(0x34456B, 1.0);
+      gfx.fillRect(w.x * tileSize, w.y * tileSize, w.w * tileSize, w.h * tileSize);
+      gfx.fillStyle(0x1F2A44, 1.0);
+      gfx.fillRect(w.x * tileSize, w.y * tileSize, w.w * tileSize, 6);
+      gfx.fillStyle(0x121A2E, 1.0);
+      gfx.fillRect(w.x * tileSize, (w.y + w.h) * tileSize - 4, w.w * tileSize, 4);
+    }
+
+    // Room label (fixed to camera)
+    const nameLabel = this.scene.add.text(
+      8, 8,
+      layout.displayName || layout.id || '',
+      { font: 'bold 11px monospace', fill: '#D9A441', stroke: '#121A2E', strokeThickness: 2 }
+    ).setScrollFactor(0).setDepth(3000);
+    this._mapObjects.push(nameLabel);
+  }
+
+  // ── Exterior rendering ───────────────────────────────────────────────────
+
+  _renderExterior(layout) {
     const tileSize = layout.world?.tileSize || 32;
     const mapW = (layout.world?.widthTiles || 40) * tileSize;
     const mapH = (layout.world?.heightTiles || 24) * tileSize;
 
-    // 1. Render Ground / Floor
     const gfx = this.scene.add.graphics();
-    gfx.setDepth(-10);
+    gfx.setDepth(-200);
+    this._mapObjects.push(gfx);
 
-    if (layout.type === 'interior') {
-      // Background void for interior
-      gfx.fillStyle(0x0a0f1a, 1.0);
-      gfx.fillRect(0, 0, mapW, mapH);
+    // Base grass
+    gfx.fillStyle(GROUND_COLORS.rumput, 1.0);
+    gfx.fillRect(0, 0, mapW, mapH);
 
-      // Render floors
-      const floorColors = {
-        lantai_kayu_kamar: { base: 0x8D6346, line: 0x6E4C33 },
-        keramik_kamar_mandi: { base: 0x4A88B8, line: 0x34658B },
-        keramik_ruang_tamu: { base: 0xC8B898, line: 0xA89878 },
-        keramik_dapur: { base: 0x98A8A0, line: 0x788880 },
-        lantai_koridor: { base: 0xB0A088, line: 0x887860 },
-        lantai_kelas: { base: 0x7C5C43, line: 0x5C3E28 },
-        lantai_kantin: { base: 0xA89878, line: 0x887858 },
-        keramik_minimarket: { base: 0xE0E0D8, line: 0xB8B8B0 },
-        keramik_kosmetik_pastel: { base: 0xD8B8C8, line: 0xB898A8 },
-        lantai_kios_spbu: { base: 0x888890, line: 0x686870 },
-        lantai_arcade_neon: { base: 0x221833, line: 0x3D2855 }
-      };
-
-      for (const fl of (layout.floors || [])) {
-        const theme = floorColors[fl.type] || { base: 0x8D6346, line: 0x6E4C33 };
-        gfx.fillStyle(theme.base, 1.0);
-        gfx.fillRect(fl.x * tileSize, fl.y * tileSize, fl.w * tileSize, fl.h * tileSize);
-
-        // Grid lines for tile effect
-        gfx.lineStyle(1, theme.line, 0.4);
-        for (let x = fl.x; x <= fl.x + fl.w; x++) {
-          gfx.lineBetween(x * tileSize, fl.y * tileSize, x * tileSize, (fl.y + fl.h) * tileSize);
-        }
-        for (let y = fl.y; y <= fl.y + fl.h; y++) {
-          gfx.lineBetween(fl.x * tileSize, y * tileSize, (fl.x + fl.w) * tileSize, y * tileSize);
-        }
-      }
-
-      // Render walls
-      for (const w of (layout.walls || [])) {
-        // Wall base
-        gfx.fillStyle(0x34456B, 1.0);
-        gfx.fillRect(w.x * tileSize, w.y * tileSize, w.w * tileSize, w.h * tileSize);
-
-        // Upper cornice
-        gfx.fillStyle(0x1F2A44, 1.0);
-        gfx.fillRect(w.x * tileSize, w.y * tileSize, w.w * tileSize, 6);
-
-        // Baseboard
-        gfx.fillStyle(0x121A2E, 1.0);
-        gfx.fillRect(w.x * tileSize, (w.y + w.h) * tileSize - 4, w.w * tileSize, 4);
-      }
-    } else {
-      // Exterior town hub ground rendering
-      for (const g of (layout.ground || [])) {
-        const color = g.type === 'rumput' ? 0x4A6B3E : (g.type === 'jalan' ? 0x2C3A54 : 0x7E7259);
-        gfx.fillStyle(color, 1.0);
-        gfx.fillRect(g.x * tileSize, g.y * tileSize, g.w * tileSize, g.h * tileSize);
-      }
+    // Zone overrides
+    for (const g of layout.ground || []) {
+      const color = GROUND_COLORS[g.type] ?? GROUND_COLORS.tanah;
+      gfx.fillStyle(color, 1.0);
+      gfx.fillRect(g.x * tileSize, g.y * tileSize, g.w * tileSize, g.h * tileSize);
     }
 
-    this._groundLayer = gfx;
+    // Subtle tile grid
+    gfx.lineStyle(1, 0x000000, 0.06);
+    for (let x = 0; x <= mapW; x += tileSize) gfx.lineBetween(x, 0, x, mapH);
+    for (let y = 0; y <= mapH; y += tileSize) gfx.lineBetween(0, y, mapW, y);
 
-    // 2. Render Furniture (pixel art sprites if available, or labeled placeholders)
-    const furniture = layout.furniture || [];
-    for (const f of furniture) {
-      const container = this.scene.add.container(f.x * tileSize, f.y * tileSize);
-      container.setDepth(f.y + f.h);
+    // Buildings
+    for (const obj of layout.objects || []) this._renderExteriorObject(obj, tileSize);
+
+    // Props
+    for (const p of layout.props || []) this._renderProp(p, tileSize);
+  }
+
+  _renderExteriorObject(obj, tileSize) {
+    const x = obj.x * tileSize;
+    const y = obj.y * tileSize;
+    const w = (obj.footprint?.w || 4) * tileSize;
+    const h = (obj.footprint?.h || 3) * tileSize;
+
+    if (this.scene.textures.exists(obj.assetId)) {
+      const img = this.scene.add.image(x, y, obj.assetId);
+      img.setOrigin(0.5, 1.0).setDepth(y);
+      this._mapObjects.push(img);
+    } else {
+      const gfx = this.scene.add.graphics();
+      gfx.fillStyle(0x2C3A54, 1);
+      gfx.fillRect(x - w / 2, y - h, w, h);
+      gfx.lineStyle(2, 0xD9A441, 1);
+      gfx.strokeRect(x - w / 2, y - h, w, h);
+      gfx.setDepth(y);
+      this._mapObjects.push(gfx);
+
+      const lbl = this.scene.add.text(x, y - h * 0.6, obj.label || obj.id || obj.type || '', {
+        font: 'bold 11px monospace', fill: '#F7EEDA', stroke: '#0a0f1a', strokeThickness: 2,
+        align: 'center', wordWrap: { width: w - 8 }
+      }).setOrigin(0.5, 0.5).setDepth(y + 1);
+      this._mapObjects.push(lbl);
+    }
+  }
+
+  _renderProp(p, tileSize) {
+    const x = p.x * tileSize + tileSize / 2;
+    const y = p.y * tileSize + tileSize;
+    if (this.scene.textures.exists(p.assetId)) {
+      const img = this.scene.add.image(x, y, p.assetId);
+      img.setOrigin(0.5, 1.0).setDepth(y);
+      this._mapObjects.push(img);
+    }
+  }
+
+  // ── Furniture ────────────────────────────────────────────────────────────
+
+  _renderFurniture(layout) {
+    const tileSize = layout.world?.tileSize || 32;
+
+    for (const f of layout.furniture || []) {
+      const px = f.x * tileSize;
+      const py = f.y * tileSize;
+      const fw = f.w * tileSize;
+      const fh = f.h * tileSize;
+      const depth = py + fh / 2;
+
+      const container = this.scene.add.container(px, py);
+      container.setDepth(depth);
+      this._mapObjects.push(container);
 
       const textureKey = f.assetId || `furn_${f.type}`;
       if (this.scene.textures.exists(textureKey)) {
-        const sprite = this.scene.add.sprite(
-          (f.w * tileSize) / 2,
-          f.h * tileSize,
-          textureKey
-        );
+        const sprite = this.scene.add.sprite(fw / 2, fh, textureKey);
         sprite.setOrigin(0.5, 1.0);
+        const tex = this.scene.textures.get(textureKey).getSourceImage();
+        if (tex.width > 0) {
+          const scale = Math.min(fw / tex.width, fh / tex.height, 1.5);
+          sprite.setScale(scale);
+        }
         container.add(sprite);
       } else {
-        const fGfx = this.scene.add.graphics();
-        // 3/4 box perspective
-        fGfx.fillStyle(0x1F2A44, 0.95);
-        fGfx.fillRect(0, 0, f.w * tileSize, f.h * tileSize);
-        fGfx.lineStyle(2, 0xD9A441, 1.0);
-        fGfx.strokeRect(0, 0, f.w * tileSize, f.h * tileSize);
+        // Coloured placeholder with label
+        const gfx = this.scene.add.graphics();
+        const fillColor = this._furnitureColor(f.type);
+        gfx.fillStyle(fillColor, 0.95);
+        gfx.fillRect(0, 0, fw, fh);
+        // Top highlight (fake 3-D)
+        gfx.fillStyle(0xFFFFFF, 0.08);
+        gfx.fillRect(0, 0, fw, Math.min(8, fh * 0.25));
+        gfx.lineStyle(2, 0xD9A441, 1.0);
+        gfx.strokeRect(0, 0, fw, fh);
+        container.add(gfx);
 
-        // Label
-        const label = this.scene.add.text(
-          (f.w * tileSize) / 2,
-          (f.h * tileSize) / 2,
+        const fontSize = Math.max(7, Math.min(10, Math.floor(fw / 7)));
+        const lbl = this.scene.add.text(
+          fw / 2, fh / 2,
           f.label || f.type,
           {
-            fontSize: '9px',
+            fontSize: `${fontSize}px`,
             fontFamily: 'monospace',
             color: '#F7EEDA',
+            stroke: '#0a0f1a',
+            strokeThickness: 1,
             align: 'center',
-            wordWrap: { width: f.w * tileSize - 4 }
+            wordWrap: { width: fw - 6 }
           }
         ).setOrigin(0.5);
-
-        container.add(fGfx);
-        container.add(label);
+        container.add(lbl);
       }
-      this.furnitureObjects.push(container);
 
-      // Collider for furniture
+      // Physics collider for furniture
       if (f.collidable && this.scene._player) {
         const body = this.scene.add.rectangle(
-          f.x * tileSize + (f.w * tileSize) / 2,
-          f.y * tileSize + (f.h * tileSize) / 2,
-          f.w * tileSize,
-          f.h * tileSize
+          px + fw / 2, py + fh / 2, fw, fh
         );
         this.scene.physics.add.existing(body, true);
         this.scene.physics.add.collider(this.scene._player.sprite, body);
-        this.colliders.push(body);
+        body.setVisible(false);
+        this._colliderBodies.push(body);
+        this._mapObjects.push(body);
       }
     }
 
-    // 3. Static Map Colliders
-    for (const c of (layout.colliders || [])) {
-      if (this.scene._player) {
-        const body = this.scene.add.rectangle(
-          c.x * tileSize + (c.w * tileSize) / 2,
-          c.y * tileSize + (c.h * tileSize) / 2,
-          c.w * tileSize,
-          c.h * tileSize
-        );
-        this.scene.physics.add.existing(body, true);
-        this.scene.physics.add.collider(this.scene._player.sprite, body);
-        this.colliders.push(body);
-      }
+    // Exit/door tile markers
+    for (const int of layout.interactables || []) {
+      if (int.type === 'exit') this._renderExitMarker(int, tileSize);
+    }
+  }
+
+  _renderExitMarker(int, tileSize) {
+    const px = int.x * tileSize;
+    const py = int.y * tileSize;
+    const fw = (int.w || 1) * tileSize;
+    const fh = (int.h || 1) * tileSize;
+
+    const gfx = this.scene.add.graphics();
+    // Golden diamond on floor
+    gfx.fillStyle(0xD9A441, 0.3);
+    gfx.fillRect(px + 4, py + 4, fw - 8, fh - 8);
+    gfx.lineStyle(2, 0xD9A441, 0.8);
+    gfx.strokeRect(px + 2, py + 2, fw - 4, fh - 4);
+    gfx.setDepth(py - 1);
+    this._mapObjects.push(gfx);
+  }
+
+  _furnitureColor(type = '') {
+    const t = type.toLowerCase();
+    if (t.includes('kasur') || t.includes('bed'))      return 0x2E4080;
+    if (t.includes('meja'))                             return 0x4A3828;
+    if (t.includes('kursi') || t.includes('sofa'))     return 0x3A2E5A;
+    if (t.includes('lemari') || t.includes('rak'))     return 0x1E3A30;
+    if (t.includes('kompor') || t.includes('dapur'))   return 0x5A2020;
+    if (t.includes('kulkas') || t.includes('chiller')) return 0x1A4055;
+    if (t.includes('tv') || t.includes('layar'))       return 0x151520;
+    if (t.includes('kasir') || t.includes('counter'))  return 0x402818;
+    if (t.includes('arcade'))                          return 0x280040;
+    if (t.includes('etalase') || t.includes('display'))return 0x1A3040;
+    return 0x1F2A44;
+  }
+
+  // ── Colliders ────────────────────────────────────────────────────────────
+
+  _buildColliders(layout) {
+    if (!this.scene._player) return;
+    const tileSize = layout.world?.tileSize || 32;
+    const mapW = (layout.world?.widthTiles || 40) * tileSize;
+    const mapH = (layout.world?.heightTiles || 24) * tileSize;
+
+    // Map boundary walls
+    const boundaries = [
+      { cx: -tileSize / 2,       cy: mapH / 2,        w: tileSize, h: mapH },
+      { cx: mapW + tileSize / 2, cy: mapH / 2,        w: tileSize, h: mapH },
+      { cx: mapW / 2,            cy: -tileSize / 2,   w: mapW,     h: tileSize },
+      { cx: mapW / 2,            cy: mapH + tileSize / 2, w: mapW, h: tileSize },
+    ];
+    for (const b of boundaries) this._addStaticBody(b.cx, b.cy, b.w, b.h);
+
+    // Layout-defined colliders
+    for (const c of layout.colliders || []) {
+      this._addStaticBody(
+        c.x * tileSize + (c.w * tileSize) / 2,
+        c.y * tileSize + (c.h * tileSize) / 2,
+        c.w * tileSize,
+        c.h * tileSize
+      );
     }
 
-    // 4. Update interactables and NPCs in World scene
-    if (layout.interactables) {
-      this.scene._interactables = layout.interactables;
-      if (this.scene._interactablesManager?.setInteractables) {
-        this.scene._interactablesManager.setInteractables(layout.interactables);
+    // Exterior object footprints
+    for (const obj of layout.objects || []) {
+      const x = obj.x * tileSize;
+      const y = obj.y * tileSize;
+      const fw = (obj.footprint?.w || 4) * tileSize;
+      const fh = (obj.footprint?.h || 2) * tileSize;
+      this._addStaticBody(x, y - fh / 2, fw, fh);
+    }
+
+    // Trees
+    for (const p of layout.props || []) {
+      if (p.assetId?.includes('tree')) {
+        const px = p.x * tileSize + tileSize / 2;
+        const py = p.y * tileSize + tileSize;
+        this._addStaticBody(px, py - 12, 24, 20);
       }
     }
-    if (this.scene._npcManager && layout.npcs) {
-      this.scene._npcManager.setNPCs(layout.npcs);
+  }
+
+  _addStaticBody(cx, cy, w, h) {
+    const body = this.scene.add.rectangle(cx, cy, w, h);
+    this.scene.physics.add.existing(body, true);
+    this.scene.physics.add.collider(this.scene._player.sprite, body);
+    body.setVisible(false);
+    this._colliderBodies.push(body);
+    this._mapObjects.push(body);
+  }
+
+  // ── NPCs ─────────────────────────────────────────────────────────────────
+
+  _spawnNPCs(layout) {
+    if (!this.scene._npcManager) return;
+    this.scene._npcManager.setNPCs(layout.npcs || []);
+  }
+
+  // ── Interactables ─────────────────────────────────────────────────────────
+
+  _registerInteractables(layout) {
+    this.scene._interactables = layout.interactables || [];
+    if (this.scene._interactablesManager?.setInteractables) {
+      this.scene._interactablesManager.setInteractables(layout.interactables || []);
     }
   }
 }
