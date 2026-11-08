@@ -6,12 +6,13 @@
 
 import { validateSave, migrateSave, SCHEMA_VERSION } from './schema.js';
 
+export const SAVE_KEY_V3 = 'lj_save_v3';
 export const SAVE_KEY_V2 = 'lj_save_v2';
-export const LEGACY_SAVE_KEYS = ['life_journey_save_v1', 'lj_save_v1'];
+export const LEGACY_SAVE_KEYS = ['lj_save_v2', 'life_journey_save_v1', 'lj_save_v1'];
 const MAX_SAVE_SIZE = 524288; // 512 KB
 
 /**
- * Save game state to LocalStorage (v2).
+ * Save game state to LocalStorage (v3).
  * @param {object} state - game state to persist
  * @returns {{ success: boolean, error?: string }}
  */
@@ -24,7 +25,7 @@ export function saveGame(state) {
       return { success: false, error: `Data save terlalu besar (${json.length} > ${MAX_SAVE_SIZE} bytes)` };
     }
 
-    localStorage.setItem(SAVE_KEY_V2, json);
+    localStorage.setItem(SAVE_KEY_V3, json);
     return { success: true };
   } catch (err) {
     console.warn('[persistence] saveGame error:', err);
@@ -34,12 +35,12 @@ export function saveGame(state) {
 
 /**
  * Load game state from LocalStorage.
- * Checks v2 first, falls back to legacy v1 keys and auto-migrates.
+ * Checks v3 first, falls back to legacy v2/v1 keys and auto-migrates.
  * @returns {{ success: boolean, state?: object, error?: string }}
  */
 export function loadGame() {
   try {
-    let raw = localStorage.getItem(SAVE_KEY_V2);
+    let raw = localStorage.getItem(SAVE_KEY_V3);
     let fromLegacy = false;
 
     if (!raw) {
@@ -98,6 +99,7 @@ export function hasValidSave() {
  */
 export function resetSave() {
   try {
+    localStorage.removeItem(SAVE_KEY_V3);
     localStorage.removeItem(SAVE_KEY_V2);
     for (const legacyKey of LEGACY_SAVE_KEYS) {
       localStorage.removeItem(legacyKey);

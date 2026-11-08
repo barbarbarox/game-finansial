@@ -37,6 +37,7 @@ export class Preload extends Phaser.Scene {
 
     // Load JSON data
     this.load.json('phase1config', 'data/phase1.config.json');
+    this.load.json('itemsData', 'data/items.phase1.json');
     this.load.json('eventsData', 'data/events.phase1.json');
     this.load.json('activitiesData', 'data/activities.phase1.json');
     this.load.json('mapsIndex', 'data/maps/index.json');

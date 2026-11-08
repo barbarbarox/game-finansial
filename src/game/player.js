@@ -95,10 +95,19 @@ export class PlayerController {
     this.vx = 0;
     this.vy = 0;
 
-    if (left)  { this.vx = -this.speed; this.facing = 'left'; }
-    if (right) { this.vx =  this.speed; this.facing = 'right'; }
-    if (up)    { this.vy = -this.speed; this.facing = 'up'; }
-    if (down)  { this.vy =  this.speed; this.facing = 'down'; }
+    let effSpeed = this.speed;
+    const st = this._store ? this._store.getState() : null;
+    if (st?.energy && st.energy.current === 0) {
+      effSpeed *= (this.config.energy?.exhaustedSpeedMultiplier ?? 0.7);
+    }
+    if (this.isMounted) {
+      effSpeed *= (this.config.vehicle?.speedMultiplier ?? 1.8);
+    }
+
+    if (left)  { this.vx = -effSpeed; this.facing = 'left'; }
+    if (right) { this.vx =  effSpeed; this.facing = 'right'; }
+    if (up)    { this.vy = -effSpeed; this.facing = 'up'; }
+    if (down)  { this.vy =  effSpeed; this.facing = 'down'; }
 
     if (this.vx !== 0 && this.vy !== 0) {
       const factor = 1 / Math.SQRT2;

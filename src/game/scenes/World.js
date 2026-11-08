@@ -24,6 +24,10 @@ import { MapManager } from '../mapManager.js';
 import { showTimeSkip } from '../../ui/timeSkip.js';
 import { startDialogue, chooseOption, getDialogueState, closeDialogue } from '../../ui/dialogueBox.js';
 import { MissionFxManager } from '../effects/missionFx.js';
+import { createHotbar } from '../../ui/hotbar.js';
+import { changeEnergy, calculateActivityDrain, canPerformActivity, DEFAULT_ENERGY_CONFIG } from '../../domain/energy.js';
+import { useItem, createInventory, addItem as domainAddItem } from '../../domain/inventory.js';
+import { ITEMS_MAP } from '../../domain/itemsCatalog.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -39,6 +43,8 @@ export class World extends Phaser.Scene {
     this._mapManager = null;
     this._missionFx = null;
     this._feedbackUntil = 0;
+    this._hotbar = null;
+    this._passiveMinuteAccumulator = 0;
   }
 
   create() {
@@ -117,6 +123,17 @@ export class World extends Phaser.Scene {
         () => createSettingsModal(uiContainer, null, () => createCreditsModal(uiContainer), () => this._exitToMainMenu(), store)
       );
 
+      // 8. Mount DOM Hotbar (Rule 74 §3)
+      this._hotbar = createHotbar(uiContainer, store, (slotIndex) => this._useHotbarItem(slotIndex));
+      if (this._hotbar) {
+        this._hotbar.update(store.getState(), ITEMS_MAP);
+        store.subscribe((st) => {
+          if (this._hotbar && st) {
+            this._hotbar.update(st, ITEMS_MAP);
+          }
+        });
+      }
+
       // Auto-save on state change & check mission completion (Rule 77)
       let prevMissions = store.getState()?.missions || [];
       store.subscribe((st) => {
@@ -167,6 +184,7 @@ export class World extends Phaser.Scene {
       if (!state || !state.clock) return;
 
       const { clock: newClock, events } = advanceTime(state.clock, minutesToAdvance, 'tick');
+      this._updateEnergyDrain(minutesToAdvance, 'tick');
       let ledger = state.ledger;
 
       for (const ev of events) {
@@ -230,6 +248,115 @@ export class World extends Phaser.Scene {
     }
   }
 
+  _useHotbarItem(slotIndex) {
+    if (document.querySelector('.dialogue-panel:not([style*="display: none"])')) return;
+
+    const store = this.game.registry.get('store');
+    if (!store) return;
+    const state = store.getState();
+    const inventory = state.inventory || createInventory(5);
+    const energyState = state.energy || { current: 100, max: 100 };
+
+    const res = useItem(inventory, slotIndex, ITEMS_MAP, energyState);
+    if (!res.ok) {
+      if (res.reason) {
+        this.showPromptFeedback(res.reason, 2000);
+      }
+      return;
+    }
+
+    const nextEnergy = changeEnergy(energyState, res.item.energy);
+    store.setState({
+      inventory: res.inventory,
+      energy: nextEnergy.state
+    });
+
+    const minutes = res.item.consumeMinutes || 3;
+    if (window.__LJ__?.advanceTime) {
+      window.__LJ__.advanceTime(minutes, `consume_${res.item.id}`);
+    }
+
+    if (this._player?.sprite) {
+      const fx = this.add.text(this._player.sprite.x, this._player.sprite.y - 28, `+${res.item.energy} Energi`, {
+        fontFamily: 'monospace',
+        fontSize: '13px',
+        fontStyle: 'bold',
+        color: '#85E37D',
+        stroke: '#0A0F1A',
+        strokeThickness: 3
+      }).setOrigin(0.5).setDepth(9999);
+
+      this.tweens.add({
+        targets: fx,
+        y: fx.y - 20,
+        alpha: 0,
+        duration: 900,
+        ease: 'Power1',
+        onComplete: () => fx.destroy()
+      });
+    }
+
+    this.showPromptFeedback(`Mengonsumsi ${res.item.label} (+${res.item.energy} Energi)`);
+  }
+
+  _updateEnergyDrain(minutes, reason) {
+    const store = this.game.registry.get('store');
+    if (!store) return;
+    const state = store.getState();
+    const energyState = state.energy || { current: 100, max: 100, exhaustionCount: 0 };
+
+    // Recovery reasons
+    if (reason === 'sleep' || reason === 'tidur_malam' || reason === 'tidur') {
+      const rec = Math.round((DEFAULT_ENERGY_CONFIG.sleepRecoveryPerHour * minutes) / 60);
+      const res = changeEnergy(energyState, Math.max(rec, 50));
+      store.setState({ energy: res.state });
+      return;
+    }
+
+    if (reason === 'makan_rumah') {
+      const res = changeEnergy(energyState, 40);
+      store.setState({ energy: res.state });
+      return;
+    }
+
+    if (reason === 'istirahat') {
+      const rec = Math.round((DEFAULT_ENERGY_CONFIG.restRecoveryPerHour * minutes) / 60);
+      const res = changeEnergy(energyState, rec);
+      store.setState({ energy: res.state });
+      return;
+    }
+
+    // Activity drain
+    const rates = DEFAULT_ENERGY_CONFIG.activityEnergyCostPerHour;
+    if (rates[reason] !== undefined) {
+      const drain = calculateActivityDrain(reason, minutes);
+      const res = changeEnergy(energyState, -drain);
+      store.setState({ energy: res.state });
+      if (res.nowExhausted && !res.wasExhausted) {
+        this.showPromptFeedback('Kamu kelelahan (Energi 0%)! Kecepatan berkurang.', 3000);
+      } else if (res.state.current <= 25 && energyState.current > 25) {
+        this.showPromptFeedback('Energi rendah (<= 25%). Makan atau istirahatlah!', 2500);
+      }
+      return;
+    }
+
+    // Normal tick passive drain (2 per game hour)
+    if (reason === 'tick') {
+      this._passiveMinuteAccumulator += minutes;
+      if (this._passiveMinuteAccumulator >= 30) {
+        const drain = Math.floor(this._passiveMinuteAccumulator / 30);
+        this._passiveMinuteAccumulator %= 30;
+        const res = changeEnergy(energyState, -drain);
+        store.setState({ energy: res.state });
+        if (res.nowExhausted && !res.wasExhausted) {
+          this.showPromptFeedback('Kamu kelelahan (Energi 0%)! Kecepatan berkurang.', 3000);
+        } else if (res.state.current <= 25 && energyState.current > 25) {
+          this.showPromptFeedback('Energi rendah (<= 25%). Makan atau istirahatlah!', 2500);
+        }
+      }
+    }
+  }
+
   _checkInteractables() {
     if (this._feedbackUntil && Date.now() < this._feedbackUntil) {
       return;
@@ -281,8 +408,8 @@ export class World extends Phaser.Scene {
       }
     }
 
-    // 2. Sleep in bed (Rule 72 §4)
-    if (int.action === 'sleep' || int.activityId === 'tidur_malam') {
+    // 2. Sleep in bed (Rule 72 §4 & Rule 74 §1)
+    if (int.action === 'sleep' || int.activityId === 'tidur_malam' || int.activityId === 'tidur') {
       const clock = store?.getState()?.clock || {};
       const diff = getTimeUntilWakeup(clock);
       showTimeSkip({
@@ -291,7 +418,27 @@ export class World extends Phaser.Scene {
         costText: 'Energi Pulih 100%',
         onComplete: () => {
           if (window.__LJ__) window.__LJ__.advanceTime(diff, 'sleep');
-          if (store) store.setState({ gasoline: 100 });
+          if (store) {
+            const st = store.getState();
+            store.setState({
+              gasoline: 100,
+              energy: { current: 100, max: 100, exhaustionCount: st?.energy?.exhaustionCount || 0 }
+            });
+          }
+        }
+      });
+      return;
+    }
+
+    // 2b. Makan di rumah (Rule 74 §1: makan_rumah +40 Energi, 20 menit, gratis)
+    if (int.activityId === 'makan_rumah' || int.action === 'eat_home') {
+      showTimeSkip({
+        title: 'Makan di Dapur Ibu',
+        minutes: 20,
+        costText: '+40 Energi (Gratis)',
+        onComplete: () => {
+          if (window.__LJ__) window.__LJ__.advanceTime(20, 'makan_rumah');
+          this.showPromptFeedback('Makan masakan Ibu yang lezat (+40 Energi)');
         }
       });
       return;
@@ -320,6 +467,14 @@ export class World extends Phaser.Scene {
       } else {
         // Fallback: hardcoded for known types
         actMinutes = int.activityId === 'pelajaran_sekolah' ? 120 : (int.activityId === 'main_game' ? 60 : 30);
+      }
+
+      // Check energy (Rule 74 §1: disable heavy activities if exhausted or insufficient)
+      const st = store?.getState();
+      const check = canPerformActivity(st?.energy, int.activityId, actMinutes);
+      if (!check.canPerform) {
+        this.showPromptFeedback(check.reason, 3500);
+        return;
       }
 
       showTimeSkip({
@@ -371,6 +526,10 @@ export class World extends Phaser.Scene {
       this._hudElement.remove();
       this._hudElement = null;
     }
+    if (this._hotbar) {
+      this._hotbar.destroy();
+      this._hotbar = null;
+    }
     const uiContainer = document.getElementById('ui-container');
     if (uiContainer) {
       uiContainer.replaceChildren();
@@ -421,6 +580,7 @@ export class World extends Phaser.Scene {
           }
         }
         store.setState({ clock: newClock, ledger });
+        this._updateEnergyDrain(minutes, reason);
         this._updateAmbientLight(newClock.timeOfDay);
         return { clock: newClock, events };
       },
@@ -431,6 +591,30 @@ export class World extends Phaser.Scene {
       isLocationOpen: (locId) => {
         const store = this.game.registry.get('store');
         return isLocationOpen(locId, store?.getState()?.clock || {});
+      },
+      getEnergy: () => this.game.registry.get('store')?.getState()?.energy,
+      setEnergy: (val) => {
+        const s = this.game.registry.get('store');
+        if (s) {
+          const cur = s.getState()?.energy?.current ?? 100;
+          s.setState({ energy: changeEnergy(s.getState()?.energy || { current: 100, max: 100 }, val - cur).state });
+        }
+      },
+      getInventory: () => this.game.registry.get('store')?.getState()?.inventory,
+      addItem: (itemId, count = 1) => {
+        const s = this.game.registry.get('store');
+        if (!s) return null;
+        const inv = s.getState()?.inventory || createInventory(5);
+        const res = domainAddItem(inv, itemId, count);
+        if (res.ok) {
+          s.setState({ inventory: res.inventory });
+        }
+        return res;
+      },
+      useHotbarItem: (idx) => this._useHotbarItem(idx),
+      openShop: (locId) => {
+        const uiContainer = document.getElementById('ui-container') || document.body;
+        createShopModal(uiContainer, this.game.registry.get('store'), locId, config, null);
       },
       startDialogue: (id, npcId, onClose) => startDialogue(id, npcId, onClose),
       choose: (i) => chooseOption(i),

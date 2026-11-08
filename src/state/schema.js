@@ -4,7 +4,7 @@
  * Complies with Rule 50 (Security) and Rule 72 (Time System v2).
  */
 
-export const SCHEMA_VERSION = 2;
+export const SCHEMA_VERSION = 3;
 
 /**
  * Whitelist of allowed top-level keys and their types.
@@ -21,6 +21,9 @@ export const SAVE_SCHEMA = {
   budget: { type: 'object', required: false },
   missions: { type: 'array', required: false },
   gasoline: { type: 'number', required: false, min: 0, max: 100 },
+  energy: { type: 'object', required: false },
+  inventory: { type: 'array', required: false },
+  vehicle: { type: 'object', required: false },
   eventEngine: { type: 'object', required: false },
   flags: { type: 'object', required: false },
   seed: { type: 'number', required: false },
@@ -146,6 +149,25 @@ export function migrateSave(data) {
   clean.missions = clean.missions ?? [];
   clean.budget = clean.budget ?? {};
   clean.currentMap = clean.currentMap ?? 'home';
+
+  // Energy & Inventory (Rule 74, Save v3)
+  clean.energy = clean.energy ? {
+    current: Math.max(0, Math.min(clean.energy.max ?? 100, Math.round(clean.energy.current ?? 100))),
+    max: clean.energy.max ?? 100,
+    exhaustionCount: clean.energy.exhaustionCount ?? 0
+  } : {
+    current: 100,
+    max: 100,
+    exhaustionCount: 0
+  };
+
+  clean.inventory = Array.isArray(clean.inventory) ? clean.inventory : [
+    { slotIndex: 0, itemId: null, count: 0 },
+    { slotIndex: 1, itemId: null, count: 0 },
+    { slotIndex: 2, itemId: null, count: 0 },
+    { slotIndex: 3, itemId: null, count: 0 },
+    { slotIndex: 4, itemId: null, count: 0 }
+  ];
 
   // Standardize character
   if (!clean.character && clean.playerName) {

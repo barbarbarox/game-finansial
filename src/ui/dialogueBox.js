@@ -463,6 +463,9 @@ export async function startDialogue(dialogueOrId, npcId = null, onClose = null) 
   currentDialogue = dialogue;
   onDialogueClose = onClose;
 
+  const hotbar = document.getElementById('hud-hotbar');
+  if (hotbar) hotbar.style.display = 'none';
+
   // Set NPC placeholder label
   const npcPlaceholder = document.getElementById('dlg-npc-placeholder');
   if (npcPlaceholder) {
@@ -541,6 +544,9 @@ export function closeDialogue() {
     dialogueContainer.classList.remove('visible');
     dialogueContainer.classList.add('hidden');
   }
+
+  const hotbar = document.getElementById('hud-hotbar');
+  if (hotbar) hotbar.style.display = 'flex';
 
   if (onDialogueClose) {
     const cb = onDialogueClose;

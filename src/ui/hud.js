@@ -136,6 +136,25 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   fuelContainer.appendChild(fuelTrack);
   statusWidget.appendChild(fuelContainer);
 
+  // Bar Energi (Rule 74 §2: Visual Bar Hijau, <= 25% Terracotta)
+  const energyContainer = document.createElement('div');
+  energyContainer.className = 'hm-energy-bar-container';
+  const energyIcon = makeIcon('assets/icons/icon_energi.png', 'Energi');
+  energyIcon.className = 'hm-energy-icon';
+  const energyTrack = document.createElement('div');
+  energyTrack.className = 'hm-energy-track';
+  const energyFill = document.createElement('div');
+  energyFill.className = 'hm-energy-fill';
+  energyFill.style.width = '100%';
+  const energyText = document.createElement('span');
+  energyText.className = 'hm-energy-text hud-val-energy'; // selector for tests
+  energyText.textContent = '100%';
+  energyFill.appendChild(energyText);
+  energyTrack.appendChild(energyFill);
+  energyContainer.appendChild(energyIcon);
+  energyContainer.appendChild(energyTrack);
+  statusWidget.appendChild(energyContainer);
+
   hudElement.appendChild(statusWidget);
 
   // ================= 2. MISI AKTIF (TENGAH ATAS) =================
@@ -222,6 +241,19 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
       fuelFill.classList.add('danger');
     } else if (gasPercent < 60) {
       fuelFill.classList.add('warning');
+    }
+
+    // Energy bar updates (Rule 74 §2)
+    const energyState = state.energy || { current: 100, max: 100 };
+    const energyCur = energyState.current ?? 100;
+    const energyMax = energyState.max ?? 100;
+    const energyPct = energyMax > 0 ? Math.max(0, Math.min(100, Math.round((energyCur / energyMax) * 100))) : 0;
+    energyText.textContent = `${energyPct}%`;
+    energyFill.style.width = `${energyPct}%`;
+    if (energyPct <= 25) {
+      energyFill.style.backgroundColor = '#C0654A';
+    } else {
+      energyFill.style.backgroundColor = '#6F9262';
     }
 
     // Time & Calendar updates

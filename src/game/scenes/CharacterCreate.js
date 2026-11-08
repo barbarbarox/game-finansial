@@ -32,7 +32,7 @@ export class CharacterCreate extends Phaser.Scene {
       ];
 
       const gameState = {
-        schemaVersion: 2,
+        schemaVersion: 3,
         character: charData,
         currentMap: 'home',
         clock: {
@@ -47,6 +47,18 @@ export class CharacterCreate extends Phaser.Scene {
         },
         ledger: ledger,
         gasoline: config.gasolineStartPercent || 100,
+        energy: {
+          current: 100,
+          max: 100,
+          exhaustionCount: 0
+        },
+        inventory: [
+          { slotIndex: 0, itemId: null, count: 0 },
+          { slotIndex: 1, itemId: null, count: 0 },
+          { slotIndex: 2, itemId: null, count: 0 },
+          { slotIndex: 3, itemId: null, count: 0 },
+          { slotIndex: 4, itemId: null, count: 0 }
+        ],
         budget: {},
         missions: initialMissions,
         flags: {},

@@ -1795,4 +1795,158 @@ body.lj-light .time-bar-track {
   }
 }
 
+/* ==========================================================================
+   HOTBAR INVENTARIS & BAR ENERGI (RULE 74)
+   ========================================================================== */
+.hm-energy-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.hm-energy-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.hm-energy-track {
+  flex: 1;
+  height: 8px;
+  background: var(--color-navy-deepest, #0A0F1A);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--color-border, #34456B);
+  position: relative;
+}
+
+.hm-energy-fill {
+  height: 100%;
+  background-color: #6F9262;
+  transition: width 0.3s ease, background-color 0.3s ease;
+  position: relative;
+}
+
+.hm-energy-text {
+  position: absolute;
+  right: 4px;
+  top: -2px;
+  font-size: 8px;
+  font-weight: 700;
+  color: #F7EEDA;
+  text-shadow: 0 0 2px #000;
+  line-height: 10px;
+}
+
+.hud-hotbar-container {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 1000;
+  padding: 6px 10px;
+  background: rgba(31, 42, 68, 0.92);
+  border: 2px solid #D9A441;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(10, 15, 26, 0.6);
+  pointer-events: auto;
+  backdrop-filter: blur(2px);
+}
+
+.hotbar-slot {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  background: #F7EEDA;
+  border: 2px solid #34456B;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+}
+
+.hotbar-slot:hover,
+.hotbar-slot:focus-visible {
+  border-color: #D9A441;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(217, 164, 65, 0.4);
+}
+
+.hotbar-slot.has-item:active {
+  transform: scale(0.95);
+}
+
+.hotbar-slot-key {
+  position: absolute;
+  top: 2px;
+  left: 4px;
+  font-size: 10px;
+  font-weight: bold;
+  color: #34456B;
+  pointer-events: none;
+  font-family: monospace;
+}
+
+.hotbar-slot-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.hotbar-slot-badge {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  background: #C0654A;
+  color: #F7EEDA;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 3px;
+  padding: 0 4px;
+  line-height: 14px;
+  pointer-events: none;
+}
+
+.hotbar-tooltip {
+  position: fixed;
+  transform: translateX(-50%);
+  background: #1F2A44;
+  color: #F7EEDA;
+  border: 1px solid #D9A441;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  pointer-events: none;
+  z-index: 10000;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 600px) {
+  .hud-hotbar-container {
+    bottom: 8px;
+    gap: 4px;
+    padding: 4px 6px;
+  }
+  .hotbar-slot {
+    width: 36px;
+    height: 36px;
+  }
+  .hotbar-slot-icon {
+    width: 22px;
+    height: 22px;
+  }
+}
+
 
