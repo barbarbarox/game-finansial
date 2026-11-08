@@ -57,3 +57,9 @@ Larangan: objek melayang (dasar tidak menyentuh lantai/dinding sesuai kelas), fu
 
 ## 7. Validator tata letak (`tests/layout-check.html` + `map-check.html`)
 Untuk tiap peta: (a) semua objek di dalam batas; (b) kelas `wall_back`/`counter_module` dasar rata `wallBaseY`; (c) tidak ada tumpang-tindih non-dekoratif (IoU > 0.1) dan tidak ada objek melayang; (d) jalur ≥ 2 tile ke semua interactable (BFS); (e) probe kolisi hijau; (f) oklusi hijau; (g) setiap `assetId` ada di manifest; (h) daftar item minimum dari katalog terpenuhi; (i) tidak ada NPC yang salah peta. Hasil ditulis ke `docs/layouts/VALIDATION-<mapId>.md` dengan tangkapan layar overlay.
+
+
+## 8. Zona pendekatan interactable (v5; perbaikan nakas yang menghalangi kasur)
+- Setiap interactable memiliki **zona pendekatan** bebas kolisi, minimal `layout.approachZoneMinTiles` (default 2 lebar × 1 dalam tile) di sisi tempat pemain berinteraksi (default: depan/selatan), dan zona itu **terjangkau dari pintu ruangan** lewat BFS/pathfinding dengan collider kaki pemain yang sebenarnya.
+- Furnitur samping (nakas, rak kecil, tanaman) **tidak boleh** berada di zona pendekatan atau menyempitkan lorong menuju interactable di bawah 1 tile. **Kasur:** kepala di dinding belakang; nakas menempel dinding belakang di samping kepala kasur; jalur ke kaki dan sisi kasur tetap lega. Perbaiki posisi nakas di kamar pemain (dan temuan serupa di ruang lain).
+- Validator `approachCheck` (di `layout-check.html`) berjalan untuk semua interactable di 7 peta dan melaporkan: zona bebas, terjangkau, jarak jalur dari pintu. Tes jalan dari pintu kamar ke titik interaksi kasur dijalankan dengan pathfinding rule 81.

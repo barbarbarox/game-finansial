@@ -49,3 +49,7 @@ Key `lj_save_v2` (satu objek; migrasi dari `lj_save_v1` wajib, lihat 70 dan 72).
 
 ## 10. Save v3 dan hook uji (v4)
 Save v3 menambah: `energy`, `inventory[{itemId,count}]`, `vehicle{mounted,parked{map,x,y}}`, `missionsCompleted[]`, `terrain.mode`; migrasi dari v2 (energi 100, tas kosong, motor turun). Hook debug tambahan (aturan keamanan sama, hanya `?debug=1` + `debugEnabled:true`): `collisionProbe(mapId)`, `listNPCs(mapId)`, `completeMission(id)`, `useItem(slot)`, `giveItem(id,n)`, `setEnergy(n)`, `toggleVehicle()`, `measureSpeed()`, `setFuel(n)`, `advanceRealSeconds(n)` (jam palsu untuk uji bensin).
+
+
+## 11. Event domain dan hook inspeksi (v5)
+Perubahan state melalui satu pintu domain yang memancarkan event bertipe (`cashChanged`, `fuelChanged`, `energyChanged`, `inventoryChanged`, `backpackChanged`, `mapChanged`, dst.); UI berlangganan. Hook debug tambahan hanya untuk inspeksi/persiapan: `getInventory()`, `getFuel()`, `getPath()`, `getApproachReport(mapId)`; tidak boleh dipakai untuk menjalankan aksi yang diuji (rule 78).

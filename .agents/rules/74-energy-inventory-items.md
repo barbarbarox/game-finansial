@@ -33,3 +33,7 @@ Ikon 32×32 untuk 16 item dari sheet grid (`data/asset-briefs-v4.json` → `item
 
 ## 6. Uji wajib
 Penguras pasif dan biaya aktivitas benar per jam (belajar 1 jam → −10 − pasif); makan rumah +40 dan waktu maju; item dari minimarket → tas → dipakai → energi naik, jumlah turun, saldo benar di ledger; tas penuh menolak pembelian; energi 0% menonaktifkan aktivitas berat; hotbar via klik dan tombol 1–5; save/load mempertahankan energi dan tas; tangkapan layar hotbar dan bar energi pada desktop dan tablet.
+
+
+## 7. Pembaruan v5
+Bagian inventaris (§3) **digantikan oleh `80-inventory-backpack-item-actions.md`** (hotbar 5 + ransel 20, pengisian otomatis, popup aksi). Bagian katalog item (§4) dilengkapi `79-shop-and-vendors.md` dan `data/items-types.v5.json`; katalog **harus selaras dengan ikon yang ada**. Pembelian wajib masuk ke inventaris lewat `inventory.add` (atomik dengan ledger).

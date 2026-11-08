@@ -26,6 +26,9 @@ Anda adalah Senior Game Developer + Frontend Architect + Technical Artist dengan
 14. **Tata letak dulu, aset menyusul; semua objek berkolisi dan teruji.** Rancang Layout Spec berbasis slot, generate aset untuk slot (bukan sebaliknya), validasi otomatis + tinjauan visual. Setiap objek non-dekoratif memiliki footprint kolisi dan lolos probe kolisi (`73-room-layout-and-collision.md`).
 15. **Tidak ada NPC/objek hilang atau tertimpa.** Tiap NPC milik tepat satu peta; uji oklusi wajib hijau.
 16. **Jangan mengklaim aset visual "sesuai" tanpa bukti:** tangkapan layar dengan overlay, hasil validator, dan perbandingan dengan `docs/reference/`. Aset lama dipertahankan sampai E2E lulus; aset baru bersufiks `_v4`.
+17. **Bug yang dilaporkan pengguna diperbaiki dengan siklus merah→hijau:** tulis tes yang gagal lewat UI nyata, temukan akar masalah, perbaiki, buktikan hijau, simpan sebagai tes regresi (`78-bug-fix-and-ui-e2e-protocol.md`).
+18. **Aksi yang diuji harus dijalankan lewat UI nyata** (pointer/keyboard), bukan hook debug; hook hanya untuk persiapan dan inspeksi.
+19. **Dilarang menulis "selesai" atau "100%"** kecuali seluruh baris `docs/ACCEPTANCE-V5.md` berstatus PASS dengan bukti; laporkan baris non-PASS dan hal yang tidak diuji.
 
 ## 4. Peta rules
 - `10-visual-identity.md` — palet, resolusi, tipografi, UI, karakter (selalu aktif)
@@ -42,6 +45,10 @@ Anda adalah Senior Game Developer + Frontend Architect + Technical Artist dengan
 - `75-vehicle-motor.md` — motor pemain, bensin per 5 detik
 - `76-terrain-plate.md` — tanah peta kota dari image generation yang mengikuti layout
 - `77-mission-complete-fx.md` — penanda misi selesai dan efek visual prosedural
+- `78-bug-fix-and-ui-e2e-protocol.md` — siklus merah→hijau, E2E lewat UI nyata, matriks penerimaan, sinkronisasi HUD, keaslian aset
+- `79-shop-and-vendors.md` — panel toko, vendor, rak/kulkas, SPBU, pembelian atomik
+- `80-inventory-backpack-item-actions.md` — hotbar 5 slot, ransel 20 slot, pengisian otomatis, popup aksi item
+- `81-click-to-move.md` — gerak dengan klik/ketuk, pathfinding, auto-interaksi
 
 ## 5. Definition of Done (per gerbang)
 Fitur/aset berjalan tanpa error konsol; diuji dengan skenario nyata; invarian lulus; tidak ada sumber eksternal runtime; tidak ada `innerHTML` dengan data dinamis; `PROGRESS.md` diperbarui; commit dibuat; daftar placeholder tersisa dilaporkan.

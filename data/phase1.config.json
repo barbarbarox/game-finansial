@@ -216,7 +216,19 @@
       "3",
       "4",
       "5"
-    ]
+    ],
+    "hotbarSlots": 5,
+    "backpackSlots": 20,
+    "autoRefillHotbar": true,
+    "quickUseKeys": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ],
+    "backpackKey": "B",
+    "discardConfirm": true
   },
   "vehicle": {
     "speedMultiplier": 1.8,
@@ -246,5 +258,37 @@
     "conformanceIoUMin": 0.85,
     "edgeTolerancePx": 6,
     "maxAttempts": 3
+  },
+  "shop": {
+    "purchaseMinutes": 5,
+    "maxQtyPerPurchase": 5,
+    "eatInPlaceMinutesFromItem": true
+  },
+  "spbu": {
+    "pricePerPercent": 500,
+    "presets": [
+      10000,
+      20000,
+      30000,
+      "full"
+    ],
+    "minutesPerRefuel": 10
+  },
+  "clickToMove": {
+    "enabled": true,
+    "autoInteract": true,
+    "stopDistancePx": 4,
+    "stuckTimeoutMs": 1500,
+    "maxSnapRadiusTiles": 3,
+    "markerMs": 1200,
+    "holdToMove": false,
+    "navCellPx": 8,
+    "pathBudgetMs": 5
+  },
+  "layout": {
+    "approachZoneMinTiles": [
+      2,
+      1
+    ]
   }
 }

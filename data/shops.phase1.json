@@ -1,0 +1,192 @@
+{
+ "version": 1,
+ "note": "Konsumsi per toko diturunkan dari sellAt di items.phase1.json (dan tipe di items-types.v5.json). Berkas ini memuat metadata toko, barang non-konsumsi, mode beli, dan peta interactable->filter.",
+ "purchaseMinutes": 5,
+ "shops": [
+  {
+   "id": "kantin_sekolah",
+   "label": "Kantin Sekolah",
+   "map": "school",
+   "hoursRef": "school.kantin",
+   "vendorNpcHints": [
+    "penjual_kantin",
+    "bu_sri"
+   ],
+   "modes": [
+    "makan_di_tempat",
+    "bungkus"
+   ],
+   "sellAt": "kantin",
+   "interactables": {
+    "counter_kantin_etalase": {
+     "filter": "all"
+    }
+   },
+   "minConsumables": 4
+  },
+  {
+   "id": "minimarket",
+   "label": "Minimarket",
+   "map": "minimarket",
+   "hoursRef": "minimarket",
+   "vendorNpcHints": [
+    "kasir_minimarket",
+    "mbak_maya"
+   ],
+   "modes": [
+    "bungkus"
+   ],
+   "sellAt": "minimarket",
+   "interactables": {
+    "rak_dinding_snack": {
+     "filter": [
+      "snack"
+     ]
+    },
+    "kulkas_minuman_besar": {
+     "filter": [
+      "minuman"
+     ]
+    },
+    "etalase_makanan_siap_saji": {
+     "filter": [
+      "makanan"
+     ]
+    },
+    "kasir_counter": {
+     "filter": "all",
+     "goods": true
+    },
+    "rak_alat_tulis": {
+     "filter": "goods:alat_tulis"
+    },
+    "mesin_fotokopi": {
+     "filter": "goods:fotokopi"
+    }
+   },
+   "minConsumables": 8,
+   "goods": [
+    {
+     "id": "alat_tulis",
+     "label": "Alat tulis",
+     "price": 15000,
+     "minutes": 15,
+     "category": "Beban Sekolah"
+    },
+    {
+     "id": "fotokopi",
+     "label": "Fotokopi",
+     "price": 5000,
+     "minutes": 10,
+     "category": "Beban Sekolah"
+    },
+    {
+     "id": "kuota_hemat",
+     "label": "Paket kuota hemat",
+     "price": 15000,
+     "minutes": 5,
+     "category": "Beban Komunikasi",
+     "setFlag": "kuotaHemat"
+    },
+    {
+     "id": "kuota_besar",
+     "label": "Paket kuota besar",
+     "price": 35000,
+     "minutes": 5,
+     "category": "Beban Komunikasi",
+     "setFlag": "kuotaBesar"
+    }
+   ]
+  },
+  {
+   "id": "game_center_kafe",
+   "label": "Kafe Game Center",
+   "map": "game_center",
+   "hoursRef": "game_center",
+   "vendorNpcHints": [
+    "penjaga_game",
+    "kak_riko"
+   ],
+   "modes": [
+    "makan_di_tempat",
+    "bungkus"
+   ],
+   "sellAt": "game_center",
+   "interactables": {
+    "counter_kafe": {
+     "filter": "all"
+    }
+   },
+   "minConsumables": 3,
+   "note": "Jika katalog belum punya sellAt game_center, tambahkan minimal air_mineral, isotonik, keripik, es_teh."
+  },
+  {
+   "id": "toko_kosmetik",
+   "label": "Toko Kosmetik",
+   "map": "toko_kosmetik",
+   "hoursRef": "toko_kosmetik",
+   "vendorNpcHints": [
+    "penjaga_kosmetik",
+    "kak_cindy"
+   ],
+   "modes": [],
+   "sellAt": null,
+   "interactables": {
+    "etalase_kaca": {
+     "filter": "goods"
+    },
+    "kasir_kecil": {
+     "filter": "goods"
+    }
+   },
+   "minConsumables": 0,
+   "goods": [
+    {
+     "id": "lip_tint",
+     "label": "Lip tint",
+     "price": 35000,
+     "minutes": 20,
+     "category": "Beban Perawatan Diri"
+    },
+    {
+     "id": "skincare",
+     "label": "Skincare",
+     "price": 75000,
+     "minutes": 20,
+     "category": "Beban Perawatan Diri",
+     "promoEventRef": "E04"
+    }
+   ]
+  },
+  {
+   "id": "spbu",
+   "label": "SPBU",
+   "map": "spbu",
+   "hoursRef": "spbu",
+   "vendorNpcHints": [
+    "petugas_spbu",
+    "mas_doni"
+   ],
+   "kind": "fuel",
+   "interactables": {
+    "dispenser_bbm": {
+     "filter": "fuel"
+    },
+    "kiosk_spbu": {
+     "filter": "fuel"
+    }
+   },
+   "fuel": {
+    "pricePerPercent": 500,
+    "presets": [
+     10000,
+     20000,
+     30000,
+     "full"
+    ],
+    "minutesPerRefuel": 10,
+    "ledgerCategory": "Beban Transportasi"
+   }
+  }
+ ]
+}

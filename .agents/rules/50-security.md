@@ -25,3 +25,8 @@ Aplikasi client-side tanpa backend. Permukaan serangan kecil tetapi nyata. Pemet
 15. **Hook uji tambahan** (`advanceTime`, `openDialogue`, `selectChoice`, `teleportToMap`) tunduk pada aturan hook debug yang sama: hanya aktif dengan `?debug=1` dan `debugEnabled: true`.
 16. **Data inventaris/item/save v3:** validasi skema (itemId harus ada di katalog, jumlah bilangan bulat 1..stackMax, jumlah slot ≤ batas), tolak kunci berbahaya; teks tooltip/efek lewat `textContent`.
 17. **Hook uji v4** (`giveItem`, `setEnergy`, `setFuel`, `completeMission`, `advanceRealSeconds`, dsb.) hanya aktif dengan `?debug=1` dan `debugEnabled: true`; audit akhir memastikan nonaktif pada rilis dan tidak ada jalan pintas yang melewati domain.
+
+
+18. **Data toko dan transaksi (v5):** validasi skema `shops.phase1.json` (itemId ada di katalog dan punya ikon, harga bilangan bulat, jumlah 1..batas); transaksi pembelian atomik (ledger + inventaris, tanpa keadaan setengah); nominal isi bensin dihitung di domain, bukan dari UI.
+19. **Input pointer (v5):** abaikan peristiwa pada elemen UI DOM; koordinat klik divalidasi dan dibatasi ke batas peta; anggaran waktu pathfinding dibatasi (`pathBudgetMs`) agar tidak membekukan game; tidak ada eksekusi dari data klik.
+20. **Hook uji tidak sah untuk aksi yang diuji** (rule 78); audit akhir mencatat tes yang memakai hook dan memastikan hook nonaktif pada rilis.

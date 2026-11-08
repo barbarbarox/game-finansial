@@ -1,0 +1,28 @@
+{
+ "version": 1,
+ "note": "Tipe item untuk tab/filter toko. Selaraskan dengan item aktual (ikon yang ada di assets/items/): tambahkan item baru (mis. mie_ayam, lemper, soto_ayam, roti_coklat) dan hapus yang tidak punya ikon dari penjualan.",
+ "types": {
+  "nasi_goreng": "makanan",
+  "mie_goreng": "makanan",
+  "nasi_kuning": "makanan",
+  "bakso": "makanan",
+  "roti_isi": "makanan",
+  "pisang": "makanan",
+  "keripik": "snack",
+  "gorengan": "snack",
+  "mie_cup": "makanan",
+  "coklat_batang": "snack",
+  "air_mineral": "minuman",
+  "isotonik": "minuman",
+  "susu_kotak": "minuman",
+  "teh_kemasan": "minuman",
+  "jus_kotak": "minuman",
+  "es_teh": "minuman"
+ },
+ "categories": [
+  "makanan",
+  "minuman",
+  "snack",
+  "lainnya"
+ ]
+}
