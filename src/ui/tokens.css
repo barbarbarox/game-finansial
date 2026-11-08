@@ -259,9 +259,154 @@ body {
 
 /* Center group: Clock & Mission */
 .hud-center {
-  gap: 6px;
+  gap: 8px;
   flex-shrink: 1;
   min-width: 0;
+}
+
+/* ========================================================
+   HARVEST MOON-INSPIRED TIME WIDGET & BAR WAKTU
+   ======================================================== */
+.hud-time-widget {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-bg-card);
+  border: 1.5px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  padding: 3px 8px;
+  gap: 7px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+/* Sky Dial Box (Left side, inspired by Harvest Moon sky gauge) */
+.time-sky-box {
+  width: 30px;
+  height: 30px;
+  border-radius: 3px;
+  border: 1px solid var(--color-border-bright);
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #3A7BD5 0%, #00D2FF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.5);
+}
+
+.time-sky-marker {
+  font-size: 13px;
+  line-height: 1;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+}
+
+/* Sky gradient variations */
+.time-sky-box.sky-pagi {
+  background: linear-gradient(180deg, #E89E44 0%, #4A88B8 100%);
+}
+.time-sky-box.sky-siang {
+  background: linear-gradient(180deg, #2A72BA 0%, #68BFF5 100%);
+}
+.time-sky-box.sky-sore {
+  background: linear-gradient(180deg, #BA4A20 0%, #E8902A 70%, #203048 100%);
+}
+.time-sky-box.sky-malam {
+  background: linear-gradient(180deg, #0A1024 0%, #162444 100%);
+}
+
+/* Info stack */
+.time-info-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.time-row-top {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.time-day-pill {
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  padding: 1px 5px;
+  border-radius: 2px;
+  background: var(--color-gold);
+  color: var(--color-navy-deepest);
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}
+
+.time-date-text {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--color-cream-light);
+  white-space: nowrap;
+}
+
+.time-row-bottom {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Digital clock box with clean inset */
+.time-digital-box {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-navy-deepest);
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+  padding: 1px 5px;
+}
+
+.time-digital-val {
+  font-size: 12px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #FFFFFF;
+  letter-spacing: 0.5px;
+}
+
+.time-colon-pulse {
+  animation: colonBlink 1s infinite steps(1);
+}
+
+@keyframes colonBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+.time-period-tag {
+  font-size: 8px;
+  font-weight: 700;
+  padding: 1px 3px;
+  border-radius: 2px;
+  background: var(--color-navy-dark);
+  color: var(--color-gold);
+  border: 1px solid rgba(217, 164, 65, 0.4);
+  text-transform: uppercase;
+}
+
+/* Visual 24h Time Bar (Bar Waktu yang berjalan) */
+.time-bar-track {
+  width: 52px;
+  height: 6px;
+  background: var(--color-navy-deepest);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  position: relative;
+}
+
+.time-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #D9A441, #6F9262, #4A88B8);
+  transition: width 0.3s ease;
 }
 
 .clock-badge {
@@ -1014,4 +1159,28 @@ body.lj-light .lj-table td {
 
 body.lj-light .lj-table tr:hover td {
   background: #F0E8D8;
+}
+
+body.lj-light .hud-time-widget {
+  background: #FFFFFF;
+  border-color: #C4832E;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+body.lj-light .time-digital-box {
+  background: #EAE6DE;
+  border-color: #C4BAA4;
+}
+
+body.lj-light .time-digital-val {
+  color: #1A2033;
+}
+
+body.lj-light .time-date-text {
+  color: #2C3A54;
+}
+
+body.lj-light .time-bar-track {
+  background: #EAE6DE;
+  border-color: #C4BAA4;
 }

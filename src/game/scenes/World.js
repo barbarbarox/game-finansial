@@ -85,6 +85,15 @@ export class World extends Phaser.Scene {
     this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
+    // 6b. Ambient Day-Night Lighting Overlay (layar penuh, mengikuti kamera)
+    const viewW = this.cameras.main.width || 960;
+    const viewH = this.cameras.main.height || 540;
+    this._ambientLight = this.add.rectangle(0, 0, viewW, viewH, 0x000000, 0);
+    this._ambientLight.setOrigin(0, 0).setScrollFactor(0).setDepth(4500);
+
+    const initialTime = store?.getState()?.clock?.timeOfDay ?? (8 * 60);
+    this._updateAmbientLight(initialTime);
+
     // 7. Mount DOM HUD
     const uiContainer = document.getElementById('ui-container') || document.body;
     if (store) {
@@ -166,6 +175,34 @@ export class World extends Phaser.Scene {
         },
         ledger
       });
+
+      this._updateAmbientLight(timeOfDay);
+    }
+  }
+
+  _updateAmbientLight(timeOfDay) {
+    if (!this._ambientLight) return;
+    const hours = (timeOfDay / 60) % 24;
+
+    // Transisi pencahayaan dunia game sesuai waktu:
+    // Pagi (07:00 - 15:30): Cahaya siang bersih (alpha 0)
+    // Sore (15:30 - 18:00): Senja jingga/keemasan hangat
+    // Malam (18:00 - 21:00): Biru malam temaram
+    // Dini Hari (21:00 - 05:00): Biru gelap malam pekat
+    // Fajar (05:00 - 07:00): Semburat keemasan fajar
+    if (hours >= 7 && hours < 15.5) {
+      this._ambientLight.setFillStyle(0x000000, 0);
+    } else if (hours >= 15.5 && hours < 18) {
+      const t = (hours - 15.5) / 2.5;
+      this._ambientLight.setFillStyle(0xD86A28, 0.04 + t * 0.16);
+    } else if (hours >= 18 && hours < 21) {
+      const t = (hours - 18) / 3;
+      this._ambientLight.setFillStyle(0x0E1832, 0.18 + t * 0.22);
+    } else if (hours >= 21 || hours < 5) {
+      this._ambientLight.setFillStyle(0x081024, 0.40);
+    } else {
+      const t = (hours - 5) / 2;
+      this._ambientLight.setFillStyle(0xC88040, 0.22 * (1 - t));
     }
   }
 

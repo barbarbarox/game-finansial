@@ -92,18 +92,70 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const centerGroup = document.createElement('div');
   centerGroup.className = 'hud-group hud-center';
 
-  // Clock (Icon Jam Pixel Art)
-  const clockBadge = document.createElement('div');
-  clockBadge.className = 'hud-badge clock-badge';
-  const clockTag = document.createElement('span');
-  clockTag.className = 'hud-tag tag-clock';
-  clockTag.textContent = 'WAKTU';
-  const clockText = document.createElement('span');
-  clockText.className = 'hud-val hud-val-clock';
-  clockText.textContent = 'Bulan 1 · Hari 1';
-  clockBadge.appendChild(makeIcon('assets/icons/icon_jam.png', 'Waktu'));
-  clockBadge.appendChild(clockTag);
-  clockBadge.appendChild(clockText);
+  // --- HARVEST MOON-INSPIRED TIME WIDGET & BAR WAKTU ---
+  const timeWidget = document.createElement('div');
+  timeWidget.className = 'hud-time-widget';
+  timeWidget.setAttribute('role', 'status');
+  timeWidget.setAttribute('aria-label', 'Status Waktu & Siklus Hari');
+
+  // 1. Sky Dial Box (Kiri: Langit dinamis + Marker Matahari/Bulan yang bergerak)
+  const skyBox = document.createElement('div');
+  skyBox.className = 'time-sky-box sky-pagi';
+  const skyMarker = document.createElement('span');
+  skyMarker.className = 'time-sky-marker';
+  skyMarker.textContent = '☀️';
+  skyBox.appendChild(skyMarker);
+
+  // 2. Info Stack (Kanan: Hari, Tanggal, Jam Digital, dan Bar Waktu)
+  const infoStack = document.createElement('div');
+  infoStack.className = 'time-info-stack';
+
+  // Row Atas: Tab Hari (e.g. RABU) + Tanggal
+  const rowTop = document.createElement('div');
+  rowTop.className = 'time-row-top';
+  const dayPill = document.createElement('span');
+  dayPill.className = 'time-day-pill';
+  dayPill.textContent = 'SENIN';
+  const dateText = document.createElement('span');
+  dateText.className = 'time-date-text';
+  dateText.textContent = 'Hari 1 · Bln 1';
+  rowTop.appendChild(dayPill);
+  rowTop.appendChild(dateText);
+
+  // Row Bawah: Jam Digital + Bar Waktu Visual + Tag Periode
+  const rowBottom = document.createElement('div');
+  rowBottom.className = 'time-row-bottom';
+
+  const digitalBox = document.createElement('div');
+  digitalBox.className = 'time-digital-box';
+  const clockIcon = makeBtnIcon('assets/icons/icon_jam.png');
+  const digitalVal = document.createElement('span');
+  digitalVal.className = 'time-digital-val hud-val-clock'; // preserves class for automated tests
+  digitalVal.textContent = '08:00';
+  const periodTag = document.createElement('span');
+  periodTag.className = 'time-period-tag';
+  periodTag.textContent = 'PAGI';
+  digitalBox.appendChild(clockIcon);
+  digitalBox.appendChild(digitalVal);
+  digitalBox.appendChild(periodTag);
+
+  // Bar Waktu Visual (Track & Fill yang bergerak seiring waktu berjalan)
+  const timeBarTrack = document.createElement('div');
+  timeBarTrack.className = 'time-bar-track';
+  timeBarTrack.title = 'Siklus Perjalanan Waktu Hari Ini (24 Jam)';
+  const timeBarFill = document.createElement('div');
+  timeBarFill.className = 'time-bar-fill';
+  timeBarFill.style.width = '33%';
+  timeBarTrack.appendChild(timeBarFill);
+
+  rowBottom.appendChild(digitalBox);
+  rowBottom.appendChild(timeBarTrack);
+
+  infoStack.appendChild(rowTop);
+  infoStack.appendChild(rowBottom);
+
+  timeWidget.appendChild(skyBox);
+  timeWidget.appendChild(infoStack);
 
   // Misi (Icon Bendera Misi Pixel Art)
   const missionBadge = document.createElement('div');
@@ -118,7 +170,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   missionBadge.appendChild(missionTag);
   missionBadge.appendChild(missionTitle);
 
-  centerGroup.appendChild(clockBadge);
+  centerGroup.appendChild(timeWidget);
   centerGroup.appendChild(missionBadge);
 
   // ================= KANAN: TOMBOL NAVIGASI & MENU (DENGAN IKON PIXEL ART, TANPA EMOTE) =================
@@ -186,12 +238,54 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
       gasFill.classList.add('warning');
     }
 
-    const totalMin = state.clock?.timeOfDay ?? (8 * 60);
+    // --- UPDATE STATUS WAKTU & BAR WAKTU HARVEST MOON STYLE ---
+    const clock = state.clock || {};
+    const day = clock.day || 1;
+    const month = clock.month || 1;
+    const totalMin = clock.timeOfDay ?? (8 * 60);
+
     const hours = Math.floor(totalMin / 60) % 24;
     const mins = Math.floor(totalMin % 60);
     const hh = String(hours).padStart(2, '0');
     const mm = String(mins).padStart(2, '0');
-    clockText.textContent = `Bln ${state.clock?.month || 1} · H${state.clock?.day || 1} · ${hh}:${mm}`;
+
+    const DAY_NAMES = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+    const dayName = DAY_NAMES[(day - 1) % 7] || 'Senin';
+
+    dayPill.textContent = dayName.toUpperCase();
+    dateText.textContent = `Hari ${day} · Bln ${month}`;
+    digitalVal.textContent = `${hh}:${mm}`;
+
+    // Period & Sky themes
+    let period = 'PAGI';
+    let skyClass = 'sky-pagi';
+    let markerEmoji = '☀️';
+
+    if (hours >= 6 && hours < 11) {
+      period = 'PAGI';
+      skyClass = 'sky-pagi';
+      markerEmoji = '🌅';
+    } else if (hours >= 11 && hours < 15) {
+      period = 'SIANG';
+      skyClass = 'sky-siang';
+      markerEmoji = '☀️';
+    } else if (hours >= 15 && hours < 18) {
+      period = 'SORE';
+      skyClass = 'sky-sore';
+      markerEmoji = '🌇';
+    } else {
+      period = 'MALAM';
+      skyClass = 'sky-malam';
+      markerEmoji = '🌙';
+    }
+
+    periodTag.textContent = period;
+    skyBox.className = `time-sky-box ${skyClass}`;
+    skyMarker.textContent = markerEmoji;
+
+    // Persentase Bar Waktu (00:00 - 24:00 = 0% - 100%)
+    const dayPercent = Math.max(0, Math.min(100, (totalMin / 1440) * 100));
+    timeBarFill.style.width = `${dayPercent.toFixed(1)}%`;
 
     const activeM = state.missions?.find(m => !m.completed);
     missionTitle.textContent = activeM ? activeM.title : 'Semua Selesai';
