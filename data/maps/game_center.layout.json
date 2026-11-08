@@ -8,85 +8,322 @@
     "heightTiles": 18,
     "tileSize": 32,
     "spawns": {
-      "default": { "x": 13, "y": 15 },
-      "from_hub": { "x": 13, "y": 15 }
+      "default": {
+        "x": 13,
+        "y": 15
+      },
+      "from_hub": {
+        "x": 13,
+        "y": 15
+      }
     }
   },
   "floors": [
-    { "type": "lantai_arcade_neon", "x": 2, "y": 2, "w": 22, "h": 14 }
+    {
+      "type": "lantai_arcade_neon",
+      "x": 2,
+      "y": 2,
+      "w": 22,
+      "h": 14
+    }
   ],
   "walls": [
-    { "x": 1, "y": 1, "w": 24, "h": 1 },
-    { "x": 1, "y": 1, "w": 1, "h": 16 },
-    { "x": 24, "y": 1, "w": 1, "h": 16 },
-    { "x": 1, "y": 17, "w": 24, "h": 1 }
+    {
+      "x": 1,
+      "y": 1,
+      "w": 24,
+      "h": 1
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "w": 1,
+      "h": 16
+    },
+    {
+      "x": 24,
+      "y": 1,
+      "w": 1,
+      "h": 16
+    },
+    {
+      "x": 1,
+      "y": 17,
+      "w": 24,
+      "h": 1
+    }
   ],
   "colliders": [
-    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 26, "h": 2 },
-    { "name": "batas_luar_bawah", "x": 0, "y": 17, "w": 26, "h": 1 },
-    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 18 },
-    { "name": "batas_luar_kanan", "x": 24, "y": 0, "w": 2, "h": 18 }
+    {
+      "name": "batas_luar_atas",
+      "x": 0,
+      "y": 0,
+      "w": 26,
+      "h": 2
+    },
+    {
+      "name": "batas_luar_bawah",
+      "x": 0,
+      "y": 17,
+      "w": 26,
+      "h": 1
+    },
+    {
+      "name": "batas_luar_kiri",
+      "x": 0,
+      "y": 0,
+      "w": 2,
+      "h": 18
+    },
+    {
+      "name": "batas_luar_kanan",
+      "x": 24,
+      "y": 0,
+      "w": 2,
+      "h": 18
+    }
   ],
   "furniture": [
     {
-      "id": "fur_arcade_1",
-      "type": "arcade_cabinet",
-      "label": "Arcade Fighting 2000",
+      "id": "slot_gc_arcade_a1",
+      "assetId": "furn_arcade_a_v4",
+      "fallbackAssetId": "fur_arcade_1",
+      "label": "Arcade Fighting 1",
+      "class_": "wall_back",
       "x": 3,
-      "y": 3,
-      "w": 3,
-      "h": 2,
+      "y": 2,
+      "w": 1.5,
+      "h": 3,
       "collidable": true
     },
     {
-      "id": "fur_arcade_2",
-      "type": "arcade_cabinet",
-      "label": "Rhythm Music Mania",
-      "x": 8,
-      "y": 3,
-      "w": 3,
-      "h": 2,
+      "id": "slot_gc_arcade_a2",
+      "assetId": "furn_arcade_a_v4",
+      "fallbackAssetId": "fur_arcade_1",
+      "label": "Arcade Fighting 2",
+      "class_": "wall_back",
+      "x": 5,
+      "y": 2,
+      "w": 1.5,
+      "h": 3,
       "collidable": true
     },
     {
-      "id": "fur_arcade_3",
-      "type": "arcade_racing",
-      "label": "Turbo Racing Simulator",
-      "x": 13,
-      "y": 3,
-      "w": 4,
-      "h": 2,
+      "id": "slot_gc_arcade_a3",
+      "assetId": "furn_arcade_a_v4",
+      "fallbackAssetId": "fur_arcade_1",
+      "label": "Arcade Fighting 3",
+      "class_": "wall_back",
+      "x": 7,
+      "y": 2,
+      "w": 1.5,
+      "h": 3,
       "collidable": true
     },
     {
-      "id": "fur_tv_arena",
-      "type": "layar_turnamen",
+      "id": "slot_gc_arcade_b1",
+      "assetId": "furn_arcade_b_v4",
+      "fallbackAssetId": "fur_arcade_2",
+      "label": "Rhythm Mania 1",
+      "class_": "wall_back",
+      "x": 10,
+      "y": 2,
+      "w": 1.5,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_arcade_b2",
+      "assetId": "furn_arcade_b_v4",
+      "fallbackAssetId": "fur_arcade_2",
+      "label": "Rhythm Mania 2",
+      "class_": "wall_back",
+      "x": 12,
+      "y": 2,
+      "w": 1.5,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_arcade_b3",
+      "assetId": "furn_arcade_b_v4",
+      "fallbackAssetId": "fur_arcade_3",
+      "label": "Racing Turbo 3",
+      "class_": "wall_back",
+      "x": 14,
+      "y": 2,
+      "w": 1.5,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_tv_besar",
+      "assetId": "furn_tv_besar_v4",
+      "fallbackAssetId": "fur_tv_arena",
       "label": "Layar LED Turnamen",
-      "x": 19,
+      "class_": "wall_back",
+      "x": 17,
       "y": 3,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_dispenser",
+      "assetId": "furn_dispenser_galon_v4",
+      "label": "Dispenser Galon",
+      "class_": "wall_back",
+      "x": 21,
+      "y": 3,
+      "w": 1,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_poster_1",
+      "assetId": "furn_poster_kosong_v4",
+      "label": "Poster Game Retro",
+      "class_": "wall_decor",
+      "x": 9,
+      "y": 1.5,
+      "w": 1.5,
+      "h": 2,
+      "collidable": false
+    },
+    {
+      "id": "slot_gc_poster_2",
+      "assetId": "furn_poster_kosong_v4",
+      "label": "Poster Turnamen Esports",
+      "class_": "wall_decor",
+      "x": 16,
+      "y": 1.5,
+      "w": 1.5,
+      "h": 2,
+      "collidable": false
+    },
+    {
+      "id": "slot_gc_mesin_capit",
+      "assetId": "furn_mesin_capit_v4",
+      "label": "Mesin Capit Boneka",
+      "class_": "free",
+      "x": 4,
+      "y": 7,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_sofa_1",
+      "assetId": "furn_sofa_nonton_v4",
+      "fallbackAssetId": "fur_meja_lounge",
+      "label": "Sofa Nonton 1",
+      "class_": "free",
+      "x": 17,
+      "y": 7,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_sofa_2",
+      "assetId": "furn_sofa_nonton_v4",
+      "fallbackAssetId": "fur_meja_lounge",
+      "label": "Sofa Nonton 2",
+      "class_": "free",
+      "x": 17,
+      "y": 10,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_tanaman",
+      "assetId": "furn_tanaman_pot_v4",
+      "label": "Tanaman Hias",
+      "class_": "free",
+      "x": 21,
+      "y": 7.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_counter_kafe",
+      "assetId": "furn_counter_kafe_v4",
+      "fallbackAssetId": "fur_counter_arcade",
+      "label": "Counter Koin & Kafe",
+      "class_": "wall_back",
+      "x": 3,
+      "y": 12,
       "w": 4,
       "h": 2,
       "collidable": true
     },
     {
-      "id": "fur_counter_arcade",
-      "type": "counter_koin",
-      "label": "Counter Koin & Kasir",
-      "x": 4,
-      "y": 11,
-      "w": 5,
-      "h": 1,
+      "id": "slot_gc_meja_kafe_1",
+      "assetId": "furn_meja_kafe_v4",
+      "label": "Meja Kafe 1",
+      "class_": "cluster",
+      "x": 9,
+      "y": 13,
+      "w": 1.5,
+      "h": 1.5,
       "collidable": true
     },
     {
-      "id": "fur_meja_lounge",
-      "type": "meja_lounge_gaming",
-      "label": "Meja Lounge Gaming",
-      "x": 16,
-      "y": 11,
-      "w": 5,
-      "h": 2,
+      "id": "slot_gc_kursi_kafe_1a",
+      "assetId": "furn_kursi_kafe_v4",
+      "label": "Kursi Kafe 1A",
+      "class_": "cluster",
+      "x": 9.25,
+      "y": 14.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_gc_meja_kafe_2",
+      "assetId": "furn_meja_kafe_v4",
+      "label": "Meja Kafe 2",
+      "class_": "cluster",
+      "x": 13,
+      "y": 13,
+      "w": 1.5,
+      "h": 1.5,
       "collidable": true
+    },
+    {
+      "id": "slot_gc_kursi_kafe_2a",
+      "assetId": "furn_kursi_kafe_v4",
+      "label": "Kursi Kafe 2A",
+      "class_": "cluster",
+      "x": 13.25,
+      "y": 14.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_gc_meja_kafe_3",
+      "assetId": "furn_meja_kafe_v4",
+      "label": "Meja Kafe 3",
+      "class_": "cluster",
+      "x": 17,
+      "y": 13,
+      "w": 1.5,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_gc_kursi_kafe_3a",
+      "assetId": "furn_kursi_kafe_v4",
+      "label": "Kursi Kafe 3A",
+      "class_": "cluster",
+      "x": 17.25,
+      "y": 14.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
     }
   ],
   "interactables": [
@@ -94,68 +331,76 @@
       "id": "int_main_arcade",
       "type": "activity",
       "activityId": "main_game",
-      "x": 8,
+      "x": 6,
       "y": 5,
       "w": 3,
       "h": 1,
-      "prompt": "Tekan [E] Main Arcade 1 Jam (Rp25.000)",
+      "prompt": "Tekan [E] Main Game Arcade (Biaya Rp15.000, +Kesenangan)",
       "action": "play_arcade"
     },
     {
-      "id": "int_counter_koin",
-      "type": "shop",
-      "shopId": "gamecenter",
-      "x": 5,
-      "y": 10,
-      "w": 3,
-      "h": 1,
-      "prompt": "Tekan [E] Beli Koin & Camilan Gaming",
-      "action": "open_shop"
-    },
-    {
-      "id": "int_nonton_turnamen",
+      "id": "int_mesin_capit",
       "type": "activity",
-      "activityId": "nonton_turnamen",
-      "x": 20,
-      "y": 5,
-      "w": 3,
-      "h": 1,
-      "prompt": "Tekan [E] Nonton Turnamen E-Sports (+30 Mnt)",
-      "action": "watch_stream"
-    },
-    {
-      "id": "exit_to_hub",
-      "type": "exit",
-      "targetMap": "town_hub",
-      "targetSpawn": [30, 21],
-      "x": 12,
-      "y": 16,
+      "activityId": "claw_machine",
+      "x": 4,
+      "y": 8,
       "w": 2,
       "h": 1,
-      "prompt": "Tekan [E] Keluar ke Kota Harmoni",
-      "action": "exit_map"
+      "prompt": "Tekan [E] Main Mesin Capit (Rp5.000)",
+      "action": "claw_machine"
+    },
+    {
+      "id": "int_koin_game",
+      "type": "shop",
+      "shopId": "gamecenter",
+      "x": 3,
+      "y": 12,
+      "w": 4,
+      "h": 1,
+      "prompt": "Tekan [E] Beli Koin & Snack Game Center",
+      "panel": "gamecenter"
+    },
+    {
+      "id": "int_keluar_gamecenter",
+      "type": "exit",
+      "targetMap": "town_hub",
+      "targetSpawn": [
+        30,
+        22
+      ],
+      "x": 13,
+      "y": 16,
+      "w": 2,
+      "h": 1
     }
   ],
   "npcs": [
     {
-      "id": "npc_riko",
-      "name": "Kak Riko",
+      "id": "npc_operator_game",
+      "name": "Gani",
       "role": "Operator Game Center",
       "assetId": "npc_sheet_vendors",
-      "color": 3425643,
-      "x": 6,
-      "y": 12,
-      "dialogId": "dia_riko_game"
-    },
-    {
-      "id": "npc_rani",
-      "name": "Rani",
-      "role": "Teman Sekolah",
-      "assetId": "npc_sheet_friends",
-      "color": 14197368,
-      "x": 18,
-      "y": 13,
-      "dialogId": "dia_rani_game"
+      "color": 6229970,
+      "x": 5,
+      "y": 11,
+      "dialog": "Yo bro! Mau tukar koin game arcade atau ikutan turnamen fighting sore ini?",
+      "choices": [
+        {
+          "id": "koin",
+          "label": "\ud83e\ude99 Beli Koin Arcade",
+          "reply": "Paket koin hemat tersedia di loket! Main secukupnya ya, jangan bablas anggaranmu."
+        },
+        {
+          "id": "turnamen",
+          "label": "\ud83c\udfc6 Info Turnamen Fighting",
+          "reply": "Turnamen dibuka setiap Sabtu sore dengan hadiah piala dan sertifikat!"
+        },
+        {
+          "id": "bye",
+          "label": "\ud83d\udc4b Siap Mas Gani, mantap!",
+          "reply": "Selamat bersenang-senang di Pixel Arena!"
+        }
+      ]
     }
   ]
 }

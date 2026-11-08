@@ -8,114 +8,282 @@
     "heightTiles": 18,
     "tileSize": 32,
     "spawns": {
-      "default": { "x": 12, "y": 15 },
-      "from_hub": { "x": 12, "y": 15 }
+      "default": {
+        "x": 12,
+        "y": 15
+      },
+      "from_hub": {
+        "x": 12,
+        "y": 15
+      }
     }
   },
   "floors": [
-    { "type": "lantai_kios_spbu", "x": 2, "y": 2, "w": 20, "h": 14 }
+    {
+      "type": "lantai_kios_spbu",
+      "x": 2,
+      "y": 2,
+      "w": 20,
+      "h": 14
+    }
   ],
   "walls": [
-    { "x": 1, "y": 1, "w": 22, "h": 1 },
-    { "x": 1, "y": 1, "w": 1, "h": 16 },
-    { "x": 22, "y": 1, "w": 1, "h": 16 },
-    { "x": 1, "y": 17, "w": 22, "h": 1 }
+    {
+      "x": 1,
+      "y": 1,
+      "w": 22,
+      "h": 1
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "w": 1,
+      "h": 16
+    },
+    {
+      "x": 22,
+      "y": 1,
+      "w": 1,
+      "h": 16
+    },
+    {
+      "x": 1,
+      "y": 17,
+      "w": 22,
+      "h": 1
+    }
   ],
   "colliders": [
-    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 24, "h": 2 },
-    { "name": "batas_luar_bawah", "x": 0, "y": 17, "w": 24, "h": 1 },
-    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 18 },
-    { "name": "batas_luar_kanan", "x": 22, "y": 0, "w": 2, "h": 18 }
+    {
+      "name": "batas_luar_atas",
+      "x": 0,
+      "y": 0,
+      "w": 24,
+      "h": 2
+    },
+    {
+      "name": "batas_luar_bawah",
+      "x": 0,
+      "y": 17,
+      "w": 24,
+      "h": 1
+    },
+    {
+      "name": "batas_luar_kiri",
+      "x": 0,
+      "y": 0,
+      "w": 2,
+      "h": 18
+    },
+    {
+      "name": "batas_luar_kanan",
+      "x": 22,
+      "y": 0,
+      "w": 2,
+      "h": 18
+    }
   ],
   "furniture": [
     {
-      "id": "fur_counter_spbu",
-      "type": "meja_kasir_spbu",
-      "label": "Loket Kasir SPBU",
-      "x": 4,
-      "y": 11,
-      "w": 4,
-      "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_rak_oli",
-      "type": "rak_oli_motor",
+      "id": "slot_spbu_rak_oli",
+      "assetId": "furn_rak_oli_v4",
+      "fallbackAssetId": "fur_rak_oli",
       "label": "Rak Oli & Pelumas Motor",
+      "class_": "wall_back",
       "x": 3,
-      "y": 3,
-      "w": 5,
-      "h": 1,
+      "y": 2.5,
+      "w": 2,
+      "h": 2.5,
       "collidable": true
     },
     {
-      "id": "fur_chiller_spbu",
-      "type": "kulkas_minuman_spbu",
-      "label": "Kulkas Minuman Dingin",
-      "x": 15,
-      "y": 3,
+      "id": "slot_spbu_kiosk",
+      "assetId": "furn_kiosk_spbu_v4",
+      "fallbackAssetId": "fur_counter_spbu",
+      "label": "Kiosk Kasir SPBU",
+      "class_": "wall_back",
+      "x": 6,
+      "y": 2,
       "w": 4,
-      "h": 1,
+      "h": 3,
       "collidable": true
     },
     {
-      "id": "fur_kompresor_angin",
-      "type": "kompresor_angin",
-      "label": "Mesin Pompa Angin Ban",
-      "x": 18,
-      "y": 11,
+      "id": "slot_spbu_bangku",
+      "assetId": "furn_bangku_spbu_v4",
+      "label": "Bangku Tunggu SPBU",
+      "class_": "wall_back",
+      "x": 12,
+      "y": 4,
       "w": 2,
       "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "slot_spbu_pemadam",
+      "assetId": "furn_tong_pemadam_v4",
+      "label": "Tabung Pemadam Api",
+      "class_": "wall_back",
+      "x": 16,
+      "y": 3.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_spbu_sampah",
+      "assetId": "furn_tempat_sampah_v4",
+      "label": "Tempat Sampah",
+      "class_": "free",
+      "x": 18,
+      "y": 4,
+      "w": 1,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "slot_spbu_tiang_1",
+      "assetId": "furn_tiang_kanopi_v4",
+      "label": "Tiang Kanopi Barat Laut",
+      "class_": "free",
+      "x": 5,
+      "y": 7,
+      "w": 1,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_spbu_tiang_2",
+      "assetId": "furn_tiang_kanopi_v4",
+      "label": "Tiang Kanopi Timur Laut",
+      "class_": "free",
+      "x": 16,
+      "y": 7,
+      "w": 1,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_spbu_dispenser_1",
+      "assetId": "furn_dispenser_bbm_v4",
+      "label": "Dispenser BBM Pompa 1",
+      "class_": "free",
+      "x": 8,
+      "y": 8,
+      "w": 1.5,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_spbu_dispenser_2",
+      "assetId": "furn_dispenser_bbm_v4",
+      "label": "Dispenser BBM Pompa 2",
+      "class_": "free",
+      "x": 13,
+      "y": 8,
+      "w": 1.5,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_spbu_tiang_3",
+      "assetId": "furn_tiang_kanopi_v4",
+      "label": "Tiang Kanopi Barat Daya",
+      "class_": "free",
+      "x": 5,
+      "y": 12,
+      "w": 1,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_spbu_tiang_4",
+      "assetId": "furn_tiang_kanopi_v4",
+      "label": "Tiang Kanopi Timur Daya",
+      "class_": "free",
+      "x": 16,
+      "y": 12,
+      "w": 1,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_spbu_kompresor",
+      "assetId": "furn_kompresor_angin_v4",
+      "fallbackAssetId": "fur_kompresor_angin",
+      "label": "Mesin Pompa Angin Ban",
+      "class_": "free",
+      "x": 3,
+      "y": 13,
+      "w": 1,
+      "h": 1.5,
       "collidable": true
     }
   ],
   "interactables": [
     {
-      "id": "int_dispenser_bensin",
+      "id": "int_isi_bensin",
       "type": "activity",
-      "activityId": "isi_bensin_motor",
-      "x": 5,
-      "y": 10,
+      "activityId": "isi_bensin",
+      "x": 8,
+      "y": 8,
       "w": 2,
-      "h": 1,
-      "prompt": "Tekan [E] Isi Bensin Motor (Rp15.000)",
-      "action": "refuel_gas"
+      "h": 2,
+      "prompt": "Tekan [E] Isi Bensin Motor (+100% Bensin, Rp25.000)",
+      "action": "refuel"
     },
     {
-      "id": "int_pompa_angin",
+      "id": "int_isi_angin",
       "type": "activity",
-      "activityId": "pompa_angin_ban",
-      "x": 18,
-      "y": 12,
+      "activityId": "isi_angin",
+      "x": 3,
+      "y": 13,
       "w": 2,
       "h": 1,
-      "prompt": "Tekan [E] Cek Tekanan Ban & Isi Angin (Gratis)",
-      "action": "pump_tires"
+      "prompt": "Tekan [E] Pompa Angin Ban Motor",
+      "action": "tire_pump"
     },
     {
-      "id": "exit_to_hub",
+      "id": "int_keluar_spbu",
       "type": "exit",
       "targetMap": "town_hub",
-      "targetSpawn": [36, 13],
-      "x": 11,
+      "targetSpawn": [
+        36,
+        14
+      ],
+      "x": 12,
       "y": 16,
       "w": 2,
-      "h": 1,
-      "prompt": "Tekan [E] Keluar ke Kota Harmoni",
-      "action": "exit_map"
+      "h": 1
     }
   ],
   "npcs": [
     {
-      "id": "npc_doni",
-      "name": "Mas Doni",
-      "role": "Petugas SPBU",
+      "id": "npc_bang_dodi",
+      "name": "Bang Dodi",
+      "role": "Operator SPBU",
       "assetId": "npc_sheet_vendors",
-      "color": 12608842,
-      "x": 5,
-      "y": 12,
-      "dialogId": "dia_doni_spbu"
+      "color": 8947848,
+      "x": 7,
+      "y": 5,
+      "dialog": "Halo bro! Mau isi Pertalite atau cek tekanan angin ban motor?",
+      "choices": [
+        {
+          "id": "isi_bbm",
+          "label": "\u26fd Isi Bensin Penuh (Rp25.000)",
+          "reply": "Siap! Dimulai dari angka nol ya, tangki motor kembali penuh 100%!"
+        },
+        {
+          "id": "tips_kendaraan",
+          "label": "\ud83d\udef5 Tips Rawat Motor",
+          "reply": "Rutin cek angin ban dan jangan biarkan tangki bensin sampai kosong melompong!"
+        },
+        {
+          "id": "bye",
+          "label": "\ud83d\udc4b Siap Bang Dodi, mantap!",
+          "reply": "Hati-hati berkendara di jalan raya, patuhi rambu lalu lintas!"
+        }
+      ]
     }
   ]
 }
-

@@ -4,40 +4,283 @@
     "widthTiles": 40,
     "heightTiles": 24,
     "tileSize": 32,
-    "spawn": { "x": 6, "y": 18 }
+    "spawn": {
+      "x": 6,
+      "y": 18
+    },
+    "spawns": {
+      "default": {
+        "x": 6,
+        "y": 18
+      }
+    }
   },
   "ground": [
-    { "type": "rumput", "x": 0, "y": 0, "w": 40, "h": 24 },
-    { "type": "trotoar", "x": 2, "y": 14, "w": 36, "h": 3 },
-    { "type": "jalan", "x": 0, "y": 15, "w": 40, "h": 2 },
-    { "type": "trotoar", "x": 19, "y": 0, "w": 4, "h": 24 },
-    { "type": "jalan", "x": 20, "y": 0, "w": 2, "h": 24 },
-    { "type": "halaman", "x": 2, "y": 2, "w": 16, "h": 10 },
-    { "type": "halaman", "x": 24, "y": 2, "w": 15, "h": 10 },
-    { "type": "halaman", "x": 2, "y": 17, "w": 12, "h": 6 },
-    { "type": "halaman", "x": 24, "y": 17, "w": 15, "h": 6 }
+    {
+      "type": "rumput",
+      "x": 0,
+      "y": 0,
+      "w": 40,
+      "h": 24
+    },
+    {
+      "type": "trotoar",
+      "x": 2,
+      "y": 14,
+      "w": 36,
+      "h": 3
+    },
+    {
+      "type": "jalan",
+      "x": 0,
+      "y": 15,
+      "w": 40,
+      "h": 2
+    },
+    {
+      "type": "trotoar",
+      "x": 19,
+      "y": 0,
+      "w": 4,
+      "h": 24
+    },
+    {
+      "type": "jalan",
+      "x": 20,
+      "y": 0,
+      "w": 2,
+      "h": 24
+    },
+    {
+      "type": "halaman",
+      "x": 2,
+      "y": 2,
+      "w": 16,
+      "h": 10
+    },
+    {
+      "type": "halaman",
+      "x": 24,
+      "y": 2,
+      "w": 15,
+      "h": 10
+    },
+    {
+      "type": "halaman",
+      "x": 2,
+      "y": 17,
+      "w": 12,
+      "h": 6
+    },
+    {
+      "type": "halaman",
+      "x": 24,
+      "y": 17,
+      "w": 15,
+      "h": 6
+    }
   ],
   "objects": [
-    { "id": "obj_sekolah", "assetId": "bld_sekolah", "x": 10, "y": 9, "layer": "buildings", "footprint": { "w": 14, "h": 4 } },
-    { "id": "obj_rumah", "assetId": "bld_rumah_pemain", "x": 6, "y": 22, "layer": "buildings", "footprint": { "w": 9, "h": 3 } },
-    { "id": "obj_minimarket", "assetId": "bld_minimarket", "x": 27, "y": 8, "layer": "buildings", "footprint": { "w": 8, "h": 3 } },
-    { "id": "obj_kosmetik", "assetId": "bld_toko_kosmetik", "x": 35, "y": 8, "layer": "buildings", "footprint": { "w": 7, "h": 3 } },
-    { "id": "obj_spbu", "assetId": "bld_spbu", "x": 36, "y": 14, "layer": "buildings", "footprint": { "w": 10, "h": 4 } },
-    { "id": "obj_gamecenter", "assetId": "bld_game_center", "x": 30, "y": 22, "layer": "buildings", "footprint": { "w": 8, "h": 3 } }
+    {
+      "id": "obj_sekolah",
+      "assetId": "bld_sekolah",
+      "x": 10,
+      "y": 9,
+      "layer": "buildings",
+      "footprint": {
+        "w": 14,
+        "h": 4
+      }
+    },
+    {
+      "id": "obj_rumah",
+      "assetId": "bld_rumah_pemain",
+      "x": 6,
+      "y": 22,
+      "layer": "buildings",
+      "footprint": {
+        "w": 9,
+        "h": 3
+      }
+    },
+    {
+      "id": "obj_minimarket",
+      "assetId": "bld_minimarket",
+      "x": 27,
+      "y": 8,
+      "layer": "buildings",
+      "footprint": {
+        "w": 8,
+        "h": 3
+      }
+    },
+    {
+      "id": "obj_kosmetik",
+      "assetId": "bld_toko_kosmetik",
+      "x": 35,
+      "y": 8,
+      "layer": "buildings",
+      "footprint": {
+        "w": 7,
+        "h": 3
+      }
+    },
+    {
+      "id": "obj_spbu",
+      "assetId": "bld_spbu",
+      "x": 36,
+      "y": 14,
+      "layer": "buildings",
+      "footprint": {
+        "w": 10,
+        "h": 4
+      }
+    },
+    {
+      "id": "obj_gamecenter",
+      "assetId": "bld_game_center",
+      "x": 30,
+      "y": 22,
+      "layer": "buildings",
+      "footprint": {
+        "w": 8,
+        "h": 3
+      }
+    }
   ],
   "colliders": [
-    { "name": "batas_kiri", "x": -1, "y": 0, "w": 1, "h": 24 },
-    { "name": "batas_kanan", "x": 40, "y": 0, "w": 1, "h": 24 },
-    { "name": "batas_atas", "x": 0, "y": -1, "w": 40, "h": 1 },
-    { "name": "batas_bawah", "x": 0, "y": 24, "w": 40, "h": 1 }
+    {
+      "name": "batas_kiri",
+      "x": -1,
+      "y": 0,
+      "w": 1,
+      "h": 24
+    },
+    {
+      "name": "batas_kanan",
+      "x": 40,
+      "y": 0,
+      "w": 1,
+      "h": 24
+    },
+    {
+      "name": "batas_atas",
+      "x": 0,
+      "y": -1,
+      "w": 40,
+      "h": 1
+    },
+    {
+      "name": "batas_bawah",
+      "x": 0,
+      "y": 24,
+      "w": 40,
+      "h": 1
+    }
   ],
   "interactables": [
-    { "id": "int_rumah", "type": "door", "locationId": "rumah", "targetMap": "home", "targetSpawn": [7, 17], "openingHoursId": "home", "x": 6, "y": 21, "w": 2, "h": 2, "prompt": "Tekan [E] Masuk Rumah", "panel": "rumah" },
-    { "id": "int_sekolah", "type": "door", "locationId": "school", "targetMap": "school", "targetSpawn": [16, 19], "openingHoursId": "school", "x": 10, "y": 8, "w": 2, "h": 2, "prompt": "Tekan [E] Masuk SMA Negeri 1", "panel": "school" },
-    { "id": "int_minimarket", "type": "door", "locationId": "minimarket", "targetMap": "minimarket", "targetSpawn": [12, 15], "openingHoursId": "minimarket", "x": 27, "y": 7, "w": 2, "h": 2, "prompt": "Tekan [E] Masuk Mini Mart", "panel": "minimarket" },
-    { "id": "int_kosmetik", "type": "door", "locationId": "toko_kosmetik", "targetMap": "toko_kosmetik", "targetSpawn": [11, 13], "openingHoursId": "toko_kosmetik", "x": 35, "y": 7, "w": 2, "h": 2, "prompt": "Tekan [E] Masuk Toko Cantik", "panel": "kosmetik" },
-    { "id": "int_spbu", "type": "door", "locationId": "spbu", "targetMap": "spbu", "targetSpawn": [12, 15], "openingHoursId": "spbu", "x": 36, "y": 13, "w": 2, "h": 2, "prompt": "Tekan [E] Masuk SPBU", "panel": "spbu" },
-    { "id": "int_gamecenter", "type": "door", "locationId": "game_center", "targetMap": "game_center", "targetSpawn": [13, 15], "openingHoursId": "game_center", "x": 30, "y": 21, "w": 2, "h": 2, "prompt": "Tekan [E] Masuk Game Center", "panel": "gamecenter" }
+    {
+      "id": "int_rumah",
+      "type": "door",
+      "locationId": "rumah",
+      "targetMap": "home",
+      "targetSpawn": [
+        7,
+        17
+      ],
+      "openingHoursId": "home",
+      "x": 6,
+      "y": 21,
+      "w": 2,
+      "h": 2,
+      "prompt": "Tekan [E] Masuk Rumah",
+      "panel": "rumah"
+    },
+    {
+      "id": "int_sekolah",
+      "type": "door",
+      "locationId": "school",
+      "targetMap": "school",
+      "targetSpawn": [
+        16,
+        19
+      ],
+      "openingHoursId": "school",
+      "x": 10,
+      "y": 8,
+      "w": 2,
+      "h": 2,
+      "prompt": "Tekan [E] Masuk SMA Negeri 1",
+      "panel": "school"
+    },
+    {
+      "id": "int_minimarket",
+      "type": "door",
+      "locationId": "minimarket",
+      "targetMap": "minimarket",
+      "targetSpawn": [
+        12,
+        15
+      ],
+      "openingHoursId": "minimarket",
+      "x": 27,
+      "y": 7,
+      "w": 2,
+      "h": 2,
+      "prompt": "Tekan [E] Masuk Mini Mart",
+      "panel": "minimarket"
+    },
+    {
+      "id": "int_kosmetik",
+      "type": "door",
+      "locationId": "toko_kosmetik",
+      "targetMap": "toko_kosmetik",
+      "targetSpawn": [
+        11,
+        13
+      ],
+      "openingHoursId": "toko_kosmetik",
+      "x": 35,
+      "y": 7,
+      "w": 2,
+      "h": 2,
+      "prompt": "Tekan [E] Masuk Toko Cantik",
+      "panel": "kosmetik"
+    },
+    {
+      "id": "int_spbu",
+      "type": "door",
+      "locationId": "spbu",
+      "targetMap": "spbu",
+      "targetSpawn": [
+        12,
+        15
+      ],
+      "openingHoursId": "spbu",
+      "x": 36,
+      "y": 13,
+      "w": 2,
+      "h": 2,
+      "prompt": "Tekan [E] Masuk SPBU",
+      "panel": "spbu"
+    },
+    {
+      "id": "int_gamecenter",
+      "type": "door",
+      "locationId": "game_center",
+      "targetMap": "game_center",
+      "targetSpawn": [
+        13,
+        15
+      ],
+      "openingHoursId": "game_center",
+      "x": 30,
+      "y": 21,
+      "w": 2,
+      "h": 2,
+      "prompt": "Tekan [E] Masuk Game Center",
+      "panel": "gamecenter"
+    }
   ],
   "npcs": [
     {
@@ -52,22 +295,22 @@
       "choices": [
         {
           "id": "kantin",
-          "label": "🍔 Ajak ke Kantin Sekolah",
+          "label": "\ud83c\udf54 Ajak ke Kantin Sekolah",
           "reply": "Ayo! Di kantin ada nasi uduk enak seharga Rp8.000, pas dan hemat buat sarapan."
         },
         {
           "id": "gamecenter",
-          "label": "🎮 Ajak ke Game Center Sore Nanti",
+          "label": "\ud83c\udfae Ajak ke Game Center Sore Nanti",
           "reply": "Boleh aja sesekali refreshing main game, tapi ingat anggaramu jangan sampai jebol ya!"
         },
         {
           "id": "budget",
-          "label": "📊 Tanya Tips Anggaran",
+          "label": "\ud83d\udcca Tanya Tips Anggaran",
           "reply": "Buka menu Anggaran di HUD atas, buat pos batas jajan biar nggak bokek sebelum akhir bulan!"
         },
         {
           "id": "bye",
-          "label": "🚶 Sampai Ketemu di Kelas",
+          "label": "\ud83d\udeb6 Sampai Ketemu di Kelas",
           "reply": "Siap bro, sampai ketemu di kelas!"
         }
       ]
@@ -84,52 +327,175 @@
       "choices": [
         {
           "id": "spbu",
-          "label": "⛽ Tanya Lokasi SPBU",
+          "label": "\u26fd Tanya Lokasi SPBU",
           "reply": "SPBU ada tepat di sebelah timur. Segera isi bensin bila bar di HUD menunjukkan warna kuning atau merah!"
         },
         {
           "id": "minimarket",
-          "label": "🏪 Tips Belanja di Minimarket",
+          "label": "\ud83c\udfea Tips Belanja di Minimarket",
           "reply": "Minimarket ada di seberang jalan. Belilah barang sesuai kebutuhan pokok, hindari godaan diskon barang yang tidak perlu."
         },
         {
           "id": "bye",
-          "label": "🚶 Terima kasih Pak Anto!",
+          "label": "\ud83d\udeb6 Terima kasih Pak Anto!",
           "reply": "Sama-sama nak, hati-hati menyeberang jalan!"
         }
       ]
     }
   ],
   "props": [
-    { "id": "tree_sch_1", "assetId": "prop_tree_large", "x": 2, "y": 6 },
-    { "id": "tree_sch_2", "assetId": "prop_tree_large", "x": 18, "y": 6 },
-    { "id": "tree_sch_3", "assetId": "prop_tree_small", "x": 18, "y": 10 },
-    { "id": "tree_home_1", "assetId": "prop_tree_large", "x": 2, "y": 21 },
-    { "id": "tree_home_2", "assetId": "prop_tree_small", "x": 12, "y": 21 },
-    { "id": "tree_mall_1", "assetId": "prop_tree_large", "x": 24, "y": 6 },
-    { "id": "tree_mall_2", "assetId": "prop_tree_small", "x": 39, "y": 6 },
-    { "id": "tree_park_1", "assetId": "prop_tree_large", "x": 25, "y": 21 },
-    { "id": "tree_park_2", "assetId": "prop_tree_small", "x": 37, "y": 21 },
-
-    { "id": "lamp_1", "assetId": "prop_street_lamp", "x": 7, "y": 14 },
-    { "id": "lamp_2", "assetId": "prop_street_lamp", "x": 14, "y": 14 },
-    { "id": "lamp_3", "assetId": "prop_street_lamp", "x": 25, "y": 14 },
-    { "id": "lamp_4", "assetId": "prop_street_lamp", "x": 32, "y": 14 },
-
-    { "id": "bench_1", "assetId": "prop_bench", "x": 10, "y": 14 },
-    { "id": "bench_2", "assetId": "prop_bench", "x": 28, "y": 14 },
-
-    { "id": "bush_1", "assetId": "prop_bush", "x": 4, "y": 14 },
-    { "id": "bush_2", "assetId": "prop_bush", "x": 16, "y": 14 },
-    { "id": "bush_3", "assetId": "prop_bush", "x": 22, "y": 14 },
-    { "id": "bush_4", "assetId": "prop_bush", "x": 35, "y": 14 },
-
-    { "id": "trash_1", "assetId": "prop_trashcan", "x": 12, "y": 9 },
-    { "id": "trash_2", "assetId": "prop_trashcan", "x": 29, "y": 8 },
-
-    { "id": "pot_1", "assetId": "prop_flowerpot", "x": 4, "y": 21 },
-    { "id": "pot_2", "assetId": "prop_flowerpot", "x": 9, "y": 21 },
-    { "id": "pot_3", "assetId": "prop_flowerpot", "x": 25, "y": 8 },
-    { "id": "pot_4", "assetId": "prop_flowerpot", "x": 33, "y": 8 }
-  ]
+    {
+      "id": "tree_sch_1",
+      "assetId": "prop_tree_large",
+      "x": 2,
+      "y": 6
+    },
+    {
+      "id": "tree_sch_2",
+      "assetId": "prop_tree_large",
+      "x": 18,
+      "y": 6
+    },
+    {
+      "id": "tree_sch_3",
+      "assetId": "prop_tree_small",
+      "x": 18,
+      "y": 10
+    },
+    {
+      "id": "tree_home_1",
+      "assetId": "prop_tree_large",
+      "x": 2,
+      "y": 21
+    },
+    {
+      "id": "tree_home_2",
+      "assetId": "prop_tree_small",
+      "x": 12,
+      "y": 21
+    },
+    {
+      "id": "tree_mall_1",
+      "assetId": "prop_tree_large",
+      "x": 24,
+      "y": 6
+    },
+    {
+      "id": "tree_mall_2",
+      "assetId": "prop_tree_small",
+      "x": 39,
+      "y": 6
+    },
+    {
+      "id": "tree_park_1",
+      "assetId": "prop_tree_large",
+      "x": 25,
+      "y": 21
+    },
+    {
+      "id": "tree_park_2",
+      "assetId": "prop_tree_small",
+      "x": 37,
+      "y": 21
+    },
+    {
+      "id": "lamp_1",
+      "assetId": "prop_street_lamp",
+      "x": 7,
+      "y": 14
+    },
+    {
+      "id": "lamp_2",
+      "assetId": "prop_street_lamp",
+      "x": 14,
+      "y": 14
+    },
+    {
+      "id": "lamp_3",
+      "assetId": "prop_street_lamp",
+      "x": 25,
+      "y": 14
+    },
+    {
+      "id": "lamp_4",
+      "assetId": "prop_street_lamp",
+      "x": 32,
+      "y": 14
+    },
+    {
+      "id": "bench_1",
+      "assetId": "prop_bench",
+      "x": 10,
+      "y": 14
+    },
+    {
+      "id": "bench_2",
+      "assetId": "prop_bench",
+      "x": 28,
+      "y": 14
+    },
+    {
+      "id": "bush_1",
+      "assetId": "prop_bush",
+      "x": 4,
+      "y": 14
+    },
+    {
+      "id": "bush_2",
+      "assetId": "prop_bush",
+      "x": 16,
+      "y": 14
+    },
+    {
+      "id": "bush_3",
+      "assetId": "prop_bush",
+      "x": 22,
+      "y": 14
+    },
+    {
+      "id": "bush_4",
+      "assetId": "prop_bush",
+      "x": 35,
+      "y": 14
+    },
+    {
+      "id": "trash_1",
+      "assetId": "prop_trashcan",
+      "x": 12,
+      "y": 9
+    },
+    {
+      "id": "trash_2",
+      "assetId": "prop_trashcan",
+      "x": 29,
+      "y": 8
+    },
+    {
+      "id": "pot_1",
+      "assetId": "prop_flowerpot",
+      "x": 4,
+      "y": 21
+    },
+    {
+      "id": "pot_2",
+      "assetId": "prop_flowerpot",
+      "x": 9,
+      "y": 21
+    },
+    {
+      "id": "pot_3",
+      "assetId": "prop_flowerpot",
+      "x": 25,
+      "y": 8
+    },
+    {
+      "id": "pot_4",
+      "assetId": "prop_flowerpot",
+      "x": 33,
+      "y": 8
+    }
+  ],
+  "id": "town_hub",
+  "displayName": "Pusat Kota Harmoni",
+  "type": "exterior"
 }

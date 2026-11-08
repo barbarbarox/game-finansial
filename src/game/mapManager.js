@@ -255,6 +255,11 @@ export class MapManager {
       gfx.fillRect(w.x * tileSize, (w.y + w.h) * tileSize - 4, w.w * tileSize, 4);
     }
 
+    // Doorways & Archways (Rule 73: clear visual doorways, thresholds & archway frames)
+    for (const d of layout.doorways || []) {
+      this._renderDoorway(d, tileSize);
+    }
+
     // Room label (fixed to camera)
     const nameLabel = this.scene.add.text(
       8, 8,
@@ -262,6 +267,116 @@ export class MapManager {
       { font: 'bold 11px monospace', fill: '#D9A441', stroke: '#121A2E', strokeThickness: 2 }
     ).setScrollFactor(0).setDepth(3000);
     this._mapObjects.push(nameLabel);
+  }
+
+  /**
+   * Render visually distinct doorway archways, thresholds, and pillar posts
+   */
+  _renderDoorway(d, tileSize) {
+    const gfx = this.scene.add.graphics();
+    gfx.setDepth(-5);
+    this._mapObjects.push(gfx);
+
+    const x = d.x * tileSize;
+    const y = d.y * tileSize;
+    const w = (d.w || 1) * tileSize;
+    const h = (d.h || 1) * tileSize;
+
+    if (d.orientation === 'vertical') {
+      // 1. Floor threshold / parquet runner bridging the rooms
+      const pad = 10;
+      gfx.fillStyle(0x7C5236, 1.0);
+      gfx.fillRect(x - pad, y, w + pad * 2, h);
+
+      // Brass transition strips on both left and right edges
+      gfx.fillStyle(0xD9A441, 0.95);
+      gfx.fillRect(x - pad, y, 4, h);
+      gfx.fillRect(x + w + pad - 4, y, 4, h);
+
+      // Wood plank lines
+      gfx.lineStyle(1, 0x543622, 0.7);
+      for (let py = y + 16; py < y + h; py += 16) {
+        gfx.lineBetween(x - pad, py, x + w + pad, py);
+      }
+
+      // 2. Doorway Pillars / Jambs (Tiang Kusen Pintu) at top and bottom wall terminations
+      // Top Pillar Cap
+      gfx.fillStyle(0x5A3825, 1.0);
+      gfx.fillRect(x - 4, y - 8, w + 8, 12);
+      gfx.fillStyle(0x9E6D48, 1.0);
+      gfx.fillRect(x - 4, y - 8, w + 8, 4);
+      gfx.fillStyle(0xD9A441, 1.0);
+      gfx.fillRect(x - 4, y + 2, w + 8, 2);
+
+      // Bottom Pillar Cap
+      gfx.fillStyle(0x5A3825, 1.0);
+      gfx.fillRect(x - 4, y + h - 4, w + 8, 12);
+      gfx.fillStyle(0x9E6D48, 1.0);
+      gfx.fillRect(x - 4, y + h - 4, w + 8, 4);
+      gfx.fillStyle(0xD9A441, 1.0);
+      gfx.fillRect(x - 4, y + h + 6, w + 8, 2);
+
+      // Overhead archway beam hint
+      gfx.fillStyle(0x1F2A44, 0.4);
+      gfx.fillRect(x - pad, y, w + pad * 2, 8);
+
+      // 3. Directional Floor Sign
+      const textX = x + w / 2;
+      const textY = y + h / 2;
+      const labelStr = d.type === 'archway' ? '◀ TAMU  ·  DAPUR ▶' : (d.label || 'PINTU');
+      const passageLabel = this.scene.add.text(
+        textX, textY,
+        labelStr,
+        {
+          font: 'bold 9px monospace',
+          fill: '#F7EEDA',
+          stroke: '#121A2E',
+          strokeThickness: 2,
+          align: 'center'
+        }
+      ).setOrigin(0.5, 0.5).setDepth(-3).setRotation(-Math.PI / 2);
+      this._mapObjects.push(passageLabel);
+
+    } else {
+      // Horizontal doorway (bedroom doors, bathroom doors, entrance)
+      // 1. Floor threshold
+      gfx.fillStyle(0x7C5236, 1.0);
+      gfx.fillRect(x, y - 4, w, h + 8);
+
+      // Brass edges
+      gfx.fillStyle(0xD9A441, 0.95);
+      gfx.fillRect(x, y - 4, w, 3);
+      gfx.fillRect(x, y + h + 1, w, 3);
+
+      // Wood plank lines
+      gfx.lineStyle(1, 0x543622, 0.7);
+      for (let px = x + 16; px < x + w; px += 16) {
+        gfx.lineBetween(px, y - 4, px, y + h + 4);
+      }
+
+      // Left & Right Door Frame Jambs
+      gfx.fillStyle(0x5A3825, 1.0);
+      gfx.fillRect(x - 4, y - 6, 6, h + 12);
+      gfx.fillRect(x + w - 2, y - 6, 6, h + 12);
+      gfx.fillStyle(0x9E6D48, 1.0);
+      gfx.fillRect(x - 4, y - 6, 2, h + 12);
+      gfx.fillRect(x + w + 2, y - 6, 2, h + 12);
+
+      if (d.label) {
+        const lbl = this.scene.add.text(
+          x + w / 2, y + h / 2,
+          d.label,
+          {
+            font: 'bold 8px monospace',
+            fill: '#F7EEDA',
+            stroke: '#121A2E',
+            strokeThickness: 2,
+            align: 'center'
+          }
+        ).setOrigin(0.5, 0.5).setDepth(-3);
+        this._mapObjects.push(lbl);
+      }
+    }
   }
 
   // ── Exterior rendering ───────────────────────────────────────────────────
@@ -345,13 +460,22 @@ export class MapManager {
       const py = f.y * tileSize;
       const fw = f.w * tileSize;
       const fh = f.h * tileSize;
-      const depth = py + fh / 2;
+      const isDecal = f.class_ === 'floor_decal' || f.type?.includes('karpet') || f.type?.includes('keset');
+      const depth = isDecal ? 2 : (py + fh);
 
       const container = this.scene.add.container(px, py);
       container.setDepth(depth);
       this._mapObjects.push(container);
 
-      const textureKey = f.assetId || `furn_${f.type}`;
+      let textureKey = f.assetId;
+      if (!this.scene.textures.exists(textureKey)) {
+        if (f.fallbackAssetId && this.scene.textures.exists(f.fallbackAssetId)) {
+          textureKey = f.fallbackAssetId;
+        } else if (f.type && this.scene.textures.exists(`furn_${f.type}`)) {
+          textureKey = `furn_${f.type}`;
+        }
+      }
+
       if (this.scene.textures.exists(textureKey)) {
         const sprite = this.scene.add.sprite(fw / 2, fh, textureKey);
         sprite.setOrigin(0.5, 1.0);
@@ -364,20 +488,22 @@ export class MapManager {
       } else {
         // Coloured placeholder with label
         const gfx = this.scene.add.graphics();
-        const fillColor = this._furnitureColor(f.type);
-        gfx.fillStyle(fillColor, 0.95);
+        const fillColor = this._furnitureColor(f.type || f.id);
+        gfx.fillStyle(fillColor, isDecal ? 0.6 : 0.95);
         gfx.fillRect(0, 0, fw, fh);
         // Top highlight (fake 3-D)
-        gfx.fillStyle(0xFFFFFF, 0.08);
-        gfx.fillRect(0, 0, fw, Math.min(8, fh * 0.25));
-        gfx.lineStyle(2, 0xD9A441, 1.0);
+        if (!isDecal && f.class_ !== 'wall_decor') {
+          gfx.fillStyle(0xFFFFFF, 0.08);
+          gfx.fillRect(0, 0, fw, Math.min(8, fh * 0.25));
+        }
+        gfx.lineStyle(2, 0xD9A441, 0.9);
         gfx.strokeRect(0, 0, fw, fh);
         container.add(gfx);
 
         const fontSize = Math.max(7, Math.min(10, Math.floor(fw / 7)));
         const lbl = this.scene.add.text(
           fw / 2, fh / 2,
-          f.label || f.type,
+          f.label || f.type || f.id,
           {
             fontSize: `${fontSize}px`,
             fontFamily: 'monospace',
@@ -392,7 +518,8 @@ export class MapManager {
       }
 
       // Physics collider for furniture (Rule 73 §5: non-decorative items get collision footprint)
-      if (f.collidable !== false && this.scene._player) {
+      const isDecorative = isDecal || f.class_ === 'wall_decor' || f.collidable === false;
+      if (!isDecorative && this.scene._player) {
         const fpw = f.footprint?.w ? f.footprint.w * tileSize : (fw > 16 ? fw - 8 : fw);
         const fph = f.footprint?.h ? f.footprint.h * tileSize : Math.max(16, Math.floor(fh * 0.4));
         const fpx = px + fw / 2;
@@ -595,7 +722,8 @@ export class MapManager {
       });
     }
     for (const f of layout.furniture || []) {
-      if (f.collidable !== false) {
+      const isDecorative = f.class_ === 'floor_decal' || f.class_ === 'wall_decor' || f.collidable === false;
+      if (!isDecorative) {
         const px = f.x * tileSize;
         const py = f.y * tileSize;
         const fw = f.w * tileSize;

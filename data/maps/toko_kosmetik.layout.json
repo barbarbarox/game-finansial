@@ -8,74 +8,254 @@
     "heightTiles": 16,
     "tileSize": 32,
     "spawns": {
-      "default": { "x": 11, "y": 13 },
-      "from_hub": { "x": 11, "y": 13 }
+      "default": {
+        "x": 11,
+        "y": 13
+      },
+      "from_hub": {
+        "x": 11,
+        "y": 13
+      }
     }
   },
   "floors": [
-    { "type": "keramik_kosmetik_pastel", "x": 2, "y": 2, "w": 18, "h": 12 }
+    {
+      "type": "keramik_kosmetik_pastel",
+      "x": 2,
+      "y": 2,
+      "w": 18,
+      "h": 12
+    }
   ],
   "walls": [
-    { "x": 1, "y": 1, "w": 20, "h": 1 },
-    { "x": 1, "y": 1, "w": 1, "h": 14 },
-    { "x": 20, "y": 1, "w": 1, "h": 14 },
-    { "x": 1, "y": 15, "w": 20, "h": 1 }
+    {
+      "x": 1,
+      "y": 1,
+      "w": 20,
+      "h": 1
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "w": 1,
+      "h": 14
+    },
+    {
+      "x": 20,
+      "y": 1,
+      "w": 1,
+      "h": 14
+    },
+    {
+      "x": 1,
+      "y": 15,
+      "w": 20,
+      "h": 1
+    }
   ],
   "colliders": [
-    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 22, "h": 2 },
-    { "name": "batas_luar_bawah", "x": 0, "y": 15, "w": 22, "h": 1 },
-    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 16 },
-    { "name": "batas_luar_kanan", "x": 20, "y": 0, "w": 2, "h": 16 }
+    {
+      "name": "batas_luar_atas",
+      "x": 0,
+      "y": 0,
+      "w": 22,
+      "h": 2
+    },
+    {
+      "name": "batas_luar_bawah",
+      "x": 0,
+      "y": 15,
+      "w": 22,
+      "h": 1
+    },
+    {
+      "name": "batas_luar_kiri",
+      "x": 0,
+      "y": 0,
+      "w": 2,
+      "h": 16
+    },
+    {
+      "name": "batas_luar_kanan",
+      "x": 20,
+      "y": 0,
+      "w": 2,
+      "h": 16
+    }
   ],
   "furniture": [
     {
-      "id": "fur_counter_kosmetik",
-      "type": "etalase_kosmetik",
-      "label": "Etalase Skincare & Serum",
+      "id": "slot_kos_rak_dinding_1",
+      "assetId": "furn_rak_dinding_kosmetik_v4",
+      "fallbackAssetId": "fur_counter_kosmetik",
+      "label": "Rak Kosmetik Dinding 1",
+      "class_": "wall_back",
       "x": 3,
       "y": 2,
-      "w": 6,
-      "h": 1,
+      "w": 2,
+      "h": 3,
       "collidable": true
     },
     {
-      "id": "fur_etalase_liptint",
-      "type": "display_makeup",
-      "label": "Display Lip Tint & Bedak",
-      "x": 13,
+      "id": "slot_kos_rak_dinding_2",
+      "assetId": "furn_rak_dinding_kosmetik_v4",
+      "fallbackAssetId": "fur_counter_kosmetik",
+      "label": "Rak Kosmetik Dinding 2",
+      "class_": "wall_back",
+      "x": 6,
       "y": 2,
-      "w": 5,
-      "h": 1,
+      "w": 2,
+      "h": 3,
       "collidable": true
     },
     {
-      "id": "fur_meja_cermin",
-      "type": "meja_cermin_tester",
-      "label": "Meja Cermin Tester",
-      "x": 3,
-      "y": 7,
-      "w": 4,
+      "id": "slot_kos_rak_dinding_3",
+      "assetId": "furn_rak_dinding_kosmetik_v4",
+      "fallbackAssetId": "fur_counter_kosmetik",
+      "label": "Rak Kosmetik Dinding 3",
+      "class_": "wall_back",
+      "x": 9,
+      "y": 2,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_kos_sofa",
+      "assetId": "furn_sofa_tunggu_v4",
+      "fallbackAssetId": "fur_sofa_kosmetik",
+      "label": "Sofa Tunggu Pengunjung",
+      "class_": "wall_back",
+      "x": 15,
+      "y": 3,
+      "w": 2,
       "h": 2,
       "collidable": true
     },
     {
-      "id": "fur_kasir_kosmetik",
-      "type": "meja_kasir_cantik",
+      "id": "slot_kos_poster_1",
+      "assetId": "furn_poster_kosong_v4",
+      "label": "Poster Promo Skincare",
+      "class_": "wall_decor",
+      "x": 12,
+      "y": 2,
+      "w": 1.5,
+      "h": 2,
+      "collidable": false
+    },
+    {
+      "id": "slot_kos_poster_2",
+      "assetId": "furn_poster_kosong_v4",
+      "label": "Poster Brand Kecantikan",
+      "class_": "wall_decor",
+      "x": 18,
+      "y": 2,
+      "w": 1.5,
+      "h": 2,
+      "collidable": false
+    },
+    {
+      "id": "slot_kos_etalase_1",
+      "assetId": "furn_etalase_kaca_v4",
+      "fallbackAssetId": "fur_etalase_liptint",
+      "label": "Etalase Display Lip Tint",
+      "class_": "free",
+      "x": 4,
+      "y": 6,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_kos_etalase_2",
+      "assetId": "furn_etalase_kaca_v4",
+      "fallbackAssetId": "fur_etalase_liptint",
+      "label": "Etalase Display Serum",
+      "class_": "free",
+      "x": 12,
+      "y": 6,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_kos_meja_cermin_1",
+      "assetId": "furn_meja_cermin_v4",
+      "fallbackAssetId": "fur_meja_cermin",
+      "label": "Meja Cermin Tester 1",
+      "class_": "cluster",
+      "x": 4,
+      "y": 9,
+      "w": 2,
+      "h": 2.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_kos_kursi_cermin_1",
+      "assetId": "furn_kursi_cermin_v4",
+      "label": "Kursi Tester 1",
+      "class_": "cluster",
+      "x": 4.5,
+      "y": 11,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_kos_meja_cermin_2",
+      "assetId": "furn_meja_cermin_v4",
+      "fallbackAssetId": "fur_meja_cermin",
+      "label": "Meja Cermin Tester 2",
+      "class_": "cluster",
+      "x": 8,
+      "y": 9,
+      "w": 2,
+      "h": 2.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_kos_kursi_cermin_2",
+      "assetId": "furn_kursi_cermin_v4",
+      "label": "Kursi Tester 2",
+      "class_": "cluster",
+      "x": 8.5,
+      "y": 11,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_kos_kasir",
+      "assetId": "furn_kasir_kecil_v4",
+      "fallbackAssetId": "fur_kasir_kosmetik",
       "label": "Kasir Toko Cantik",
+      "class_": "free",
       "x": 13,
-      "y": 8,
-      "w": 4,
+      "y": 10,
+      "w": 2.5,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_kos_keranjang",
+      "assetId": "furn_keranjang_belanja_v4",
+      "label": "Keranjang Belanja",
+      "class_": "free",
+      "x": 17,
+      "y": 11,
+      "w": 1,
       "h": 1,
       "collidable": true
     },
     {
-      "id": "fur_sofa_kosmetik",
-      "type": "sofa_tunggu",
-      "label": "Sofa Tunggu Pengunjung",
-      "x": 3,
+      "id": "slot_kos_tanaman",
+      "assetId": "furn_tanaman_pot_v4",
+      "label": "Tanaman Hias",
+      "class_": "free",
+      "x": 18,
       "y": 12,
-      "w": 3,
-      "h": 1,
+      "w": 1,
+      "h": 1.5,
       "collidable": true
     }
   ],
@@ -83,49 +263,66 @@
     {
       "id": "int_kasir_kosmetik",
       "type": "shop",
-      "shopId": "kosmetik",
-      "x": 14,
-      "y": 7,
-      "w": 2,
+      "shopId": "toko_kosmetik",
+      "x": 13,
+      "y": 10,
+      "w": 3,
       "h": 1,
-      "prompt": "Tekan [E] Belanja Skincare & Kosmetik",
-      "action": "open_shop"
+      "prompt": "Tekan [E] Belanja di Toko Cantik",
+      "panel": "kosmetik"
     },
     {
-      "id": "int_tester_skincare",
+      "id": "int_tester_kosmetik",
       "type": "activity",
-      "activityId": "konsultasi_skincare",
+      "activityId": "tester_skincare",
       "x": 4,
       "y": 9,
       "w": 2,
       "h": 1,
-      "prompt": "Tekan [E] Coba Tester & Tips Kulit Sehat",
-      "action": "test_skincare"
+      "prompt": "Tekan [E] Uji Coba Tester Skincare",
+      "action": "skincare_test"
     },
     {
-      "id": "exit_to_hub",
+      "id": "int_keluar_kosmetik",
       "type": "exit",
       "targetMap": "town_hub",
-      "targetSpawn": [35, 7],
-      "x": 10,
+      "targetSpawn": [
+        35,
+        8
+      ],
+      "x": 11,
       "y": 14,
       "w": 2,
-      "h": 1,
-      "prompt": "Tekan [E] Keluar ke Kota Harmoni",
-      "action": "exit_map"
+      "h": 1
     }
   ],
   "npcs": [
     {
-      "id": "npc_cindy",
-      "name": "Kak Cindy",
-      "role": "Beauty Advisor",
+      "id": "npc_mbak_maya",
+      "name": "Mbak Maya",
+      "role": "Beauty Consultant",
       "assetId": "npc_sheet_vendors",
-      "color": 14197368,
-      "x": 15,
+      "color": 14184650,
+      "x": 14,
       "y": 9,
-      "dialogId": "dia_cindy_kosmetik"
+      "dialog": "Selamat datang di Toko Cantik! Ingin konsultasi perawatan kulit atau mencari wewangian favoritmu?",
+      "choices": [
+        {
+          "id": "katalog",
+          "label": "\ud83d\udc84 Buka Katalog Kecantikan",
+          "reply": "Silakan pilih produk perawatan berkualitas di etalase kami!"
+        },
+        {
+          "id": "tips_skincare",
+          "label": "\u2728 Tips Skincare Hemat",
+          "reply": "Gunakan produk dasar yang esensial: pembersih wajah, pelembap, dan tabir surya!"
+        },
+        {
+          "id": "bye",
+          "label": "\ud83d\udc4b Terima kasih Mbak Maya!",
+          "reply": "Senang bisa membantu, tampil percaya diri ya!"
+        }
+      ]
     }
   ]
 }
-

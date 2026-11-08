@@ -8,230 +8,792 @@
     "heightTiles": 22,
     "tileSize": 32,
     "spawns": {
-      "default": { "x": 16, "y": 19 },
-      "from_hub": { "x": 16, "y": 19 }
+      "default": {
+        "x": 16,
+        "y": 19
+      },
+      "from_hub": {
+        "x": 16,
+        "y": 19
+      }
     }
   },
   "floors": [
-    { "type": "lantai_koridor", "x": 2, "y": 11, "w": 28, "h": 9 },
-    { "type": "lantai_kelas", "x": 2, "y": 2, "w": 13, "h": 8 },
-    { "type": "lantai_kantin", "x": 17, "y": 2, "w": 13, "h": 8 }
+    {
+      "type": "lantai_koridor",
+      "x": 2,
+      "y": 11,
+      "w": 28,
+      "h": 9
+    },
+    {
+      "type": "lantai_kelas",
+      "x": 2,
+      "y": 2,
+      "w": 13,
+      "h": 8
+    },
+    {
+      "type": "lantai_kantin",
+      "x": 17,
+      "y": 2,
+      "w": 13,
+      "h": 8
+    }
   ],
   "walls": [
-    { "x": 1, "y": 1, "w": 30, "h": 1 },
-    { "x": 1, "y": 1, "w": 1, "h": 20 },
-    { "x": 30, "y": 1, "w": 1, "h": 20 },
-    { "x": 1, "y": 21, "w": 30, "h": 1 },
-    { "x": 1, "y": 10, "w": 6, "h": 1 },
-    { "x": 9, "y": 10, "w": 6, "h": 1 },
-    { "x": 15, "y": 1, "w": 1, "h": 10 },
-    { "x": 16, "y": 10, "w": 5, "h": 1 },
-    { "x": 23, "y": 10, "w": 8, "h": 1 }
+    {
+      "x": 1,
+      "y": 1,
+      "w": 30,
+      "h": 1
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "w": 1,
+      "h": 20
+    },
+    {
+      "x": 30,
+      "y": 1,
+      "w": 1,
+      "h": 20
+    },
+    {
+      "x": 1,
+      "y": 21,
+      "w": 30,
+      "h": 1
+    },
+    {
+      "x": 1,
+      "y": 10,
+      "w": 6,
+      "h": 1
+    },
+    {
+      "x": 9,
+      "y": 10,
+      "w": 6,
+      "h": 1
+    },
+    {
+      "x": 15,
+      "y": 1,
+      "w": 1,
+      "h": 10
+    },
+    {
+      "x": 16,
+      "y": 10,
+      "w": 5,
+      "h": 1
+    },
+    {
+      "x": 23,
+      "y": 10,
+      "w": 8,
+      "h": 1
+    }
   ],
   "colliders": [
-    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 32, "h": 2 },
-    { "name": "batas_luar_bawah", "x": 0, "y": 21, "w": 32, "h": 1 },
-    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 22 },
-    { "name": "batas_luar_kanan", "x": 30, "y": 0, "w": 2, "h": 22 },
-    { "name": "sekat_kelas_bawah_1", "x": 2, "y": 10, "w": 5, "h": 1 },
-    { "name": "sekat_kelas_bawah_2", "x": 9, "y": 10, "w": 6, "h": 1 },
-    { "name": "sekat_kelas_kantin", "x": 15, "y": 2, "w": 1, "h": 8 },
-    { "name": "sekat_kantin_bawah_1", "x": 16, "y": 10, "w": 5, "h": 1 },
-    { "name": "sekat_kantin_bawah_2", "x": 23, "y": 10, "w": 7, "h": 1 }
+    {
+      "name": "batas_luar_atas",
+      "x": 0,
+      "y": 0,
+      "w": 32,
+      "h": 2
+    },
+    {
+      "name": "batas_luar_bawah",
+      "x": 0,
+      "y": 21,
+      "w": 32,
+      "h": 1
+    },
+    {
+      "name": "batas_luar_kiri",
+      "x": 0,
+      "y": 0,
+      "w": 2,
+      "h": 22
+    },
+    {
+      "name": "batas_luar_kanan",
+      "x": 30,
+      "y": 0,
+      "w": 2,
+      "h": 22
+    },
+    {
+      "name": "sekat_kelas_bawah_1",
+      "x": 2,
+      "y": 10,
+      "w": 5,
+      "h": 1
+    },
+    {
+      "name": "sekat_kelas_bawah_2",
+      "x": 9,
+      "y": 10,
+      "w": 6,
+      "h": 1
+    },
+    {
+      "name": "sekat_kelas_kantin",
+      "x": 15,
+      "y": 2,
+      "w": 1,
+      "h": 8
+    },
+    {
+      "name": "sekat_kantin_bawah_1",
+      "x": 16,
+      "y": 10,
+      "w": 5,
+      "h": 1
+    },
+    {
+      "name": "sekat_kantin_bawah_2",
+      "x": 23,
+      "y": 10,
+      "w": 7,
+      "h": 1
+    }
   ],
   "furniture": [
     {
-      "id": "fur_papan_tulis",
-      "type": "papan_tulis",
-      "assetId": "furn_papan_tulis",
+      "id": "slot_sch_papan_tulis",
+      "assetId": "furn_papan_tulis_v4",
+      "fallbackAssetId": "fur_papan_tulis",
       "label": "Papan Tulis",
+      "class_": "wall_decor",
       "x": 6,
       "y": 2,
       "w": 4,
-      "h": 1,
-      "collidable": true
+      "h": 2,
+      "collidable": false
     },
     {
-      "id": "fur_meja_guru",
-      "type": "meja_guru",
-      "assetId": "furn_meja_guru",
-      "label": "Meja Guru",
+      "id": "slot_sch_jam",
+      "assetId": "furn_jam_dinding_v4",
+      "label": "Jam Dinding",
+      "class_": "wall_decor",
       "x": 12,
-      "y": 3,
-      "w": 2,
+      "y": 2,
+      "w": 1,
       "h": 1,
-      "collidable": true
+      "collidable": false
     },
     {
-      "id": "fur_meja_siswa_1",
-      "type": "meja_siswa",
-      "assetId": "furn_meja_siswa_kursi",
-      "label": "Meja Siswa",
-      "x": 4,
-      "y": 5,
+      "id": "slot_sch_meja_guru",
+      "assetId": "furn_meja_guru_v4",
+      "fallbackAssetId": "fur_meja_guru",
+      "label": "Meja Guru",
+      "class_": "cluster",
+      "x": 7,
+      "y": 3.5,
       "w": 3,
-      "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_meja_siswa_2",
-      "type": "meja_siswa",
-      "assetId": "furn_meja_siswa_kursi",
-      "label": "Meja Siswa",
-      "x": 9,
-      "y": 5,
-      "w": 3,
-      "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_meja_siswa_3",
-      "type": "meja_siswa",
-      "assetId": "furn_meja_siswa_kursi",
-      "label": "Meja Siswa",
-      "x": 4,
-      "y": 8,
-      "w": 3,
-      "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_meja_siswa_4",
-      "type": "meja_siswa",
-      "assetId": "furn_meja_siswa_kursi",
-      "label": "Meja Siswa",
-      "x": 9,
-      "y": 8,
-      "w": 3,
-      "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_counter_kantin",
-      "type": "counter_kantin",
-      "assetId": "furn_counter_kantin",
-      "label": "Etalase Kantin",
-      "x": 18,
-      "y": 4,
-      "w": 5,
-      "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_kulkas_kantin",
-      "type": "kulkas_minuman",
-      "assetId": "furn_kulkas_minuman",
-      "label": "Kulkas Minuman",
-      "x": 27,
-      "y": 3,
-      "w": 2,
       "h": 2,
       "collidable": true
     },
     {
-      "id": "fur_meja_kantin_1",
-      "type": "meja_kantin",
-      "assetId": "furn_meja_kantin",
-      "label": "Meja Kantin",
+      "id": "slot_sch_kursi_guru",
+      "assetId": "furn_kursi_guru_v4",
+      "label": "Kursi Guru",
+      "class_": "cluster",
+      "x": 8,
+      "y": 3,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_meja_siswa_1",
+      "assetId": "furn_meja_siswa_v4",
+      "fallbackAssetId": "fur_meja_siswa_1",
+      "label": "Meja Siswa 1",
+      "class_": "grid",
+      "x": 4,
+      "y": 6,
+      "w": 3,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_kursi_siswa_1a",
+      "assetId": "furn_kursi_siswa_v4",
+      "label": "Kursi 1A",
+      "class_": "grid",
+      "x": 4.5,
+      "y": 7.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_kursi_siswa_1b",
+      "assetId": "furn_kursi_siswa_v4",
+      "label": "Kursi 1B",
+      "class_": "grid",
+      "x": 6,
+      "y": 7.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_meja_siswa_2",
+      "assetId": "furn_meja_siswa_v4",
+      "fallbackAssetId": "fur_meja_siswa_2",
+      "label": "Meja Siswa 2",
+      "class_": "grid",
+      "x": 9,
+      "y": 6,
+      "w": 3,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_kursi_siswa_2a",
+      "assetId": "furn_kursi_siswa_v4",
+      "label": "Kursi 2A",
+      "class_": "grid",
+      "x": 9.5,
+      "y": 7.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_kursi_siswa_2b",
+      "assetId": "furn_kursi_siswa_v4",
+      "label": "Kursi 2B",
+      "class_": "grid",
+      "x": 11,
+      "y": 7.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_meja_siswa_3",
+      "assetId": "furn_meja_siswa_v4",
+      "fallbackAssetId": "fur_meja_siswa_3",
+      "label": "Meja Siswa 3",
+      "class_": "grid",
+      "x": 4,
+      "y": 9,
+      "w": 3,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_kursi_siswa_3a",
+      "assetId": "furn_kursi_siswa_v4",
+      "label": "Kursi 3A",
+      "class_": "grid",
+      "x": 4.5,
+      "y": 10.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_kursi_siswa_3b",
+      "assetId": "furn_kursi_siswa_v4",
+      "label": "Kursi 3B",
+      "class_": "grid",
+      "x": 6,
+      "y": 10.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_meja_siswa_4",
+      "assetId": "furn_meja_siswa_v4",
+      "fallbackAssetId": "fur_meja_siswa_4",
+      "label": "Meja Siswa 4",
+      "class_": "grid",
+      "x": 9,
+      "y": 9,
+      "w": 3,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_kursi_siswa_4a",
+      "assetId": "furn_kursi_siswa_v4",
+      "label": "Kursi 4A",
+      "class_": "grid",
+      "x": 9.5,
+      "y": 10.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_kursi_siswa_4b",
+      "assetId": "furn_kursi_siswa_v4",
+      "label": "Kursi 4B",
+      "class_": "grid",
+      "x": 11,
+      "y": 10.5,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_rak_buku_kelas",
+      "assetId": "furn_rak_buku_v4",
+      "label": "Rak Buku Kelas",
+      "class_": "wall_back",
+      "x": 2,
+      "y": 4,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_sampah_kelas",
+      "assetId": "furn_tempat_sampah_v4",
+      "label": "Tempat Sampah",
+      "class_": "free",
+      "x": 2,
+      "y": 9,
+      "w": 1,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_counter_kantin",
+      "assetId": "furn_counter_kantin_etalase_v4",
+      "fallbackAssetId": "fur_counter_kantin",
+      "label": "Counter Kantin",
+      "class_": "wall_back",
+      "x": 18,
+      "y": 2.5,
+      "w": 5,
+      "h": 2.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_kulkas_kantin",
+      "assetId": "furn_kulkas_minuman_v4",
+      "fallbackAssetId": "fur_kulkas_kantin",
+      "label": "Kulkas Minuman",
+      "class_": "wall_back",
+      "x": 24,
+      "y": 2,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_dispenser_kantin",
+      "assetId": "furn_dispenser_galon_v4",
+      "label": "Dispenser Galon",
+      "class_": "wall_back",
+      "x": 26,
+      "y": 3,
+      "w": 1,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_wastafel_kantin",
+      "assetId": "furn_wastafel_cuci_tangan_v4",
+      "label": "Wastafel Cuci Tangan",
+      "class_": "wall_back",
+      "x": 28,
+      "y": 3,
+      "w": 1.5,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_menu_kantin",
+      "assetId": "furn_papan_menu_kosong_v4",
+      "label": "Papan Menu",
+      "class_": "wall_decor",
       "x": 19,
+      "y": 1.5,
+      "w": 3,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_meja_kantin_1",
+      "assetId": "furn_meja_kantin_panjang_v4",
+      "fallbackAssetId": "fur_meja_kantin_1",
+      "label": "Meja Kantin 1",
+      "class_": "free",
+      "x": 18,
       "y": 8,
-      "w": 4,
-      "h": 1,
+      "w": 3,
+      "h": 2,
       "collidable": true
     },
     {
-      "id": "fur_rak_perpustakaan",
-      "type": "rak_buku_besar",
-      "assetId": "furn_rak_buku_perpus",
-      "label": "Rak Buku Perpustakaan",
-      "x": 3,
-      "y": 14,
-      "w": 4,
-      "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_meja_baca",
-      "type": "meja_baca",
-      "assetId": "furn_meja_baca",
-      "label": "Meja Baca Perpustakaan",
-      "x": 3,
-      "y": 17,
+      "id": "slot_sch_bangku_kantin_1a",
+      "assetId": "furn_bangku_kantin_v4",
+      "label": "Bangku 1A",
+      "class_": "free",
+      "x": 18,
+      "y": 7,
       "w": 3,
       "h": 1,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_bangku_kantin_1b",
+      "assetId": "furn_bangku_kantin_v4",
+      "label": "Bangku 1B",
+      "class_": "free",
+      "x": 18,
+      "y": 10,
+      "w": 3,
+      "h": 1,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_meja_kantin_2",
+      "assetId": "furn_meja_kantin_panjang_v4",
+      "label": "Meja Kantin 2",
+      "class_": "free",
+      "x": 23,
+      "y": 8,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_bangku_kantin_2a",
+      "assetId": "furn_bangku_kantin_v4",
+      "label": "Bangku 2A",
+      "class_": "free",
+      "x": 23,
+      "y": 7,
+      "w": 3,
+      "h": 1,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_bangku_kantin_2b",
+      "assetId": "furn_bangku_kantin_v4",
+      "label": "Bangku 2B",
+      "class_": "free",
+      "x": 23,
+      "y": 10,
+      "w": 3,
+      "h": 1,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_sampah_kantin",
+      "assetId": "furn_tempat_sampah_v4",
+      "label": "Tempat Sampah",
+      "class_": "free",
+      "x": 28,
+      "y": 9,
+      "w": 1,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_counter_perpus",
+      "assetId": "furn_counter_pustakawan_v4",
+      "label": "Counter Pustakawan",
+      "class_": "wall_back",
+      "x": 4,
+      "y": 13,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_komputer_perpus",
+      "assetId": "furn_komputer_meja_v4",
+      "label": "Komputer Katalog",
+      "class_": "free",
+      "x": 7,
+      "y": 13.5,
+      "w": 1.5,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_rak_perpus_1",
+      "assetId": "furn_rak_buku_perpus_v4",
+      "fallbackAssetId": "fur_rak_perpustakaan",
+      "label": "Rak Buku 1",
+      "class_": "wall_back",
+      "x": 2,
+      "y": 14,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_rak_perpus_2",
+      "assetId": "furn_rak_buku_perpus_v4",
+      "label": "Rak Buku 2",
+      "class_": "wall_back",
+      "x": 2,
+      "y": 17,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_meja_baca_1",
+      "assetId": "furn_meja_baca_v4",
+      "fallbackAssetId": "fur_meja_baca",
+      "label": "Meja Baca 1",
+      "class_": "cluster",
+      "x": 5,
+      "y": 17,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_kursi_baca_1",
+      "assetId": "furn_kursi_baca_v4",
+      "label": "Kursi Baca 1",
+      "class_": "cluster",
+      "x": 5.5,
+      "y": 19,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_kursi_baca_2",
+      "assetId": "furn_kursi_baca_v4",
+      "label": "Kursi Baca 2",
+      "class_": "cluster",
+      "x": 6.5,
+      "y": 19,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_meja_baca_2",
+      "assetId": "furn_meja_baca_v4",
+      "label": "Meja Baca 2",
+      "class_": "cluster",
+      "x": 9,
+      "y": 17,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_kursi_baca_3",
+      "assetId": "furn_kursi_baca_v4",
+      "label": "Kursi Baca 3",
+      "class_": "cluster",
+      "x": 9.5,
+      "y": 19,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_kursi_baca_4",
+      "assetId": "furn_kursi_baca_v4",
+      "label": "Kursi Baca 4",
+      "class_": "cluster",
+      "x": 10.5,
+      "y": 19,
+      "w": 1,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_papan_info",
+      "assetId": "furn_papan_info_v4",
+      "label": "Papan Info",
+      "class_": "wall_decor",
+      "x": 8,
+      "y": 12.5,
+      "w": 3,
+      "h": 1.5,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_papan_pengumuman",
+      "assetId": "furn_papan_pengumuman_v4",
+      "label": "Papan Pengumuman",
+      "class_": "wall_decor",
+      "x": 20,
+      "y": 12.5,
+      "w": 3,
+      "h": 2,
+      "collidable": false
+    },
+    {
+      "id": "slot_sch_rak_piala",
+      "assetId": "furn_rak_piala_v4",
+      "label": "Rak Piala",
+      "class_": "wall_back",
+      "x": 23,
+      "y": 12,
+      "w": 2,
+      "h": 2.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_bangku_tunggu_1",
+      "assetId": "furn_bangku_tunggu_v4",
+      "label": "Bangku Lobby 1",
+      "class_": "wall_back",
+      "x": 19,
+      "y": 15,
+      "w": 3,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_bangku_tunggu_2",
+      "assetId": "furn_bangku_tunggu_v4",
+      "label": "Bangku Lobby 2",
+      "class_": "wall_back",
+      "x": 25,
+      "y": 15,
+      "w": 3,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_tanaman_1",
+      "assetId": "furn_vas_tanaman_v4",
+      "label": "Vas Tanaman",
+      "class_": "free",
+      "x": 18,
+      "y": 18,
+      "w": 1,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_sch_tanaman_2",
+      "assetId": "furn_vas_tanaman_v4",
+      "label": "Vas Tanaman",
+      "class_": "free",
+      "x": 28,
+      "y": 18,
+      "w": 1,
+      "h": 1.5,
       "collidable": true
     }
   ],
   "interactables": [
     {
-      "id": "int_kelas_belajar",
+      "id": "int_belajar_kelas",
       "type": "activity",
-      "activityId": "ikut_pelajaran",
-      "x": 6,
+      "activityId": "pelajaran_sekolah",
+      "x": 7,
       "y": 4,
-      "w": 4,
+      "w": 3,
       "h": 1,
-      "prompt": "Tekan [E] Ikut Pelajaran Sekolah (sampai 14:30)",
-      "action": "study_class"
+      "prompt": "Tekan [E] Ikuti Pelajaran Sekolah",
+      "action": "school_lesson"
     },
     {
-      "id": "int_kantin_makan",
+      "id": "int_kantin",
       "type": "shop",
       "shopId": "kantin",
-      "locationId": "kantin",
-      "openingHoursId": "kantin",
-      "x": 19,
-      "y": 5,
-      "w": 3,
+      "x": 18,
+      "y": 3,
+      "w": 5,
       "h": 1,
-      "prompt": "Tekan [E] Beli Makanan / Jajan Kantin",
-      "action": "canteen_shop"
+      "prompt": "Tekan [E] Beli Makanan di Kantin",
+      "panel": "kantin"
     },
     {
-      "id": "int_perpus_baca",
+      "id": "int_baca_perpus",
       "type": "activity",
-      "activityId": "baca_perpustakaan",
-      "x": 3,
-      "y": 16,
+      "activityId": "baca_buku",
+      "x": 5,
+      "y": 17,
       "w": 3,
       "h": 1,
-      "prompt": "Tekan [E] Baca Buku di Perpustakaan (60 Menit)",
-      "action": "library_read"
+      "prompt": "Tekan [E] Membaca Buku Literasi Keuangan",
+      "action": "read_book"
     },
     {
-      "id": "exit_to_hub",
+      "id": "int_keluar_sekolah",
       "type": "exit",
       "targetMap": "town_hub",
-      "targetSpawn": [10, 8],
-      "x": 15,
-      "y": 20,
+      "targetSpawn": [
+        10,
+        9
+      ],
+      "x": 16,
+      "y": 19,
       "w": 2,
-      "h": 1,
-      "prompt": "Tekan [E] Keluar ke Kota Harmoni",
-      "action": "exit_map"
+      "h": 1
     }
   ],
   "npcs": [
     {
       "id": "npc_budi",
       "name": "Budi",
-      "role": "Teman Sekelas",
-      "assetId": "npc_budi",
+      "role": "Ketua Kelas",
+      "assetId": "npc_sheet_friends",
       "color": 7288674,
-      "x": 5,
-      "y": 7,
-      "dialogId": "dia_budi_school"
+      "x": 10,
+      "y": 6,
+      "dialog": "Halo! Pelajaran hari ini tentang pengelolaan uang saku dan investasi sederhana. Duduk yuk!",
+      "choices": [
+        {
+          "id": "belajar",
+          "label": "\ud83d\udcda Diskusi Soal Finansial",
+          "reply": "Keren! Pak Guru tadi bilang kalau kita menabung rutin Rp5.000 sehari, setahun bisa dapat hampir dua juta rupiah!"
+        },
+        {
+          "id": "kantin",
+          "label": "\ud83c\udf5b Ajak ke Kantin",
+          "reply": "Ayo ke kantin saat jam istirahat! Nasi uduk Bu Sri selalu laris manis."
+        },
+        {
+          "id": "bye",
+          "label": "\ud83d\udc4b Siap Budi!",
+          "reply": "Sampai ketemu lagi!"
+        }
+      ]
     },
     {
-      "id": "npc_kantin",
-      "name": "Ibu Sri",
-      "role": "Penjaga Kantin",
-      "assetId": "npc_penjual_kantin",
-      "color": 14197368,
-      "x": 20,
-      "y": 3,
-      "dialogId": "dia_sri_kantin"
+      "id": "npc_sri",
+      "name": "Bu Sri",
+      "role": "Penjual Kantin",
+      "assetId": "npc_sheet_vendors",
+      "color": 14450338,
+      "x": 22,
+      "y": 4,
+      "dialog": "Selamat datang di kantin sekolah! Mau makan siang apa hari ini nak?",
+      "choices": [
+        {
+          "id": "menu",
+          "label": "\ud83c\udf71 Buka Menu Kantin",
+          "reply": "Silakan pilih makanan sehat berenergi di menu kantin!"
+        },
+        {
+          "id": "hemat",
+          "label": "\ud83d\udca1 Tips Jajan Sehat & Hemat",
+          "reply": "Pilihlah makanan bernutrisi seperti nasi dan telur, hindari jajan manis berlebihan ya!"
+        },
+        {
+          "id": "bye",
+          "label": "\ud83d\udc4b Terima kasih Bu Sri!",
+          "reply": "Sama-sama nak, selamat belajar!"
+        }
+      ]
     }
   ]
 }
-

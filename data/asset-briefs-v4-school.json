@@ -1,0 +1,261 @@
+{
+  "mapId": "school",
+  "sheetsCount": 5,
+  "sheets": [
+    {
+      "id": "sheet_school_sch_1",
+      "mapId": "school",
+      "zone": "school_sch",
+      "kind": "furniture_sheet",
+      "prompt": "Cozy chunky pixel art with clearly visible square pixels, top-down 3/4 RPG perspective (camera tilted so building fronts and character faces are visible; NOT isometric, NOT pure overhead). Crisp hard-edged pixels, no anti-aliasing, no blur, no gradients, no dithering noise, flat shading with 2-3 tones per material, 1px dark warm outline (#2A1F1A-like deep brown/navy). Soft warm morning light from the upper left, shadows as one flat darker tone falling to the lower right. Calm, warm, cozy mood of a small Indonesian town. Limited palette built around: warm cream #F7EEDA and #E9D8B4; muted green #A5BE93, #6F9262, #44603F; soft brown #C9A27A, #9A6F4C, #5E3F2A; dark navy #1F2A44, #34456B. Sparing accents only: mustard #D9A441, terracotta #C0654A. Furniture sprite sheet for school_sch. Items left to right: Papan Tulis (128x64 px, role: wall_decor), Jam Dinding (32x32 px, role: wall_decor), Meja Guru (96x64 px, role: wall_back), Kursi Guru (32x48 px, role: cluster), Meja Siswa 1 (96x48 px, role: grid). Every item is front-facing (facing the camera), top-down 3/4 RPG view, drawn as ONE separate object with a flat straight base along its bottom edge, no walls, no floor, no surrounding room. Items are drawn at consistent real-world scale relative to each other with the same visible pixel size. All screens, labels, frames and book spines blank or abstract. Flat solid magenta #FF00FF background, no shadows on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly. Avoid: any text, letters, numbers, logos, watermarks, real-world brand names, photorealism, 3D render, smooth vector art, glow, neon, soft airbrushed shading, drop shadows with blur, emoji, isometric view, extra characters, cropped subjects, busy backgrounds, anti-aliased edges.",
+      "isCounterModule": false,
+      "background": "#FF00FF",
+      "subjects": [
+        {
+          "assetId": "furn_papan_tulis_v4",
+          "label": "Papan Tulis",
+          "class_": "wall_decor",
+          "w": 128,
+          "h": 64,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_jam_dinding_v4",
+          "label": "Jam Dinding",
+          "class_": "wall_decor",
+          "w": 32,
+          "h": 32,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_meja_guru_v4",
+          "label": "Meja Guru",
+          "class_": "wall_back",
+          "w": 96,
+          "h": 64,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_kursi_guru_v4",
+          "label": "Kursi Guru",
+          "class_": "cluster",
+          "w": 32,
+          "h": 48,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_meja_siswa_v4",
+          "label": "Meja Siswa 1",
+          "class_": "grid",
+          "w": 96,
+          "h": 48,
+          "facing": "front"
+        }
+      ]
+    },
+    {
+      "id": "sheet_school_sch_2",
+      "mapId": "school",
+      "zone": "school_sch",
+      "kind": "furniture_sheet",
+      "prompt": "Cozy chunky pixel art with clearly visible square pixels, top-down 3/4 RPG perspective (camera tilted so building fronts and character faces are visible; NOT isometric, NOT pure overhead). Crisp hard-edged pixels, no anti-aliasing, no blur, no gradients, no dithering noise, flat shading with 2-3 tones per material, 1px dark warm outline (#2A1F1A-like deep brown/navy). Soft warm morning light from the upper left, shadows as one flat darker tone falling to the lower right. Calm, warm, cozy mood of a small Indonesian town. Limited palette built around: warm cream #F7EEDA and #E9D8B4; muted green #A5BE93, #6F9262, #44603F; soft brown #C9A27A, #9A6F4C, #5E3F2A; dark navy #1F2A44, #34456B. Sparing accents only: mustard #D9A441, terracotta #C0654A. Furniture sprite sheet for school_sch. Items left to right: Kursi 1A (32x48 px, role: grid), Rak Buku Kelas (64x96 px, role: wall_back), Tempat Sampah (32x32 px, role: free), Counter Kantin (160x80 px, role: wall_back), Kulkas Minuman (64x96 px, role: wall_back). Every item is front-facing (facing the camera), top-down 3/4 RPG view, drawn as ONE separate object with a flat straight base along its bottom edge, no walls, no floor, no surrounding room. Items are drawn at consistent real-world scale relative to each other with the same visible pixel size. All screens, labels, frames and book spines blank or abstract. Flat solid magenta #FF00FF background, no shadows on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly. Avoid: any text, letters, numbers, logos, watermarks, real-world brand names, photorealism, 3D render, smooth vector art, glow, neon, soft airbrushed shading, drop shadows with blur, emoji, isometric view, extra characters, cropped subjects, busy backgrounds, anti-aliased edges.",
+      "isCounterModule": false,
+      "background": "#FF00FF",
+      "subjects": [
+        {
+          "assetId": "furn_kursi_siswa_v4",
+          "label": "Kursi 1A",
+          "class_": "grid",
+          "w": 32,
+          "h": 48,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_rak_buku_v4",
+          "label": "Rak Buku Kelas",
+          "class_": "wall_back",
+          "w": 64,
+          "h": 96,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_tempat_sampah_v4",
+          "label": "Tempat Sampah",
+          "class_": "free",
+          "w": 32,
+          "h": 32,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_counter_kantin_etalase_v4",
+          "label": "Counter Kantin",
+          "class_": "wall_back",
+          "w": 160,
+          "h": 80,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_kulkas_minuman_v4",
+          "label": "Kulkas Minuman",
+          "class_": "wall_back",
+          "w": 64,
+          "h": 96,
+          "facing": "front"
+        }
+      ]
+    },
+    {
+      "id": "sheet_school_sch_3",
+      "mapId": "school",
+      "zone": "school_sch",
+      "kind": "furniture_sheet",
+      "prompt": "Cozy chunky pixel art with clearly visible square pixels, top-down 3/4 RPG perspective (camera tilted so building fronts and character faces are visible; NOT isometric, NOT pure overhead). Crisp hard-edged pixels, no anti-aliasing, no blur, no gradients, no dithering noise, flat shading with 2-3 tones per material, 1px dark warm outline (#2A1F1A-like deep brown/navy). Soft warm morning light from the upper left, shadows as one flat darker tone falling to the lower right. Calm, warm, cozy mood of a small Indonesian town. Limited palette built around: warm cream #F7EEDA and #E9D8B4; muted green #A5BE93, #6F9262, #44603F; soft brown #C9A27A, #9A6F4C, #5E3F2A; dark navy #1F2A44, #34456B. Sparing accents only: mustard #D9A441, terracotta #C0654A. Furniture sprite sheet for school_sch. Items left to right: Dispenser Galon (32x64 px, role: wall_back), Wastafel Cuci Tangan (48x64 px, role: wall_back), Papan Menu (96x48 px, role: wall_decor), Meja Kantin 1 (96x64 px, role: free), Bangku 1A (96x32 px, role: free). Every item is front-facing (facing the camera), top-down 3/4 RPG view, drawn as ONE separate object with a flat straight base along its bottom edge, no walls, no floor, no surrounding room. Items are drawn at consistent real-world scale relative to each other with the same visible pixel size. All screens, labels, frames and book spines blank or abstract. Flat solid magenta #FF00FF background, no shadows on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly. Avoid: any text, letters, numbers, logos, watermarks, real-world brand names, photorealism, 3D render, smooth vector art, glow, neon, soft airbrushed shading, drop shadows with blur, emoji, isometric view, extra characters, cropped subjects, busy backgrounds, anti-aliased edges.",
+      "isCounterModule": false,
+      "background": "#FF00FF",
+      "subjects": [
+        {
+          "assetId": "furn_dispenser_galon_v4",
+          "label": "Dispenser Galon",
+          "class_": "wall_back",
+          "w": 32,
+          "h": 64,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_wastafel_cuci_tangan_v4",
+          "label": "Wastafel Cuci Tangan",
+          "class_": "wall_back",
+          "w": 48,
+          "h": 64,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_papan_menu_kosong_v4",
+          "label": "Papan Menu",
+          "class_": "wall_decor",
+          "w": 96,
+          "h": 48,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_meja_kantin_panjang_v4",
+          "label": "Meja Kantin 1",
+          "class_": "free",
+          "w": 96,
+          "h": 64,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_bangku_kantin_v4",
+          "label": "Bangku 1A",
+          "class_": "free",
+          "w": 96,
+          "h": 32,
+          "facing": "front"
+        }
+      ]
+    },
+    {
+      "id": "sheet_school_sch_4",
+      "mapId": "school",
+      "zone": "school_sch",
+      "kind": "furniture_sheet",
+      "prompt": "Cozy chunky pixel art with clearly visible square pixels, top-down 3/4 RPG perspective (camera tilted so building fronts and character faces are visible; NOT isometric, NOT pure overhead). Crisp hard-edged pixels, no anti-aliasing, no blur, no gradients, no dithering noise, flat shading with 2-3 tones per material, 1px dark warm outline (#2A1F1A-like deep brown/navy). Soft warm morning light from the upper left, shadows as one flat darker tone falling to the lower right. Calm, warm, cozy mood of a small Indonesian town. Limited palette built around: warm cream #F7EEDA and #E9D8B4; muted green #A5BE93, #6F9262, #44603F; soft brown #C9A27A, #9A6F4C, #5E3F2A; dark navy #1F2A44, #34456B. Sparing accents only: mustard #D9A441, terracotta #C0654A. Furniture sprite sheet for school_sch. Items left to right: Counter Pustakawan (96x64 px, role: wall_back), Komputer Katalog (48x48 px, role: free), Rak Buku 1 (64x96 px, role: wall_back), Meja Baca 1 (96x64 px, role: cluster), Kursi Baca 1 (32x48 px, role: cluster). Every item is front-facing (facing the camera), top-down 3/4 RPG view, drawn as ONE separate object with a flat straight base along its bottom edge, no walls, no floor, no surrounding room. Items are drawn at consistent real-world scale relative to each other with the same visible pixel size. All screens, labels, frames and book spines blank or abstract. Flat solid magenta #FF00FF background, no shadows on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly. Avoid: any text, letters, numbers, logos, watermarks, real-world brand names, photorealism, 3D render, smooth vector art, glow, neon, soft airbrushed shading, drop shadows with blur, emoji, isometric view, extra characters, cropped subjects, busy backgrounds, anti-aliased edges.",
+      "isCounterModule": false,
+      "background": "#FF00FF",
+      "subjects": [
+        {
+          "assetId": "furn_counter_pustakawan_v4",
+          "label": "Counter Pustakawan",
+          "class_": "wall_back",
+          "w": 96,
+          "h": 64,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_komputer_meja_v4",
+          "label": "Komputer Katalog",
+          "class_": "free",
+          "w": 48,
+          "h": 48,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_rak_buku_perpus_v4",
+          "label": "Rak Buku 1",
+          "class_": "wall_back",
+          "w": 64,
+          "h": 96,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_meja_baca_v4",
+          "label": "Meja Baca 1",
+          "class_": "cluster",
+          "w": 96,
+          "h": 64,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_kursi_baca_v4",
+          "label": "Kursi Baca 1",
+          "class_": "cluster",
+          "w": 32,
+          "h": 48,
+          "facing": "front"
+        }
+      ]
+    },
+    {
+      "id": "sheet_school_sch_5",
+      "mapId": "school",
+      "zone": "school_sch",
+      "kind": "furniture_sheet",
+      "prompt": "Cozy chunky pixel art with clearly visible square pixels, top-down 3/4 RPG perspective (camera tilted so building fronts and character faces are visible; NOT isometric, NOT pure overhead). Crisp hard-edged pixels, no anti-aliasing, no blur, no gradients, no dithering noise, flat shading with 2-3 tones per material, 1px dark warm outline (#2A1F1A-like deep brown/navy). Soft warm morning light from the upper left, shadows as one flat darker tone falling to the lower right. Calm, warm, cozy mood of a small Indonesian town. Limited palette built around: warm cream #F7EEDA and #E9D8B4; muted green #A5BE93, #6F9262, #44603F; soft brown #C9A27A, #9A6F4C, #5E3F2A; dark navy #1F2A44, #34456B. Sparing accents only: mustard #D9A441, terracotta #C0654A. Furniture sprite sheet for school_sch. Items left to right: Papan Info (96x48 px, role: wall_decor), Papan Pengumuman (96x64 px, role: wall_decor), Rak Piala (64x96 px, role: wall_back), Bangku Lobby 1 (96x32 px, role: wall_back), Vas Tanaman (32x48 px, role: free). Every item is front-facing (facing the camera), top-down 3/4 RPG view, drawn as ONE separate object with a flat straight base along its bottom edge, no walls, no floor, no surrounding room. Items are drawn at consistent real-world scale relative to each other with the same visible pixel size. All screens, labels, frames and book spines blank or abstract. Flat solid magenta #FF00FF background, no shadows on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly. Avoid: any text, letters, numbers, logos, watermarks, real-world brand names, photorealism, 3D render, smooth vector art, glow, neon, soft airbrushed shading, drop shadows with blur, emoji, isometric view, extra characters, cropped subjects, busy backgrounds, anti-aliased edges.",
+      "isCounterModule": false,
+      "background": "#FF00FF",
+      "subjects": [
+        {
+          "assetId": "furn_papan_info_v4",
+          "label": "Papan Info",
+          "class_": "wall_decor",
+          "w": 96,
+          "h": 48,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_papan_pengumuman_v4",
+          "label": "Papan Pengumuman",
+          "class_": "wall_decor",
+          "w": 96,
+          "h": 64,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_rak_piala_v4",
+          "label": "Rak Piala",
+          "class_": "wall_back",
+          "w": 64,
+          "h": 96,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_bangku_tunggu_v4",
+          "label": "Bangku Lobby 1",
+          "class_": "wall_back",
+          "w": 96,
+          "h": 32,
+          "facing": "front"
+        },
+        {
+          "assetId": "furn_vas_tanaman_v4",
+          "label": "Vas Tanaman",
+          "class_": "free",
+          "w": 32,
+          "h": 48,
+          "facing": "front"
+        }
+      ]
+    }
+  ]
+}

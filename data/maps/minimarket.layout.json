@@ -8,84 +8,269 @@
     "heightTiles": 18,
     "tileSize": 32,
     "spawns": {
-      "default": { "x": 12, "y": 15 },
-      "from_hub": { "x": 12, "y": 15 }
+      "default": {
+        "x": 12,
+        "y": 15
+      },
+      "from_hub": {
+        "x": 12,
+        "y": 15
+      }
     }
   },
   "floors": [
-    { "type": "keramik_minimarket", "x": 2, "y": 2, "w": 20, "h": 14 }
+    {
+      "type": "keramik_minimarket",
+      "x": 2,
+      "y": 2,
+      "w": 20,
+      "h": 14
+    }
   ],
   "walls": [
-    { "x": 1, "y": 1, "w": 22, "h": 1 },
-    { "x": 1, "y": 1, "w": 1, "h": 16 },
-    { "x": 22, "y": 1, "w": 1, "h": 16 },
-    { "x": 1, "y": 17, "w": 22, "h": 1 }
+    {
+      "x": 1,
+      "y": 1,
+      "w": 22,
+      "h": 1
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "w": 1,
+      "h": 16
+    },
+    {
+      "x": 22,
+      "y": 1,
+      "w": 1,
+      "h": 16
+    },
+    {
+      "x": 1,
+      "y": 17,
+      "w": 22,
+      "h": 1
+    }
   ],
   "colliders": [
-    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 24, "h": 2 },
-    { "name": "batas_luar_bawah", "x": 0, "y": 17, "w": 24, "h": 1 },
-    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 18 },
-    { "name": "batas_luar_kanan", "x": 22, "y": 0, "w": 2, "h": 18 }
+    {
+      "name": "batas_luar_atas",
+      "x": 0,
+      "y": 0,
+      "w": 24,
+      "h": 2
+    },
+    {
+      "name": "batas_luar_bawah",
+      "x": 0,
+      "y": 17,
+      "w": 24,
+      "h": 1
+    },
+    {
+      "name": "batas_luar_kiri",
+      "x": 0,
+      "y": 0,
+      "w": 2,
+      "h": 18
+    },
+    {
+      "name": "batas_luar_kanan",
+      "x": 22,
+      "y": 0,
+      "w": 2,
+      "h": 18
+    }
   ],
   "furniture": [
     {
-      "id": "fur_meja_kasir_mini",
-      "type": "meja_kasir",
-      "label": "Meja Kasir & POS",
-      "x": 4,
-      "y": 12,
-      "w": 4,
-      "h": 1,
-      "collidable": true
-    },
-    {
-      "id": "fur_gondola_1",
-      "type": "rak_gondola",
-      "label": "Rak Snack & Makanan Ringan",
-      "x": 4,
-      "y": 5,
-      "w": 6,
-      "h": 2,
-      "collidable": true
-    },
-    {
-      "id": "fur_gondola_2",
-      "type": "rak_gondola",
-      "label": "Rak Kebutuhan Harian",
-      "x": 14,
-      "y": 5,
-      "w": 6,
-      "h": 2,
-      "collidable": true
-    },
-    {
-      "id": "fur_kulkas_minimarket",
-      "type": "chiller_minuman",
-      "label": "Chiller Minuman Dingin",
-      "x": 4,
+      "id": "slot_mini_kulkas_1",
+      "assetId": "furn_kulkas_minuman_besar_v4",
+      "fallbackAssetId": "furn_kulkas",
+      "label": "Kulkas Minuman 1",
+      "class_": "wall_back",
+      "x": 3,
       "y": 2,
-      "w": 8,
-      "h": 1,
+      "w": 2,
+      "h": 3,
       "collidable": true
     },
     {
-      "id": "fur_rak_alat_tulis",
-      "type": "rak_atk",
-      "label": "Rak Alat Tulis Sekolah",
-      "x": 16,
+      "id": "slot_mini_kulkas_2",
+      "assetId": "furn_kulkas_minuman_besar_v4",
+      "fallbackAssetId": "furn_kulkas",
+      "label": "Kulkas Minuman 2",
+      "class_": "wall_back",
+      "x": 5,
       "y": 2,
-      "w": 4,
-      "h": 1,
+      "w": 2,
+      "h": 3,
       "collidable": true
     },
     {
-      "id": "fur_mesin_fotokopi",
-      "type": "mesin_fotokopi",
-      "label": "Mesin Fotokopi",
-      "x": 18,
-      "y": 12,
+      "id": "slot_mini_rak_roti",
+      "assetId": "furn_rak_roti_v4",
+      "label": "Rak Roti",
+      "class_": "wall_back",
+      "x": 7,
+      "y": 3,
       "w": 2,
       "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_rak_mie",
+      "assetId": "furn_rak_mie_instan_v4",
+      "label": "Rak Mie Instan",
+      "class_": "wall_back",
+      "x": 9,
+      "y": 2.5,
+      "w": 2,
+      "h": 2.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_rak_snack_1",
+      "assetId": "furn_rak_dinding_snack_v4",
+      "label": "Rak Snack Dinding 1",
+      "class_": "wall_back",
+      "x": 11,
+      "y": 2,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_rak_snack_2",
+      "assetId": "furn_rak_dinding_snack_v4",
+      "label": "Rak Snack Dinding 2",
+      "class_": "wall_back",
+      "x": 13,
+      "y": 2,
+      "w": 2,
+      "h": 3,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_etalase_makanan",
+      "assetId": "furn_etalase_makanan_siap_saji_v4",
+      "label": "Etalase Makanan",
+      "class_": "wall_back",
+      "x": 15,
+      "y": 3,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_rak_atk",
+      "assetId": "furn_rak_alat_tulis_v4",
+      "label": "Rak Alat Tulis",
+      "class_": "wall_back",
+      "x": 18,
+      "y": 2.5,
+      "w": 2,
+      "h": 2.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_mesin_fotokopi",
+      "assetId": "furn_mesin_fotokopi_v4",
+      "label": "Mesin Fotokopi",
+      "class_": "wall_back",
+      "x": 20,
+      "y": 3,
+      "w": 2,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_gondola_1",
+      "assetId": "furn_rak_gondola_v4",
+      "label": "Rak Gondola Depan Kiri",
+      "class_": "free",
+      "x": 4,
+      "y": 7,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_gondola_2",
+      "assetId": "furn_rak_gondola_v4",
+      "label": "Rak Gondola Depan Kanan",
+      "class_": "free",
+      "x": 13,
+      "y": 7,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_gondola_3",
+      "assetId": "furn_rak_gondola_v4",
+      "label": "Rak Gondola Belakang Kiri",
+      "class_": "free",
+      "x": 4,
+      "y": 10,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_gondola_4",
+      "assetId": "furn_rak_gondola_v4",
+      "label": "Rak Gondola Belakang Kanan",
+      "class_": "free",
+      "x": 13,
+      "y": 10,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_kasir",
+      "assetId": "furn_kasir_counter_v4",
+      "label": "Counter Kasir",
+      "class_": "free",
+      "x": 4,
+      "y": 13,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_keranjang",
+      "assetId": "furn_keranjang_belanja_v4",
+      "label": "Tumpukan Keranjang",
+      "class_": "free",
+      "x": 8,
+      "y": 14,
+      "w": 1,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_galon",
+      "assetId": "furn_galon_tumpuk_v4",
+      "label": "Tumpukan Galon",
+      "class_": "free",
+      "x": 19,
+      "y": 13,
+      "w": 1,
+      "h": 1.5,
+      "collidable": true
+    },
+    {
+      "id": "slot_mini_sampah",
+      "assetId": "furn_tempat_sampah_v4",
+      "label": "Tempat Sampah",
+      "class_": "free",
+      "x": 20,
+      "y": 14,
+      "w": 1,
+      "h": 1,
       "collidable": true
     }
   ],
@@ -94,58 +279,65 @@
       "id": "int_kasir_minimarket",
       "type": "shop",
       "shopId": "minimarket",
-      "x": 5,
-      "y": 11,
-      "w": 2,
+      "x": 4,
+      "y": 13,
+      "w": 3,
       "h": 1,
-      "prompt": "Tekan [E] Belanja di Kasir / Beli Pulsa",
-      "action": "open_shop"
-    },
-    {
-      "id": "int_rak_snack",
-      "type": "activity",
-      "activityId": "beli_snack_mini",
-      "x": 6,
-      "y": 7,
-      "w": 2,
-      "h": 1,
-      "prompt": "Tekan [E] Beli Roti & Snack (+10 Mnt)",
-      "action": "buy_snack"
+      "prompt": "Tekan [E] Belanja di Minimarket",
+      "panel": "minimarket"
     },
     {
       "id": "int_fotokopi",
       "type": "activity",
-      "activityId": "fotokopi_tugas",
-      "x": 18,
-      "y": 14,
+      "activityId": "fotokopi",
+      "x": 20,
+      "y": 4,
       "w": 2,
       "h": 1,
-      "prompt": "Tekan [E] Fotokopi Catatan & Tugas (Rp5.000)",
+      "prompt": "Tekan [E] Fotokopi Dokumen",
       "action": "photocopy"
     },
     {
-      "id": "exit_to_hub",
+      "id": "int_keluar_minimarket",
       "type": "exit",
       "targetMap": "town_hub",
-      "targetSpawn": [27, 7],
-      "x": 11,
+      "targetSpawn": [
+        27,
+        8
+      ],
+      "x": 12,
       "y": 16,
       "w": 2,
-      "h": 1,
-      "prompt": "Tekan [E] Keluar ke Kota Harmoni",
-      "action": "exit_map"
+      "h": 1
     }
   ],
   "npcs": [
     {
-      "id": "npc_kasir_minimarket",
-      "name": "Mbak Maya",
-      "role": "Kasir Mini Mart",
+      "id": "npc_kasir_mini",
+      "name": "Rian",
+      "role": "Kasir Minimarket",
       "assetId": "npc_sheet_vendors",
-      "color": 3425643,
+      "color": 3174570,
       "x": 5,
-      "y": 13,
-      "dialogId": "dia_maya_minimarket"
+      "y": 12,
+      "dialog": "Selamat datang di Mini Mart Harmoni! Ada yang bisa saya bantu cari?",
+      "choices": [
+        {
+          "id": "belanja",
+          "label": "\ud83d\uded2 Buka Katalog Belanja",
+          "reply": "Silakan pilih barang yang kamu perlukan di menu belanja!"
+        },
+        {
+          "id": "diskon",
+          "label": "\ud83c\udff7\ufe0f Tanya Promo Hari Ini",
+          "reply": "Hari ini ada promo roti tawar dan susu kotak, pas buat bekal hemat!"
+        },
+        {
+          "id": "bye",
+          "label": "\ud83d\udc4b Terima kasih Mas Rian!",
+          "reply": "Terima kasih telah berbelanja di Mini Mart Harmoni!"
+        }
+      ]
     }
   ]
 }
