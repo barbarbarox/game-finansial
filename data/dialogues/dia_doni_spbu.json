@@ -24,6 +24,11 @@
               "description": "Isi bensin motor 2 liter di SPBU"
             },
             {
+              "type": "refuel",
+              "percent": 40,
+              "amount": 20000
+            },
+            {
               "type": "start_activity",
               "activityId": "isi_bensin_motor"
             }

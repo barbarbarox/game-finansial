@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>HUD Synchronization Test (Rule 78 §4)</title>
+  <link rel="stylesheet" href="../src/ui/tokens.css">
+  <style>
+    body {
+      background: #1e1e2f;
+      color: #fff;
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    #hud-mount {
+      margin-bottom: 24px;
+      position: relative;
+      height: 120px;
+    }
+    .test-box {
+      background: #2a2a3e;
+      border: 1px solid #444;
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+    .pass { color: #4ade80; font-weight: bold; }
+    .fail { color: #f87171; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <h1>Life Journey — HUD Synchronization & Latency Suite</h1>
+  <div id="hud-mount"></div>
+  <div id="results">Menjalankan pengujian...</div>
+
+  <script type="module">
+    import { createHUD } from '../src/ui/hud.js';
+    import { subscribe, emit, DOMAIN_EVENTS, getSubscribersCount } from '../src/domain/events.js';
+    import { refuelPercent, refuelAmount } from '../src/domain/vehicle.js';
+
+    // Mock store
+    const listeners = [];
+    let state = {
+      gasoline: 50,
+      ledger: { entries: [] },
+      energy: { current: 80, max: 100 },
+      clock: { day: 1, month: 1, timeOfDay: 480 },
+      missions: [{ id: 'M1', title: 'Terima Uang Saku', completed: false }]
+    };
+
+    const store = {
+      getState: () => state,
+      setState: (partial) => {
+        state = { ...state, ...partial };
+        listeners.forEach(fn => fn(state));
+      },
+      subscribe: (fn) => {
+        listeners.push(fn);
+        return () => {
+          const idx = listeners.indexOf(fn);
+          if (idx !== -1) listeners.splice(idx, 1);
+        };
+      }
+    };
+
+    const mount = document.getElementById('hud-mount');
+    const hud = createHUD(mount, store, () => {}, () => {}, () => {}, () => {});
+    mount.appendChild(hud);
+
+    const testResults = [];
+    function record(name, passed, detail = '') {
+      testResults.push({ name, passed, detail });
+      console.log(`[TEST] ${passed ? 'PASS' : 'FAIL'}: ${name} (${detail})`);
+    }
+
+    async function runSuite() {
+      // 1. Test Subscriber Count for all HUD domain events
+      const hudEvents = [
+        DOMAIN_EVENTS.FUEL_CHANGED,
+        DOMAIN_EVENTS.ENERGY_CHANGED,
+        DOMAIN_EVENTS.CASH_CHANGED,
+        DOMAIN_EVENTS.SAVINGS_CHANGED,
+        DOMAIN_EVENTS.MISSION_CHANGED,
+        DOMAIN_EVENTS.TIME_CHANGED
+      ];
+      hudEvents.forEach(t => {
+        const count = getSubscribersCount(t);
+        if (count < 1) {
+          record(`Event ${t} has >= 1 subscriber`, false, `Found ${count} subscribers`);
+        } else {
+          record(`Event ${t} has >= 1 subscriber`, true, `${count} subscriber(s)`);
+        }
+      });
+
+      // 2. Test Fuel synchronization & latency <= 200ms
+      const t0_fuel = performance.now();
+      const refuelResult = refuelPercent(state, 30, 500);
+      store.setState({ gasoline: refuelResult.newGasoline });
+      
+      // Check DOM after microtask
+      await new Promise(r => setTimeout(r, 20));
+      const t_fuel_done = performance.now();
+      const fuelLatency = t_fuel_done - t0_fuel;
+
+      const gasText = document.querySelector('.hm-fuel-text')?.textContent;
+      const gasWidth = document.querySelector('.hm-fuel-fill')?.style.width;
+
+      const fuelSyncPass = gasText === '80%' && gasWidth === '80%' && fuelLatency <= 200;
+      record('Fuel Bar Sync & Latency <= 200ms', fuelSyncPass, `Gas: ${gasText}, Width: ${gasWidth}, Latency: ${fuelLatency.toFixed(1)}ms`);
+
+      // 3. Test Cash sync & latency
+      const t0_cash = performance.now();
+      emit(DOMAIN_EVENTS.CASH_CHANGED, { cash: 750000 });
+      await new Promise(r => setTimeout(r, 20));
+      const cashLatency = performance.now() - t0_cash;
+      const cashText = document.querySelector('.hm-cash-text')?.textContent;
+      const cashPass = cashText.includes('750.000') && cashLatency <= 200;
+      record('Cash Display Sync & Latency <= 200ms', cashPass, `Cash: ${cashText}, Latency: ${cashLatency.toFixed(1)}ms`);
+
+      // 4. Test Energy sync & latency
+      const t0_energy = performance.now();
+      emit(DOMAIN_EVENTS.ENERGY_CHANGED, { current: 50, max: 100 });
+      await new Promise(r => setTimeout(r, 20));
+      const energyLatency = performance.now() - t0_energy;
+      const energyText = document.querySelector('.hm-energy-text')?.textContent;
+      const energyWidth = document.querySelector('.hm-energy-fill')?.style.width;
+      const energyPass = energyText === '50%' && energyWidth === '50%' && energyLatency <= 200;
+      record('Energy Bar Sync & Latency <= 200ms', energyPass, `Energy: ${energyText}, Width: ${energyWidth}, Latency: ${energyLatency.toFixed(1)}ms`);
+
+      // 5. Test Clock & Calendar sync & latency
+      const t0_time = performance.now();
+      emit(DOMAIN_EVENTS.TIME_CHANGED, { clock: { day: 2, month: 1, timeOfDay: 840, gameMinutes: 840 } });
+      await new Promise(r => setTimeout(r, 20));
+      const timeLatency = performance.now() - t0_time;
+      const clockText = document.querySelector('.hm-time-text')?.textContent;
+      const dayText = document.querySelector('.hm-day-text')?.textContent;
+      const timePass = clockText === '14:00' && dayText === 'SELASA' && timeLatency <= 200;
+      record('Clock & Calendar Sync & Latency <= 200ms', timePass, `Clock: ${clockText}, Day: ${dayText}, Latency: ${timeLatency.toFixed(1)}ms`);
+
+      // Render summary
+      const resultsDiv = document.getElementById('results');
+      resultsDiv.innerHTML = '';
+      const allPassed = testResults.every(r => r.passed);
+
+      const summaryHeader = document.createElement('h2');
+      summaryHeader.textContent = allPassed ? '✅ SEMUA PENGUJIAN HUD SYNC LULUS' : '❌ BEBERAPA PENGUJIAN GAGAL';
+      summaryHeader.className = allPassed ? 'pass' : 'fail';
+      resultsDiv.appendChild(summaryHeader);
+
+      testResults.forEach(r => {
+        const row = document.createElement('div');
+        row.className = 'test-box';
+        row.innerHTML = `<span class="${r.passed ? 'pass' : 'fail'}">[${r.passed ? 'PASS' : 'FAIL'}]</span> <strong>${r.name}</strong> — ${r.detail}`;
+        resultsDiv.appendChild(row);
+      });
+
+      window.__TEST_RESULTS__ = {
+        allPassed,
+        results: testResults
+      };
+    }
+
+    runSuite();
+  </script>
+</body>
+</html>

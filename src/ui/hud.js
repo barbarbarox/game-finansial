@@ -10,6 +10,7 @@
  */
 
 import { getCash, getSavings } from '../domain/ledger.js';
+import { subscribe, DOMAIN_EVENTS } from '../domain/events.js';
 
 function makeIcon(src, alt = '') {
   const img = document.createElement('img');
@@ -337,6 +338,84 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
     updateUI(store.getState());
     store.subscribe(updateUI);
   }
+
+  // Typed Domain Event Subscriptions (Rule 78 §4)
+  subscribe(DOMAIN_EVENTS.FUEL_CHANGED, (payload) => {
+    const gasPercent = Math.max(0, Math.min(100, Math.round(payload.gasoline ?? 100)));
+    fuelText.textContent = `${gasPercent}%`;
+    fuelFill.style.width = `${gasPercent}%`;
+    fuelFill.className = 'hm-fuel-fill';
+    if (gasPercent < 30) {
+      fuelFill.classList.add('danger');
+    } else if (gasPercent < 60) {
+      fuelFill.classList.add('warning');
+    }
+  });
+
+  subscribe(DOMAIN_EVENTS.ENERGY_CHANGED, (payload) => {
+    const current = payload.current ?? 100;
+    const max = payload.max ?? 100;
+    const energyPct = max > 0 ? Math.max(0, Math.min(100, Math.round((current / max) * 100))) : 0;
+    energyText.textContent = `${energyPct}%`;
+    energyFill.style.width = `${energyPct}%`;
+    if (energyPct <= 25) {
+      energyFill.style.backgroundColor = '#C0654A';
+    } else {
+      energyFill.style.backgroundColor = '#6F9262';
+    }
+  });
+
+  subscribe(DOMAIN_EVENTS.CASH_CHANGED, (payload) => {
+    if (payload.cash !== undefined) {
+      cashVal.textContent = rupiahFormatter.format(payload.cash);
+    }
+  });
+
+  subscribe(DOMAIN_EVENTS.SAVINGS_CHANGED, (payload) => {
+    if (payload.savings !== undefined) {
+      savingsVal.textContent = rupiahFormatter.format(payload.savings);
+    }
+  });
+
+  subscribe(DOMAIN_EVENTS.MISSION_CHANGED, (payload) => {
+    const missions = payload.missions || [];
+    const activeM = missions.find(m => !m.completed);
+    missionTitle.textContent = activeM ? activeM.title : 'Semua Selesai';
+  });
+
+  subscribe(DOMAIN_EVENTS.TIME_CHANGED, (payload) => {
+    const clock = payload.clock || payload;
+    const day = clock.day || 1;
+    const month = clock.month || 1;
+    const totalMin = (clock.gameMinutes !== undefined) ? (clock.gameMinutes % 1440) : (clock.timeOfDay ?? (6 * 60));
+    const hours = Math.floor(totalMin / 60) % 24;
+    const mins = Math.floor(totalMin % 60);
+    const hh = String(hours).padStart(2, '0');
+    const mm = String(mins).padStart(2, '0');
+    const dayName = DAY_NAMES[(day - 1) % 7] || 'Senin';
+    dayPill.textContent = dayName.toUpperCase();
+    dateText.textContent = `Hari ${day} · Bln ${month}`;
+    digitalVal.textContent = `${hh}:${mm}`;
+
+    let period = 'PAGI';
+    let skyClass = 'sky-pagi';
+    let markerEmoji = '🌅';
+    if (hours >= 6 && hours < 12) {
+      period = 'PAGI'; skyClass = 'sky-pagi'; markerEmoji = '🌅';
+    } else if (hours >= 12 && hours < 17) {
+      period = 'SIANG'; skyClass = 'sky-siang'; markerEmoji = '☀️';
+    } else if (hours >= 17 && hours < 19) {
+      period = 'SORE'; skyClass = 'sky-sore'; markerEmoji = '🌇';
+    } else {
+      period = 'MALAM'; skyClass = 'sky-malam'; markerEmoji = '🌙';
+    }
+    periodBadge.textContent = period;
+    skyBox.className = `hm-sky-box ${skyClass}`;
+    skyMarker.textContent = markerEmoji;
+    const progressFraction = Math.max(0, Math.min(1, totalMin / 1440));
+    const arrowOffsetPx = Math.round((progressFraction - 0.5) * 28);
+    skyArrow.style.transform = `translateX(${arrowOffsetPx}px)`;
+  });
 
   return hudElement;
 }

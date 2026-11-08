@@ -4,6 +4,7 @@
  */
 
 import { getCash, addEntry, createExpenseEntry, createAllowanceEntry } from '../domain/ledger.js';
+import { refuelPercent, refuelAmount } from '../domain/vehicle.js';
 import { showTimeSkip } from './timeSkip.js';
 
 let dialogueContainer = null;
@@ -331,6 +332,7 @@ function executeEffects(effects = []) {
   const store = window.__LJ__?.getStore?.();
   if (!store) return;
   let state = store.getState();
+  const hasExplicitRefuel = effects.some(e => e && e.type === 'refuel');
 
   for (const eff of effects) {
     if (!eff || typeof eff !== 'object') continue;
@@ -376,8 +378,40 @@ function executeEffects(effects = []) {
         break;
       }
 
+      case 'refuel': {
+        const pricePerPercent = state.config?.spbu?.pricePerPercent || 500;
+        let res;
+        if (eff.percent !== undefined) {
+          res = refuelPercent(state, eff.percent, pricePerPercent);
+        } else if (eff.amount !== undefined) {
+          res = refuelAmount(state, eff.amount, pricePerPercent);
+        } else {
+          res = refuelPercent(state, 100, pricePerPercent);
+        }
+        if (res) {
+          state = { ...state, gasoline: res.newGasoline };
+          store.setState({ gasoline: res.newGasoline });
+        }
+        break;
+      }
+
+      case 'open_shop':
+      case 'openShop': {
+        const shopId = eff.shopId || eff.targetShop;
+        if (shopId) {
+          document.dispatchEvent(new CustomEvent('lj:openShop', { detail: { shopId, category: eff.category } }));
+        }
+        break;
+      }
+
       case 'start_activity': {
         const actId = eff.activityId;
+        if (actId === 'isi_bensin_motor' && !hasExplicitRefuel) {
+          // Fallback refuel 40% only if not already refueled by explicit refuel effect
+          const res = refuelPercent(state, 40, state.config?.spbu?.pricePerPercent || 500);
+          state = { ...state, gasoline: res.newGasoline };
+          store.setState({ gasoline: res.newGasoline });
+        }
         const minutes = actId === 'pelajaran_sekolah' ? 120 : (actId === 'main_game' ? 60 : 30);
         showTimeSkip({
           title: `Aktivitas: ${actId}`,

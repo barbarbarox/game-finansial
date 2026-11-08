@@ -315,7 +315,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: width 0.3s ease, background-color 0.3s ease;
+  transition: width 0.2s ease, background-color 0.2s ease;
 }
 
 .hm-fuel-fill.warning {
