@@ -14,6 +14,14 @@ import { createCreditsModal } from '../ui/credits.js';
 function initGame() {
   if (window.__GAME__) return;
 
+  // Restore saved theme (Dark vs Light mode)
+  try {
+    const savedTheme = localStorage.getItem('lj_theme');
+    if (savedTheme === 'light') {
+      document.body.classList.add('lj-light');
+    }
+  } catch (_) {}
+
   const config = {
     type: Phaser.AUTO,
     parent: 'game-container',

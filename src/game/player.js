@@ -13,6 +13,7 @@ export class PlayerController {
     this._store = scene.game.registry.get('store');
     const state = this._store ? this._store.getState() : null;
     const gender = state?.character?.gender || 'm';
+    const playerName = state?.character?.name || 'Pemain';
     this.textureKey = gender === 'f' ? 'char_player_f_casual' : 'char_player_m_casual';
 
     // Shadow at feet
@@ -29,6 +30,34 @@ export class PlayerController {
       this.sprite.setOrigin(0.5, 1.0);
       this.hasTexture = false;
     }
+
+    // Player indicator label above sprite (floating name tag with arrow)
+    const indicatorBg = scene.add.rectangle(x, y - 60, 70, 20, 0xD9A441, 0.9);
+    indicatorBg.setOrigin(0.5, 1.0);
+    indicatorBg.setStrokeStyle(1, 0x121A2E, 1);
+
+    this._indicatorBg = indicatorBg;
+    this._indicatorText = scene.add.text(x, y - 61, playerName, {
+      font: 'bold 10px sans-serif',
+      fill: '#121A2E',
+      resolution: 2,
+    }).setOrigin(0.5, 1.0);
+
+    // Small downward arrow triangle below the label
+    this._indicatorArrow = scene.add.triangle(
+      x, y - 42,
+      -6, 0, 6, 0, 0, 7,
+      0xD9A441, 0.9
+    ).setOrigin(0.5, 0.5);
+
+    // Adjust indicator width to fit player name
+    indicatorBg.width = Math.max(60, this._indicatorText.width + 16);
+
+    // Set initial depths for indicator
+    indicatorBg.setDepth(5000);
+    this._indicatorText.setDepth(5001);
+    this._indicatorArrow.setDepth(5000);
+    this._updateIndicator();
 
     // Input keys
     this.cursors = scene.input.keyboard.createCursorKeys();
@@ -102,6 +131,18 @@ export class PlayerController {
     // Depth sort: lower Y = in front
     this.sprite.setDepth(this.sprite.y);
     this.shadow.setDepth(this.sprite.y - 1);
+    this._updateIndicator();
+  }
+
+  _updateIndicator() {
+    if (!this._indicatorBg) return;
+    const sx = this.sprite.x;
+    const sy = this.sprite.y;
+    // Position label ~70px above feet, in world space
+    const labelY = sy - 70;
+    this._indicatorBg.setPosition(sx, labelY);
+    this._indicatorText.setPosition(sx, labelY - 1);
+    this._indicatorArrow.setPosition(sx, labelY + 8);
   }
 
   _collidesAt(x, y, hw, hh, colliders) {

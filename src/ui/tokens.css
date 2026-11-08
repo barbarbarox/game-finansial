@@ -103,10 +103,10 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 52px;
+  height: 48px;
   background: var(--color-bg-hud);
   border-bottom: 2px solid var(--color-border);
-  padding: 0 var(--space-md);
+  padding: 0 10px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -118,7 +118,11 @@ body {
 .hud-group {
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
+  gap: 6px;
+}
+
+.hud-stats {
+  flex-shrink: 0;
 }
 
 /* Badge komponen status */
@@ -128,9 +132,10 @@ body {
   background: var(--color-bg-card);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-sm);
-  padding: 4px 10px;
-  font-size: 12px;
-  gap: 6px;
+  padding: 3px 8px;
+  font-size: 11px;
+  gap: 5px;
+  white-space: nowrap;
 }
 
 .hud-icon {
@@ -200,8 +205,9 @@ body {
 .hud-btn {
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.3px;
-  padding: 5px 12px;
+  letter-spacing: 0.2px;
+  padding: 4px 10px;
+  white-space: nowrap;
 }
 
 .hud-label {
@@ -229,7 +235,7 @@ body {
 }
 
 .hud-gas-bar {
-  width: 56px;
+  width: 44px;
   height: 6px;
   background: var(--color-navy-dark);
   border-radius: 3px;
@@ -253,16 +259,19 @@ body {
 
 /* Center group: Clock & Mission */
 .hud-center {
-  gap: var(--space-md);
+  gap: 6px;
+  flex-shrink: 1;
+  min-width: 0;
 }
 
 .clock-badge {
   color: var(--color-text-secondary);
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .mission-badge {
-  max-width: 220px;
+  max-width: 170px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -273,11 +282,14 @@ body {
   color: var(--color-cream-light);
   font-size: 11px;
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* Nav group: Tombol aksi HUD */
 .hud-nav {
-  gap: var(--space-sm);
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 /* ========================================================
@@ -894,4 +906,112 @@ body {
 @keyframes slideUp {
   from { transform: translateY(8px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
+}
+
+/* ========================================================
+   LIGHT MODE THEME OVERRIDE
+   Applied when <body> has class "lj-light"
+   ======================================================== */
+body.lj-light {
+  --color-bg-primary:   #EAE6DE;
+  --color-bg-panel:     #F5F0E8;
+  --color-bg-card:      #FFFFFF;
+  --color-bg-hud:       rgba(240, 234, 214, 0.97);
+  --color-text-primary: #1A2033;
+  --color-text-secondary: #2C3A54;
+  --color-text-muted:   #5A6070;
+  --color-text-disabled:#9AA0AA;
+  --color-border:       #C4BAA4;
+  --color-border-bright:#9A6F4C;
+  --color-bg-primary:   #EAE6DE;
+  --color-navy-dark:    #E0D8C8;
+  --color-navy-mid:     #D4CAB8;
+  --color-navy-deepest: #C8BEA8;
+  background: #EAE6DE;
+  color: #1A2033;
+}
+
+body.lj-light .lj-hud {
+  border-bottom-color: #C4BAA4;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+}
+
+body.lj-light .hud-badge {
+  background: #FFFFFF;
+  border-color: #C4BAA4;
+  color: #1A2033;
+}
+
+body.lj-light .hud-tag {
+  background: #EAE6DE;
+  color: #5A6070;
+  border-color: #C4BAA4;
+}
+
+body.lj-light .hud-val {
+  color: #1A2033;
+}
+
+body.lj-light .hud-val-cash,
+body.lj-light .hud-val-savings {
+  color: #9A6F4C;
+}
+
+body.lj-light .lj-btn.secondary,
+body.lj-light .btn.btn-secondary {
+  background: #FFFFFF;
+  border-color: #C4BAA4;
+  color: #2C3A54;
+}
+
+body.lj-light .lj-btn.secondary:hover,
+body.lj-light .btn.btn-secondary:hover {
+  background: #F0E8D8;
+}
+
+body.lj-light .lj-panel {
+  background: #F5F0E8;
+  border-color: #C4BAA4;
+  color: #1A2033;
+}
+
+body.lj-light .panel-header {
+  border-bottom-color: #C4BAA4;
+}
+
+body.lj-light .panel-title {
+  color: #1A2033;
+}
+
+body.lj-light .settings-section h3,
+body.lj-light .settings-section {
+  border-color: #C4BAA4;
+  color: #2C3A54;
+}
+
+body.lj-light .settings-row {
+  border-color: #D4CAB8;
+}
+
+body.lj-light .settings-row-label {
+  color: #2C3A54;
+}
+
+body.lj-light .lj-modal-backdrop {
+  background: rgba(100, 90, 80, 0.55);
+}
+
+body.lj-light .lj-table th {
+  background: #EAE6DE;
+  color: #2C3A54;
+  border-color: #C4BAA4;
+}
+
+body.lj-light .lj-table td {
+  border-color: #D4CAB8;
+  color: #1A2033;
+}
+
+body.lj-light .lj-table tr:hover td {
+  background: #F0E8D8;
 }

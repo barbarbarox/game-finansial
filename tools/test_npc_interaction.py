@@ -166,9 +166,18 @@ async def run_npc_suite():
                 player.sprite.y = 620; // 20px above npc_ibu (dalam radius 54px)
             })()
             """, 8)
-            await asyncio.sleep(0.8)
+            await asyncio.sleep(0.5)
 
-            # Check if NPC dialog appeared automatically
+            # Tekan tombol E untuk membuka interaksi
+            print("   Menekan tombol [E] untuk berinteraksi...")
+            await evaluate_js(ws, """
+            (() => {
+                window.dispatchEvent(new KeyboardEvent('keydown', { key: 'e', code: 'KeyE', keyCode: 69 }));
+            })()
+            """, 85)
+            await asyncio.sleep(0.5)
+
+            # Check if NPC dialog appeared
             dialog_title = await evaluate_js(ws, "document.querySelector('.lj-npc-dialog .npc-name')?.textContent", 9)
             dialog_role = await evaluate_js(ws, "document.querySelector('.lj-npc-dialog .npc-title')?.textContent", 10)
             dialog_body = await evaluate_js(ws, "document.querySelector('.lj-npc-dialog .npc-dialog-body')?.textContent", 11)

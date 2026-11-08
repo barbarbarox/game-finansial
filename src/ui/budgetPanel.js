@@ -7,6 +7,22 @@
 import { getTotalExpense } from '../domain/ledger.js';
 
 export function createBudgetModal(container, store, config, onClose) {
+  if (!store) return;
+
+  // Fallback categories if not in config
+  const CATEGORIES = (config && config.categories) ? config.categories : {
+    tabungan:       'Tabungan',
+    jajan:          'Jajan & Makanan',
+    bensin:         'Bensin & Transportasi',
+    sekolah:        'Keperluan Sekolah',
+    perawatanDiri:  'Perawatan Diri',
+    hiburan:        'Hiburan',
+    cadangan:       'Dana Cadangan',
+  };
+  const SUGGESTION = (config && config.budgetSuggestion) ? config.budgetSuggestion : {
+    tabungan: 100000, jajan: 250000, bensin: 100000,
+    sekolah: 100000, perawatanDiri: 100000, hiburan: 150000, cadangan: 200000,
+  };
   const backdrop = document.createElement('div');
   backdrop.className = 'lj-modal-backdrop';
 
@@ -54,7 +70,7 @@ export function createBudgetModal(container, store, config, onClose) {
   const tbody = document.createElement('tbody');
   const inputs = {};
 
-  Object.entries(config.categories).forEach(([catId, catName]) => {
+  Object.entries(CATEGORIES).forEach(([catId, catName]) => {
     const tr = document.createElement('tr');
 
     const tdName = document.createElement('td');
@@ -70,7 +86,7 @@ export function createBudgetModal(container, store, config, onClose) {
     inputs[catId] = inp;
     tdInput.appendChild(inp);
 
-    const spent = getTotalExpense(state.ledger, state.clock.month, catId);
+    const spent = getTotalExpense(state.ledger, state.clock?.month || 1, catId);
     const allocated = currentBudget[catId] || 0;
     const remaining = allocated - spent;
 
@@ -100,7 +116,7 @@ export function createBudgetModal(container, store, config, onClose) {
   useSuggestionBtn.className = 'btn btn-secondary';
   useSuggestionBtn.textContent = 'Gunakan Saran Anggaran';
   useSuggestionBtn.addEventListener('click', () => {
-    Object.entries(config.budgetSuggestion).forEach(([key, val]) => {
+    Object.entries(SUGGESTION).forEach(([key, val]) => {
       if (inputs[key]) {
         inputs[key].value = val;
       }
@@ -126,5 +142,23 @@ export function createBudgetModal(container, store, config, onClose) {
   modal.appendChild(actions);
   backdrop.appendChild(modal);
   container.appendChild(backdrop);
+
+  // Klik backdrop atau tekan Escape untuk menutup modal
+  const handleKeydown = (e) => {
+    if (e.key === 'Escape') {
+      backdrop.remove();
+      if (onClose) onClose();
+      window.removeEventListener('keydown', handleKeydown);
+    }
+  };
+  window.addEventListener('keydown', handleKeydown);
+
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) {
+      backdrop.remove();
+      if (onClose) onClose();
+      window.removeEventListener('keydown', handleKeydown);
+    }
+  });
 }
 

@@ -146,6 +146,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const settingsBtn = document.createElement('button');
   settingsBtn.type = 'button';
   settingsBtn.className = 'lj-btn secondary btn-sm hud-btn';
+  settingsBtn.appendChild(makeBtnIcon('assets/icons/icon_gamepad.png'));
   const stLabel = document.createElement('span');
   stLabel.textContent = 'Pengaturan';
   settingsBtn.appendChild(stLabel);
@@ -185,7 +186,12 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
       gasFill.classList.add('warning');
     }
 
-    clockText.textContent = `Bulan ${state.clock?.month || 1} · Hari ${state.clock?.day || 1}`;
+    const totalMin = state.clock?.timeOfDay ?? (8 * 60);
+    const hours = Math.floor(totalMin / 60) % 24;
+    const mins = Math.floor(totalMin % 60);
+    const hh = String(hours).padStart(2, '0');
+    const mm = String(mins).padStart(2, '0');
+    clockText.textContent = `Bln ${state.clock?.month || 1} · H${state.clock?.day || 1} · ${hh}:${mm}`;
 
     const activeM = state.missions?.find(m => !m.completed);
     missionTitle.textContent = activeM ? activeM.title : 'Semua Selesai';

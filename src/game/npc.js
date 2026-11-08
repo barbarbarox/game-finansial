@@ -116,25 +116,21 @@ export class NPCManager {
         if (!npc.inRange) {
           npc.inRange = true;
           npc.promptBubble.setVisible(true);
-
-          // Pilihan interaksi otomatis muncul saat pemain mendekat
-          if (!npc.autoOpened && !isNPCDialogOpen()) {
-            this.openDialog(npc, uiContainer);
-            npc.autoOpened = true;
-          }
         }
 
-        // Jika tombol E atau Space ditekan saat berada di dekat NPC
-        if (this.scene.keyE && (Phaser.Input.Keyboard.JustDown(this.scene.keyE) || Phaser.Input.Keyboard.JustDown(this.scene.keySpace))) {
+        // Buka dialog HANYA jika pemain menekan tombol interaksi [E] atau [Space]
+        const keyEDown = this.scene.keyE && Phaser.Input.Keyboard.JustDown(this.scene.keyE);
+        const keySpaceDown = this.scene.keySpace && Phaser.Input.Keyboard.JustDown(this.scene.keySpace);
+
+        if ((keyEDown || keySpaceDown) && !isNPCDialogOpen()) {
           this.openDialog(npc, uiContainer);
         }
       } else {
         if (npc.inRange) {
           npc.inRange = false;
           npc.promptBubble.setVisible(false);
-          npc.autoOpened = false;
 
-          // Jika pemain menjauh (dist > 72), tutup dialog otomatis bila aktif untuk NPC ini
+          // Jika pemain menjauh (keluar dari jangkauan), tutup dialog otomatis bila aktif untuk NPC ini
           if (this.activeNpc === npc) {
             closeNPCDialog();
             this.activeNpc = null;

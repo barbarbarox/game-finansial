@@ -140,6 +140,31 @@ export function createSettingsModal(container, onClose, onOpenCredits, onExitToM
   audioGrid.appendChild(createToggleRow('Musik Latar (BGM):', true));
   audioGrid.appendChild(createToggleRow('Efek Suara (SFX):', true));
   audioGrid.appendChild(createToggleRow('Animasi Karakter:', true));
+
+  // --- Dark / Light Mode Toggle (interactive, persisted) ---
+  const themeRow = document.createElement('div');
+  themeRow.className = 'settings-row';
+  const themeLbl = document.createElement('span');
+  themeLbl.className = 'settings-row-label';
+  themeLbl.textContent = 'Tema Tampilan:';
+
+  const themeBtn = document.createElement('button');
+  themeBtn.type = 'button';
+  themeBtn.className = 'btn btn-sm btn-secondary';
+  const isLightNow = document.body.classList.contains('lj-light');
+  themeBtn.textContent = isLightNow ? 'Terang (aktif)' : 'Gelap (aktif)';
+
+  themeBtn.addEventListener('click', () => {
+    const willLight = !document.body.classList.contains('lj-light');
+    document.body.classList.toggle('lj-light', willLight);
+    try { localStorage.setItem('lj_theme', willLight ? 'light' : 'dark'); } catch(_) {}
+    themeBtn.textContent = willLight ? 'Terang (aktif)' : 'Gelap (aktif)';
+  });
+
+  themeRow.appendChild(themeLbl);
+  themeRow.appendChild(themeBtn);
+  audioGrid.appendChild(themeRow);
+
   audioSection.appendChild(audioGrid);
   body.appendChild(audioSection);
 

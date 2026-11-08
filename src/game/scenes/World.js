@@ -15,6 +15,7 @@ import { createSettingsModal } from '../../ui/settings.js';
 import { createCreditsModal } from '../../ui/credits.js';
 import { createProceduralTiles } from '../../assets-gen/groundTiles.js';
 import { saveGame } from '../../state/persistence.js';
+import { addEntry, createAllowanceEntry } from '../../domain/ledger.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -27,6 +28,7 @@ export class World extends Phaser.Scene {
     this._tileSize = 32;
     this._promptText = null;
     this._currentInteractable = null;
+    this._clockTimerMs = 0;
   }
 
   create() {
@@ -111,6 +113,59 @@ export class World extends Phaser.Scene {
       if (this._npcManager) {
         this._npcManager.update(time, this._player);
       }
+      this._updateGameClock(delta);
+    }
+  }
+
+  _updateGameClock(delta) {
+    this._clockTimerMs += delta;
+
+    // 1000ms real time = 1 menit dalam game
+    // 60 detik real time = 1 jam dalam game
+    // 24 menit real time = 24 jam (1 hari penuh) dalam game
+    if (this._clockTimerMs >= 1000) {
+      const minutesToAdvance = Math.floor(this._clockTimerMs / 1000);
+      this._clockTimerMs %= 1000;
+
+      const store = this.game.registry.get('store');
+      if (!store) return;
+      const state = store.getState();
+      if (!state) return;
+
+      const clock = state.clock || { day: 1, month: 1, timeOfDay: 8 * 60 };
+      let timeOfDay = (clock.timeOfDay ?? (8 * 60)) + minutesToAdvance;
+      let day = clock.day || 1;
+      let month = clock.month || 1;
+      let ledger = state.ledger;
+
+      if (timeOfDay >= 24 * 60) {
+        const daysPassed = Math.floor(timeOfDay / (24 * 60));
+        timeOfDay %= (24 * 60);
+        day += daysPassed;
+
+        if (day > 30) {
+          const monthsPassed = Math.floor((day - 1) / 30);
+          day = ((day - 1) % 30) + 1;
+          month += monthsPassed;
+
+          // Uang saku bulanan cair di hari ke-1 setiap bulan baru
+          if (ledger) {
+            const allowanceEntry = createAllowanceEntry(day, month);
+            const res = addEntry(ledger, allowanceEntry);
+            if (res.ok) ledger = res.ledger;
+          }
+        }
+      }
+
+      store.setState({
+        clock: {
+          ...clock,
+          day,
+          month,
+          timeOfDay
+        },
+        ledger
+      });
     }
   }
 
