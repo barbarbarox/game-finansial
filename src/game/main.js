@@ -46,6 +46,7 @@ function initGame() {
 
   const game = new Phaser.Game(config);
   window.__GAME__ = game;
+  window.game = game;
 
   // Global UI event listener for DOM overlays
   document.addEventListener('lj:openPanel', (e) => {

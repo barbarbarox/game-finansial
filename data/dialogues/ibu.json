@@ -10,7 +10,11 @@
       "choices": [
         {
           "text": "Pagi Bu! Mau ambil uang saku bulan ini.",
-          "next": "allowance_given"
+          "next": "allowance_given",
+          "requires": {
+            "flagNot": "received_allowance_month1"
+          },
+          "disabledReason": "(Uang saku bulan ini sudah diambil)"
         },
         {
           "text": "Ada sarapan apa di meja Bu?",

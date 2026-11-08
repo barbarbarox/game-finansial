@@ -61,6 +61,28 @@ export class Preload extends Phaser.Scene {
     this.load.image('portrait_player_m', 'assets/portraits/portrait_player_m.png');
     this.load.image('portrait_player_f', 'assets/portraits/portrait_player_f.png');
 
+    // Individual NPC Sprites
+    this.load.image('npc_ibu', 'assets/npcs/npc_ibu.png');
+    this.load.image('npc_ayah', 'assets/npcs/npc_ayah.png');
+    this.load.image('npc_budi', 'assets/npcs/npc_budi.png');
+    this.load.image('npc_siti', 'assets/npcs/npc_siti.png');
+    this.load.image('npc_penjual_kantin', 'assets/npcs/npc_penjual_kantin.png');
+    this.load.image('npc_kasir_minimarket', 'assets/npcs/npc_kasir_minimarket.png');
+    this.load.image('npc_penjaga_kosmetik', 'assets/npcs/npc_penjaga_kosmetik.png');
+    this.load.image('npc_petugas_spbu', 'assets/npcs/npc_petugas_spbu.png');
+    this.load.image('npc_penjaga_game', 'assets/npcs/npc_penjaga_game.png');
+
+    // Dialogue Portraits
+    this.load.image('portrait_ibu', 'assets/portraits/portrait_ibu.png');
+    this.load.image('portrait_ayah', 'assets/portraits/portrait_ayah.png');
+    this.load.image('portrait_teman_l', 'assets/portraits/portrait_teman_l.png');
+    this.load.image('portrait_teman_p', 'assets/portraits/portrait_teman_p.png');
+    this.load.image('portrait_penjual_kantin', 'assets/portraits/portrait_penjual_kantin.png');
+    this.load.image('portrait_kasir_minimarket', 'assets/portraits/portrait_kasir_minimarket.png');
+    this.load.image('portrait_penjaga_kosmetik', 'assets/portraits/portrait_penjaga_kosmetik.png');
+    this.load.image('portrait_petugas_spbu', 'assets/portraits/portrait_petugas_spbu.png');
+    this.load.image('portrait_penjaga_game', 'assets/portraits/portrait_penjaga_game.png');
+
     // Retrieve asset manifest loaded in Boot scene
     const manifest = this.cache.json.get('assetManifest');
     const assets = manifest?.assets || [];

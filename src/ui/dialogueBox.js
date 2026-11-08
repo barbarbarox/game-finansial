@@ -243,6 +243,12 @@ function renderChoices(choices) {
     if (choice.requires?.minCash && cash < choice.requires.minCash) {
       disabled = true;
       reason = choice.disabledReason || `(Kurang Rp${(choice.requires.minCash - cash).toLocaleString('id-ID')})`;
+    } else if (choice.requires?.flagNot && state.flags?.[choice.requires.flagNot]) {
+      disabled = true;
+      reason = choice.disabledReason || '(Sudah dilakukan)';
+    } else if (choice.requires?.flag && !state.flags?.[choice.requires.flag]) {
+      disabled = true;
+      reason = choice.disabledReason || '(Belum tersedia)';
     }
 
     const btn = document.createElement('button');
@@ -353,11 +359,18 @@ function executeEffects(effects = []) {
       case 'grant_allowance': {
         if (state.ledger) {
           const clock = state.clock || {};
-          const entry = createAllowanceEntry(clock.day || 1, clock.month || 1, clock.timeOfDay || 360);
-          const res = addEntry(state.ledger, entry);
-          if (!res.error) {
-            state = { ...state, ledger: res.ledger };
-            store.setState({ ledger: res.ledger });
+          const currentMonth = clock.month || 1;
+          const alreadyGranted = state.ledger.entries?.some(e => (e.kind === 'allowance' || e.type === 'allowance') && e.month === currentMonth);
+          if (!alreadyGranted) {
+            const entry = createAllowanceEntry(clock.day || 1, currentMonth, clock.timeOfDay || 360);
+            const res = addEntry(state.ledger, entry);
+            if (!res.error) {
+              const updatedMissions = (state.missions || []).map(m =>
+                m.id === 'M1' ? { ...m, completed: true } : m
+              );
+              state = { ...state, ledger: res.ledger, missions: updatedMissions };
+              store.setState({ ledger: res.ledger, missions: updatedMissions });
+            }
           }
         }
         break;
@@ -471,9 +484,28 @@ export async function startDialogue(dialogueOrId, npcId = null, onClose = null) 
 
   // Set NPC portrait if available
   const npcImg = document.querySelector('#dlg-npc-portrait .portrait-img');
-  if (dialogue.portrait) {
+  let portraitSrc = dialogue.portrait;
+  if (!portraitSrc) {
+    const portraitMap = {
+      'npc_ibu': 'assets/portraits/portrait_ibu.png',
+      'npc_ayah': 'assets/portraits/portrait_ayah.png',
+      'npc_budi': 'assets/portraits/portrait_teman_l.png',
+      'npc_teman': 'assets/portraits/portrait_teman_l.png',
+      'npc_siti': 'assets/portraits/portrait_teman_p.png',
+      'npc_kantin': 'assets/portraits/portrait_penjual_kantin.png',
+      'npc_penjual': 'assets/portraits/portrait_penjual_kantin.png',
+      'npc_kasir_minimarket': 'assets/portraits/portrait_kasir_minimarket.png',
+      'npc_cindy': 'assets/portraits/portrait_penjaga_kosmetik.png',
+      'npc_doni': 'assets/portraits/portrait_petugas_spbu.png',
+      'npc_pak_anto': 'assets/portraits/portrait_petugas_spbu.png',
+      'npc_riko': 'assets/portraits/portrait_penjaga_game.png'
+    };
+    portraitSrc = portraitMap[npcId] || portraitMap[dialogue.npcId];
+  }
+
+  if (portraitSrc) {
     if (npcImg) {
-      npcImg.src = dialogue.portrait;
+      npcImg.src = portraitSrc;
       npcImg.classList.remove('hidden');
       if (npcPlaceholder) npcPlaceholder.classList.add('hidden');
     }
@@ -516,6 +548,13 @@ export function closeDialogue() {
  * Return current dialogue inspection state for tests & debug.
  */
 export function getDialogueState() {
+  if (isTyping) {
+    clearInterval(typeInterval);
+    isTyping = false;
+    const textEl = document.getElementById('dlg-text');
+    if (textEl) textEl.textContent = currentNode?._fullText || '';
+    onTypingFinished();
+  }
   return {
     active: Boolean(currentDialogue),
     currentNodeId: currentNode?.id || null,
@@ -530,6 +569,13 @@ export function getDialogueState() {
 }
 
 export function chooseOption(index) {
+  if (isTyping) {
+    clearInterval(typeInterval);
+    isTyping = false;
+    const textEl = document.getElementById('dlg-text');
+    if (textEl) textEl.textContent = currentNode?._fullText || '';
+    onTypingFinished();
+  }
   if (index >= 0 && index < currentChoices.length) {
     selectedChoiceIndex = index;
     confirmSelectedChoice();

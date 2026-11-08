@@ -49,8 +49,48 @@ export class NPCManager {
 
     // NPC Sprite or Figure Container
     let body;
-    if (scene.textures.exists(def.assetId)) {
-      body = scene.add.sprite(x, y + 4, def.assetId, 0);
+    let textureKey = null;
+    let frame = def.frame ?? 0;
+
+    // 1. Direct match by def.id
+    if (scene.textures.exists(def.id)) {
+      textureKey = def.id;
+      frame = 0;
+    } else if (def.id === 'npc_ibu' && scene.textures.exists('npc_ibu')) {
+      textureKey = 'npc_ibu';
+    } else if (def.id === 'npc_ayah' && scene.textures.exists('npc_ayah')) {
+      textureKey = 'npc_ayah';
+    } else if ((def.id === 'npc_budi' || def.id === 'npc_teman') && scene.textures.exists('npc_budi')) {
+      textureKey = 'npc_budi';
+    } else if (def.id === 'npc_siti' && scene.textures.exists('npc_siti')) {
+      textureKey = 'npc_siti';
+    } else if ((def.id === 'npc_kantin' || def.id === 'npc_penjual') && scene.textures.exists('npc_penjual_kantin')) {
+      textureKey = 'npc_penjual_kantin';
+    } else if ((def.id === 'npc_kasir_minimarket' || def.id === 'npc_kasir') && scene.textures.exists('npc_kasir_minimarket')) {
+      textureKey = 'npc_kasir_minimarket';
+    } else if ((def.id === 'npc_cindy' || def.id === 'npc_penjaga_kosmetik') && scene.textures.exists('npc_penjaga_kosmetik')) {
+      textureKey = 'npc_penjaga_kosmetik';
+    } else if ((def.id === 'npc_doni' || def.id === 'npc_petugas_spbu' || def.id === 'npc_pak_anto') && scene.textures.exists('npc_petugas_spbu')) {
+      textureKey = 'npc_petugas_spbu';
+    } else if ((def.id === 'npc_riko' || def.id === 'npc_penjaga_game') && scene.textures.exists('npc_penjaga_game')) {
+      textureKey = 'npc_penjaga_game';
+    } else if (def.assetId && scene.textures.exists(def.assetId)) {
+      textureKey = def.assetId;
+      if (def.assetId === 'npc_sheet_family') {
+        frame = def.id === 'npc_ayah' ? 1 : 0;
+      } else if (def.assetId === 'npc_sheet_friends') {
+        frame = def.id === 'npc_siti' ? 1 : 0;
+      } else if (def.assetId === 'npc_sheet_vendors') {
+        if (def.id === 'npc_kasir_minimarket' || def.id === 'npc_kasir') frame = 1;
+        else if (def.id === 'npc_cindy' || def.id === 'npc_penjaga_kosmetik') frame = 2;
+        else if (def.id === 'npc_doni' || def.id === 'npc_petugas_spbu' || def.id === 'npc_pak_anto') frame = 3;
+        else if (def.id === 'npc_riko' || def.id === 'npc_penjaga_game') frame = 4;
+        else frame = 0;
+      }
+    }
+
+    if (textureKey) {
+      body = scene.add.sprite(x, y + 4, textureKey, frame);
       body.setOrigin(0.5, 0.95);
       body.setDepth(500 + y / 1000);
     } else {

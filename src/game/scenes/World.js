@@ -114,8 +114,9 @@ export class World extends Phaser.Scene {
 
     // Initial map: check saved currentMap (default 'home' for new game)
     const savedMap = store?.getState()?.currentMap;
+    const savedPos = store?.getState()?.playerPos;
     if (savedMap && savedMap !== 'town_hub') {
-      this._mapManager.loadMap(savedMap, 'default');
+      this._mapManager.loadMap(savedMap, savedPos ? 'saved' : 'default');
     }
 
     // 7. Mount DOM HUD
@@ -393,7 +394,29 @@ export class World extends Phaser.Scene {
 
     // 3. Other activities (study, watch tv, etc.)
     if (int.type === 'activity') {
-      const actMinutes = int.activityId === 'pelajaran_sekolah' ? 120 : (int.activityId === 'main_game' ? 60 : 30);
+      // Look up duration from activities catalog
+      const activitiesCatalog = this.cache.json.get('activitiesData')?.activities || [];
+      const actEntry = activitiesCatalog.find(a => a.id === int.activityId);
+      let actMinutes;
+      if (actEntry) {
+        if (typeof actEntry.duration === 'number') {
+          actMinutes = actEntry.duration;
+        } else if (Array.isArray(actEntry.durationOptions)) {
+          // Default to minimum duration
+          actMinutes = actEntry.durationOptions[0];
+        } else if (actEntry.duration === 'until_1430') {
+          // School lesson: advance to 14:30
+          const clock = store?.getState()?.clock || {};
+          const currentMin = (clock.gameMinutes ?? (clock.timeOfDay ?? 360)) % 1440;
+          actMinutes = Math.max(1, 870 - currentMin); // 14:30 = 870 mins
+        } else {
+          actMinutes = 30; // safe fallback
+        }
+      } else {
+        // Fallback: hardcoded for known types
+        actMinutes = int.activityId === 'pelajaran_sekolah' ? 120 : (int.activityId === 'main_game' ? 60 : 30);
+      }
+
       showTimeSkip({
         title: int.prompt.replace(/^Tekan \[E\]\s*/, ''),
         minutes: actMinutes,
@@ -416,6 +439,14 @@ export class World extends Phaser.Scene {
   }
 
   _exitToMainMenu() {
+    const store = this.game.registry.get('store');
+    if (store && this._player?.sprite) {
+      const st = store.getState();
+      saveGame({
+        ...st,
+        playerPos: { x: Math.round(this._player.sprite.x), y: Math.round(this._player.sprite.y) }
+      });
+    }
     if (this._hudElement) {
       this._hudElement.remove();
       this._hudElement = null;

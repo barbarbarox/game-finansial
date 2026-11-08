@@ -66,10 +66,18 @@ export class MapManager {
     }
 
     // Position player
-    const tileSize = layout.world?.tileSize || 32;
-    if (this.scene._player) {
-      this.scene._player.sprite.x = (spawnX + 0.5) * tileSize;
-      this.scene._player.sprite.y = (spawnY + 0.5) * tileSize;
+    const store = this.scene.game.registry.get('store');
+    const savedPos = store?.getState()?.playerPos;
+
+    if (spawnTarget === 'saved' && savedPos && savedPos.x && savedPos.y && this.scene._player) {
+      this.scene._player.sprite.x = savedPos.x;
+      this.scene._player.sprite.y = savedPos.y;
+    } else {
+      const tileSize = layout.world?.tileSize || 32;
+      if (this.scene._player) {
+        this.scene._player.sprite.x = (spawnX + 0.5) * tileSize;
+        this.scene._player.sprite.y = (spawnY + 0.5) * tileSize;
+      }
     }
 
     // Set camera bounds
@@ -81,7 +89,6 @@ export class MapManager {
     }
 
     // Update store state with currentMap
-    const store = this.scene.game.registry.get('store');
     if (store) {
       store.setState({ currentMap: mapId });
     }
@@ -108,28 +115,46 @@ export class MapManager {
         if (this.scene._promptText) {
           this.scene._promptText.setText(`[TUTUP] ${status.reason}`);
           this.scene._promptText.setVisible(true);
-          this.scene.time.delayedCall(2500, () => {
+          setTimeout(() => {
             if (this.scene._promptText) this.scene._promptText.setVisible(false);
-          });
+          }, 2500);
         }
         return;
       }
     }
 
     this.isTransitioning = true;
-    this.scene.cameras.main.fadeOut(200, 10, 15, 26);
 
-    this.scene.time.delayedCall(200, async () => {
+    // Use setTimeout instead of scene.time.delayedCall to ensure it fires even
+    // when Phaser's game loop is throttled (e.g., headless testing).
+    try {
+      this.scene.cameras.main.fadeOut(200, 10, 15, 26);
+    } catch (_) { /* camera may not be ready */ }
+
+    // Failsafe: always clear isTransitioning after 3 seconds max
+    const failsafeTimer = setTimeout(() => {
+      this.isTransitioning = false;
+    }, 3000);
+
+    setTimeout(async () => {
       // Clear previous map objects
       this.clearCurrentMap();
 
-      await this.loadMap(targetMapId, targetSpawn);
+      try {
+        await this.loadMap(targetMapId, targetSpawn);
+      } catch (err) {
+        console.error('[MapManager] Error loading map during transition:', err);
+      }
 
-      this.scene.cameras.main.fadeIn(200, 10, 15, 26);
-      this.scene.time.delayedCall(200, () => {
+      try {
+        this.scene.cameras.main.fadeIn(200, 10, 15, 26);
+      } catch (_) { /* ignore */ }
+
+      setTimeout(() => {
+        clearTimeout(failsafeTimer);
         this.isTransitioning = false;
-      });
-    });
+      }, 250);
+    }, 200);
   }
 
   /**

@@ -19,16 +19,10 @@ export class CharacterCreate extends Phaser.Scene {
 
     createCharacterModal(container, (charData) => {
       let ledger = createLedger();
-
-      // Day 1 allowance: Rp 1.000.000
-      const allowanceEntry = createAllowanceEntry(1, 1);
-      const res = addEntry(ledger, allowanceEntry);
-      if (!res.error) {
-        ledger = res.ledger;
-      }
+      // Allowance will be granted by Ibu during Day 1 morning dialogue (E6 flow)
 
       const initialMissions = [
-        { id: 'M1', title: 'Terima Uang Saku & Lihat Buku Kas', completed: true },
+        { id: 'M1', title: 'Terima Uang Saku dari Ibu', completed: false },
         { id: 'M2', title: 'Susun Anggaran Bulan Ini', completed: false },
         { id: 'M3', title: 'Isi Bensin Sebelum 20%', completed: false },
         { id: 'M4', title: 'Tabung Minimal Rp100.000 Bulan Ini', completed: false },

@@ -267,8 +267,8 @@
       "frameWidth": 32,
       "frameHeight": 64,
       "status": "ready",
-      "source": "pixel-crafted",
-      "tool": "16-bit Pixel Generator"
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator"
     },
     {
       "id": "prop_tree_large",
@@ -1732,12 +1732,13 @@
         0.5,
         1.0
       ],
-      "status": "placeholder",
-      "source": "placeholder-generator",
+      "status": "ready",
+      "source": "ai-generated",
       "group": "portraits",
       "qa": {
         "pass": true
-      }
+      },
+      "tool": "Gemini Image Generator"
     },
     {
       "id": "portrait_ayah",
@@ -1749,12 +1750,13 @@
         0.5,
         1.0
       ],
-      "status": "placeholder",
-      "source": "placeholder-generator",
+      "status": "ready",
+      "source": "ai-generated",
       "group": "portraits",
       "qa": {
         "pass": true
-      }
+      },
+      "tool": "Gemini Image Generator"
     },
     {
       "id": "portrait_teman_l",
@@ -1766,12 +1768,13 @@
         0.5,
         1.0
       ],
-      "status": "placeholder",
-      "source": "placeholder-generator",
+      "status": "ready",
+      "source": "ai-generated",
       "group": "portraits",
       "qa": {
         "pass": true
-      }
+      },
+      "tool": "Gemini Image Generator"
     },
     {
       "id": "portrait_teman_p",
@@ -1783,12 +1786,13 @@
         0.5,
         1.0
       ],
-      "status": "placeholder",
-      "source": "placeholder-generator",
+      "status": "ready",
+      "source": "ai-generated",
       "group": "portraits",
       "qa": {
         "pass": true
-      }
+      },
+      "tool": "Gemini Image Generator"
     },
     {
       "id": "portrait_penjual_kantin",
@@ -1800,12 +1804,13 @@
         0.5,
         1.0
       ],
-      "status": "placeholder",
-      "source": "placeholder-generator",
+      "status": "ready",
+      "source": "ai-generated",
       "group": "portraits",
       "qa": {
         "pass": true
-      }
+      },
+      "tool": "Gemini Image Generator"
     },
     {
       "id": "portrait_kasir_minimarket",
@@ -1817,12 +1822,13 @@
         0.5,
         1.0
       ],
-      "status": "placeholder",
-      "source": "placeholder-generator",
+      "status": "ready",
+      "source": "ai-generated",
       "group": "portraits",
       "qa": {
         "pass": true
-      }
+      },
+      "tool": "Gemini Image Generator"
     },
     {
       "id": "portrait_penjaga_kosmetik",
@@ -1834,12 +1840,13 @@
         0.5,
         1.0
       ],
-      "status": "placeholder",
-      "source": "placeholder-generator",
+      "status": "ready",
+      "source": "ai-generated",
       "group": "portraits",
       "qa": {
         "pass": true
-      }
+      },
+      "tool": "Gemini Image Generator"
     },
     {
       "id": "portrait_petugas_spbu",
@@ -1851,12 +1858,13 @@
         0.5,
         1.0
       ],
-      "status": "placeholder",
-      "source": "placeholder-generator",
+      "status": "ready",
+      "source": "ai-generated",
       "group": "portraits",
       "qa": {
         "pass": true
-      }
+      },
+      "tool": "Gemini Image Generator"
     },
     {
       "id": "portrait_penjaga_game",
@@ -1868,12 +1876,13 @@
         0.5,
         1.0
       ],
-      "status": "placeholder",
-      "source": "placeholder-generator",
+      "status": "ready",
+      "source": "ai-generated",
       "group": "portraits",
       "qa": {
         "pass": true
-      }
+      },
+      "tool": "Gemini Image Generator"
     }
   ]
 }
