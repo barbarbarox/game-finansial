@@ -486,10 +486,15 @@ export class MapManager {
 
       let textureKey = f.assetId;
       if (!this.scene.textures.exists(textureKey)) {
-        if (f.fallbackAssetId && this.scene.textures.exists(f.fallbackAssetId)) {
+        const altKey = textureKey?.endsWith('_v4') ? textureKey.slice(0, -3) : `${textureKey}_v4`;
+        if (this.scene.textures.exists(altKey)) {
+          textureKey = altKey;
+        } else if (f.fallbackAssetId && this.scene.textures.exists(f.fallbackAssetId)) {
           textureKey = f.fallbackAssetId;
         } else if (f.type && this.scene.textures.exists(`furn_${f.type}`)) {
           textureKey = `furn_${f.type}`;
+        } else if (f.type && this.scene.textures.exists(`furn_${f.type}_v4`)) {
+          textureKey = `furn_${f.type}_v4`;
         }
       }
 

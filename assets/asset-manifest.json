@@ -16,7 +16,7 @@
           "jalan": 0.8812,
           "trotoar": 0.8763,
           "halaman": 0.9867,
-          "rumput": 0.9740
+          "rumput": 0.974
         }
       }
     },
@@ -1953,6 +1953,666 @@
         "pass": true
       },
       "tool": "Gemini Image Generator"
+    },
+    {
+      "id": "furn_kursi_cermin",
+      "file": "assets/furniture/kosmetik/furn_kursi_cermin.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_cermin_v4",
+      "file": "assets/furniture/kosmetik/furn_kursi_cermin_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_sofa_tunggu",
+      "file": "assets/furniture/kosmetik/furn_sofa_tunggu.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_sofa_tunggu_v4",
+      "file": "assets/furniture/kosmetik/furn_sofa_tunggu_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tanaman_pot",
+      "file": "assets/furniture/kosmetik/furn_tanaman_pot.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tanaman_pot_v4",
+      "file": "assets/furniture/kosmetik/furn_tanaman_pot_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kompresor_angin",
+      "file": "assets/furniture/spbu/furn_kompresor_angin.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kompresor_angin_v4",
+      "file": "assets/furniture/spbu/furn_kompresor_angin_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tempat_sampah",
+      "file": "assets/furniture/spbu/furn_tempat_sampah.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tempat_sampah_v4",
+      "file": "assets/furniture/spbu/furn_tempat_sampah_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tiang_kanopi",
+      "file": "assets/furniture/spbu/furn_tiang_kanopi.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tiang_kanopi_v4",
+      "file": "assets/furniture/spbu/furn_tiang_kanopi_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tong_pemadam",
+      "file": "assets/furniture/spbu/furn_tong_pemadam.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tong_pemadam_v4",
+      "file": "assets/furniture/spbu/furn_tong_pemadam_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_etalase_makanan_siap_saji",
+      "file": "assets/furniture/minimarket/furn_etalase_makanan_siap_saji.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_etalase_makanan_siap_saji_v4",
+      "file": "assets/furniture/minimarket/furn_etalase_makanan_siap_saji_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_galon_tumpuk",
+      "file": "assets/furniture/minimarket/furn_galon_tumpuk.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_galon_tumpuk_v4",
+      "file": "assets/furniture/minimarket/furn_galon_tumpuk_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_dinding_snack",
+      "file": "assets/furniture/minimarket/furn_rak_dinding_snack.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_dinding_snack_v4",
+      "file": "assets/furniture/minimarket/furn_rak_dinding_snack_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_mie_instan",
+      "file": "assets/furniture/minimarket/furn_rak_mie_instan.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_mie_instan_v4",
+      "file": "assets/furniture/minimarket/furn_rak_mie_instan_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_roti",
+      "file": "assets/furniture/minimarket/furn_rak_roti.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_roti_v4",
+      "file": "assets/furniture/minimarket/furn_rak_roti_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_mesin_capit",
+      "file": "assets/furniture/game_center/furn_mesin_capit.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_mesin_capit_v4",
+      "file": "assets/furniture/game_center/furn_mesin_capit_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_sofa_nonton",
+      "file": "assets/furniture/game_center/furn_sofa_nonton.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_sofa_nonton_v4",
+      "file": "assets/furniture/game_center/furn_sofa_nonton_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_counter_kantin_etalase",
+      "file": "assets/furniture/school/furn_counter_kantin_etalase.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_counter_kantin_etalase_v4",
+      "file": "assets/furniture/school/furn_counter_kantin_etalase_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_counter_pustakawan",
+      "file": "assets/furniture/school/furn_counter_pustakawan.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_counter_pustakawan_v4",
+      "file": "assets/furniture/school/furn_counter_pustakawan_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_komputer_meja",
+      "file": "assets/furniture/school/furn_komputer_meja.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_komputer_meja_v4",
+      "file": "assets/furniture/school/furn_komputer_meja_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_baca",
+      "file": "assets/furniture/school/furn_kursi_baca.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_baca_v4",
+      "file": "assets/furniture/school/furn_kursi_baca_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_guru",
+      "file": "assets/furniture/school/furn_kursi_guru.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_guru_v4",
+      "file": "assets/furniture/school/furn_kursi_guru_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_siswa",
+      "file": "assets/furniture/school/furn_kursi_siswa.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_siswa_v4",
+      "file": "assets/furniture/school/furn_kursi_siswa_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_kantin_panjang",
+      "file": "assets/furniture/school/furn_meja_kantin_panjang.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_kantin_panjang_v4",
+      "file": "assets/furniture/school/furn_meja_kantin_panjang_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_siswa",
+      "file": "assets/furniture/school/furn_meja_siswa.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_siswa_v4",
+      "file": "assets/furniture/school/furn_meja_siswa_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_papan_info",
+      "file": "assets/furniture/school/furn_papan_info.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_papan_info_v4",
+      "file": "assets/furniture/school/furn_papan_info_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_papan_menu_kosong",
+      "file": "assets/furniture/school/furn_papan_menu_kosong.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_papan_menu_kosong_v4",
+      "file": "assets/furniture/school/furn_papan_menu_kosong_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_buku_kelas",
+      "file": "assets/furniture/school/furn_rak_buku_kelas.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_buku_kelas_v4",
+      "file": "assets/furniture/school/furn_rak_buku_kelas_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_piala",
+      "file": "assets/furniture/school/furn_rak_piala.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_piala_v4",
+      "file": "assets/furniture/school/furn_rak_piala_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_wastafel_cuci_tangan",
+      "file": "assets/furniture/school/furn_wastafel_cuci_tangan.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_wastafel_cuci_tangan_v4",
+      "file": "assets/furniture/school/furn_wastafel_cuci_tangan_v4.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "prop_motor_parkir",
+      "file": "assets/furniture/props/prop_motor_parkir.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated",
+      "tool": "Gemini Image Generator",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true
+      }
     }
   ]
 }

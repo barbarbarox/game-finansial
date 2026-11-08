@@ -88,53 +88,88 @@ export class Preload extends Phaser.Scene {
     this.load.image('furn_jam_dinding', 'assets/furniture/home/furn_jam_dinding.png');
     this.load.image('furn_bingkai_kosong', 'assets/furniture/home/furn_bingkai_kosong.png');
 
-    // School Furniture
-    this.load.image('furn_meja_siswa_kursi', 'assets/furniture/school/furn_meja_siswa_kursi.png');
-    this.load.image('furn_meja_guru', 'assets/furniture/school/furn_meja_guru.png');
-    this.load.image('furn_papan_tulis', 'assets/furniture/school/furn_papan_tulis.png');
-    this.load.image('furn_lemari_kelas', 'assets/furniture/school/furn_lemari_kelas.png');
-    this.load.image('furn_tempat_sampah_kelas', 'assets/furniture/school/furn_tempat_sampah_kelas.png');
-    this.load.image('furn_counter_kantin', 'assets/furniture/school/furn_counter_kantin.png');
-    this.load.image('furn_meja_kantin', 'assets/furniture/school/furn_meja_kantin.png');
-    this.load.image('furn_bangku_kantin', 'assets/furniture/school/furn_bangku_kantin.png');
-    this.load.image('furn_kulkas_minuman', 'assets/furniture/school/furn_kulkas_minuman.png');
-    this.load.image('furn_dispenser_galon', 'assets/furniture/school/furn_dispenser_galon.png');
-    this.load.image('furn_rak_snack', 'assets/furniture/school/furn_rak_snack.png');
-    this.load.image('furn_rak_buku_perpus', 'assets/furniture/school/furn_rak_buku_perpus.png');
-    this.load.image('furn_meja_baca', 'assets/furniture/school/furn_meja_baca.png');
-    this.load.image('furn_bangku_tunggu', 'assets/furniture/school/furn_bangku_tunggu.png');
-    this.load.image('furn_papan_pengumuman', 'assets/furniture/school/furn_papan_pengumuman.png');
-    this.load.image('furn_vas_tanaman', 'assets/furniture/school/furn_vas_tanaman.png');
-    this.load.image('furn_poster_kosong', 'assets/furniture/school/furn_poster_kosong.png');
+    // Load Furniture (both base key and _v4 key for seamless compatibility)
+    const furnitureFiles = [
+      // School
+      ['furn_meja_siswa_kursi', 'assets/furniture/school/furn_meja_siswa_kursi.png'],
+      ['furn_meja_guru', 'assets/furniture/school/furn_meja_guru.png'],
+      ['furn_kursi_guru', 'assets/furniture/school/furn_kursi_guru.png'],
+      ['furn_meja_siswa', 'assets/furniture/school/furn_meja_siswa.png'],
+      ['furn_kursi_siswa', 'assets/furniture/school/furn_kursi_siswa.png'],
+      ['furn_papan_tulis', 'assets/furniture/school/furn_papan_tulis.png'],
+      ['furn_lemari_kelas', 'assets/furniture/school/furn_lemari_kelas.png'],
+      ['furn_rak_buku_kelas', 'assets/furniture/school/furn_rak_buku_kelas.png'],
+      ['furn_tempat_sampah_kelas', 'assets/furniture/school/furn_tempat_sampah_kelas.png'],
+      ['furn_tempat_sampah', 'assets/furniture/school/furn_tempat_sampah.png'],
+      ['furn_counter_kantin', 'assets/furniture/school/furn_counter_kantin.png'],
+      ['furn_counter_kantin_etalase', 'assets/furniture/school/furn_counter_kantin_etalase.png'],
+      ['furn_meja_kantin', 'assets/furniture/school/furn_meja_kantin.png'],
+      ['furn_meja_kantin_panjang', 'assets/furniture/school/furn_meja_kantin_panjang.png'],
+      ['furn_bangku_kantin', 'assets/furniture/school/furn_bangku_kantin.png'],
+      ['furn_kulkas_minuman', 'assets/furniture/school/furn_kulkas_minuman.png'],
+      ['furn_dispenser_galon', 'assets/furniture/school/furn_dispenser_galon.png'],
+      ['furn_rak_snack', 'assets/furniture/school/furn_rak_snack.png'],
+      ['furn_rak_buku_perpus', 'assets/furniture/school/furn_rak_buku_perpus.png'],
+      ['furn_meja_baca', 'assets/furniture/school/furn_meja_baca.png'],
+      ['furn_kursi_baca', 'assets/furniture/school/furn_kursi_baca.png'],
+      ['furn_counter_pustakawan', 'assets/furniture/school/furn_counter_pustakawan.png'],
+      ['furn_komputer_meja', 'assets/furniture/school/furn_komputer_meja.png'],
+      ['furn_bangku_tunggu', 'assets/furniture/school/furn_bangku_tunggu.png'],
+      ['furn_papan_pengumuman', 'assets/furniture/school/furn_papan_pengumuman.png'],
+      ['furn_papan_info', 'assets/furniture/school/furn_papan_info.png'],
+      ['furn_papan_menu_kosong', 'assets/furniture/school/furn_papan_menu_kosong.png'],
+      ['furn_rak_piala', 'assets/furniture/school/furn_rak_piala.png'],
+      ['furn_wastafel_cuci_tangan', 'assets/furniture/school/furn_wastafel_cuci_tangan.png'],
+      ['furn_vas_tanaman', 'assets/furniture/school/furn_vas_tanaman.png'],
+      ['furn_poster_kosong', 'assets/furniture/school/furn_poster_kosong.png'],
 
-    // Minimarket Furniture
-    this.load.image('furn_kasir_counter', 'assets/furniture/minimarket/furn_kasir_counter.png');
-    this.load.image('furn_rak_gondola', 'assets/furniture/minimarket/furn_rak_gondola.png');
-    this.load.image('furn_kulkas_minuman_besar', 'assets/furniture/minimarket/furn_kulkas_minuman_besar.png');
-    this.load.image('furn_rak_alat_tulis', 'assets/furniture/minimarket/furn_rak_alat_tulis.png');
-    this.load.image('furn_mesin_fotokopi', 'assets/furniture/minimarket/furn_mesin_fotokopi.png');
-    this.load.image('furn_keranjang_belanja', 'assets/furniture/minimarket/furn_keranjang_belanja.png');
+      // Minimarket
+      ['furn_kasir_counter', 'assets/furniture/minimarket/furn_kasir_counter.png'],
+      ['furn_rak_gondola', 'assets/furniture/minimarket/furn_rak_gondola.png'],
+      ['furn_kulkas_minuman_besar', 'assets/furniture/minimarket/furn_kulkas_minuman_besar.png'],
+      ['furn_rak_alat_tulis', 'assets/furniture/minimarket/furn_rak_alat_tulis.png'],
+      ['furn_mesin_fotokopi', 'assets/furniture/minimarket/furn_mesin_fotokopi.png'],
+      ['furn_keranjang_belanja', 'assets/furniture/minimarket/furn_keranjang_belanja.png'],
+      ['furn_rak_roti', 'assets/furniture/minimarket/furn_rak_roti.png'],
+      ['furn_rak_mie_instan', 'assets/furniture/minimarket/furn_rak_mie_instan.png'],
+      ['furn_rak_dinding_snack', 'assets/furniture/minimarket/furn_rak_dinding_snack.png'],
+      ['furn_etalase_makanan_siap_saji', 'assets/furniture/minimarket/furn_etalase_makanan_siap_saji.png'],
+      ['furn_galon_tumpuk', 'assets/furniture/minimarket/furn_galon_tumpuk.png'],
 
-    // Cosmetics Furniture
-    this.load.image('furn_etalase_kaca', 'assets/furniture/kosmetik/furn_etalase_kaca.png');
-    this.load.image('furn_kasir_kecil', 'assets/furniture/kosmetik/furn_kasir_kecil.png');
-    this.load.image('furn_meja_cermin', 'assets/furniture/kosmetik/furn_meja_cermin.png');
-    this.load.image('furn_rak_dinding_kosmetik', 'assets/furniture/kosmetik/furn_rak_dinding_kosmetik.png');
-    this.load.image('furn_kursi_tunggu', 'assets/furniture/kosmetik/furn_kursi_tunggu.png');
+      // Cosmetics
+      ['furn_etalase_kaca', 'assets/furniture/kosmetik/furn_etalase_kaca.png'],
+      ['furn_kasir_kecil', 'assets/furniture/kosmetik/furn_kasir_kecil.png'],
+      ['furn_meja_cermin', 'assets/furniture/kosmetik/furn_meja_cermin.png'],
+      ['furn_kursi_cermin', 'assets/furniture/kosmetik/furn_kursi_cermin.png'],
+      ['furn_rak_dinding_kosmetik', 'assets/furniture/kosmetik/furn_rak_dinding_kosmetik.png'],
+      ['furn_kursi_tunggu', 'assets/furniture/kosmetik/furn_kursi_tunggu.png'],
+      ['furn_sofa_tunggu', 'assets/furniture/kosmetik/furn_sofa_tunggu.png'],
+      ['furn_tanaman_pot', 'assets/furniture/kosmetik/furn_tanaman_pot.png'],
 
-    // SPBU Furniture
-    this.load.image('furn_dispenser_bbm', 'assets/furniture/spbu/furn_dispenser_bbm.png');
-    this.load.image('furn_kiosk_spbu', 'assets/furniture/spbu/furn_kiosk_spbu.png');
-    this.load.image('furn_rak_oli', 'assets/furniture/spbu/furn_rak_oli.png');
-    this.load.image('furn_bangku_spbu', 'assets/furniture/spbu/furn_bangku_spbu.png');
+      // SPBU
+      ['furn_dispenser_bbm', 'assets/furniture/spbu/furn_dispenser_bbm.png'],
+      ['furn_kiosk_spbu', 'assets/furniture/spbu/furn_kiosk_spbu.png'],
+      ['furn_rak_oli', 'assets/furniture/spbu/furn_rak_oli.png'],
+      ['furn_bangku_spbu', 'assets/furniture/spbu/furn_bangku_spbu.png'],
+      ['furn_kompresor_angin', 'assets/furniture/spbu/furn_kompresor_angin.png'],
+      ['furn_tong_pemadam', 'assets/furniture/spbu/furn_tong_pemadam.png'],
+      ['furn_tiang_kanopi', 'assets/furniture/spbu/furn_tiang_kanopi.png'],
 
-    // Game Center Furniture
-    this.load.image('furn_arcade_a', 'assets/furniture/game_center/furn_arcade_a.png');
-    this.load.image('furn_arcade_b', 'assets/furniture/game_center/furn_arcade_b.png');
-    this.load.image('furn_counter_kafe', 'assets/furniture/game_center/furn_counter_kafe.png');
-    this.load.image('furn_meja_kafe', 'assets/furniture/game_center/furn_meja_kafe.png');
-    this.load.image('furn_kursi_kafe', 'assets/furniture/game_center/furn_kursi_kafe.png');
-    this.load.image('furn_tv_besar', 'assets/furniture/game_center/furn_tv_besar.png');
+      // Game Center
+      ['furn_arcade_a', 'assets/furniture/game_center/furn_arcade_a.png'],
+      ['furn_arcade_b', 'assets/furniture/game_center/furn_arcade_b.png'],
+      ['furn_mesin_capit', 'assets/furniture/game_center/furn_mesin_capit.png'],
+      ['furn_counter_kafe', 'assets/furniture/game_center/furn_counter_kafe.png'],
+      ['furn_meja_kafe', 'assets/furniture/game_center/furn_meja_kafe.png'],
+      ['furn_kursi_kafe', 'assets/furniture/game_center/furn_kursi_kafe.png'],
+      ['furn_tv_besar', 'assets/furniture/game_center/furn_tv_besar.png'],
+      ['furn_sofa_nonton', 'assets/furniture/game_center/furn_sofa_nonton.png'],
+    ];
+
+    for (const [key, path] of furnitureFiles) {
+      this.load.image(key, path);
+      this.load.image(`${key}_v4`, path);
+    }
 
     // 16 Consumable Item Icons (AI-Generated Pixel Art)
     this.load.image('item_air_mineral', 'assets/items/item_air_mineral.png');
