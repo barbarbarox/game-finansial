@@ -14,7 +14,7 @@ Tag pra-v4: pre-v4 | Kapabilitas gambar: `image-generator` subagent (Gemini Imag
 ## Log gerbang (terbaru di atas)
 | Tanggal | Gerbang | Hasil | Bukti (file/tangkapan layar/log) | Commit |
 |---|---|---|---|---|
-| 2026-11-08 | G0 Audit, patch, preflight | LULUS | docs/AUDIT-V4.md disusun lengkap (7 peta, kolisi, NPC Ibu di hub, layout dapur/WC, game center, bensin, item); EXPANSION-PATCH-V4 diterapkan ke AGENTS.md dan rules; config additions digabung ke phase1.config.json; items.phase1.json siap; tag pre-v4 dibuat | HEAD |
+| 2026-11-08 | G0 Audit, patch, preflight | LULUS | docs/AUDIT-V4.md disusun lengkap (7 peta, kolisi, NPC Ibu di hub, layout dapur/WC, game center, bensin, item); EXPANSION-PATCH-V4 diterapkan ke AGENTS.md dan rules; config additions digabung ke phase1.config.json; items.phase1.json siap; tag pre-v4 dibuat | d0c6bb7 |
 
 ## Aset placeholder tersisa
 - Seluruh aset ekspansi v4 belum digenerate; siap dimulai dari G0.
