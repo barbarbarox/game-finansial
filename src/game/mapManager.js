@@ -111,6 +111,10 @@ export class MapManager {
     // Persist current map in store
     const store = this.scene.game.registry.get('store');
     if (store) store.setState({ currentMap: mapId });
+
+    if (this.scene._initNavGrid) {
+      this.scene._initNavGrid();
+    }
   }
 
   /**

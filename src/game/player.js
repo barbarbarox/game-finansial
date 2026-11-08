@@ -79,8 +79,96 @@ export class PlayerController {
     this._motorFuelAccumulatorMs = 0;
     this._bikeUnderlay = null;
 
+    // Click-to-Move Pathfinding state (Gate H5)
+    this._path = [];
+    this._targetInteractable = null;
+    this._isClickMoving = false;
+    this._markerGfx = null;
+    this._markerTimer = null;
+
+    window.addEventListener('keydown', (e) => {
+      const k = e.key?.toLowerCase();
+      if (['w', 'a', 's', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright', 'escape'].includes(k)) {
+        if (this._isClickMoving) {
+          this.clearPath();
+        }
+      }
+    });
+
     const dayDurSec = this.config.dayDurationSeconds || 12;
     this.gasolineDrainRate = (this.config.gasolineDrainPerDay || 5) / (dayDurSec * 1000);
+  }
+
+  setPath(path, targetInteractable = null) {
+    if (!path || path.length === 0) return;
+    this._path = [...path];
+    this._targetInteractable = targetInteractable;
+    this._isClickMoving = true;
+
+    // Show visual pulsating marker at final destination point
+    const dest = path[path.length - 1];
+    this._createDestinationMarker(dest.x, dest.y);
+  }
+
+  clearPath() {
+    this._path = [];
+    this._targetInteractable = null;
+    this._isClickMoving = false;
+    this.vx = 0;
+    this.vy = 0;
+    this.moving = false;
+    this._removeDestinationMarker();
+  }
+
+  _createDestinationMarker(x, y) {
+    this._removeDestinationMarker();
+    if (!this.scene || !this.scene.add) return;
+
+    const gfx = this.scene.add.graphics();
+    gfx.setDepth(100);
+    this._markerGfx = gfx;
+
+    let radius = 6;
+    let alpha = 0.9;
+    let growing = true;
+
+    this._markerTimer = this.scene.time.addEvent({
+      delay: 50,
+      loop: true,
+      callback: () => {
+        if (!this._markerGfx) return;
+        this._markerGfx.clear();
+
+        // Inner glowing dot
+        this._markerGfx.fillStyle(0xD9A441, alpha);
+        this._markerGfx.fillCircle(x, y, 3);
+
+        // Outer expanding ring
+        this._markerGfx.lineStyle(2, 0xD9A441, alpha * 0.8);
+        this._markerGfx.strokeCircle(x, y, radius);
+
+        if (growing) {
+          radius += 0.8;
+          alpha -= 0.05;
+          if (radius >= 14) growing = false;
+        } else {
+          radius -= 0.8;
+          alpha += 0.05;
+          if (radius <= 6) growing = true;
+        }
+      }
+    });
+  }
+
+  _removeDestinationMarker() {
+    if (this._markerTimer) {
+      this._markerTimer.remove();
+      this._markerTimer = null;
+    }
+    if (this._markerGfx) {
+      this._markerGfx.destroy();
+      this._markerGfx = null;
+    }
   }
 
   mount(callback) {
@@ -219,9 +307,7 @@ export class PlayerController {
     const down  = this.cursors.down.isDown  || this.wasd.down.isDown;
     const left  = this.cursors.left.isDown  || this.wasd.left.isDown;
     const right = this.cursors.right.isDown || this.wasd.right.isDown;
-
-    this.vx = 0;
-    this.vy = 0;
+    const hasManual = up || down || left || right;
 
     let effSpeed = this.speed;
     const st = this._store ? this._store.getState() : null;
@@ -232,44 +318,107 @@ export class PlayerController {
       effSpeed *= (this.config.vehicle?.speedMultiplier ?? 1.8);
     }
 
-    if (left)  { this.vx = -effSpeed; this.facing = 'left'; }
-    if (right) { this.vx =  effSpeed; this.facing = 'right'; }
-    if (up)    { this.vy = -effSpeed; this.facing = 'up'; }
-    if (down)  { this.vy =  effSpeed; this.facing = 'down'; }
-
-    if (this.vx !== 0 && this.vy !== 0) {
-      const factor = 1 / Math.SQRT2;
-      this.vx *= factor;
-      this.vy *= factor;
-    }
-
-    this.moving = this.vx !== 0 || this.vy !== 0;
-    if (!this.moving) return;
-
     const dt = delta / 1000;
-    const nx = this.sprite.x + this.vx * dt;
-    const ny = this.sprite.y + this.vy * dt;
 
-    // Feet collision box (Rule 73 §5: 16x10 px normal, 24x12 px mounted)
-    const hw = this.isMounted ? 12 : 8;
-    const hh = this.isMounted ? 6 : 5;
+    // 1. Manual keyboard input cancels click-to-move immediately
+    if (hasManual) {
+      if (this._isClickMoving) {
+        this.clearPath();
+      }
 
-    const canX = !this._collidesAt(nx, this.sprite.y, hw, hh, colliders);
-    const canY = !this._collidesAt(this.sprite.x, ny, hw, hh, colliders);
+      this.vx = 0;
+      this.vy = 0;
+      if (left)  { this.vx = -effSpeed; this.facing = 'left'; }
+      if (right) { this.vx =  effSpeed; this.facing = 'right'; }
+      if (up)    { this.vy = -effSpeed; this.facing = 'up'; }
+      if (down)  { this.vy =  effSpeed; this.facing = 'down'; }
 
-    if (canX) {
-      this.sprite.x = nx;
-      this.shadow.x = nx;
+      if (this.vx !== 0 && this.vy !== 0) {
+        const factor = 1 / Math.SQRT2;
+        this.vx *= factor;
+        this.vy *= factor;
+      }
+
+      this.moving = this.vx !== 0 || this.vy !== 0;
+      if (!this.moving) return;
+
+      const nx = this.sprite.x + this.vx * dt;
+      const ny = this.sprite.y + this.vy * dt;
+
+      // Feet collision box (Rule 73 §5: 16x10 px normal, 24x12 px mounted)
+      const hw = this.isMounted ? 12 : 8;
+      const hh = this.isMounted ? 6 : 5;
+
+      const canX = !this._collidesAt(nx, this.sprite.y, hw, hh, colliders);
+      const canY = !this._collidesAt(this.sprite.x, ny, hw, hh, colliders);
+
+      if (canX) {
+        this.sprite.x = nx;
+        this.shadow.x = nx;
+      }
+      if (canY) {
+        this.sprite.y = ny;
+        this.shadow.y = ny;
+      }
+
+      // Depth sort: lower Y = in front
+      this.sprite.setDepth(this.sprite.y);
+      this.shadow.setDepth(this.sprite.y - 1);
+      this._updateIndicator();
+      return;
     }
-    if (canY) {
-      this.sprite.y = ny;
-      this.shadow.y = ny;
+
+    // 2. Click-to-Move Path Following (Gate H5)
+    if (this._isClickMoving && this._path.length > 0) {
+      const wp = this._path[0];
+      const dx = wp.x - this.sprite.x;
+      const dy = wp.y - this.sprite.y;
+      const dist = Math.hypot(dx, dy);
+
+      if (dist <= Math.max(4, effSpeed * dt * 1.1)) {
+        this.sprite.x = wp.x;
+        this.sprite.y = wp.y;
+        this.shadow.x = wp.x;
+        this.shadow.y = wp.y;
+        this._path.shift();
+
+        if (this._path.length === 0) {
+          const target = this._targetInteractable;
+          this.clearPath();
+          if (target && this.scene && this.scene._onArrivalAtTarget) {
+            this.scene._onArrivalAtTarget(target);
+          }
+          return;
+        }
+      } else {
+        this.vx = (dx / dist) * effSpeed;
+        this.vy = (dy / dist) * effSpeed;
+        this.moving = true;
+
+        if (Math.abs(dx) > Math.abs(dy)) {
+          this.facing = dx > 0 ? 'right' : 'left';
+        } else {
+          this.facing = dy > 0 ? 'down' : 'up';
+        }
+
+        const nx = this.sprite.x + this.vx * dt;
+        const ny = this.sprite.y + this.vy * dt;
+
+        this.sprite.x = nx;
+        this.sprite.y = ny;
+        this.shadow.x = nx;
+        this.shadow.y = ny;
+
+        this.sprite.setDepth(this.sprite.y);
+        this.shadow.setDepth(this.sprite.y - 1);
+        this._updateIndicator();
+        return;
+      }
     }
 
-    // Depth sort: lower Y = in front
-    this.sprite.setDepth(this.sprite.y);
-    this.shadow.setDepth(this.sprite.y - 1);
-    this._updateIndicator();
+    this.vx = 0;
+    this.vy = 0;
+    this.moving = false;
   }
 
   _updateIndicator() {

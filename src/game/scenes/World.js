@@ -29,6 +29,7 @@ import { changeEnergy, calculateActivityDrain, canPerformActivity, DEFAULT_ENERG
 import { useItem, createInventory, addItem as domainAddItem } from '../../domain/inventory.js';
 import { ITEMS_MAP } from '../../domain/itemsCatalog.js';
 import { canMountVehicle } from '../../domain/vehicle.js';
+import { NavigationGrid } from '../navigationGrid.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -48,6 +49,8 @@ export class World extends Phaser.Scene {
     this._passiveMinuteAccumulator = 0;
     this._parkedMotorProp = null;
     this.keyV = null;
+    this.keyEsc = null;
+    this._navGrid = null;
     this._initData = null;
   }
 
@@ -90,6 +93,7 @@ export class World extends Phaser.Scene {
     this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
+    this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
 
     // 5. Ambient Day-Night Lighting Overlay
     const viewW = this.cameras.main.width || 960;
@@ -164,6 +168,13 @@ export class World extends Phaser.Scene {
       });
     }
 
+    // 9. Click-to-Move Pathfinding & Interaction (Gate H5)
+    this._initNavGrid();
+    this.input.on('pointerdown', (pointer) => {
+      if (pointer.button !== 0) return;
+      this._handleClickToMove(pointer);
+    });
+
     // Debug hook
     this._setupDebug(config);
   }
@@ -172,6 +183,9 @@ export class World extends Phaser.Scene {
     if (this._player) {
       if (this.keyV && Phaser.Input.Keyboard.JustDown(this.keyV)) {
         this._toggleVehicle();
+      }
+      if (this.keyEsc && Phaser.Input.Keyboard.JustDown(this.keyEsc)) {
+        this._player.clearPath();
       }
       const colliders = this._mapManager ? this._mapManager.getColliderRects() : [];
       this._player.update(delta, colliders);
@@ -739,8 +753,121 @@ export class World extends Phaser.Scene {
       closeDialogue: () => closeDialogue(),
       completeMission: (id, title) => this._missionFx ? this._missionFx.trigger(id, title) : false,
       listNPCs: (mapId) => this._mapManager ? this._mapManager.listNPCs(mapId) : [],
-      collisionProbe: (mapId) => this._mapManager ? this._mapManager.runCollisionProbe(mapId) : { allPassed: false }
+      collisionProbe: (mapId) => this._mapManager ? this._mapManager.runCollisionProbe(mapId) : { allPassed: false },
+      getNavGrid: () => this._navGrid
     };
     console.info('[Debug] window.__LJ__ aktif dengan time system, map & dialogue controls');
+  }
+
+  _initNavGrid() {
+    if (!this._mapManager) return;
+    const colliders = this._mapManager.getColliderRects();
+    const layout = this._mapManager.currentLayout;
+    const ts = this._tileSize || 32;
+    const mapW = (layout?.world?.widthTiles || layout?.width || 30) * ts;
+    const mapH = (layout?.world?.heightTiles || layout?.height || 24) * ts;
+    this._navGrid = new NavigationGrid(mapW, mapH, colliders, 16);
+  }
+
+  _handleClickToMove(pointer) {
+    if (!this._player || !this._navGrid) return;
+
+    // Ignore clicks on DOM UI overlays!
+    const clientX = pointer.event.clientX;
+    const clientY = pointer.event.clientY;
+    const domEl = document.elementFromPoint(clientX, clientY);
+    if (domEl) {
+      if (domEl.closest('#ui-container > *') ||
+          domEl.closest('.lj-panel') ||
+          domEl.closest('.lj-modal-backdrop') ||
+          domEl.closest('.hud-container') ||
+          domEl.closest('.hud-hotbar-container') ||
+          domEl.closest('.dialogue-panel') ||
+          domEl.closest('.dialogue-overlay') ||
+          domEl.closest('.time-skip-backdrop') ||
+          domEl.closest('.shop-modal-panel') ||
+          domEl.closest('.backpack-modal-panel') ||
+          domEl.closest('.item-action-popup')) {
+        return; // Clicked on UI, do not move player!
+      }
+    }
+
+    // Convert screen coordinates to world coordinates taking camera zoom & scroll into account
+    const wp = this.cameras.main.getWorldPoint(pointer.x, pointer.y);
+
+    // Check if target is an interactable or NPC
+    const targetObj = this._findClickableAt(wp.x, wp.y);
+
+    let destX = wp.x;
+    let destY = wp.y;
+
+    if (targetObj) {
+      if (targetObj.targetX !== undefined && targetObj.targetY !== undefined) {
+        destX = targetObj.targetX;
+        destY = targetObj.targetY;
+      }
+    }
+
+    const path = this._navGrid.findPath(this._player.sprite.x, this._player.sprite.y, destX, destY);
+    if (path && path.length > 0) {
+      this._player.setPath(path, targetObj);
+    }
+  }
+
+  _findClickableAt(wx, wy) {
+    const ts = this._tileSize || 32;
+
+    // 1. Check NPCs
+    if (this._npcManager && this._npcManager.npcs) {
+      for (const npc of this._npcManager.npcs) {
+        const dist = Math.hypot(wx - npc.x, wy - npc.y);
+        if (dist < 32) {
+          return {
+            type: 'npc',
+            npc: npc,
+            targetX: npc.x,
+            targetY: npc.y
+          };
+        }
+      }
+    }
+
+    // 2. Check interactables (bed, counter, door, etc.)
+    for (const int of (this._interactables || [])) {
+      const rx0 = (int.x || 0) * ts;
+      const ry0 = (int.y || 0) * ts;
+      const rx1 = rx0 + (int.w || 1) * ts;
+      const ry1 = ry0 + (int.h || 1) * ts;
+
+      if (wx >= rx0 - 16 && wx <= rx1 + 16 && wy >= ry0 - 16 && wy <= ry1 + 16) {
+        const closestX = Math.max(rx0, Math.min(wx, rx1));
+        const closestY = Math.max(ry0, Math.min(wy, ry1));
+        return {
+          type: 'interactable',
+          interactable: int,
+          targetX: closestX,
+          targetY: closestY
+        };
+      }
+    }
+
+    return null;
+  }
+
+  _onArrivalAtTarget(target) {
+    if (!target) return;
+
+    if (target.type === 'npc' && target.npc) {
+      const uiContainer = document.getElementById('ui-container') || document.body;
+      if (this._npcManager) {
+        this._npcManager.openDialog(target.npc, uiContainer);
+      }
+      return;
+    }
+
+    if (target.type === 'interactable' && target.interactable) {
+      this._openInteraction(target.interactable);
+      return;
+    }
   }
 }
