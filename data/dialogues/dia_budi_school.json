@@ -10,7 +10,9 @@
       "choices": [
         {
           "text": "Ayo gas! Aku ikut main arcade (Rp25.000).",
-          "requires": { "minCash": 25000 },
+          "requires": {
+            "minCash": 25000
+          },
           "disabledReason": "Uang kas tidak cukup (butuh Rp25.000)",
           "next": "accept_arcade",
           "effects": [
@@ -77,6 +79,6 @@
       "text": "Keren kamu bisa tahan godaan jajan! Kapan-kapan kalau ada tabungan lebih kita main ya.",
       "next": null
     }
-  }
+  },
+  "portrait": "assets/portraits/portrait_teman_l.png"
 }
-

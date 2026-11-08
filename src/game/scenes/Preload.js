@@ -61,32 +61,41 @@ export class Preload extends Phaser.Scene {
     this.load.image('furn_nakas_lampu', 'assets/furniture/kamar_pemain/furn_nakas_lampu.png');
 
     // Home Furniture (Living Room, Kitchen, Bedrooms, Bathroom)
-    this.load.image('furn_kasur_besar', 'assets/furniture/home/furn_kasur_besar.png');
-    this.load.image('furn_lemari_besar', 'assets/furniture/home/furn_lemari_besar.png');
-    this.load.image('furn_meja_rias', 'assets/furniture/home/furn_meja_rias.png');
-    this.load.image('furn_kipas_berdiri', 'assets/furniture/home/furn_kipas_berdiri.png');
-    this.load.image('furn_sofa_3dudukan', 'assets/furniture/home/furn_sofa_3dudukan.png');
-    this.load.image('furn_sofa_single', 'assets/furniture/home/furn_sofa_single.png');
-    this.load.image('furn_meja_tamu', 'assets/furniture/home/furn_meja_tamu.png');
-    this.load.image('furn_tv_dan_rak', 'assets/furniture/home/furn_tv_dan_rak.png');
-    this.load.image('furn_rak_pajangan', 'assets/furniture/home/furn_rak_pajangan.png');
-    this.load.image('furn_karpet_tamu', 'assets/furniture/home/furn_karpet_tamu.png');
-    this.load.image('furn_kompor_counter', 'assets/furniture/home/furn_kompor_counter.png');
-    this.load.image('furn_kulkas', 'assets/furniture/home/furn_kulkas.png');
-    this.load.image('furn_meja_makan', 'assets/furniture/home/furn_meja_makan.png');
-    this.load.image('furn_kursi_makan', 'assets/furniture/home/furn_kursi_makan.png');
-    this.load.image('furn_rak_piring', 'assets/furniture/home/furn_rak_piring.png');
-    this.load.image('furn_wastafel_dapur', 'assets/furniture/home/furn_wastafel_dapur.png');
-    this.load.image('furn_bak_mandi', 'assets/furniture/home/furn_bak_mandi.png');
-    this.load.image('furn_toilet', 'assets/furniture/home/furn_toilet.png');
-    this.load.image('furn_wastafel_cermin', 'assets/furniture/home/furn_wastafel_cermin.png');
-    this.load.image('furn_rak_handuk', 'assets/furniture/home/furn_rak_handuk.png');
-    this.load.image('furn_ember', 'assets/furniture/home/furn_ember.png');
-    this.load.image('furn_pintu_kamar', 'assets/furniture/home/furn_pintu_kamar.png');
-    this.load.image('furn_pintu_depan', 'assets/furniture/home/furn_pintu_depan.png');
-    this.load.image('furn_jendela', 'assets/furniture/home/furn_jendela.png');
-    this.load.image('furn_jam_dinding', 'assets/furniture/home/furn_jam_dinding.png');
-    this.load.image('furn_bingkai_kosong', 'assets/furniture/home/furn_bingkai_kosong.png');
+    const homeFurnitureList = [
+      ['furn_kasur_besar', 'assets/furniture/home/furn_kasur_besar.png'],
+      ['furn_lemari_besar', 'assets/furniture/home/furn_lemari_besar.png'],
+      ['furn_meja_rias', 'assets/furniture/home/furn_meja_rias.png'],
+      ['furn_kipas_berdiri', 'assets/furniture/home/furn_kipas_berdiri.png'],
+      ['furn_sofa_3dudukan', 'assets/furniture/home/furn_sofa_3dudukan.png'],
+      ['furn_sofa_single', 'assets/furniture/home/furn_sofa_single.png'],
+      ['furn_meja_tamu', 'assets/furniture/home/furn_meja_tamu.png'],
+      ['furn_tv_dan_rak', 'assets/furniture/home/furn_tv_dan_rak.png'],
+      ['furn_rak_pajangan', 'assets/furniture/home/furn_rak_pajangan.png'],
+      ['furn_karpet_tamu', 'assets/furniture/home/furn_karpet_tamu.png'],
+      ['furn_kompor_counter', 'assets/furniture/home/furn_kompor_counter.png'],
+      ['furn_kulkas', 'assets/furniture/home/furn_kulkas.png'],
+      ['furn_meja_makan', 'assets/furniture/home/furn_meja_makan.png'],
+      ['furn_kursi_makan', 'assets/furniture/home/furn_kursi_makan.png'],
+      ['furn_kursi_makan_kiri', 'assets/furniture/home/furn_kursi_makan_kiri.png'],
+      ['furn_kursi_makan_kanan', 'assets/furniture/home/furn_kursi_makan_kanan.png'],
+      ['furn_kursi_makan_depan', 'assets/furniture/home/furn_kursi_makan_depan.png'],
+      ['furn_rak_piring', 'assets/furniture/home/furn_rak_piring.png'],
+      ['furn_wastafel_dapur', 'assets/furniture/home/furn_wastafel_dapur.png'],
+      ['furn_bak_mandi', 'assets/furniture/home/furn_bak_mandi.png'],
+      ['furn_toilet', 'assets/furniture/home/furn_toilet.png'],
+      ['furn_wastafel_cermin', 'assets/furniture/home/furn_wastafel_cermin.png'],
+      ['furn_rak_handuk', 'assets/furniture/home/furn_rak_handuk.png'],
+      ['furn_ember', 'assets/furniture/home/furn_ember.png'],
+      ['furn_pintu_kamar', 'assets/furniture/home/furn_pintu_kamar.png'],
+      ['furn_pintu_depan', 'assets/furniture/home/furn_pintu_depan.png'],
+      ['furn_jendela', 'assets/furniture/home/furn_jendela.png'],
+      ['furn_jam_dinding', 'assets/furniture/home/furn_jam_dinding.png'],
+      ['furn_bingkai_kosong', 'assets/furniture/home/furn_bingkai_kosong.png']
+    ];
+    for (const [key, path] of homeFurnitureList) {
+      this.load.image(key, path);
+      this.load.image(`${key}_v4`, path);
+    }
 
     // Load Furniture (both base key and _v4 key for seamless compatibility)
     const furnitureFiles = [

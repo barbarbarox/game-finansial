@@ -11,7 +11,9 @@
       "choices": [
         {
           "text": "Beli Lip Balm & Sunscreen Remaja (Rp25.000)",
-          "requires": { "minCash": 25000 },
+          "requires": {
+            "minCash": 25000
+          },
           "disabledReason": "Uang kas tidak cukup (butuh Rp25.000)",
           "next": "buy_skincare",
           "effects": [
@@ -63,4 +65,3 @@
     }
   }
 }
-

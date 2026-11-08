@@ -322,7 +322,8 @@
           "label": "\ud83d\udc4b Terima kasih Mbak Maya!",
           "reply": "Senang bisa membantu, tampil percaya diri ya!"
         }
-      ]
+      ],
+      "dialogId": "dia_cindy_kosmetik"
     }
   ]
 }

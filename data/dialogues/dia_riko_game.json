@@ -11,7 +11,9 @@
       "choices": [
         {
           "text": "Beli Koin Main Arcade 1 Jam (Rp20.000)",
-          "requires": { "minCash": 20000 },
+          "requires": {
+            "minCash": 20000
+          },
           "disabledReason": "Uang kas tidak cukup (butuh Rp20.000)",
           "next": "play_game",
           "effects": [
@@ -63,4 +65,3 @@
     }
   }
 }
-

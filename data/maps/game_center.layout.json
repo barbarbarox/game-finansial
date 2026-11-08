@@ -400,7 +400,8 @@
           "label": "\ud83d\udc4b Siap Mas Gani, mantap!",
           "reply": "Selamat bersenang-senang di Pixel Arena!"
         }
-      ]
+      ],
+      "dialogId": "dia_riko_game"
     }
   ]
 }

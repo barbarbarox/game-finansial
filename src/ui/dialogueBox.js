@@ -475,9 +475,10 @@ export async function startDialogue(dialogueOrId, npcId = null, onClose = null) 
   // Set Player portrait
   const playerImg = document.querySelector('#dlg-player-portrait .portrait-img');
   const playerPlaceholder = document.querySelector('#dlg-player-portrait .portrait-img-placeholder');
-  const store = window.__LJ__?.getStore?.();
+  const store = window.__LJ__?.getStore?.() || window.__GAME__?.registry?.get('store');
   const state = store?.getState?.() || {};
-  const isFemale = state.character?.gender === 'female';
+  const gender = state.character?.gender;
+  const isFemale = gender === 'f' || gender === 'female';
   const playerPortraitSrc = isFemale ? 'assets/portraits/portrait_player_f.png' : 'assets/portraits/portrait_player_m.png';
   if (playerImg) {
     playerImg.src = playerPortraitSrc;
@@ -495,16 +496,21 @@ export async function startDialogue(dialogueOrId, npcId = null, onClose = null) 
       'npc_budi': 'assets/portraits/portrait_teman_l.png',
       'npc_teman': 'assets/portraits/portrait_teman_l.png',
       'npc_siti': 'assets/portraits/portrait_teman_p.png',
+      'npc_sri': 'assets/portraits/portrait_penjual_kantin.png',
       'npc_kantin': 'assets/portraits/portrait_penjual_kantin.png',
       'npc_penjual': 'assets/portraits/portrait_penjual_kantin.png',
       'npc_kasir_minimarket': 'assets/portraits/portrait_kasir_minimarket.png',
+      'npc_kasir_mini': 'assets/portraits/portrait_kasir_minimarket.png',
       'npc_kasir': 'assets/portraits/portrait_kasir_minimarket.png',
       'npc_cindy': 'assets/portraits/portrait_penjaga_kosmetik.png',
+      'npc_mbak_maya': 'assets/portraits/portrait_penjaga_kosmetik.png',
       'npc_penjaga_kosmetik': 'assets/portraits/portrait_penjaga_kosmetik.png',
       'npc_doni': 'assets/portraits/portrait_petugas_spbu.png',
+      'npc_bang_dodi': 'assets/portraits/portrait_petugas_spbu.png',
       'npc_petugas_spbu': 'assets/portraits/portrait_petugas_spbu.png',
       'npc_pak_anto': 'assets/portraits/portrait_petugas_spbu.png',
       'npc_riko': 'assets/portraits/portrait_penjaga_game.png',
+      'npc_operator_game': 'assets/portraits/portrait_penjaga_game.png',
       'npc_penjaga_game': 'assets/portraits/portrait_penjaga_game.png',
       'npc_rani': 'assets/portraits/portrait_teman_p.png'
     };

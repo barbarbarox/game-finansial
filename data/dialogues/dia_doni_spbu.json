@@ -11,7 +11,9 @@
       "choices": [
         {
           "text": "Isi Bensin Pertalite 2 Liter (Rp20.000)",
-          "requires": { "minCash": 20000 },
+          "requires": {
+            "minCash": 20000
+          },
           "disabledReason": "Uang kas tidak cukup (butuh Rp20.000)",
           "next": "fill_gas",
           "effects": [
@@ -63,4 +65,3 @@
     }
   }
 }
-

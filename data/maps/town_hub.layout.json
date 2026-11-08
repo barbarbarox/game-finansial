@@ -317,7 +317,8 @@
           "label": "\ud83d\udeb6 Sampai Ketemu di Kelas",
           "reply": "Siap bro, sampai ketemu di kelas!"
         }
-      ]
+      ],
+      "dialogId": "dia_budi_school"
     },
     {
       "id": "npc_pak_anto",
@@ -344,7 +345,8 @@
           "label": "\ud83d\udeb6 Terima kasih Pak Anto!",
           "reply": "Sama-sama nak, hati-hati menyeberang jalan!"
         }
-      ]
+      ],
+      "dialogId": "dia_pak_anto_hub"
     }
   ],
   "props": [

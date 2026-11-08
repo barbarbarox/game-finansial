@@ -31,15 +31,23 @@
       "speaker": "npc",
       "text": "Ini uang saku Rp1.000.000 untuk sebulan. Jangan lupa susun anggaran di meja belajarmu ya!",
       "effects": [
-        { "type": "grant_allowance" },
-        { "type": "set_flag", "flagKey": "received_allowance_month1", "value": true }
+        {
+          "type": "grant_allowance"
+        },
+        {
+          "type": "set_flag",
+          "flagKey": "received_allowance_month1",
+          "value": true
+        }
       ],
       "choices": [
         {
           "text": "Siap Bu, aku akan buat anggarannya sekarang.",
           "next": "budget_reminder",
           "effects": [
-            { "type": "open_budget" }
+            {
+              "type": "open_budget"
+            }
           ]
         },
         {
@@ -63,7 +71,10 @@
           "text": "Wah enak, aku sarapan dulu Bu.",
           "next": null,
           "effects": [
-            { "type": "start_activity", "activityId": "sarapan_rumah" }
+            {
+              "type": "start_activity",
+              "activityId": "sarapan_rumah"
+            }
           ]
         },
         {
@@ -84,6 +95,6 @@
       "text": "Semoga harimu menyenangkan di sekolah!",
       "next": null
     }
-  }
+  },
+  "portrait": "assets/portraits/portrait_ibu.png"
 }
-

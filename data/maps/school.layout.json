@@ -766,7 +766,8 @@
           "label": "\ud83d\udc4b Siap Budi!",
           "reply": "Sampai ketemu lagi!"
         }
-      ]
+      ],
+      "dialogId": "dia_budi_school"
     },
     {
       "id": "npc_sri",
@@ -793,7 +794,8 @@
           "label": "\ud83d\udc4b Terima kasih Bu Sri!",
           "reply": "Sama-sama nak, selamat belajar!"
         }
-      ]
+      ],
+      "dialogId": "dia_sri_kantin"
     }
   ]
 }

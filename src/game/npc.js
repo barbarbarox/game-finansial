@@ -202,11 +202,26 @@ export class NPCManager {
     }
   }
 
+  _resolveDialogId(npcDef) {
+    if (npcDef.dialogId) return npcDef.dialogId;
+    const id = npcDef.id;
+    if (id === 'npc_ibu') return 'dia_ibu_home';
+    if (id === 'npc_ayah') return 'dia_ayah_home';
+    if (id === 'npc_budi' || id === 'npc_teman') return 'dia_budi_school';
+    if (id === 'npc_sri' || id === 'npc_kantin' || id === 'npc_penjual') return 'dia_sri_kantin';
+    if (id === 'npc_kasir_mini' || id === 'npc_kasir_minimarket' || id === 'npc_kasir') return 'dia_maya_minimarket';
+    if (id === 'npc_mbak_maya' || id === 'npc_cindy' || id === 'npc_penjaga_kosmetik') return 'dia_cindy_kosmetik';
+    if (id === 'npc_bang_dodi' || id === 'npc_doni' || id === 'npc_petugas_spbu') return 'dia_doni_spbu';
+    if (id === 'npc_pak_anto') return 'dia_pak_anto_hub';
+    if (id === 'npc_operator_game' || id === 'npc_riko' || id === 'npc_penjaga_game') return 'dia_riko_game';
+    return null;
+  }
+
   openDialog(npc, container) {
     this.activeNpc = npc;
 
-    // Use Rule 71 Dialogue Box with Portraits if dialogId is present
-    const dialogId = npc.def.dialogId || (npc.def.id === 'npc_ibu' ? 'dia_ibu_home' : (npc.def.id === 'npc_ayah' ? 'dia_ayah_home' : null));
+    // Use Rule 71 Dialogue Box with Character Portraits for all NPCs
+    const dialogId = this._resolveDialogId(npc.def);
     if (dialogId) {
       startDialogue(dialogId, npc.def.id, () => {
         this.activeNpc = null;

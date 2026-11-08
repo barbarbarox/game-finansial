@@ -1,0 +1,45 @@
+{
+  "id": "dia_pak_anto_hub",
+  "npcId": "npc_pak_anto",
+  "npcName": "Pak Anto",
+  "portrait": "assets/portraits/portrait_petugas_spbu.png",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Selamat pagi nak {player}! Sedang jalan-jalan di kota atau mau berangkat sekolah? Ingat selalu berhati-hati di jalan ya.",
+      "choices": [
+        {
+          "text": "Ada saran untuk keliling kota Pak Anto?",
+          "next": "town_tips"
+        },
+        {
+          "text": "Bisa minta tips mengatur uang saku Pak?",
+          "next": "financial_tips"
+        },
+        {
+          "text": "Saya pamit lanjut jalan dulu Pak Anto.",
+          "next": "farewell"
+        }
+      ]
+    },
+    "town_tips": {
+      "id": "town_tips",
+      "speaker": "npc",
+      "text": "Di barat ada SMA Negeri 1, di timur ada Minimarket Harmoni dan Toko Kosmetik Cantik, lalu di selatan ada SPBU dan Game Center. Kalau bawa motor, pastikan bensin tidak habis di jalan ya!",
+      "next": null
+    },
+    "financial_tips": {
+      "id": "financial_tips",
+      "speaker": "npc",
+      "text": "Kunci keuangan sehat adalah membedakan kebutuhan dan keinginan. Dahulukan makan bergizi dan ongkos bensin sebelum jajan hiburan di Game Center!",
+      "next": null
+    },
+    "farewell": {
+      "id": "farewell",
+      "speaker": "npc",
+      "text": "Hati-hati di jalan nak! Selalu seberangi jalan lewat trotoar ya.",
+      "next": null
+    }
+  }
+}

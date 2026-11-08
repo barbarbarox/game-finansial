@@ -51,3 +51,4 @@ with open(manifest_path, "w", encoding="utf-8") as f:
     json.dump(manifest, f, indent=2)
 
 print(f"Manifest updated: {added} new assets registered, {updated} updated to ready.")
+

@@ -11,7 +11,9 @@
       "choices": [
         {
           "text": "Beli Roti & Air Mineral (Rp8.000)",
-          "requires": { "minCash": 8000 },
+          "requires": {
+            "minCash": 8000
+          },
           "disabledReason": "Uang kas tidak cukup (butuh Rp8.000)",
           "next": "buy_snack",
           "effects": [
@@ -29,7 +31,9 @@
         },
         {
           "text": "Beli Buku Tulis & Pulpen (Rp7.500)",
-          "requires": { "minCash": 7500 },
+          "requires": {
+            "minCash": 7500
+          },
           "disabledReason": "Uang kas tidak cukup (butuh Rp7.500)",
           "next": "buy_stationery",
           "effects": [
@@ -43,7 +47,9 @@
         },
         {
           "text": "Fotokopi Catatan Pelajaran (Rp2.000)",
-          "requires": { "minCash": 2000 },
+          "requires": {
+            "minCash": 2000
+          },
           "disabledReason": "Uang kas tidak cukup (butuh Rp2.000)",
           "next": "photocopy",
           "effects": [
@@ -87,4 +93,3 @@
     }
   }
 }
-

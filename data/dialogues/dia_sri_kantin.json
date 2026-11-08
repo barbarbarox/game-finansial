@@ -10,7 +10,9 @@
       "choices": [
         {
           "text": "Beli Nasi Kuning Komplit (Rp12.000)",
-          "requires": { "minCash": 12000 },
+          "requires": {
+            "minCash": 12000
+          },
           "disabledReason": "Uang kas tidak cukup (butuh Rp12.000)",
           "next": "buy_food",
           "effects": [
@@ -28,7 +30,9 @@
         },
         {
           "text": "Beli Teh Manis Hangat (Rp3.000)",
-          "requires": { "minCash": 3000 },
+          "requires": {
+            "minCash": 3000
+          },
           "disabledReason": "Uang kas tidak cukup (butuh Rp3.000)",
           "next": "buy_drink",
           "effects": [
@@ -64,6 +68,6 @@
       "text": "Silakan, kalau butuh makan siang langsung ke sini saja ya nak.",
       "next": null
     }
-  }
+  },
+  "portrait": "assets/portraits/portrait_penjual_kantin.png"
 }
-

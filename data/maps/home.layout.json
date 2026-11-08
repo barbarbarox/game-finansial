@@ -8,35 +8,136 @@
     "heightTiles": 20,
     "tileSize": 32,
     "spawns": {
-      "default": { "x": 5, "y": 5 },
-      "kamar_tidur": { "x": 5, "y": 5 },
-      "from_hub": { "x": 5, "y": 17 }
+      "default": {
+        "x": 5,
+        "y": 5
+      },
+      "kamar_tidur": {
+        "x": 5,
+        "y": 5
+      },
+      "from_hub": {
+        "x": 5,
+        "y": 17
+      }
     }
   },
   "floors": [
-    { "type": "lantai_kayu_kamar", "x": 2, "y": 2, "w": 8, "h": 7 },
-    { "type": "lantai_kayu_kamar", "x": 11, "y": 2, "w": 9, "h": 7 },
-    { "type": "keramik_kamar_mandi", "x": 21, "y": 2, "w": 7, "h": 7 },
-    { "type": "keramik_ruang_tamu", "x": 2, "y": 10, "w": 12, "h": 9 },
-    { "type": "keramik_dapur", "x": 15, "y": 10, "w": 13, "h": 9 }
+    {
+      "type": "lantai_kayu_kamar",
+      "x": 2,
+      "y": 2,
+      "w": 8,
+      "h": 7
+    },
+    {
+      "type": "lantai_kayu_kamar",
+      "x": 11,
+      "y": 2,
+      "w": 9,
+      "h": 7
+    },
+    {
+      "type": "keramik_kamar_mandi",
+      "x": 21,
+      "y": 2,
+      "w": 7,
+      "h": 7
+    },
+    {
+      "type": "keramik_ruang_tamu",
+      "x": 2,
+      "y": 10,
+      "w": 12,
+      "h": 9
+    },
+    {
+      "type": "keramik_dapur",
+      "x": 15,
+      "y": 10,
+      "w": 13,
+      "h": 9
+    }
   ],
   "walls": [
-    { "x": 1, "y": 1, "w": 28, "h": 1 },
-    { "x": 1, "y": 1, "w": 1, "h": 18 },
-    { "x": 28, "y": 1, "w": 1, "h": 18 },
-    { "x": 1, "y": 19, "w": 4, "h": 1 },
-    { "x": 7, "y": 19, "w": 22, "h": 1 },
-
-    { "x": 1, "y": 9, "w": 3, "h": 1 },
-    { "x": 6, "y": 9, "w": 8, "h": 1 },
-    { "x": 16, "y": 9, "w": 7, "h": 1 },
-    { "x": 25, "y": 9, "w": 4, "h": 1 },
-
-    { "x": 10, "y": 1, "w": 1, "h": 8 },
-    { "x": 20, "y": 1, "w": 1, "h": 8 },
-
-    { "x": 14, "y": 10, "w": 1, "h": 3 },
-    { "x": 14, "y": 16, "w": 1, "h": 3 }
+    {
+      "x": 1,
+      "y": 1,
+      "w": 28,
+      "h": 1
+    },
+    {
+      "x": 1,
+      "y": 1,
+      "w": 1,
+      "h": 18
+    },
+    {
+      "x": 28,
+      "y": 1,
+      "w": 1,
+      "h": 18
+    },
+    {
+      "x": 1,
+      "y": 19,
+      "w": 4,
+      "h": 1
+    },
+    {
+      "x": 7,
+      "y": 19,
+      "w": 22,
+      "h": 1
+    },
+    {
+      "x": 1,
+      "y": 9,
+      "w": 3,
+      "h": 1
+    },
+    {
+      "x": 6,
+      "y": 9,
+      "w": 8,
+      "h": 1
+    },
+    {
+      "x": 16,
+      "y": 9,
+      "w": 7,
+      "h": 1
+    },
+    {
+      "x": 25,
+      "y": 9,
+      "w": 4,
+      "h": 1
+    },
+    {
+      "x": 10,
+      "y": 1,
+      "w": 1,
+      "h": 8
+    },
+    {
+      "x": 20,
+      "y": 1,
+      "w": 1,
+      "h": 8
+    },
+    {
+      "x": 14,
+      "y": 10,
+      "w": 1,
+      "h": 3
+    },
+    {
+      "x": 14,
+      "y": 16,
+      "w": 1,
+      "h": 3
+    }
   ],
   "doorways": [
     {
@@ -91,25 +192,111 @@
     }
   ],
   "colliders": [
-    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 30, "h": 2 },
-    { "name": "batas_luar_bawah_kiri", "x": 0, "y": 19, "w": 5, "h": 1 },
-    { "name": "batas_luar_bawah_kanan", "x": 7, "y": 19, "w": 23, "h": 1 },
-    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 20 },
-    { "name": "batas_luar_kanan", "x": 28, "y": 0, "w": 2, "h": 20 },
-
-    { "name": "dinding_kamar1_bawah_kiri", "x": 2, "y": 9, "w": 2, "h": 1 },
-    { "name": "dinding_pemisah_kamar1_2", "x": 10, "y": 2, "w": 1, "h": 7 },
-    { "name": "dinding_kamar1_bawah_kanan", "x": 6, "y": 9, "w": 4, "h": 1 },
-
-    { "name": "dinding_kamar2_bawah_kiri", "x": 11, "y": 9, "w": 3, "h": 1 },
-    { "name": "dinding_pemisah_kamar2_wc", "x": 20, "y": 2, "w": 1, "h": 7 },
-    { "name": "dinding_kamar2_bawah_kanan", "x": 16, "y": 9, "w": 4, "h": 1 },
-
-    { "name": "dinding_wc_bawah_kiri", "x": 21, "y": 9, "w": 2, "h": 1 },
-    { "name": "dinding_wc_bawah_kanan", "x": 25, "y": 9, "w": 3, "h": 1 },
-
-    { "name": "sekat_tamu_dapur_atas", "x": 14, "y": 10, "w": 1, "h": 3 },
-    { "name": "sekat_tamu_dapur_bawah", "x": 14, "y": 16, "w": 1, "h": 3 }
+    {
+      "name": "batas_luar_atas",
+      "x": 0,
+      "y": 0,
+      "w": 30,
+      "h": 2
+    },
+    {
+      "name": "batas_luar_bawah_kiri",
+      "x": 0,
+      "y": 19,
+      "w": 5,
+      "h": 1
+    },
+    {
+      "name": "batas_luar_bawah_kanan",
+      "x": 7,
+      "y": 19,
+      "w": 23,
+      "h": 1
+    },
+    {
+      "name": "batas_luar_kiri",
+      "x": 0,
+      "y": 0,
+      "w": 2,
+      "h": 20
+    },
+    {
+      "name": "batas_luar_kanan",
+      "x": 28,
+      "y": 0,
+      "w": 2,
+      "h": 20
+    },
+    {
+      "name": "dinding_kamar1_bawah_kiri",
+      "x": 2,
+      "y": 9,
+      "w": 2,
+      "h": 1
+    },
+    {
+      "name": "dinding_pemisah_kamar1_2",
+      "x": 10,
+      "y": 2,
+      "w": 1,
+      "h": 7
+    },
+    {
+      "name": "dinding_kamar1_bawah_kanan",
+      "x": 6,
+      "y": 9,
+      "w": 4,
+      "h": 1
+    },
+    {
+      "name": "dinding_kamar2_bawah_kiri",
+      "x": 11,
+      "y": 9,
+      "w": 3,
+      "h": 1
+    },
+    {
+      "name": "dinding_pemisah_kamar2_wc",
+      "x": 20,
+      "y": 2,
+      "w": 1,
+      "h": 7
+    },
+    {
+      "name": "dinding_kamar2_bawah_kanan",
+      "x": 16,
+      "y": 9,
+      "w": 4,
+      "h": 1
+    },
+    {
+      "name": "dinding_wc_bawah_kiri",
+      "x": 21,
+      "y": 9,
+      "w": 2,
+      "h": 1
+    },
+    {
+      "name": "dinding_wc_bawah_kanan",
+      "x": 25,
+      "y": 9,
+      "w": 3,
+      "h": 1
+    },
+    {
+      "name": "sekat_tamu_dapur_atas",
+      "x": 14,
+      "y": 10,
+      "w": 1,
+      "h": 3
+    },
+    {
+      "name": "sekat_tamu_dapur_bawah",
+      "x": 14,
+      "y": 16,
+      "w": 1,
+      "h": 3
+    }
   ],
   "furniture": [
     {
@@ -189,7 +376,6 @@
       "h": 1.5,
       "collidable": false
     },
-
     {
       "id": "fur_nakas_ortu",
       "assetId": "furn_nakas_lampu",
@@ -256,7 +442,6 @@
       "h": 2,
       "collidable": false
     },
-
     {
       "id": "fur_bak_mandi",
       "assetId": "furn_bak_mandi",
@@ -312,7 +497,6 @@
       "h": 2.5,
       "collidable": true
     },
-
     {
       "id": "fur_rak_pajangan",
       "assetId": "furn_rak_pajangan",
@@ -412,7 +596,6 @@
       "h": 2,
       "collidable": true
     },
-
     {
       "id": "fur_kulkas",
       "assetId": "furn_kulkas",
@@ -481,22 +664,22 @@
     },
     {
       "id": "fur_kursi_makan_1",
-      "assetId": "furn_kursi_makan",
+      "assetId": "furn_kursi_makan_kiri",
       "label": "Kursi Makan Kiri",
       "class_": "cluster",
-      "x": 18.5,
-      "y": 15.5,
+      "x": 19.3,
+      "y": 15.2,
       "w": 1,
       "h": 1.5,
       "collidable": false
     },
     {
       "id": "fur_kursi_makan_2",
-      "assetId": "furn_kursi_makan",
+      "assetId": "furn_kursi_makan_kanan",
       "label": "Kursi Makan Kanan",
       "class_": "cluster",
-      "x": 23.5,
-      "y": 15.5,
+      "x": 22.7,
+      "y": 15.2,
       "w": 1,
       "h": 1.5,
       "collidable": false
@@ -573,7 +756,10 @@
       "id": "int_keluar_rumah",
       "type": "exit",
       "targetMap": "town_hub",
-      "targetSpawn": [6, 22],
+      "targetSpawn": [
+        6,
+        22
+      ],
       "x": 5,
       "y": 18,
       "w": 2,
@@ -593,20 +779,21 @@
       "choices": [
         {
           "id": "sarapan",
-          "label": "🍳 Sarapan di Meja Makan",
+          "label": "\ud83c\udf73 Sarapan di Meja Makan",
           "reply": "Makanlah sampai kenyang nak, supaya energimu penuh untuk belajar seharian!"
         },
         {
           "id": "uang_saku",
-          "label": "💵 Minta Uang Saku Harian",
+          "label": "\ud83d\udcb5 Minta Uang Saku Harian",
           "reply": "Ini uang saku Rp20.000 untuk hari ini. Gunakan dengan bijak dan catat di buku kas ya!"
         },
         {
           "id": "pamit",
-          "label": "🎒 Pamit Berangkat Sekolah",
+          "label": "\ud83c\udf92 Pamit Berangkat Sekolah",
           "reply": "Hati-hati di jalan ya nak, rajinlah belajar!"
         }
-      ]
+      ],
+      "dialogId": "dia_ibu_home"
     },
     {
       "id": "npc_ayah",
@@ -620,20 +807,21 @@
       "choices": [
         {
           "id": "tips_investasi",
-          "label": "📈 Tanya Tips Finansial",
+          "label": "\ud83d\udcc8 Tanya Tips Finansial",
           "reply": "Kunci kebebasan finansial ada pada konsistensi menabung dan menghindari belanja impulsif."
         },
         {
           "id": "motor",
-          "label": "🛵 Tanya Soal Motor",
+          "label": "\ud83d\udef5 Tanya Soal Motor",
           "reply": "Motor Ayah parkir di luar. Kamu bisa menaikinya dengan tombol Motor [V] di HUD, tapi pastikan bensin tidak kosong ya!"
         },
         {
           "id": "bye",
-          "label": "👋 Siap Ayah, terima kasih!",
+          "label": "\ud83d\udc4b Siap Ayah, terima kasih!",
           "reply": "Semangat menjalani harimu, nak!"
         }
-      ]
+      ],
+      "dialogId": "dia_ayah_home"
     }
   ]
 }

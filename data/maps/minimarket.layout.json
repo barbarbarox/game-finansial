@@ -337,7 +337,8 @@
           "label": "\ud83d\udc4b Terima kasih Mas Rian!",
           "reply": "Terima kasih telah berbelanja di Mini Mart Harmoni!"
         }
-      ]
+      ],
+      "dialogId": "dia_maya_minimarket"
     }
   ]
 }
