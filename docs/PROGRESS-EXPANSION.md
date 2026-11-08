@@ -15,7 +15,7 @@ Kapabilitas gambar: `image-generator` subagent (Gemini Image API) aktif | Tag pr
 ## Log gerbang (terbaru di atas)
 | Tanggal | Gerbang | Hasil | Bukti (file/tangkapan layar/log) | Commit |
 |---|---|---|---|---|
-| 2026-11-08 | E5 Generate sisa aset | LULUS | 118 aset terdaftar di manifest; 59 ready (AI-generated kamar pemain, ortu, ruang tamu, dapur, potret pemain) + 59 placeholder terstandar (Rule 60 §6 kuota fallback); 4 contact sheets di docs/contact-sheets/; asset-check.html hijau | TBD |
+| 2026-11-08 | E5 Generate sisa aset | LULUS | 118 aset terdaftar di manifest; 59 ready (AI-generated kamar pemain, ortu, ruang tamu, dapur, potret pemain) + 59 placeholder terstandar (Rule 60 §6 kuota fallback); 4 contact sheets di docs/contact-sheets/; asset-check.html hijau | 68b7e9f |
 | 2026-11-08 | E4 Style lock interior | CHECKPOINT B | 6 furnitur kamar pemain & 2 potret pemain berhasil diproses; 2 contact sheet di docs/checkpoint-B/; render nyata kamar pemain & dialog potret di game; disetujui oleh pengguna | c731d58 |
 | 2026-11-08 | E3 Dialog dengan potret | LULUS | 21/21 dialogue-test.html lulus; 4 skema dialog valid; sorotan pembicara aktif (+6px) & redup non-pembicara; menu pilihan vertikal + opsi nonaktif; tangkapan layar desktop & tablet | 515af42 |
 | 2026-11-08 | E2 Kerangka peta interior | LULUS | 27/27 map-check.html lulus; 7 peta termuat (index.json + 6 layout interior + hub); MapManager transisi fade 200ms; verifikasi timbal balik pintu; tangkapan layar 7 peta | bca2119 |
