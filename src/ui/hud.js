@@ -1,10 +1,11 @@
 /**
  * hud.js — HUD DOM overlay untuk Life Journey
- * Mengimplementasikan UI Design Rules (docs/UI-DESIGN-RULES.md):
- * - Status finansial (Kas, Tabungan) tanpa emote/emoji
- * - Status bensin dengan visual bar persentase
- * - Status waktu & misi aktif
- * - Tombol navigasi Buku Kas, Anggaran, & Pengaturan (bersih tanpa emote)
+ * Mengimplementasikan gaya Status Dashboard Harvest Moon sesuai referensi gambar:
+ * - Tab hari di atas (RABU, SENIN, dst.)
+ * - Kotak dial langit dinamis dengan marker matahari/bulan di kiri
+ * - Kolom informasi inset: Tanggal, Jam Digital, Kas, dan Tabungan
+ * - Bar Bensin/Energi visual persentase langsung di bawah kotak
+ * - Tombol navigasi Buku Kas, Anggaran, & Pengaturan di sisi kanan atas
  * Anti-XSS: textContent only, no innerHTML.
  */
 
@@ -12,7 +13,7 @@ import { getCash, getSavings } from '../domain/ledger.js';
 
 function makeIcon(src, alt = '') {
   const img = document.createElement('img');
-  img.className = 'hud-icon-img';
+  img.className = 'hm-icon-img';
   img.src = src;
   img.alt = alt;
   return img;
@@ -32,148 +33,130 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   hudElement.setAttribute('role', 'region');
   hudElement.setAttribute('aria-label', 'Status Permainan');
 
-  // ================= KIRI: STATUS PLAYER & FINANSIAL =================
-  const statsGroup = document.createElement('div');
-  statsGroup.className = 'hud-group hud-stats';
+  // ================= 1. HARVEST MOON STATUS DASHBOARD (KIRI ATAS) =================
+  const statusWidget = document.createElement('div');
+  statusWidget.className = 'hm-status-widget';
+  statusWidget.setAttribute('role', 'status');
 
-  // Kas Badge (Icon Koin Pixel Art)
-  const cashBadge = document.createElement('div');
-  cashBadge.className = 'hud-badge cash-badge';
-  const cashTag = document.createElement('span');
-  cashTag.className = 'hud-tag tag-cash';
-  cashTag.textContent = 'KAS';
-  const cashValue = document.createElement('span');
-  cashValue.className = 'hud-val hud-val-cash';
-  cashValue.textContent = 'Rp0';
-  cashBadge.appendChild(makeIcon('assets/icons/icon_coin.png', 'Kas'));
-  cashBadge.appendChild(cashTag);
-  cashBadge.appendChild(cashValue);
-
-  // Tabungan Badge (Icon Celengan Ayam Pixel Art)
-  const savingsBadge = document.createElement('div');
-  savingsBadge.className = 'hud-badge savings-badge';
-  const savingsTag = document.createElement('span');
-  savingsTag.className = 'hud-tag tag-savings';
-  savingsTag.textContent = 'TABUNGAN';
-  const savingsValue = document.createElement('span');
-  savingsValue.className = 'hud-val hud-val-savings';
-  savingsValue.textContent = 'Rp0';
-  savingsBadge.appendChild(makeIcon('assets/icons/icon_celengan.png', 'Tabungan'));
-  savingsBadge.appendChild(savingsTag);
-  savingsBadge.appendChild(savingsValue);
-
-  // Bensin Badge dengan Visual Bar (Icon Pompa Bensin Pixel Art)
-  const gasBadge = document.createElement('div');
-  gasBadge.className = 'hud-badge gas-badge';
-  const gasTag = document.createElement('span');
-  gasTag.className = 'hud-tag tag-gas';
-  gasTag.textContent = 'BENSIN';
-  const gasContainer = document.createElement('div');
-  gasContainer.className = 'hud-gas-container';
-  const gasBar = document.createElement('div');
-  gasBar.className = 'hud-gas-bar';
-  const gasFill = document.createElement('div');
-  gasFill.className = 'hud-gas-fill';
-  gasBar.appendChild(gasFill);
-  gasContainer.appendChild(gasBar);
-  const gasValue = document.createElement('span');
-  gasValue.className = 'hud-val hud-val-gas';
-  gasValue.textContent = '100%';
-  gasBadge.appendChild(makeIcon('assets/icons/icon_bensin.png', 'Bensin'));
-  gasBadge.appendChild(gasTag);
-  gasBadge.appendChild(gasContainer);
-  gasBadge.appendChild(gasValue);
-
-  statsGroup.appendChild(cashBadge);
-  statsGroup.appendChild(savingsBadge);
-  statsGroup.appendChild(gasBadge);
-
-  // ================= TENGAH: WAKTU & MISI =================
-  const centerGroup = document.createElement('div');
-  centerGroup.className = 'hud-group hud-center';
-
-  // --- HARVEST MOON-INSPIRED TIME WIDGET & BAR WAKTU ---
-  const timeWidget = document.createElement('div');
-  timeWidget.className = 'hud-time-widget';
-  timeWidget.setAttribute('role', 'status');
-  timeWidget.setAttribute('aria-label', 'Status Waktu & Siklus Hari');
-
-  // 1. Sky Dial Box (Kiri: Langit dinamis + Marker Matahari/Bulan yang bergerak)
-  const skyBox = document.createElement('div');
-  skyBox.className = 'time-sky-box sky-pagi';
-  const skyMarker = document.createElement('span');
-  skyMarker.className = 'time-sky-marker';
-  skyMarker.textContent = '☀️';
-  skyBox.appendChild(skyMarker);
-
-  // 2. Info Stack (Kanan: Hari, Tanggal, Jam Digital, dan Bar Waktu)
-  const infoStack = document.createElement('div');
-  infoStack.className = 'time-info-stack';
-
-  // Row Atas: Tab Hari (e.g. RABU) + Tanggal
-  const rowTop = document.createElement('div');
-  rowTop.className = 'time-row-top';
+  // Tab Hari di bagian atas (seperti tab 'Rabu' di referensi)
+  const dayTab = document.createElement('div');
+  dayTab.className = 'hm-day-tab';
   const dayPill = document.createElement('span');
-  dayPill.className = 'time-day-pill';
+  dayPill.className = 'hm-day-text';
   dayPill.textContent = 'SENIN';
+  dayTab.appendChild(dayPill);
+  statusWidget.appendChild(dayTab);
+
+  // Main Box (kotak oranye/kayu)
+  const mainBox = document.createElement('div');
+  mainBox.className = 'hm-main-box';
+
+  // Kolom Kiri: Dial Langit / Waktu (Sky Dial Box)
+  const skyBox = document.createElement('div');
+  skyBox.className = 'hm-sky-box sky-pagi';
+  const skyMarker = document.createElement('span');
+  skyMarker.className = 'hm-sky-marker';
+  skyMarker.textContent = '☀️';
+  const skyArrow = document.createElement('div');
+  skyArrow.className = 'hm-sky-arrow';
+  skyArrow.textContent = '▲';
+  skyBox.appendChild(skyMarker);
+  skyBox.appendChild(skyArrow);
+  mainBox.appendChild(skyBox);
+
+  // Kolom Kanan: 4 Kotak Inset (Tanggal, Jam, Kas, Tabungan)
+  const infoCol = document.createElement('div');
+  infoCol.className = 'hm-info-column';
+
+  // Row 1: Tanggal (misal: "Hari 1 · Bln 1")
+  const dateBox = document.createElement('div');
+  dateBox.className = 'hm-inset-box hm-date-box';
   const dateText = document.createElement('span');
-  dateText.className = 'time-date-text';
+  dateText.className = 'hm-date-text';
   dateText.textContent = 'Hari 1 · Bln 1';
-  rowTop.appendChild(dayPill);
-  rowTop.appendChild(dateText);
+  dateBox.appendChild(dateText);
+  infoCol.appendChild(dateBox);
 
-  // Row Bawah: Jam Digital + Bar Waktu Visual + Tag Periode
-  const rowBottom = document.createElement('div');
-  rowBottom.className = 'time-row-bottom';
-
-  const digitalBox = document.createElement('div');
-  digitalBox.className = 'time-digital-box';
-  const clockIcon = makeBtnIcon('assets/icons/icon_jam.png');
+  // Row 2: Jam Digital (Icon Jam + HH:MM + Tag Periode)
+  const timeBox = document.createElement('div');
+  timeBox.className = 'hm-inset-box hm-time-box';
+  const timeIcon = makeIcon('assets/icons/icon_jam.png', 'Jam');
   const digitalVal = document.createElement('span');
-  digitalVal.className = 'time-digital-val hud-val-clock'; // preserves class for automated tests
+  digitalVal.className = 'hm-time-text hud-val-clock'; // preserves selector for tests
   digitalVal.textContent = '08:00';
-  const periodTag = document.createElement('span');
-  periodTag.className = 'time-period-tag';
-  periodTag.textContent = 'PAGI';
-  digitalBox.appendChild(clockIcon);
-  digitalBox.appendChild(digitalVal);
-  digitalBox.appendChild(periodTag);
+  const periodBadge = document.createElement('span');
+  periodBadge.className = 'hm-period-badge';
+  periodBadge.textContent = 'PAGI';
+  timeBox.appendChild(timeIcon);
+  timeBox.appendChild(digitalVal);
+  timeBox.appendChild(periodBadge);
+  infoCol.appendChild(timeBox);
 
-  // Bar Waktu Visual (Track & Fill yang bergerak seiring waktu berjalan)
-  const timeBarTrack = document.createElement('div');
-  timeBarTrack.className = 'time-bar-track';
-  timeBarTrack.title = 'Siklus Perjalanan Waktu Hari Ini (24 Jam)';
-  const timeBarFill = document.createElement('div');
-  timeBarFill.className = 'time-bar-fill';
-  timeBarFill.style.width = '33%';
-  timeBarTrack.appendChild(timeBarFill);
+  // Row 3: Kas (Icon Koin + Jumlah Kas)
+  const cashBox = document.createElement('div');
+  cashBox.className = 'hm-inset-box hm-cash-box';
+  const cashIcon = makeIcon('assets/icons/icon_coin.png', 'Kas');
+  const cashVal = document.createElement('span');
+  cashVal.className = 'hm-cash-text hud-val-cash'; // preserves selector for tests
+  cashVal.textContent = 'Rp1.000.000';
+  cashBox.appendChild(cashIcon);
+  cashBox.appendChild(cashVal);
+  infoCol.appendChild(cashBox);
 
-  rowBottom.appendChild(digitalBox);
-  rowBottom.appendChild(timeBarTrack);
+  // Row 4: Tabungan (Icon Celengan + Jumlah Tabungan)
+  const savingsBox = document.createElement('div');
+  savingsBox.className = 'hm-inset-box hm-savings-box';
+  const savingsIcon = makeIcon('assets/icons/icon_celengan.png', 'Tabungan');
+  const savingsVal = document.createElement('span');
+  savingsVal.className = 'hm-savings-text hud-val-savings'; // preserves selector for tests
+  savingsVal.textContent = 'Rp0';
+  savingsBox.appendChild(savingsIcon);
+  savingsBox.appendChild(savingsVal);
+  infoCol.appendChild(savingsBox);
 
-  infoStack.appendChild(rowTop);
-  infoStack.appendChild(rowBottom);
+  mainBox.appendChild(infoCol);
+  statusWidget.appendChild(mainBox);
 
-  timeWidget.appendChild(skyBox);
-  timeWidget.appendChild(infoStack);
+  // Bagian Bawah: Bar Bensin / Energi (Visual Bar Hijau 100%)
+  const fuelContainer = document.createElement('div');
+  fuelContainer.className = 'hm-fuel-bar-container';
+  const fuelIcon = makeIcon('assets/icons/icon_bensin.png', 'Bensin');
+  fuelIcon.className = 'hm-fuel-icon';
+  const fuelTrack = document.createElement('div');
+  fuelTrack.className = 'hm-fuel-track';
+  const fuelFill = document.createElement('div');
+  fuelFill.className = 'hm-fuel-fill';
+  fuelFill.style.width = '100%';
+  const fuelText = document.createElement('span');
+  fuelText.className = 'hm-fuel-text hud-val-gas'; // preserves selector for tests
+  fuelText.textContent = '100%';
+  fuelFill.appendChild(fuelText);
+  fuelTrack.appendChild(fuelFill);
+  fuelContainer.appendChild(fuelIcon);
+  fuelContainer.appendChild(fuelTrack);
+  statusWidget.appendChild(fuelContainer);
 
-  // Misi (Icon Bendera Misi Pixel Art)
+  hudElement.appendChild(statusWidget);
+
+  // ================= 2. MISI AKTIF (TENGAH ATAS) =================
   const missionBadge = document.createElement('div');
-  missionBadge.className = 'hud-badge mission-badge';
+  missionBadge.className = 'hud-mission-badge';
+  const missionIcon = document.createElement('img');
+  missionIcon.className = 'hm-icon-img';
+  missionIcon.src = 'assets/icons/icon_misi.png';
+  missionIcon.alt = 'Misi';
   const missionTag = document.createElement('span');
   missionTag.className = 'hud-tag tag-mission';
   missionTag.textContent = 'MISI';
   const missionTitle = document.createElement('span');
   missionTitle.className = 'hud-val-mission';
   missionTitle.textContent = '...';
-  missionBadge.appendChild(makeIcon('assets/icons/icon_misi.png', 'Misi'));
+  missionBadge.appendChild(missionIcon);
   missionBadge.appendChild(missionTag);
   missionBadge.appendChild(missionTitle);
+  hudElement.appendChild(missionBadge);
 
-  centerGroup.appendChild(timeWidget);
-  centerGroup.appendChild(missionBadge);
-
-  // ================= KANAN: TOMBOL NAVIGASI & MENU (DENGAN IKON PIXEL ART, TANPA EMOTE) =================
+  // ================= 3. TOMBOL NAVIGASI & MENU (KANAN ATAS) =================
   const navGroup = document.createElement('div');
   navGroup.className = 'hud-group hud-nav';
 
@@ -209,10 +192,8 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   navGroup.appendChild(cashbookBtn);
   navGroup.appendChild(budgetBtn);
   navGroup.appendChild(settingsBtn);
-
-  hudElement.appendChild(statsGroup);
-  hudElement.appendChild(centerGroup);
   hudElement.appendChild(navGroup);
+
   container.appendChild(hudElement);
 
   const rupiahFormatter = new Intl.NumberFormat('id-ID', {
@@ -221,24 +202,29 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
     maximumFractionDigits: 0
   });
 
+  const DAY_NAMES = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+
   function updateUI(state) {
     if (!state) return;
+
+    // Financial updates
     const cash = getCash(state.ledger);
     const savings = getSavings(state.ledger);
-    cashValue.textContent = rupiahFormatter.format(cash);
-    savingsValue.textContent = rupiahFormatter.format(savings);
+    cashVal.textContent = rupiahFormatter.format(cash);
+    savingsVal.textContent = rupiahFormatter.format(savings);
 
+    // Fuel bar updates
     const gasPercent = Math.max(0, Math.min(100, Math.round(state.gasoline ?? 100)));
-    gasValue.textContent = `${gasPercent}%`;
-    gasFill.style.width = `${gasPercent}%`;
-    gasFill.className = 'hud-gas-fill';
+    fuelText.textContent = `${gasPercent}%`;
+    fuelFill.style.width = `${gasPercent}%`;
+    fuelFill.className = 'hm-fuel-fill';
     if (gasPercent < 30) {
-      gasFill.classList.add('danger');
+      fuelFill.classList.add('danger');
     } else if (gasPercent < 60) {
-      gasFill.classList.add('warning');
+      fuelFill.classList.add('warning');
     }
 
-    // --- UPDATE STATUS WAKTU & BAR WAKTU HARVEST MOON STYLE ---
+    // Time & Calendar updates
     const clock = state.clock || {};
     const day = clock.day || 1;
     const month = clock.month || 1;
@@ -249,14 +235,12 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
     const hh = String(hours).padStart(2, '0');
     const mm = String(mins).padStart(2, '0');
 
-    const DAY_NAMES = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
     const dayName = DAY_NAMES[(day - 1) % 7] || 'Senin';
-
     dayPill.textContent = dayName.toUpperCase();
     dateText.textContent = `Hari ${day} · Bln ${month}`;
     digitalVal.textContent = `${hh}:${mm}`;
 
-    // Period & Sky themes
+    // Period of day & sky theme
     let period = 'PAGI';
     let skyClass = 'sky-pagi';
     let markerEmoji = '☀️';
@@ -279,14 +263,16 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
       markerEmoji = '🌙';
     }
 
-    periodTag.textContent = period;
-    skyBox.className = `time-sky-box ${skyClass}`;
+    periodBadge.textContent = period;
+    skyBox.className = `hm-sky-box ${skyClass}`;
     skyMarker.textContent = markerEmoji;
 
-    // Persentase Bar Waktu (00:00 - 24:00 = 0% - 100%)
-    const dayPercent = Math.max(0, Math.min(100, (totalMin / 1440) * 100));
-    timeBarFill.style.width = `${dayPercent.toFixed(1)}%`;
+    // Arrow positioning based on time of day (0 to 1440 minutes)
+    const progressFraction = Math.max(0, Math.min(1, totalMin / 1440));
+    const arrowOffsetPx = Math.round((progressFraction - 0.5) * 28);
+    skyArrow.style.transform = `translateX(${arrowOffsetPx}px)`;
 
+    // Active mission title
     const activeM = state.missions?.find(m => !m.completed);
     missionTitle.textContent = activeM ? activeM.title : 'Semua Selesai';
   }

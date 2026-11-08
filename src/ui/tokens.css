@@ -103,16 +103,247 @@ body {
   top: 0;
   left: 0;
   width: 100%;
-  height: 48px;
-  background: var(--color-bg-hud);
-  border-bottom: 2px solid var(--color-border);
-  padding: 0 10px;
+  padding: 10px 14px;
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  pointer-events: none;
   z-index: 50;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
+}
+
+.lj-hud > * {
+  pointer-events: auto;
+}
+
+/* ========================================================
+   HARVEST MOON-STYLE UNIFIED STATUS DASHBOARD WIDGET
+   ======================================================== */
+.hm-status-widget {
+  display: inline-flex;
+  flex-direction: column;
+  position: relative;
+  background: #C46814;
+  border: 2px solid #E89E44;
+  border-radius: 6px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.3);
+  padding: 6px 5px 5px 5px;
+  gap: 4px;
+  width: 224px;
+  flex-shrink: 0;
+}
+
+/* Day tab on top of the widget */
+.hm-day-tab {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #FFFFFF;
+  border: 1.5px solid #C46814;
+  border-radius: 4px;
+  padding: 1px 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  z-index: 2;
+}
+
+.hm-day-text {
+  font-size: 10px;
+  font-weight: 800;
+  color: #8C4008;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* Main inner box */
+.hm-main-box {
+  display: flex;
+  gap: 5px;
+  margin-top: 2px;
+  background: #DE852C;
+  border: 1.5px solid #8C4008;
+  border-radius: 4px;
+  padding: 4px;
+}
+
+/* Left column: Sky dial box */
+.hm-sky-box {
+  width: 52px;
+  height: 80px;
+  border-radius: 3px;
+  border: 1.5px solid #8C4008;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 4px 2px;
+  flex-shrink: 0;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.5);
+  background: linear-gradient(180deg, #3A7BD5 0%, #00D2FF 100%);
+}
+
+.hm-sky-box.sky-pagi {
+  background: linear-gradient(180deg, #E89E44 0%, #4A88B8 100%);
+}
+.hm-sky-box.sky-siang {
+  background: linear-gradient(180deg, #2A72BA 0%, #68BFF5 100%);
+}
+.hm-sky-box.sky-sore {
+  background: linear-gradient(180deg, #BA4A20 0%, #E8902A 70%, #203048 100%);
+}
+.hm-sky-box.sky-malam {
+  background: linear-gradient(180deg, #0A1024 0%, #162444 100%);
+}
+
+.hm-sky-marker {
+  font-size: 15px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.6));
+  transition: transform 0.3s ease;
+}
+
+.hm-sky-arrow {
+  font-size: 11px;
+  color: #D9A441;
+  line-height: 1;
+  font-weight: 900;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.8));
+}
+
+/* Right column: Inset info boxes */
+.hm-info-column {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-grow: 1;
+  min-width: 0;
+}
+
+.hm-inset-box {
+  display: flex;
+  align-items: center;
+  background: #FFFFFF;
+  border: 1px solid #8C4008;
+  border-radius: 3px;
+  padding: 1px 4px;
+  height: 18px;
+  gap: 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hm-icon-img {
+  width: 14px;
+  height: 14px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.hm-date-text {
+  font-size: 10px;
+  font-weight: 700;
+  color: #1A2033;
+  white-space: nowrap;
+}
+
+.hm-time-text {
+  font-size: 11px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #1A2033;
+  letter-spacing: 0.3px;
+}
+
+.hm-period-badge {
+  font-size: 8px;
+  font-weight: 800;
+  color: #8C4008;
+  background: #F7EEDA;
+  border-radius: 2px;
+  padding: 0 3px;
+  margin-left: auto;
+  border: 1px solid #D9A441;
+}
+
+.hm-cash-text, .hm-savings-text {
+  font-size: 10px;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: #1A2033;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Fuel / Bensin Bar directly below the box */
+.hm-fuel-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #FFFFFF;
+  border: 1.5px solid #8C4008;
+  border-radius: 4px;
+  padding: 2px 4px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.hm-fuel-icon {
+  width: 14px;
+  height: 14px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.hm-fuel-track {
+  flex-grow: 1;
+  height: 11px;
+  background: #D4CAB8;
+  border-radius: 3px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #8C4008;
+}
+
+.hm-fuel-fill {
+  height: 100%;
+  background: #4ADE80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.hm-fuel-fill.warning {
+  background: #FACC15;
+}
+
+.hm-fuel-fill.danger {
+  background: #F87171;
+}
+
+.hm-fuel-text {
+  font-size: 8px;
+  font-weight: 900;
+  color: #121A2E;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+/* Mission badge */
+.hud-mission-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--color-bg-card);
+  border: 1.5px solid var(--color-gold);
+  border-radius: var(--radius-sm);
+  padding: 4px 10px;
+  font-size: 11px;
+  gap: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  max-width: 260px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .hud-group {

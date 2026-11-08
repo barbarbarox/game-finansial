@@ -47,19 +47,20 @@ export class NPCManager {
       body.add([torso, head, outline]);
     }
 
-    // Name label
+    // Name label — Diletakkan di atas kepala karakter (bukan menutupi wajah)
+    // Tinggi sprite 64px, kepala berada di ~ (y - 58), label ditempatkan di y - 64
     const displayName = def.name || def.id || 'NPC';
-    const label = scene.add.text(x, y - 36, displayName, {
-      font: 'bold 11px sans-serif',
+    const label = scene.add.text(x, y - 64, displayName, {
+      font: 'bold 10px sans-serif',
       fill: '#FBF6EA',
       backgroundColor: '#121A2E',
-      padding: { x: 4, y: 2 },
+      padding: { x: 5, y: 2 },
     });
     label.setOrigin(0.5, 1);
     label.setDepth(600);
 
-    // Floating interaction prompt bubble
-    const promptBubble = scene.add.container(x, y - 56);
+    // Floating interaction prompt bubble — Melayang di atas label nama (y - 88)
+    const promptBubble = scene.add.container(x, y - 88);
     promptBubble.setDepth(1500);
     promptBubble.setVisible(false);
 
@@ -74,7 +75,7 @@ export class NPCManager {
     // Subtle floating tween for prompt
     scene.tweens.add({
       targets: promptBubble,
-      y: y - 60,
+      y: y - 92,
       duration: 600,
       yoyo: true,
       repeat: -1,
