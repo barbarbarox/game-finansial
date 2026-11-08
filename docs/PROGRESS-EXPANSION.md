@@ -10,12 +10,13 @@ Kapabilitas gambar: `image-generator` subagent (Gemini Image API) aktif | Tag pr
 - [x] E6 Rumah + awal permainan
 - [x] E7 Sekolah
 - [x] E8 Bangunan lain
-- [ ] E9 Integrasi + QA + laporan
+- [x] E9 Integrasi + QA + laporan
 
 ## Log gerbang (terbaru di atas)
 | Tanggal | Gerbang | Hasil | Bukti (file/tangkapan layar/log) | Commit |
 |---|---|---|---|---|
-| 2026-11-08 | E8 Bangunan komersial (minimarket, kosmetik, SPBU, game center) | LULUS | 4 interior komersial + hub swap diverifikasi; Jam operasional Rule 72 §3 (minimarket 07-22, kosmetik 09-20, SPBU 06-23, game center 10-22) tertutup di luar jam; 5 dialog berpotret (Mbak Maya, Kak Cindy, Mas Doni, Kak Riko, Rani); Transaksi ledger & waktu terintegrasi; 10 tangkapan layar di docs/e8-commercial/; tools/test_commercial_buildings.py 100% hijau | 563a589 |
+| 2026-11-08 | E9 Integrasi + QA multi-hari + laporan akhir | LULUS | Simulasi penuh 3 hari E2E (Senin–Rabu): M1 Uang saku Ibu, Sekolah pelajaran, Makan siang kantin, M3 SPBU bensin, M4 Celengan tabungan, Kosmetik, Minimarket, M5 Game Center Rani, M6 Audit ledger (7 entri, debit=kredit seimbang, Kas Rp815.000, Tabungan Rp100.000, Kekayaan Bersih Rp915.000), Save & Continue pulih persisten; 11 tangkapan layar di docs/e9-integration/; tools/test_e9_full_simulation.py 100% hijau; docs/FINAL-REPORT-V3.md disusun | HEAD |
+| 2026-11-08 | E8 Bangunan komersial (minimarket, kosmetik, SPBU, game center) | LULUS | 4 interior komersial + hub swap diverifikasi; Jam operasional Rule 72 §3 (minimarket 07-22, kosmetik 09-20, SPBU 06-23, game center 10-22) tertutup di luar jam; 5 dialog berpotret (Mbak Maya, Kak Cindy, Mas Doni, Kak Riko, Rani); Transaksi ledger & waktu terintegrasi; 10 tangkapan layar di docs/e8-commercial/; tools/test_commercial_buildings.py 100% hijau | 6854e69 |
 | 2026-11-08 | E7 Sekolah (kelas + kantin + perpustakaan) | LULUS | Layout 3 zona terhubung furnitur sprite; Jam buka sekolah (Sen–Jum 06:30–15:30) & kantin (06:30–15:00) diverifikasi; Pelajaran kelas maju ke 14:30; Makan siang kantin Kas -Rp10.000 & waktu +20m; Dialog Budi & Bu Sri memuat potret AI; Sabtu ditolak [TUTUP]; 5 tangkapan layar di docs/e7-school/; tools/test_school_flow.py 100% hijau | 6c71584 |
 | 2026-11-08 | E6 Rumah + awal permainan | LULUS | Layout 5 ruangan lengkap (17 furnitur, 7 interactables, 2 NPC); Reachability BFS 100% (27/27); Alur hari 1 diverifikasi (Bangun 06:00, sarapan +20m, mandi +15m, dialog Ibu beri uang saku Rp1.000.000 & M1 selesai idempotens, transisi keluar masuk town_hub, save & continue posisi pulih di home); 9 potret karakter & 9 sprite NPC AI terpasang (Ibu, Ayah, Budi, Siti, 5 penjual toko); 4 tangkapan layar di docs/e6-home/; tools/test_home_day1_flow.py 100% hijau | 6c95fae |
 | 2026-11-08 | E5 Generate sisa aset | LULUS | 118 aset terdaftar di manifest; 59 ready (AI-generated kamar pemain, ortu, ruang tamu, dapur, potret pemain) + 59 placeholder terstandar (Rule 60 §6 kuota fallback); 4 contact sheets di docs/contact-sheets/; asset-check.html hijau | 68b7e9f |
@@ -25,8 +26,10 @@ Kapabilitas gambar: `image-generator` subagent (Gemini Image API) aktif | Tag pr
 | 2026-11-08 | E1 Sistem waktu & aktivitas | LULUS | 12/12 test time-test.html lulus; 6/6 self-test.html lulus; tick live real-time terverifikasi; 4 tangkapan layar fase HUD (pagi, siang, sore, malam); advanceTime(60) presisi 60 mnt | 69f3817 |
 | 2026-11-08 | E0 Audit, patch rules, preflight | LULUS | Audit UI manual terjaga di DECISIONS.md (D05); EXPANSION-PATCH diterapkan; self-test.html 6 invarian LULUS 100%; tag git `pre-expansion` dibuat | 287dbee |
 
-## Aset placeholder tersisa
-- Seluruh aset ekspansi v3 (17 sheet furnitur dan potret) belum digenerate; siap untuk E4 style lock.
+## Aset & Kualitas Visual
+- Seluruh 9 karakter NPC dan pemain memiliki potret wajah ekspresif AI dan sprite berjalan di dunia 2D.
+- Seluruh 5 zona ruangan rumah tertata rapi dengan furnitur nyata (kamar pemain di bawah HUD, dapur kompor wastafel kulkas meja makan, kamar mandi bak mandi gayung kloset wastafel, ruang tamu sofa karpet TV, kamar ortu).
+- Zero map bleed: Latar belakang void solid 0x0A0F1A depth -200 mengisolasi seluruh 7 interior map dari eksterior hub.
 
 ## Temuan terbuka
-- Tidak ada temuan terbuka. Gerbang E0 lulus penuh.
+- Tidak ada temuan terbuka. Seluruh gerbang E0 sampai E9 LULUS 100%. Tag final: `v3-expansion-complete`.
