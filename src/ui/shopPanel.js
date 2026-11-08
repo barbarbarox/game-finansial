@@ -166,6 +166,21 @@ export function createShopModal(container, store, locationId, config, onClose) {
             updates.gasoline = Math.min(100, (state.gasoline || 0) + config.gasolineFillAmount);
           }
           store.setState(updates);
+
+          // Rule 72 §3 & Rule 70: Purchases advance time
+          let duration = 15;
+          if (locationId === 'kantin') {
+            duration = item.id === 'makan_siang' ? 20 : 10;
+          } else if (locationId === 'spbu') {
+            duration = 10;
+          } else if (locationId === 'kosmetik') {
+            duration = 20;
+          } else if (locationId === 'gamecenter') {
+            duration = item.id === 'nonton' ? 120 : (item.id === 'nongkrong' ? 90 : 60);
+          }
+          if (window.__LJ__?.advanceTime) {
+            window.__LJ__.advanceTime(duration, `beli_${item.id}`);
+          }
         }
       });
 

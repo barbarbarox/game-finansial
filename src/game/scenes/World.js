@@ -332,7 +332,27 @@ export class World extends Phaser.Scene {
     }
   }
 
+  showPromptFeedback(text, durationMs = 2500) {
+    if (this._promptText) {
+      this._promptText.setText(text);
+      this._promptText.setVisible(true);
+      if (this._player) {
+        this._promptText.setPosition(this._player.x, this._player.y - 70);
+      }
+      this._feedbackUntil = Date.now() + durationMs;
+      setTimeout(() => {
+        if (Date.now() >= this._feedbackUntil && this._promptText) {
+          this._promptText.setVisible(false);
+        }
+      }, durationMs);
+    }
+  }
+
   _checkInteractables() {
+    if (this._feedbackUntil && Date.now() < this._feedbackUntil) {
+      return;
+    }
+
     const px = this._player.x;
     const py = this._player.y;
     const ts = this._tileSize;
@@ -434,6 +454,21 @@ export class World extends Phaser.Scene {
     }
 
     if (int.locationId) {
+      if (int.openingHoursId || DEFAULT_OPENING_HOURS[int.locationId]) {
+        const checkId = int.openingHoursId || int.locationId;
+        const clock = store?.getState()?.clock || {};
+        const status = isLocationOpen(checkId, clock);
+        if (!status.open) {
+          if (this._promptText) {
+            this._promptText.setText(`[TUTUP] ${status.reason}`);
+            this._promptText.setVisible(true);
+            setTimeout(() => {
+              if (this._promptText) this._promptText.setVisible(false);
+            }, 2500);
+          }
+          return;
+        }
+      }
       createShopModal(uiContainer, store, int.locationId, config, null);
     }
   }

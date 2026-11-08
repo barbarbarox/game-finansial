@@ -112,12 +112,11 @@ export class MapManager {
       const status = isLocationOpen(checkId, clock);
       if (!status.open) {
         // Show door closed feedback
-        if (this.scene._promptText) {
+        if (this.scene.showPromptFeedback) {
+          this.scene.showPromptFeedback(`[TUTUP] ${status.reason}`);
+        } else if (this.scene._promptText) {
           this.scene._promptText.setText(`[TUTUP] ${status.reason}`);
           this.scene._promptText.setVisible(true);
-          setTimeout(() => {
-            if (this.scene._promptText) this.scene._promptText.setVisible(false);
-          }, 2500);
         }
         return;
       }

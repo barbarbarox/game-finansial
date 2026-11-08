@@ -20,7 +20,8 @@ export const DAYS_OF_WEEK = [
 export const DAYS_PER_MONTH = 28;
 
 export const DEFAULT_OPENING_HOURS = {
-  school: { openMinute: 7 * 60, closeMinute: 15 * 60, days: [1, 2, 3, 4, 5] }, // Sen - Jum (1-5)
+  school: { openMinute: 6 * 60 + 30, closeMinute: 15 * 60 + 30, days: [1, 2, 3, 4, 5] }, // Sen - Jum (06:30 - 15:30)
+  kantin: { openMinute: 6 * 60 + 30, closeMinute: 15 * 60, days: [1, 2, 3, 4, 5] }, // Sen - Jum (06:30 - 15:00)
   minimarket: { openMinute: 7 * 60, closeMinute: 22 * 60, days: [1, 2, 3, 4, 5, 6, 7] },
   toko_kosmetik: { openMinute: 9 * 60, closeMinute: 20 * 60, days: [1, 2, 3, 4, 5, 6, 7] },
   game_center: { openMinute: 10 * 60, closeMinute: 22 * 60, days: [1, 2, 3, 4, 5, 6, 7] },
