@@ -48,6 +48,11 @@ export class World extends Phaser.Scene {
     this._passiveMinuteAccumulator = 0;
     this._parkedMotorProp = null;
     this.keyV = null;
+    this._initData = null;
+  }
+
+  init(data) {
+    this._initData = data || {};
   }
 
   create() {
@@ -109,11 +114,11 @@ export class World extends Phaser.Scene {
     this._mapManager = new MapManager(this, mapsIndex);
     this._missionFx = new MissionFxManager(this);
 
-    // Load initial map: saved map first, then 'home' for new game, then town_hub
+    // Load initial map: query param / init data first, then saved map, then 'home'
     const savedMap = store?.getState()?.currentMap;
     const savedPos  = store?.getState()?.playerPos;
-    const startMap  = savedMap || 'home';
-    const startSpawn = (savedMap && savedPos) ? 'saved' : 'default';
+    const startMap  = this._initData?.mapId || savedMap || 'home';
+    const startSpawn = this._initData?.spawnTarget || ((savedMap && savedPos) ? 'saved' : 'default');
     this._mapManager.loadMap(startMap, startSpawn);
 
     // 7. Mount DOM HUD

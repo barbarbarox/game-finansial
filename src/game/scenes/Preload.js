@@ -196,9 +196,18 @@ export class Preload extends Phaser.Scene {
     // Create canvas textures for any placeholder assets
     createPlaceholders(this, assets);
 
-    // Short delay before transitioning to MainMenu
+    // Short delay before transitioning
     this.time.delayedCall(200, () => {
-      this.scene.start('MainMenu');
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetScene = urlParams.get('scene');
+      const targetMap = urlParams.get('map') || 'home';
+      const targetSpawn = urlParams.get('spawn') || 'default';
+
+      if (targetScene === 'World') {
+        this.scene.start('World', { mapId: targetMap, spawnTarget: targetSpawn });
+      } else {
+        this.scene.start('MainMenu');
+      }
     });
   }
 }
