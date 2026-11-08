@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Life Journey — Dialogue System Test (Rule 71)</title>
+  <link rel="stylesheet" href="../src/ui/tokens.css">
+  <style>
+    body {
+      font-family: monospace;
+      padding: 24px;
+      background: #121A2E;
+      color: #F7EEDA;
+    }
+    h1 { color: #D9A441; margin-bottom: 16px; }
+    .test-card {
+      background: #1F2A44;
+      border: 1px solid #34456B;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+    }
+    .pass { color: #A5BE93; font-weight: bold; }
+    .fail { color: #C0654A; font-weight: bold; }
+    #summary {
+      font-size: 1.15rem;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 4px;
+    }
+    .summary-pass { background: #44603F; color: #F7EEDA; }
+    .summary-fail { background: #9E4A33; color: #F7EEDA; }
+  </style>
+</head>
+<body>
+  <h1>Life Journey · Test Sistem Dialog & Potret (Rule 71)</h1>
+  <div id="results"></div>
+  <div id="summary">Menjalankan pengujian dialog...</div>
+
+  <script type="module">
+    import {
+      startDialogue,
+      chooseOption,
+      getDialogueState,
+      closeDialogue
+    } from '../src/ui/dialogueBox.js';
+
+    import { createLedger, getCash } from '../src/domain/ledger.js';
+
+    const results = [];
+    const container = document.getElementById('results');
+
+    function assert(name, condition, details = '') {
+      results.push({ name, pass: Boolean(condition), details });
+      const card = document.createElement('div');
+      card.className = 'test-card';
+      card.innerHTML = `<strong>${condition ? '<span class="pass">[LULUS]</span>' : '<span class="fail">[GAGAL]</span>'}</strong> ${name} ${details ? `<br><small style="color:#A4B2C8">${details}</small>` : ''}`;
+      container.appendChild(card);
+    }
+
+    async function loadJson(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status} fetch ${url}`);
+      return await res.json();
+    }
+
+    // Mock store for headless test
+    let mockState = {
+      character: { name: 'Budi', fatherName: 'Pak Budi', motherName: 'Bu Budi' },
+      ledger: createLedger(),
+      clock: { day: 1, month: 1, timeOfDay: 360 },
+      flags: {}
+    };
+
+    window.__LJ__ = {
+      getStore: () => ({
+        getState: () => mockState,
+        setState: (patch) => { mockState = { ...mockState, ...patch }; }
+      }),
+      advanceTime: (m, r) => { mockState.clock.timeOfDay = (mockState.clock.timeOfDay + m) % 1440; },
+      getMapManager: () => ({ transitionTo: (m) => { mockState.currentMap = m; } })
+    };
+
+    async function runDialogueTests() {
+      try {
+        const WHITELIST_EFFECTS = new Set([
+          'ledger_expense',
+          'ledger_income',
+          'grant_allowance',
+          'start_activity',
+          'map_transition',
+          'set_flag',
+          'open_budget'
+        ]);
+
+        // 1. Validate JSON Dialogue files
+        const dialogFiles = [
+          'data/dialogues/ibu.json',
+          'data/dialogues/ayah.json',
+          'data/dialogues/teman.json',
+          'data/dialogues/penjual.json'
+        ];
+
+        for (const file of dialogFiles) {
+          const data = await loadJson('../' + file);
+          assert(`Validasi Skema [${file}]: Format valid dengan id '${data.id}'`, Boolean(data.id && data.nodes && data.nodes.start));
+
+          let allTextsUnder140 = true;
+          let allEffectsWhitelisted = true;
+
+          for (const [nodeId, node] of Object.entries(data.nodes)) {
+            if (node.text && node.text.length > 140) {
+              allTextsUnder140 = false;
+            }
+            if (node.effects) {
+              for (const eff of node.effects) {
+                if (!WHITELIST_EFFECTS.has(eff.type)) allEffectsWhitelisted = false;
+              }
+            }
+            if (node.choices) {
+              for (const ch of node.choices) {
+                if (ch.effects) {
+                  for (const eff of ch.effects) {
+                    if (!WHITELIST_EFFECTS.has(eff.type)) allEffectsWhitelisted = false;
+                  }
+                }
+              }
+            }
+          }
+
+          assert(`Validasi Teks [${file}]: Seluruh teks simpul <= 140 karakter`, allTextsUnder140);
+          assert(`Validasi Efek [${file}]: Seluruh efek ter-whitelist ketat`, allEffectsWhitelisted);
+        }
+
+        // 2. Test Live Dialogue Execution & Highlighting
+        const ibuData = await loadJson('../data/dialogues/ibu.json');
+        await startDialogue(ibuData, 'npc_ibu');
+
+        // Immediately check start state
+        let st = getDialogueState();
+        assert('Eksekusi Dialog: Dialog aktif dan simpul awal dimulai', st.active && st.currentNodeId === 'start');
+        assert('Sorotan Pembicara: NPC aktif di awal (speaker = npc)', st.speaker === 'npc');
+
+        // Fast forward typewriter by simulating click
+        const box = document.getElementById('dlg-box');
+        box.click();
+
+        // Now choices should appear
+        st = getDialogueState();
+        assert('Pilihan Menu: Pilihan tampil vertikal (3 pilihan)', st.choices.length === 3);
+
+        const playerWrap = document.getElementById('dlg-player-portrait');
+        const npcWrap = document.getElementById('dlg-npc-portrait');
+        assert(
+          'Sorotan Pilihan: Pemain disorot (speaker-active) saat memilih menu pilihan',
+          playerWrap.classList.contains('speaker-active') && npcWrap.classList.contains('speaker-inactive')
+        );
+
+        // 3. Test Effect Execution: Pilih opsi 1 (Ambil uang saku)
+        // Kas awal = 0
+        const initialCash = getCash(mockState.ledger);
+        chooseOption(0);
+
+        // Fast forward next node
+        box.click();
+        const cashAfter = getCash(mockState.ledger);
+        assert(
+          'Eksekusi Efek: grant_allowance menambah uang saku Rp1.000.000 ke kas',
+          cashAfter === initialCash + 1000000,
+          `Kas: Rp${cashAfter.toLocaleString('id-ID')}`
+        );
+        assert(
+          'Eksekusi Efek: set_flag mencatat flag received_allowance_month1 = true',
+          mockState.flags.received_allowance_month1 === true
+        );
+
+        closeDialogue();
+
+        // 4. Test Disabled Option with Budi (Teman)
+        // Set cash to 0 to trigger disabled requirement
+        mockState.ledger = createLedger(); // kas = 0
+        const temanData = await loadJson('../data/dialogues/teman.json');
+        await startDialogue(temanData, 'npc_budi');
+        box.click(); // finish typewriter to show choices
+
+        st = getDialogueState();
+        assert(
+          'Pilihan Terkunci: Opsi 1 (Arcade Rp25.000) nonaktif karena saldo kas Rp0',
+          st.choices[0].disabled === true,
+          `Pilihan 1 disabled: ${st.choices[0].disabled}`
+        );
+
+        // Choosing disabled option should fail or be ignored
+        const chooseDisabled = chooseOption(0);
+        st = getDialogueState();
+        assert('Keamanan Input: Opsi nonaktif tidak dapat dipilih', st.currentNodeId === 'start');
+
+        // Choose option 2 (Nongkrong di perpus gratis)
+        chooseOption(1);
+        box.click();
+        assert(
+          'Eksekusi Efek: Opsi alternatif (perpus) berhasil dipilih dan set flag peer_pressure_wise',
+          mockState.flags.peer_pressure_wise === true
+        );
+
+        closeDialogue();
+
+        const allPass = results.every(r => r.pass);
+        const summary = document.getElementById('summary');
+        summary.className = allPass ? 'summary-pass' : 'summary-fail';
+        summary.textContent = allPass
+          ? `LULUS SEMUA (${results.filter(r => r.pass).length}/${results.length}) — Sistem Dialog & Potret Rule 71 Terverifikasi Penuh!`
+          : `GAGAL (${results.filter(r => !r.pass).length}/${results.length}) pengujian.`;
+
+      } catch (err) {
+        assert('Eksekusi dialogue-test gagal', false, err.stack || err.message);
+      }
+    }
+
+    runDialogueTests();
+  </script>
+</body>
+</html>

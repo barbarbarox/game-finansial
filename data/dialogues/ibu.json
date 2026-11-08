@@ -1,0 +1,85 @@
+{
+  "id": "dia_ibu_home",
+  "npcId": "npc_ibu",
+  "npcName": "Ibu",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Selamat pagi {player}! Sudah siap untuk hari pertama sekolah di SMA?",
+      "choices": [
+        {
+          "text": "Pagi Bu! Mau ambil uang saku bulan ini.",
+          "next": "allowance_given"
+        },
+        {
+          "text": "Ada sarapan apa di meja Bu?",
+          "next": "ask_breakfast"
+        },
+        {
+          "text": "Aku pamit berangkat sekolah ya Bu.",
+          "next": "say_goodbye"
+        }
+      ]
+    },
+    "allowance_given": {
+      "id": "allowance_given",
+      "speaker": "npc",
+      "text": "Ini uang saku Rp1.000.000 untuk sebulan. Jangan lupa susun anggaran di meja belajarmu ya!",
+      "effects": [
+        { "type": "grant_allowance" },
+        { "type": "set_flag", "flagKey": "received_allowance_month1", "value": true }
+      ],
+      "choices": [
+        {
+          "text": "Siap Bu, aku akan buat anggarannya sekarang.",
+          "next": "budget_reminder",
+          "effects": [
+            { "type": "open_budget" }
+          ]
+        },
+        {
+          "text": "Terima kasih banyak Bu!",
+          "next": "end_conversation"
+        }
+      ]
+    },
+    "budget_reminder": {
+      "id": "budget_reminder",
+      "speaker": "npc",
+      "text": "Bagus! Ingat sisihkan tabungan di Celengan Ayam sebelum kamu mulai jajan.",
+      "next": null
+    },
+    "ask_breakfast": {
+      "id": "ask_breakfast",
+      "speaker": "npc",
+      "text": "Ada lontong sayur hangat di meja makan. Sarapan di rumah bikin hemat dan bertenaga!",
+      "choices": [
+        {
+          "text": "Wah enak, aku sarapan dulu Bu.",
+          "next": null,
+          "effects": [
+            { "type": "start_activity", "activityId": "sarapan_rumah" }
+          ]
+        },
+        {
+          "text": "Nanti saja Bu, terima kasih.",
+          "next": null
+        }
+      ]
+    },
+    "say_goodbye": {
+      "id": "say_goodbye",
+      "speaker": "npc",
+      "text": "Hati-hati di jalan ya nak! Selalu perhatikan persentase bensin motormu.",
+      "next": null
+    },
+    "end_conversation": {
+      "id": "end_conversation",
+      "speaker": "npc",
+      "text": "Semoga harimu menyenangkan di sekolah!",
+      "next": null
+    }
+  }
+}
+

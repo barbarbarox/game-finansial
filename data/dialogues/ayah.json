@@ -1,0 +1,55 @@
+{
+  "id": "dia_ayah_home",
+  "npcId": "npc_ayah",
+  "npcName": "Ayah",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Pagi {player}! Jangan terburu-buru, periksa dulu motor dan uang sakumu sebelum berangkat.",
+      "choices": [
+        {
+          "text": "Ada tips mengelola uang saku Yah?",
+          "next": "financial_tip"
+        },
+        {
+          "text": "Bensin motor masih aman Yah?",
+          "next": "motor_tip"
+        },
+        {
+          "text": "Aku pamit berangkat dulu Yah.",
+          "next": "goodbye"
+        }
+      ]
+    },
+    "financial_tip": {
+      "id": "financial_tip",
+      "speaker": "npc",
+      "text": "Kuncinya disiplin mencatat di Buku Kas. Kalau tidak dicatat, uang sakumu bisa habis tiba-tiba!",
+      "choices": [
+        {
+          "text": "Siap Yah, aku selalu catat tiap pengeluaran.",
+          "next": null
+        }
+      ]
+    },
+    "motor_tip": {
+      "id": "motor_tip",
+      "speaker": "npc",
+      "text": "Kalau bensin motormu di bawah 30%, segera mampir ke SPBU. Jangan sampai dorong motor!",
+      "choices": [
+        {
+          "text": "Oke Yah, nanti aku isi bensin di jalan.",
+          "next": null
+        }
+      ]
+    },
+    "goodbye": {
+      "id": "goodbye",
+      "speaker": "npc",
+      "text": "Fokus belajar di sekolah dan hati-hati berkendara ya nak.",
+      "next": null
+    }
+  }
+}
+

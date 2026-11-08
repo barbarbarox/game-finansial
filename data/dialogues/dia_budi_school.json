@@ -1,0 +1,82 @@
+{
+  "id": "dia_budi_school",
+  "npcId": "npc_budi",
+  "npcName": "Budi",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Hei {player}! Pulang sekolah nanti ke Game Center yuk, main arcade bareng! Seru banget lho.",
+      "choices": [
+        {
+          "text": "Ayo gas! Aku ikut main arcade (Rp25.000).",
+          "requires": { "minCash": 25000 },
+          "disabledReason": "Uang kas tidak cukup (butuh Rp25.000)",
+          "next": "accept_arcade",
+          "effects": [
+            {
+              "type": "ledger_expense",
+              "categoryId": "BEBAN_HIBURAN",
+              "amount": 25000,
+              "description": "Main arcade bareng Budi"
+            },
+            {
+              "type": "start_activity",
+              "activityId": "main_game"
+            },
+            {
+              "type": "map_transition",
+              "targetMap": "game_center",
+              "targetSpawn": "default"
+            }
+          ]
+        },
+        {
+          "text": "Gimana kalau nongkrong gratis di perpustakaan aja?",
+          "next": "suggest_library",
+          "effects": [
+            {
+              "type": "start_activity",
+              "activityId": "baca_perpus"
+            },
+            {
+              "type": "set_flag",
+              "flagKey": "peer_pressure_wise",
+              "value": true
+            }
+          ]
+        },
+        {
+          "text": "Maaf Bud, aku lagi nabung untuk target bulan ini.",
+          "next": "decline_saving",
+          "effects": [
+            {
+              "type": "set_flag",
+              "flagKey": "savings_priority",
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    "accept_arcade": {
+      "id": "accept_arcade",
+      "speaker": "npc",
+      "text": "Mantap! Kita tanding Street Fighter ya. Tapi ingat jangan sampai lupa waktu!",
+      "next": null
+    },
+    "suggest_library": {
+      "id": "suggest_library",
+      "speaker": "npc",
+      "text": "Ide bagus juga tuh! Kebetulan ada komik dan modul baru di perpustakaan. Lebih hemat!",
+      "next": null
+    },
+    "decline_saving": {
+      "id": "decline_saving",
+      "speaker": "npc",
+      "text": "Keren kamu bisa tahan godaan jajan! Kapan-kapan kalau ada tabungan lebih kita main ya.",
+      "next": null
+    }
+  }
+}
+

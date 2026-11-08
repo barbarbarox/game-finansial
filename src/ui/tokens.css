@@ -1506,3 +1506,279 @@ body.lj-light .time-bar-track {
   transition: width 0.8s ease-in-out;
 }
 
+/* ========================================================
+   Rule 71 — Dialogue System with Portraits CSS
+   ======================================================== */
+.dialogue-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  pointer-events: auto;
+  transition: opacity 0.2s ease;
+}
+
+.dialogue-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.dialogue-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.dialogue-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 15, 26, 0.55);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+.dialogue-stage {
+  position: absolute;
+  inset: 0;
+  bottom: 170px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 40px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.dialogue-portrait-wrap {
+  width: 192px;
+  height: 256px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  transition: transform 150ms ease, filter 150ms ease;
+  will-change: transform, filter;
+}
+
+.dialogue-portrait-wrap.portrait-right {
+  transform: scaleX(-1);
+}
+
+.dialogue-portrait-wrap.speaker-active {
+  filter: brightness(1) saturate(1);
+  transform: translateY(-6px);
+}
+
+.dialogue-portrait-wrap.portrait-right.speaker-active {
+  filter: brightness(1) saturate(1);
+  transform: scaleX(-1) translateY(-6px);
+}
+
+.dialogue-portrait-wrap.speaker-inactive {
+  filter: brightness(0.55) saturate(0.70);
+  transform: translateY(0);
+}
+
+.dialogue-portrait-wrap.portrait-right.speaker-inactive {
+  filter: brightness(0.55) saturate(0.70);
+  transform: scaleX(-1) translateY(0);
+}
+
+.portrait-box {
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.portrait-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(180deg, #1F2A44 0%, #121A2E 100%);
+  border: 3px solid #D9A441;
+  border-bottom: none;
+  border-radius: 6px 6px 0 0;
+  color: #F7EEDA;
+  font-family: monospace;
+  font-weight: 700;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.5);
+}
+
+.portrait-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+/* Choices Menu (Above Dialogue Box) */
+.dialogue-box-container {
+  position: relative;
+  z-index: 10;
+  max-width: 880px;
+  width: calc(100% - 32px);
+  margin: 0 auto 20px auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.dialogue-choices-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-self: flex-end;
+  max-width: 460px;
+  width: 100%;
+  animation: choiceFadeIn 0.2s ease-out;
+}
+
+@keyframes choiceFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.dialogue-choice-btn {
+  background: #1B2838;
+  border: 2px solid #34456B;
+  color: #F7EEDA;
+  padding: 8px 14px;
+  border-radius: 4px;
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.15s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+.dialogue-choice-btn:hover,
+.dialogue-choice-btn.selected {
+  background: #253952;
+  border-color: #D9A441;
+  color: #FFDE6A;
+  transform: translateX(-4px);
+}
+
+.dialogue-choice-btn.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #3A3A3A;
+  background: #151C28;
+  transform: none;
+}
+
+.choice-number {
+  color: #D9A441;
+  font-weight: 700;
+  font-family: monospace;
+}
+
+.choice-label {
+  flex: 1;
+}
+
+.choice-disabled-reason {
+  font-size: 0.8rem;
+  color: #C0654A;
+  font-style: italic;
+}
+
+/* Dialogue Main Box */
+.dialogue-box {
+  position: relative;
+  background: #172233;
+  border: 3px solid #D9A441;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.7), inset 0 0 12px rgba(0,0,0,0.5);
+  border-radius: 6px;
+  padding: 16px 20px;
+  min-height: 90px;
+  cursor: pointer;
+}
+
+.dialogue-nameplate {
+  position: absolute;
+  top: -16px;
+  background: #121A2E;
+  border: 2px solid #D9A441;
+  border-radius: 4px;
+  color: #D9A441;
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 2px 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.dialogue-nameplate.side-player {
+  left: 20px;
+  border-color: #4A88B8;
+  color: #79BAEC;
+}
+
+.dialogue-nameplate.side-npc {
+  right: 20px;
+  border-color: #D9A441;
+  color: #FFDE6A;
+}
+
+.dialogue-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 60px;
+}
+
+.dialogue-text {
+  color: #F7EEDA;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.dialogue-prompt-hint {
+  align-self: flex-end;
+  color: #D9A441;
+  font-size: 0.82rem;
+  font-weight: 700;
+  margin-top: 6px;
+  animation: promptPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes promptPulse {
+  0%, 100% { opacity: 0.6; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(2px); }
+}
+
+@media (max-width: 768px) {
+  .dialogue-portrait-wrap {
+    width: 140px;
+    height: 186px;
+  }
+  .dialogue-stage {
+    padding: 0 16px;
+    bottom: 160px;
+  }
+  .dialogue-text {
+    font-size: 0.95rem;
+  }
+}
+
+

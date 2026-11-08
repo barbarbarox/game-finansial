@@ -1,0 +1,69 @@
+{
+  "id": "dia_sri_kantin",
+  "npcId": "npc_kantin",
+  "npcName": "Ibu Sri",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Mau beli makan siang apa nak {player}? Semuanya higienis dan harganya pas di kantong siswa.",
+      "choices": [
+        {
+          "text": "Beli Nasi Kuning Komplit (Rp12.000)",
+          "requires": { "minCash": 12000 },
+          "disabledReason": "Uang kas tidak cukup (butuh Rp12.000)",
+          "next": "buy_food",
+          "effects": [
+            {
+              "type": "ledger_expense",
+              "categoryId": "BEBAN_JAJAN",
+              "amount": 12000,
+              "description": "Makan siang nasi kuning kantin"
+            },
+            {
+              "type": "start_activity",
+              "activityId": "makan_kantin"
+            }
+          ]
+        },
+        {
+          "text": "Beli Teh Manis Hangat (Rp3.000)",
+          "requires": { "minCash": 3000 },
+          "disabledReason": "Uang kas tidak cukup (butuh Rp3.000)",
+          "next": "buy_drink",
+          "effects": [
+            {
+              "type": "ledger_expense",
+              "categoryId": "BEBAN_JAJAN",
+              "amount": 3000,
+              "description": "Minum teh manis kantin"
+            }
+          ]
+        },
+        {
+          "text": "Cuma lihat-lihat dulu Bu Sri, terima kasih.",
+          "next": "just_browsing"
+        }
+      ]
+    },
+    "buy_food": {
+      "id": "buy_food",
+      "speaker": "npc",
+      "text": "Ini nasi kuningnya hangat! Makan yang teratur biar kuat konsentrasi belajar ya.",
+      "next": null
+    },
+    "buy_drink": {
+      "id": "buy_drink",
+      "speaker": "npc",
+      "text": "Ini teh manisnya, terima kasih sudah mampir ke kantin!",
+      "next": null
+    },
+    "just_browsing": {
+      "id": "just_browsing",
+      "speaker": "npc",
+      "text": "Silakan, kalau butuh makan siang langsung ke sini saja ya nak.",
+      "next": null
+    }
+  }
+}
+

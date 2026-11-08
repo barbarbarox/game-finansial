@@ -19,6 +19,7 @@ import { addEntry, createAllowanceEntry, createExpenseEntry } from '../../domain
 import { advanceTime, isLocationOpen, formatClock, getTimeUntilWakeup, DEFAULT_OPENING_HOURS } from '../../domain/clock.js';
 import { MapManager } from '../mapManager.js';
 import { showTimeSkip } from '../../ui/timeSkip.js';
+import { startDialogue, chooseOption, getDialogueState, closeDialogue } from '../../ui/dialogueBox.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -479,8 +480,12 @@ export class World extends Phaser.Scene {
       isLocationOpen: (locId) => {
         const store = this.game.registry.get('store');
         return isLocationOpen(locId, store?.getState()?.clock || {});
-      }
+      },
+      startDialogue: (id, npcId, onClose) => startDialogue(id, npcId, onClose),
+      choose: (i) => chooseOption(i),
+      getDialogueState: () => getDialogueState(),
+      closeDialogue: () => closeDialogue()
     };
-    console.info('[Debug] window.__LJ__ aktif dengan time system & map controls');
+    console.info('[Debug] window.__LJ__ aktif dengan time system, map & dialogue controls');
   }
 }

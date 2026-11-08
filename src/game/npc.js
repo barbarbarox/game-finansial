@@ -5,6 +5,7 @@
  */
 
 import { createNPCDialog, closeNPCDialog, isNPCDialogOpen } from '../ui/npcDialog.js';
+import { startDialogue, closeDialogue } from '../ui/dialogueBox.js';
 
 export class NPCManager {
   /**
@@ -158,6 +159,16 @@ export class NPCManager {
 
   openDialog(npc, container) {
     this.activeNpc = npc;
+
+    // Use Rule 71 Dialogue Box with Portraits if dialogId is present
+    const dialogId = npc.def.dialogId || (npc.def.id === 'npc_ibu' ? 'dia_ibu_home' : (npc.def.id === 'npc_ayah' ? 'dia_ayah_home' : null));
+    if (dialogId) {
+      startDialogue(dialogId, npc.def.id, () => {
+        this.activeNpc = null;
+      });
+      return;
+    }
+
     createNPCDialog(
       container,
       npc.def,
