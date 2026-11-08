@@ -15,8 +15,10 @@ import { createSettingsModal } from '../../ui/settings.js';
 import { createCreditsModal } from '../../ui/credits.js';
 import { createProceduralTiles } from '../../assets-gen/groundTiles.js';
 import { saveGame } from '../../state/persistence.js';
-import { addEntry, createAllowanceEntry } from '../../domain/ledger.js';
-import { advanceTime, isLocationOpen, formatClock, DEFAULT_OPENING_HOURS } from '../../domain/clock.js';
+import { addEntry, createAllowanceEntry, createExpenseEntry } from '../../domain/ledger.js';
+import { advanceTime, isLocationOpen, formatClock, getTimeUntilWakeup, DEFAULT_OPENING_HOURS } from '../../domain/clock.js';
+import { MapManager } from '../mapManager.js';
+import { showTimeSkip } from '../../ui/timeSkip.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -94,6 +96,26 @@ export class World extends Phaser.Scene {
 
     const initialTime = store?.getState()?.clock?.timeOfDay ?? (8 * 60);
     this._updateAmbientLight(initialTime);
+
+    // 6c. Initialize MapManager
+    const mapsIndex = this.cache.json.get('mapsIndex') || {
+      maps: [
+        { id: 'town_hub', file: 'data/maps/town_hub.layout.json' },
+        { id: 'home', file: 'data/maps/home.layout.json' },
+        { id: 'school', file: 'data/maps/school.layout.json' },
+        { id: 'minimarket', file: 'data/maps/minimarket.layout.json' },
+        { id: 'toko_kosmetik', file: 'data/maps/toko_kosmetik.layout.json' },
+        { id: 'spbu', file: 'data/maps/spbu.layout.json' },
+        { id: 'game_center', file: 'data/maps/game_center.layout.json' }
+      ]
+    };
+    this._mapManager = new MapManager(this, mapsIndex);
+
+    // Initial map: check saved currentMap (default 'home' for new game)
+    const savedMap = store?.getState()?.currentMap;
+    if (savedMap && savedMap !== 'town_hub') {
+      this._mapManager.loadMap(savedMap, 'default');
+    }
 
     // 7. Mount DOM HUD
     const uiContainer = document.getElementById('ui-container') || document.body;
@@ -344,6 +366,49 @@ export class World extends Phaser.Scene {
     const store = this.game.registry.get('store');
     const config = this.cache.json.get('phase1config') || {};
 
+    // 1. Door / Exit transition
+    if (int.type === 'door' || int.type === 'exit') {
+      if (int.targetMap && this._mapManager) {
+        this._mapManager.transitionTo(int.targetMap, int.targetSpawn, int.openingHoursId);
+        return;
+      }
+    }
+
+    // 2. Sleep in bed (Rule 72 §4)
+    if (int.action === 'sleep' || int.activityId === 'tidur_malam') {
+      const clock = store?.getState()?.clock || {};
+      const diff = getTimeUntilWakeup(clock);
+      showTimeSkip({
+        title: 'Tidur di Kamar',
+        minutes: diff,
+        costText: 'Energi Pulih 100%',
+        onComplete: () => {
+          if (window.__LJ__) window.__LJ__.advanceTime(diff, 'sleep');
+          if (store) store.setState({ gasoline: 100 });
+        }
+      });
+      return;
+    }
+
+    // 3. Other activities (study, watch tv, etc.)
+    if (int.type === 'activity') {
+      const actMinutes = int.activityId === 'pelajaran_sekolah' ? 120 : (int.activityId === 'main_game' ? 60 : 30);
+      showTimeSkip({
+        title: int.prompt.replace(/^Tekan \[E\]\s*/, ''),
+        minutes: actMinutes,
+        onComplete: () => {
+          if (window.__LJ__) window.__LJ__.advanceTime(actMinutes, int.activityId);
+        }
+      });
+      return;
+    }
+
+    // 4. Savings / Shop / Panel
+    if (int.action === 'savings' || int.type === 'savings') {
+      createShopModal(uiContainer, store, 'rumah', config, null);
+      return;
+    }
+
     if (int.locationId) {
       createShopModal(uiContainer, store, int.locationId, config, null);
     }
@@ -369,11 +434,22 @@ export class World extends Phaser.Scene {
       getState: () => this.game.registry.get('store')?.getState(),
       getLedger: () => this.game.registry.get('store')?.getState()?.ledger,
       getPlayer: () => this._player,
+      getMapManager: () => this._mapManager,
       teleportTo: (tx, ty) => {
         if (this._player) {
           this._player.sprite.x = tx * this._tileSize;
           this._player.sprite.y = ty * this._tileSize;
         }
+      },
+      teleportToMap: (mapId, spawn) => {
+        if (this._mapManager) {
+          this._mapManager.loadMap(mapId, spawn || 'default');
+        }
+      },
+      listInteractables: () => this._interactables,
+      interact: (id) => {
+        const item = this._interactables?.find(i => i.id === id);
+        if (item) this._openInteraction(item);
       },
       advanceTime: (minutes, reason = 'debug') => {
         const store = this.game.registry.get('store');
@@ -405,6 +481,6 @@ export class World extends Phaser.Scene {
         return isLocationOpen(locId, store?.getState()?.clock || {});
       }
     };
-    console.info('[Debug] window.__LJ__ aktif dengan time system controls');
+    console.info('[Debug] window.__LJ__ aktif dengan time system & map controls');
   }
 }

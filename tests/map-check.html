@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Life Journey — Map Reachability & Verification (Rule 70)</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 24px;
+      background: #121A2E;
+      color: #F7EEDA;
+    }
+    h1 { color: #D9A441; margin-bottom: 16px; }
+    .map-card {
+      background: #1F2A44;
+      border: 1px solid #34456B;
+      padding: 14px;
+      margin-bottom: 14px;
+      border-radius: 4px;
+    }
+    .pass { color: #A5BE93; font-weight: bold; }
+    .fail { color: #C0654A; font-weight: bold; }
+    #summary {
+      font-size: 1.15rem;
+      margin-top: 20px;
+      padding: 12px;
+      border-radius: 4px;
+    }
+    .summary-pass { background: #44603F; color: #F7EEDA; }
+    .summary-fail { background: #9E4A33; color: #F7EEDA; }
+    .canvas-wrap {
+      margin-top: 8px;
+      background: #0D1321;
+      display: inline-block;
+      border: 1px solid #2B3A58;
+    }
+  </style>
+</head>
+<body>
+  <h1>Life Journey · Verifikasi Peta & Keterjangkauan BFS (Rule 70)</h1>
+  <div id="results"></div>
+  <div id="summary">Memeriksa 7 peta...</div>
+
+  <script type="module">
+    const container = document.getElementById('results');
+    const results = [];
+
+    function assert(name, condition, details = '') {
+      results.push({ name, pass: Boolean(condition), details });
+      const card = document.createElement('div');
+      card.className = 'map-card';
+      card.innerHTML = `<strong>${condition ? '<span class="pass">[LULUS]</span>' : '<span class="fail">[GAGAL]</span>'}</strong> ${name} ${details ? `<br><small style="color:#A4B2C8">${details}</small>` : ''}`;
+      container.appendChild(card);
+    }
+
+    async function loadJson(url) {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`HTTP ${res.status} fetch ${url}`);
+      return await res.json();
+    }
+
+    // BFS 4-way reachability on grid
+    function checkBfsReachability(w, h, blockedGrid, startX, startY, targets) {
+      const visited = Array.from({ length: h }, () => Array(w).fill(false));
+      const queue = [[startX, startY]];
+      visited[startY][startX] = true;
+
+      const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+
+      while (queue.length > 0) {
+        const [cx, cy] = queue.shift();
+        for (const [dx, dy] of dirs) {
+          const nx = cx + dx;
+          const ny = cy + dy;
+          if (nx >= 0 && nx < w && ny >= 0 && ny < h) {
+            if (!visited[ny][nx] && !blockedGrid[ny][nx]) {
+              visited[ny][nx] = true;
+              queue.push([nx, ny]);
+            }
+          }
+        }
+      }
+
+      const unreachable = [];
+      for (const t of targets) {
+        // Target is reachable if either target tile itself or at least one adjacent unblocked tile is visited
+        let reached = false;
+        for (let tx = t.x; tx < t.x + (t.w || 1); tx++) {
+          for (let ty = t.y; ty < t.y + (t.h || 1); ty++) {
+            // Check tile itself or 4-way neighbors
+            if (tx >= 0 && tx < w && ty >= 0 && ty < h && visited[ty][tx]) {
+              reached = true;
+              break;
+            }
+            for (const [dx, dy] of dirs) {
+              const ax = tx + dx;
+              const ay = ty + dy;
+              if (ax >= 0 && ax < w && ay >= 0 && ay < h && visited[ay][ax]) {
+                reached = true;
+                break;
+              }
+            }
+            if (reached) break;
+          }
+          if (reached) break;
+        }
+        if (!reached) unreachable.push(t);
+      }
+
+      return { visited, unreachable };
+    }
+
+    async function runMapChecks() {
+      try {
+        const index = await loadJson('../data/maps/index.json');
+        assert('Index Peta: Memuat data/maps/index.json dengan 7 peta terdaftar', index.maps && index.maps.length === 7);
+
+        const loadedMaps = {};
+        for (const m of index.maps) {
+          const layout = await loadJson('../' + m.file);
+          loadedMaps[m.id] = { meta: m, layout };
+        }
+
+        // 1. Check each map boundaries and BFS reachability
+        for (const [id, { meta, layout }] of Object.entries(loadedMaps)) {
+          const w = layout.world?.widthTiles || 40;
+          const h = layout.world?.heightTiles || 24;
+
+          // Build blocked grid from colliders
+          const blocked = Array.from({ length: h }, () => Array(w).fill(false));
+          const colliders = layout.colliders || [];
+          for (const c of colliders) {
+            const x0 = Math.max(0, c.x);
+            const y0 = Math.max(0, c.y);
+            const x1 = Math.min(w, c.x + c.w);
+            const y1 = Math.min(h, c.y + c.h);
+            for (let y = y0; y < y1; y++) {
+              for (let x = x0; x < x1; x++) {
+                blocked[y][x] = true;
+              }
+            }
+          }
+
+          // Also furniture colliders
+          const furniture = layout.furniture || [];
+          for (const f of furniture) {
+            if (f.collidable) {
+              const x0 = Math.max(0, f.x);
+              const y0 = Math.max(0, f.y);
+              const x1 = Math.min(w, f.x + f.w);
+              const y1 = Math.min(h, f.y + f.h);
+              for (let y = y0; y < y1; y++) {
+                for (let x = x0; x < x1; x++) {
+                  blocked[y][x] = true;
+                }
+              }
+            }
+          }
+
+          // Get default spawn
+          let spawn = layout.world?.spawns?.default || layout.world?.spawn || { x: 5, y: 5 };
+          const spawnBlocked = blocked[spawn.y]?.[spawn.x];
+          assert(`Peta [${id}]: Spawn (${spawn.x}, ${spawn.y}) bebas kolisi`, !spawnBlocked, `Map: ${meta.displayName}`);
+
+          // Targets: all interactables and npcs
+          const targets = [];
+          (layout.interactables || []).forEach(i => targets.push({ name: `Interactable ${i.id}`, x: i.x, y: i.y, w: i.w, h: i.h }));
+          (layout.npcs || []).forEach(n => targets.push({ name: `NPC ${n.name}`, x: n.x, y: n.y, w: 1, h: 1 }));
+
+          const { unreachable } = checkBfsReachability(w, h, blocked, spawn.x, spawn.y, targets);
+          assert(
+            `Peta [${id}]: Keterjangkauan BFS (${targets.length} target)`,
+            unreachable.length === 0,
+            unreachable.length === 0 ? 'Semua titik interaksi, exit, dan NPC terjangkau dari spawn.' : `Target tak terjangkau: ${unreachable.map(u => u.name).join(', ')}`
+          );
+        }
+
+        // 2. Check reciprocal door transitions
+        const hubLayout = loadedMaps['town_hub']?.layout;
+        const hubDoors = hubLayout?.interactables?.filter(i => i.type === 'door') || [];
+
+        for (const door of hubDoors) {
+          const interiorMap = loadedMaps[door.targetMap];
+          assert(
+            `Timbal-Balik Pintu: Hub door '${door.id}' terhubung ke interior '${door.targetMap}'`,
+            Boolean(interiorMap),
+            `Target: ${door.targetMap}`
+          );
+
+          if (interiorMap) {
+            const exit = interiorMap.layout.interactables?.find(i => i.type === 'exit' && i.targetMap === 'town_hub');
+            assert(
+              `Timbal-Balik Pintu: Interior '${door.targetMap}' memiliki pintu exit kembali ke 'town_hub'`,
+              Boolean(exit),
+              `Exit targetSpawn: [${exit?.targetSpawn?.join(', ')}]`
+            );
+          }
+        }
+
+        const allPass = results.every(r => r.pass);
+        const summary = document.getElementById('summary');
+        summary.className = allPass ? 'summary-pass' : 'summary-fail';
+        summary.textContent = allPass
+          ? `LULUS SEMUA (${results.filter(r => r.pass).length}/${results.length}) — Semua 7 Peta Lolos Uji Keterjangkauan & Timbal Balik!`
+          : `GAGAL (${results.filter(r => !r.pass).length}/${results.length}) pengujian.`;
+
+      } catch (err) {
+        assert('Eksekusi map-check gagal', false, err.stack || err.message);
+      }
+    }
+
+    runMapChecks();
+  </script>
+</body>
+</html>

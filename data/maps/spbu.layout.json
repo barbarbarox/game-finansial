@@ -1,0 +1,120 @@
+{
+  "version": 2,
+  "id": "spbu",
+  "displayName": "Kios SPBU Harmoni",
+  "type": "interior",
+  "world": {
+    "widthTiles": 24,
+    "heightTiles": 18,
+    "tileSize": 32,
+    "spawns": {
+      "default": { "x": 12, "y": 15 },
+      "from_hub": { "x": 12, "y": 15 }
+    }
+  },
+  "floors": [
+    { "type": "lantai_kios_spbu", "x": 2, "y": 2, "w": 20, "h": 14 }
+  ],
+  "walls": [
+    { "x": 1, "y": 1, "w": 22, "h": 1 },
+    { "x": 1, "y": 1, "w": 1, "h": 16 },
+    { "x": 22, "y": 1, "w": 1, "h": 16 },
+    { "x": 1, "y": 17, "w": 22, "h": 1 }
+  ],
+  "colliders": [
+    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 24, "h": 2 },
+    { "name": "batas_luar_bawah", "x": 0, "y": 17, "w": 24, "h": 1 },
+    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 18 },
+    { "name": "batas_luar_kanan", "x": 22, "y": 0, "w": 2, "h": 18 }
+  ],
+  "furniture": [
+    {
+      "id": "fur_counter_spbu",
+      "type": "meja_kasir_spbu",
+      "label": "Loket Kasir SPBU",
+      "x": 4,
+      "y": 11,
+      "w": 4,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_rak_oli",
+      "type": "rak_oli_motor",
+      "label": "Rak Oli & Pelumas Motor",
+      "x": 3,
+      "y": 3,
+      "w": 5,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_chiller_spbu",
+      "type": "kulkas_minuman_spbu",
+      "label": "Kulkas Minuman Dingin",
+      "x": 15,
+      "y": 3,
+      "w": 4,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_kompresor_angin",
+      "type": "kompresor_angin",
+      "label": "Mesin Pompa Angin Ban",
+      "x": 18,
+      "y": 11,
+      "w": 2,
+      "h": 1,
+      "collidable": true
+    }
+  ],
+  "interactables": [
+    {
+      "id": "int_dispenser_bensin",
+      "type": "activity",
+      "activityId": "isi_bensin_motor",
+      "x": 5,
+      "y": 10,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Isi Bensin Motor (Rp15.000)",
+      "action": "refuel_gas"
+    },
+    {
+      "id": "int_pompa_angin",
+      "type": "activity",
+      "activityId": "pompa_angin_ban",
+      "x": 18,
+      "y": 12,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Cek Tekanan Ban & Isi Angin (Gratis)",
+      "action": "pump_tires"
+    },
+    {
+      "id": "exit_to_hub",
+      "type": "exit",
+      "targetMap": "town_hub",
+      "targetSpawn": [36, 13],
+      "x": 11,
+      "y": 16,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Keluar ke Kota Harmoni",
+      "action": "exit_map"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "npc_doni",
+      "name": "Mas Doni",
+      "role": "Petugas SPBU",
+      "assetId": "npc_sheet_vendors",
+      "color": 12608842,
+      "x": 5,
+      "y": 12,
+      "dialogId": "dia_doni_spbu"
+    }
+  ]
+}

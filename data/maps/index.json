@@ -1,0 +1,56 @@
+{
+  "version": 2,
+  "defaultMap": "home",
+  "defaultSpawn": "kamar_tidur",
+  "maps": [
+    {
+      "id": "town_hub",
+      "displayName": "Kota Harmoni",
+      "type": "exterior",
+      "file": "data/maps/town_hub.layout.json",
+      "openingHoursId": null
+    },
+    {
+      "id": "home",
+      "displayName": "Rumah Pemain",
+      "type": "interior",
+      "file": "data/maps/home.layout.json",
+      "openingHoursId": "home"
+    },
+    {
+      "id": "school",
+      "displayName": "SMA Negeri 1",
+      "type": "interior",
+      "file": "data/maps/school.layout.json",
+      "openingHoursId": "school"
+    },
+    {
+      "id": "minimarket",
+      "displayName": "Mini Mart Harmoni",
+      "type": "interior",
+      "file": "data/maps/minimarket.layout.json",
+      "openingHoursId": "minimarket"
+    },
+    {
+      "id": "toko_kosmetik",
+      "displayName": "Toko Cantik Kosmetik",
+      "type": "interior",
+      "file": "data/maps/toko_kosmetik.layout.json",
+      "openingHoursId": "toko_kosmetik"
+    },
+    {
+      "id": "spbu",
+      "displayName": "Kios SPBU Harmoni",
+      "type": "interior",
+      "file": "data/maps/spbu.layout.json",
+      "openingHoursId": "spbu"
+    },
+    {
+      "id": "game_center",
+      "displayName": "Pixel Arena Game Center",
+      "type": "interior",
+      "file": "data/maps/game_center.layout.json",
+      "openingHoursId": "game_center"
+    }
+  ]
+}

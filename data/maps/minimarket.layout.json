@@ -1,0 +1,151 @@
+{
+  "version": 2,
+  "id": "minimarket",
+  "displayName": "Mini Mart Harmoni",
+  "type": "interior",
+  "world": {
+    "widthTiles": 24,
+    "heightTiles": 18,
+    "tileSize": 32,
+    "spawns": {
+      "default": { "x": 12, "y": 15 },
+      "from_hub": { "x": 12, "y": 15 }
+    }
+  },
+  "floors": [
+    { "type": "keramik_minimarket", "x": 2, "y": 2, "w": 20, "h": 14 }
+  ],
+  "walls": [
+    { "x": 1, "y": 1, "w": 22, "h": 1 },
+    { "x": 1, "y": 1, "w": 1, "h": 16 },
+    { "x": 22, "y": 1, "w": 1, "h": 16 },
+    { "x": 1, "y": 17, "w": 22, "h": 1 }
+  ],
+  "colliders": [
+    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 24, "h": 2 },
+    { "name": "batas_luar_bawah", "x": 0, "y": 17, "w": 24, "h": 1 },
+    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 18 },
+    { "name": "batas_luar_kanan", "x": 22, "y": 0, "w": 2, "h": 18 }
+  ],
+  "furniture": [
+    {
+      "id": "fur_meja_kasir_mini",
+      "type": "meja_kasir",
+      "label": "Meja Kasir & POS",
+      "x": 4,
+      "y": 12,
+      "w": 4,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_gondola_1",
+      "type": "rak_gondola",
+      "label": "Rak Snack & Makanan Ringan",
+      "x": 4,
+      "y": 5,
+      "w": 6,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_gondola_2",
+      "type": "rak_gondola",
+      "label": "Rak Kebutuhan Harian",
+      "x": 14,
+      "y": 5,
+      "w": 6,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_kulkas_minimarket",
+      "type": "chiller_minuman",
+      "label": "Chiller Minuman Dingin",
+      "x": 4,
+      "y": 2,
+      "w": 8,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_rak_alat_tulis",
+      "type": "rak_atk",
+      "label": "Rak Alat Tulis Sekolah",
+      "x": 16,
+      "y": 2,
+      "w": 4,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_mesin_fotokopi",
+      "type": "mesin_fotokopi",
+      "label": "Mesin Fotokopi",
+      "x": 18,
+      "y": 12,
+      "w": 2,
+      "h": 2,
+      "collidable": true
+    }
+  ],
+  "interactables": [
+    {
+      "id": "int_kasir_minimarket",
+      "type": "shop",
+      "shopId": "minimarket",
+      "x": 5,
+      "y": 11,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Belanja di Kasir / Beli Pulsa",
+      "action": "open_shop"
+    },
+    {
+      "id": "int_rak_snack",
+      "type": "activity",
+      "activityId": "beli_snack_mini",
+      "x": 6,
+      "y": 7,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Beli Roti & Snack (+10 Mnt)",
+      "action": "buy_snack"
+    },
+    {
+      "id": "int_fotokopi",
+      "type": "activity",
+      "activityId": "fotokopi_tugas",
+      "x": 18,
+      "y": 14,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Fotokopi Catatan & Tugas (Rp5.000)",
+      "action": "photocopy"
+    },
+    {
+      "id": "exit_to_hub",
+      "type": "exit",
+      "targetMap": "town_hub",
+      "targetSpawn": [27, 7],
+      "x": 11,
+      "y": 16,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Keluar ke Kota Harmoni",
+      "action": "exit_map"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "npc_kasir_minimarket",
+      "name": "Mbak Maya",
+      "role": "Kasir Mini Mart",
+      "assetId": "npc_sheet_vendors",
+      "color": 3425643,
+      "x": 5,
+      "y": 13,
+      "dialogId": "dia_maya_minimarket"
+    }
+  ]
+}

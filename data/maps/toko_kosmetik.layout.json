@@ -1,0 +1,130 @@
+{
+  "version": 2,
+  "id": "toko_kosmetik",
+  "displayName": "Toko Cantik Kosmetik",
+  "type": "interior",
+  "world": {
+    "widthTiles": 22,
+    "heightTiles": 16,
+    "tileSize": 32,
+    "spawns": {
+      "default": { "x": 11, "y": 13 },
+      "from_hub": { "x": 11, "y": 13 }
+    }
+  },
+  "floors": [
+    { "type": "keramik_kosmetik_pastel", "x": 2, "y": 2, "w": 18, "h": 12 }
+  ],
+  "walls": [
+    { "x": 1, "y": 1, "w": 20, "h": 1 },
+    { "x": 1, "y": 1, "w": 1, "h": 14 },
+    { "x": 20, "y": 1, "w": 1, "h": 14 },
+    { "x": 1, "y": 15, "w": 20, "h": 1 }
+  ],
+  "colliders": [
+    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 22, "h": 2 },
+    { "name": "batas_luar_bawah", "x": 0, "y": 15, "w": 22, "h": 1 },
+    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 16 },
+    { "name": "batas_luar_kanan", "x": 20, "y": 0, "w": 2, "h": 16 }
+  ],
+  "furniture": [
+    {
+      "id": "fur_counter_kosmetik",
+      "type": "etalase_kosmetik",
+      "label": "Etalase Skincare & Serum",
+      "x": 3,
+      "y": 2,
+      "w": 6,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_etalase_liptint",
+      "type": "display_makeup",
+      "label": "Display Lip Tint & Bedak",
+      "x": 13,
+      "y": 2,
+      "w": 5,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_meja_cermin",
+      "type": "meja_cermin_tester",
+      "label": "Meja Cermin Tester",
+      "x": 3,
+      "y": 7,
+      "w": 4,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_kasir_kosmetik",
+      "type": "meja_kasir_cantik",
+      "label": "Kasir Toko Cantik",
+      "x": 13,
+      "y": 8,
+      "w": 4,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_sofa_kosmetik",
+      "type": "sofa_tunggu",
+      "label": "Sofa Tunggu Pengunjung",
+      "x": 3,
+      "y": 12,
+      "w": 3,
+      "h": 1,
+      "collidable": true
+    }
+  ],
+  "interactables": [
+    {
+      "id": "int_kasir_kosmetik",
+      "type": "shop",
+      "shopId": "kosmetik",
+      "x": 14,
+      "y": 7,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Belanja Skincare & Kosmetik",
+      "action": "open_shop"
+    },
+    {
+      "id": "int_tester_skincare",
+      "type": "activity",
+      "activityId": "konsultasi_skincare",
+      "x": 4,
+      "y": 9,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Coba Tester & Tips Kulit Sehat",
+      "action": "test_skincare"
+    },
+    {
+      "id": "exit_to_hub",
+      "type": "exit",
+      "targetMap": "town_hub",
+      "targetSpawn": [35, 7],
+      "x": 10,
+      "y": 14,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Keluar ke Kota Harmoni",
+      "action": "exit_map"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "npc_cindy",
+      "name": "Kak Cindy",
+      "role": "Beauty Advisor",
+      "assetId": "npc_sheet_vendors",
+      "color": 14197368,
+      "x": 15,
+      "y": 9,
+      "dialogId": "dia_cindy_kosmetik"
+    }
+  ]
+}

@@ -1,0 +1,161 @@
+{
+  "version": 2,
+  "id": "game_center",
+  "displayName": "Pixel Arena Game Center",
+  "type": "interior",
+  "world": {
+    "widthTiles": 26,
+    "heightTiles": 18,
+    "tileSize": 32,
+    "spawns": {
+      "default": { "x": 13, "y": 15 },
+      "from_hub": { "x": 13, "y": 15 }
+    }
+  },
+  "floors": [
+    { "type": "lantai_arcade_neon", "x": 2, "y": 2, "w": 22, "h": 14 }
+  ],
+  "walls": [
+    { "x": 1, "y": 1, "w": 24, "h": 1 },
+    { "x": 1, "y": 1, "w": 1, "h": 16 },
+    { "x": 24, "y": 1, "w": 1, "h": 16 },
+    { "x": 1, "y": 17, "w": 24, "h": 1 }
+  ],
+  "colliders": [
+    { "name": "batas_luar_atas", "x": 0, "y": 0, "w": 26, "h": 2 },
+    { "name": "batas_luar_bawah", "x": 0, "y": 17, "w": 26, "h": 1 },
+    { "name": "batas_luar_kiri", "x": 0, "y": 0, "w": 2, "h": 18 },
+    { "name": "batas_luar_kanan", "x": 24, "y": 0, "w": 2, "h": 18 }
+  ],
+  "furniture": [
+    {
+      "id": "fur_arcade_1",
+      "type": "arcade_cabinet",
+      "label": "Arcade Fighting 2000",
+      "x": 3,
+      "y": 3,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_arcade_2",
+      "type": "arcade_cabinet",
+      "label": "Rhythm Music Mania",
+      "x": 8,
+      "y": 3,
+      "w": 3,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_arcade_3",
+      "type": "arcade_racing",
+      "label": "Turbo Racing Simulator",
+      "x": 13,
+      "y": 3,
+      "w": 4,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_tv_arena",
+      "type": "layar_turnamen",
+      "label": "Layar LED Turnamen",
+      "x": 19,
+      "y": 3,
+      "w": 4,
+      "h": 2,
+      "collidable": true
+    },
+    {
+      "id": "fur_counter_arcade",
+      "type": "counter_koin",
+      "label": "Counter Koin & Kasir",
+      "x": 4,
+      "y": 11,
+      "w": 5,
+      "h": 1,
+      "collidable": true
+    },
+    {
+      "id": "fur_meja_lounge",
+      "type": "meja_lounge_gaming",
+      "label": "Meja Lounge Gaming",
+      "x": 16,
+      "y": 11,
+      "w": 5,
+      "h": 2,
+      "collidable": true
+    }
+  ],
+  "interactables": [
+    {
+      "id": "int_main_arcade",
+      "type": "activity",
+      "activityId": "main_game",
+      "x": 8,
+      "y": 5,
+      "w": 3,
+      "h": 1,
+      "prompt": "Tekan [E] Main Arcade 1 Jam (Rp25.000)",
+      "action": "play_arcade"
+    },
+    {
+      "id": "int_counter_koin",
+      "type": "shop",
+      "shopId": "gamecenter",
+      "x": 5,
+      "y": 10,
+      "w": 3,
+      "h": 1,
+      "prompt": "Tekan [E] Beli Koin & Camilan Gaming",
+      "action": "open_shop"
+    },
+    {
+      "id": "int_nonton_turnamen",
+      "type": "activity",
+      "activityId": "nonton_turnamen",
+      "x": 20,
+      "y": 5,
+      "w": 3,
+      "h": 1,
+      "prompt": "Tekan [E] Nonton Turnamen E-Sports (+30 Mnt)",
+      "action": "watch_stream"
+    },
+    {
+      "id": "exit_to_hub",
+      "type": "exit",
+      "targetMap": "town_hub",
+      "targetSpawn": [30, 21],
+      "x": 12,
+      "y": 16,
+      "w": 2,
+      "h": 1,
+      "prompt": "Tekan [E] Keluar ke Kota Harmoni",
+      "action": "exit_map"
+    }
+  ],
+  "npcs": [
+    {
+      "id": "npc_riko",
+      "name": "Kak Riko",
+      "role": "Operator Game Center",
+      "assetId": "npc_sheet_vendors",
+      "color": 3425643,
+      "x": 6,
+      "y": 12,
+      "dialogId": "dia_riko_game"
+    },
+    {
+      "id": "npc_rani",
+      "name": "Rani",
+      "role": "Teman Sekolah",
+      "assetId": "npc_sheet_friends",
+      "color": 14197368,
+      "x": 18,
+      "y": 13,
+      "dialogId": "dia_rani_game"
+    }
+  ]
+}

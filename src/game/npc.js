@@ -16,7 +16,22 @@ export class NPCManager {
     this.npcs = [];
     this.activeNpc = null;
 
-    for (const def of npcDefs) {
+    for (const def of (npcDefs || [])) {
+      this._spawnNPC(def);
+    }
+  }
+
+  setNPCs(npcDefs) {
+    for (const npc of this.npcs) {
+      if (npc.shadow && npc.shadow.destroy) npc.shadow.destroy();
+      if (npc.body && npc.body.destroy) npc.body.destroy();
+      if (npc.label && npc.label.destroy) npc.label.destroy();
+      if (npc.bubble && npc.bubble.destroy) npc.bubble.destroy();
+    }
+    this.npcs = [];
+    this.activeNpc = null;
+
+    for (const def of (npcDefs || [])) {
       this._spawnNPC(def);
     }
   }

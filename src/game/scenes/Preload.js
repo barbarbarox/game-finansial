@@ -38,7 +38,16 @@ export class Preload extends Phaser.Scene {
     // Load JSON data
     this.load.json('phase1config', 'data/phase1.config.json');
     this.load.json('eventsData', 'data/events.phase1.json');
+    this.load.json('activitiesData', 'data/activities.phase1.json');
+    this.load.json('mapsIndex', 'data/maps/index.json');
     this.load.json('townLayout', 'data/maps/town_hub.layout.json');
+    this.load.json('layout_town_hub', 'data/maps/town_hub.layout.json');
+    this.load.json('layout_home', 'data/maps/home.layout.json');
+    this.load.json('layout_school', 'data/maps/school.layout.json');
+    this.load.json('layout_minimarket', 'data/maps/minimarket.layout.json');
+    this.load.json('layout_toko_kosmetik', 'data/maps/toko_kosmetik.layout.json');
+    this.load.json('layout_spbu', 'data/maps/spbu.layout.json');
+    this.load.json('layout_game_center', 'data/maps/game_center.layout.json');
     this.load.json('credits', 'assets/credits.json');
     this.load.json('palette', 'assets/palette.json');
 

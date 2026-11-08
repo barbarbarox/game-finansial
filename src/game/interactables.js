@@ -79,8 +79,40 @@ export class InteractableManager {
   }
 
   _tryInteract() {
-    if (this._closestInRange) {
-      this._openPanel(this._closestInRange.panelId, this._closestInRange.def);
+    if (!this._closestInRange) return;
+    const def = this._closestInRange.def;
+
+    // 1. Door / Exit transition
+    if (def.type === 'door' || def.type === 'exit') {
+      if (def.targetMap && this.scene._mapManager) {
+        this.scene._mapManager.transitionTo(def.targetMap, def.targetSpawn, def.openingHoursId);
+        return;
+      }
+    }
+
+    // 2. Activity trigger (Time-Skip)
+    if (def.type === 'activity') {
+      document.dispatchEvent(new CustomEvent('lj:runActivity', {
+        detail: { activityId: def.activityId, def }
+      }));
+      return;
+    }
+
+    // 3. Shop or other panel
+    this._openPanel(this._closestInRange.panelId, def);
+  }
+
+  setInteractables(interactableDefs) {
+    for (const item of this.interactables) {
+      if (item.marker && item.marker.destroy) {
+        item.marker.destroy();
+      }
+    }
+    this.interactables = [];
+    this._closestInRange = null;
+
+    for (const def of (interactableDefs || [])) {
+      this._register(def);
     }
   }
 
