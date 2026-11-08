@@ -28,6 +28,7 @@ import { createHotbar } from '../../ui/hotbar.js';
 import { changeEnergy, calculateActivityDrain, canPerformActivity, DEFAULT_ENERGY_CONFIG } from '../../domain/energy.js';
 import { useItem, createInventory, addItem as domainAddItem } from '../../domain/inventory.js';
 import { ITEMS_MAP } from '../../domain/itemsCatalog.js';
+import { canMountVehicle } from '../../domain/vehicle.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -45,6 +46,8 @@ export class World extends Phaser.Scene {
     this._feedbackUntil = 0;
     this._hotbar = null;
     this._passiveMinuteAccumulator = 0;
+    this._parkedMotorProp = null;
+    this.keyV = null;
   }
 
   create() {
@@ -81,6 +84,7 @@ export class World extends Phaser.Scene {
     // 4. Keyboard input
     this.keyE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+    this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
 
     // 5. Ambient Day-Night Lighting Overlay
     const viewW = this.cameras.main.width || 960;
@@ -120,7 +124,8 @@ export class World extends Phaser.Scene {
         store,
         () => createCashbookModal(uiContainer, store),
         () => createBudgetModal(uiContainer, store, config),
-        () => createSettingsModal(uiContainer, null, () => createCreditsModal(uiContainer), () => this._exitToMainMenu(), store)
+        () => createSettingsModal(uiContainer, null, () => createCreditsModal(uiContainer), () => this._exitToMainMenu(), store),
+        () => this._toggleVehicle()
       );
 
       // 8. Mount DOM Hotbar (Rule 74 §3)
@@ -160,6 +165,9 @@ export class World extends Phaser.Scene {
 
   update(time, delta) {
     if (this._player) {
+      if (this.keyV && Phaser.Input.Keyboard.JustDown(this.keyV)) {
+        this._toggleVehicle();
+      }
       const colliders = this._mapManager ? this._mapManager.getColliderRects() : [];
       this._player.update(delta, colliders);
       this._checkInteractables();
@@ -357,6 +365,68 @@ export class World extends Phaser.Scene {
     }
   }
 
+  _toggleVehicle() {
+    if (document.querySelector('.dialogue-panel:not([style*="display: none"])')) return;
+    if (this._mapManager?.isTransitioning) return;
+    if (!this._player) return;
+
+    const store = this.game.registry.get('store');
+    const state = store?.getState() || {};
+    const config = this.cache.json.get('phase1config') || {};
+
+    if (this._player.isMounted) {
+      this._player.dismount(null, () => {
+        if (this._mapManager?.currentMapId === 'town_hub') {
+          const spawnX = this._player.x + (this._player.facing === 'left' ? 24 : -24);
+          this._spawnParkedMotor(spawnX, this._player.y);
+          if (store) {
+            store.setState({
+              vehicle: {
+                mounted: false,
+                parked: { mapId: 'town_hub', x: Math.round(spawnX), y: Math.round(this._player.y) }
+              }
+            });
+          }
+        } else {
+          if (store) {
+            store.setState({ vehicle: { mounted: false, parked: null } });
+          }
+        }
+        this.showPromptFeedback('Turun dari motor');
+      });
+    } else {
+      const check = canMountVehicle(state, this._mapManager?.currentMapId || 'home', config.vehicle);
+      if (!check.canMount) {
+        this.showPromptFeedback(check.reason, 3000);
+        return;
+      }
+
+      this._player.mount(() => {
+        this._removeParkedMotor();
+        if (store) {
+          store.setState({ vehicle: { mounted: true, parked: null } });
+        }
+        this.showPromptFeedback('Menaiki motor [Kecepatan 1.8x]');
+      });
+    }
+  }
+
+  _spawnParkedMotor(x, y) {
+    this._removeParkedMotor();
+    if (this.textures.exists('prop_motor_parkir')) {
+      this._parkedMotorProp = this.add.sprite(x, y, 'prop_motor_parkir');
+      this._parkedMotorProp.setOrigin(0.5, 1.0);
+      this._parkedMotorProp.setDepth(y);
+    }
+  }
+
+  _removeParkedMotor() {
+    if (this._parkedMotorProp) {
+      try { this._parkedMotorProp.destroy(); } catch (_) {}
+      this._parkedMotorProp = null;
+    }
+  }
+
   _checkInteractables() {
     if (this._feedbackUntil && Date.now() < this._feedbackUntil) {
       return;
@@ -403,6 +473,21 @@ export class World extends Phaser.Scene {
     // 1. Door / Exit transition
     if (int.type === 'door' || int.type === 'exit') {
       if (int.targetMap && this._mapManager) {
+        // Auto-dismount and park motor outside when entering building (Rule 75 §1)
+        if (this._player?.isMounted) {
+          this._player.dismount('Motor diparkir di depan pintu');
+          const parkX = Math.round(this._player.x);
+          const parkY = Math.round(this._player.y);
+          this._spawnParkedMotor(parkX, parkY);
+          if (store) {
+            store.setState({
+              vehicle: {
+                mounted: false,
+                parked: { mapId: 'town_hub', x: parkX, y: parkY }
+              }
+            });
+          }
+        }
         this._mapManager.transitionTo(int.targetMap, int.targetSpawn, int.openingHoursId);
         return;
       }
@@ -615,6 +700,19 @@ export class World extends Phaser.Scene {
       openShop: (locId) => {
         const uiContainer = document.getElementById('ui-container') || document.body;
         createShopModal(uiContainer, this.game.registry.get('store'), locId, config, null);
+      },
+      toggleVehicle: () => this._toggleVehicle(),
+      isMounted: () => Boolean(this._player?.isMounted),
+      measureSpeed: () => this._player ? this._player.measureSpeed() : 0,
+      getGasoline: () => this.game.registry.get('store')?.getState()?.gasoline,
+      setGasoline: (val) => this.game.registry.get('store')?.setState({ gasoline: Math.max(0, Math.min(100, val)) }),
+      getParkedMotor: () => this.game.registry.get('store')?.getState()?.vehicle?.parked,
+      simulateMovingFuel: (deltaMs) => {
+        if (this._player) {
+          this._player.isMounted = true;
+          this._player.moving = true;
+          this._player._drainGasoline(deltaMs);
+        }
       },
       startDialogue: (id, npcId, onClose) => startDialogue(id, npcId, onClose),
       choose: (i) => chooseOption(i),

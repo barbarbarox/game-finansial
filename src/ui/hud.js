@@ -27,7 +27,7 @@ function makeBtnIcon(src) {
   return img;
 }
 
-export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpenSettings) {
+export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpenSettings, onToggleVehicle) {
   const hudElement = document.createElement('header');
   hudElement.className = 'lj-hud';
   hudElement.setAttribute('role', 'region');
@@ -179,6 +179,17 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   const navGroup = document.createElement('div');
   navGroup.className = 'hud-group hud-nav';
 
+  const vehicleBtn = document.createElement('button');
+  vehicleBtn.type = 'button';
+  vehicleBtn.className = 'lj-btn secondary btn-sm hud-btn hud-btn-vehicle';
+  vehicleBtn.appendChild(makeBtnIcon('assets/icons/icon_motor.png'));
+  const vLabel = document.createElement('span');
+  vLabel.textContent = 'Motor [V]';
+  vehicleBtn.appendChild(vLabel);
+  if (onToggleVehicle) {
+    vehicleBtn.addEventListener('click', onToggleVehicle);
+  }
+
   const cashbookBtn = document.createElement('button');
   cashbookBtn.type = 'button';
   cashbookBtn.className = 'lj-btn secondary btn-sm hud-btn';
@@ -208,6 +219,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
     settingsBtn.addEventListener('click', onOpenSettings);
   }
 
+  navGroup.appendChild(vehicleBtn);
   navGroup.appendChild(cashbookBtn);
   navGroup.appendChild(budgetBtn);
   navGroup.appendChild(settingsBtn);
@@ -307,6 +319,17 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
     // Active mission title
     const activeM = state.missions?.find(m => !m.completed);
     missionTitle.textContent = activeM ? activeM.title : 'Semua Selesai';
+
+    // Vehicle active button styling (Rule 75 §1)
+    if (state.vehicle?.mounted) {
+      vehicleBtn.classList.add('active');
+      vehicleBtn.style.borderColor = '#D9A441';
+      vehicleBtn.style.backgroundColor = '#2A3654';
+    } else {
+      vehicleBtn.classList.remove('active');
+      vehicleBtn.style.borderColor = '';
+      vehicleBtn.style.backgroundColor = '';
+    }
   }
 
   // Initial render

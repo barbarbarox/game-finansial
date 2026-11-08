@@ -75,9 +75,119 @@ export class PlayerController {
     this.moving = false;
     this.walkTimer = 0;
     this.isMounted = false;
+    this.isMounting = false;
+    this._motorFuelAccumulatorMs = 0;
+    this._bikeUnderlay = null;
 
     const dayDurSec = this.config.dayDurationSeconds || 12;
     this.gasolineDrainRate = (this.config.gasolineDrainPerDay || 5) / (dayDurSec * 1000);
+  }
+
+  mount(callback) {
+    if (this.isMounting || this.isMounted) return;
+    this.isMounting = true;
+    this.vx = 0;
+    this.vy = 0;
+    this.moving = false;
+
+    const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+    const duration = this.config.vehicle?.mountAnimationMs || 350;
+
+    if (reducedMotion) {
+      this.isMounted = true;
+      this.isMounting = false;
+      this._updateVehicleAppearance(true);
+      if (this._store) {
+        this._store.setState({ vehicle: { mounted: true } });
+      }
+      if (callback) callback();
+      return;
+    }
+
+    const startY = this.sprite.y;
+    this.scene.tweens.add({
+      targets: this.sprite,
+      y: startY - 6,
+      duration: duration / 2,
+      ease: 'Cubic.easeOut',
+      yoyo: true,
+      onYoyo: () => {
+        this.isMounted = true;
+        this._updateVehicleAppearance(true);
+      },
+      onComplete: () => {
+        this.sprite.y = startY;
+        this.isMounting = false;
+        this._spawnDustParticles(this.sprite.x, this.sprite.y);
+        if (this._store) {
+          this._store.setState({ vehicle: { mounted: true } });
+        }
+        if (callback) callback();
+      }
+    });
+  }
+
+  dismount(reason = null, callback) {
+    if (!this.isMounted && !this.isMounting) return;
+    this.isMounted = false;
+    this.isMounting = false;
+    this._updateVehicleAppearance(false);
+
+    if (this._store) {
+      this._store.setState({ vehicle: { mounted: false } });
+    }
+
+    if (reason && this.scene?.showPromptFeedback) {
+      this.scene.showPromptFeedback(reason, 3000);
+    }
+    if (callback) callback();
+  }
+
+  _updateVehicleAppearance(mounted) {
+    if (mounted) {
+      if (!this._bikeUnderlay && this.scene.textures.exists('prop_motor_parkir')) {
+        this._bikeUnderlay = this.scene.add.sprite(this.sprite.x, this.sprite.y + 2, 'prop_motor_parkir');
+        this._bikeUnderlay.setOrigin(0.5, 1.0);
+        this._bikeUnderlay.setScale(0.85);
+      }
+      if (this._bikeUnderlay) {
+        this._bikeUnderlay.setVisible(true);
+        this._bikeUnderlay.setDepth(this.sprite.depth - 1);
+      }
+    } else {
+      if (this._bikeUnderlay) {
+        this._bikeUnderlay.setVisible(false);
+      }
+    }
+  }
+
+  _spawnDustParticles(x, y) {
+    const colors = [0xF7EEDA, 0xB8A88A, 0x8A715D];
+    for (let i = 0; i < 5; i++) {
+      const col = colors[i % colors.length];
+      const p = this.scene.add.rectangle(x + (Math.random() - 0.5) * 16, y - 2 + (Math.random() - 0.5) * 4, 3, 3, col);
+      p.setDepth(this.sprite.depth - 2);
+      this.scene.tweens.add({
+        targets: p,
+        y: p.y - (4 + Math.random() * 6),
+        alpha: 0,
+        duration: 300 + Math.random() * 200,
+        ease: 'Linear',
+        onComplete: () => p.destroy()
+      });
+    }
+  }
+
+  measureSpeed() {
+    let effSpeed = this.speed;
+    const st = this._store ? this._store.getState() : null;
+    if (st?.energy && st.energy.current === 0) {
+      effSpeed *= (this.config.energy?.exhaustedSpeedMultiplier ?? 0.7);
+    }
+    if (this.isMounted) {
+      effSpeed *= (this.config.vehicle?.speedMultiplier ?? 1.8);
+    }
+    return effSpeed;
   }
 
   update(delta, colliders) {
@@ -87,6 +197,13 @@ export class PlayerController {
   }
 
   _handleInput(delta, colliders) {
+    if (this.isMounting) {
+      this.vx = 0;
+      this.vy = 0;
+      this.moving = false;
+      return;
+    }
+
     const up    = this.cursors.up.isDown    || this.wasd.up.isDown;
     const down  = this.cursors.down.isDown  || this.wasd.down.isDown;
     const left  = this.cursors.left.isDown  || this.wasd.left.isDown;
@@ -172,12 +289,21 @@ export class PlayerController {
   }
 
   _drainGasoline(delta) {
-    if (!this._store || !this.moving) return;
-    const state = this._store.getState();
-    const gasoline = state.gasoline ?? 100;
-    const newGas = Math.max(0, gasoline - this.gasolineDrainRate * delta);
-    if (Math.abs(newGas - gasoline) > 0.05) {
+    if (!this._store) return;
+    // Only motor riding drains gasoline (Rule 75 §1: 2% per 5s of moving)
+    if (!this.isMounted || !this.moving) return;
+
+    this._motorFuelAccumulatorMs += delta;
+    if (this._motorFuelAccumulatorMs >= 5000) {
+      const ticks = Math.floor(this._motorFuelAccumulatorMs / 5000);
+      this._motorFuelAccumulatorMs %= 5000;
+      const state = this._store.getState();
+      const gasoline = state.gasoline ?? 100;
+      const newGas = Math.max(0, gasoline - (ticks * 2));
       this._store.setState({ gasoline: newGas });
+      if (newGas <= 0) {
+        this.dismount('Bensin habis! Dorong atau isi bensin di SPBU.');
+      }
     }
   }
 
@@ -200,14 +326,28 @@ export class PlayerController {
       this.sprite.setFlipX(true); // Mirrored left
     }
 
-    // Tahap A walk bounce: vertical oscillation when moving (~8Hz)
-    if (this.moving) {
-      this.walkTimer += delta * 0.018; // approx 8 Hz
-      const bounceOffset = Math.abs(Math.sin(this.walkTimer)) * 3;
-      this.sprite.setDisplayOrigin(0.5, 64 + bounceOffset);
-    } else {
+    if (this.isMounted) {
       this.walkTimer = 0;
       this.sprite.setDisplayOrigin(0.5, 64);
+      if (this._bikeUnderlay) {
+        this._bikeUnderlay.setPosition(this.sprite.x, this.sprite.y + 2);
+        this._bikeUnderlay.setDepth(this.sprite.depth - 1);
+        this._bikeUnderlay.setFlipX(this.facing === 'right');
+      }
+      // Subtle 1px engine vibration when moving
+      if (this.moving) {
+        this.sprite.y += (Math.random() > 0.5 ? 0.5 : -0.5);
+      }
+    } else {
+      // Tahap A walk bounce: vertical oscillation when moving (~8Hz)
+      if (this.moving) {
+        this.walkTimer += delta * 0.018; // approx 8 Hz
+        const bounceOffset = Math.abs(Math.sin(this.walkTimer)) * 3;
+        this.sprite.setDisplayOrigin(0.5, 64 + bounceOffset);
+      } else {
+        this.walkTimer = 0;
+        this.sprite.setDisplayOrigin(0.5, 64);
+      }
     }
   }
 
