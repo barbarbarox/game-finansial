@@ -144,17 +144,28 @@ export class PlayerController {
   }
 
   _updateVehicleAppearance(mounted) {
+    const gender = this._store?.getState()?.character?.gender || 'm';
+    const riderKey = gender === 'f' ? 'char_rider_f' : 'char_rider_m';
+
     if (mounted) {
-      if (!this._bikeUnderlay && this.scene.textures.exists('prop_motor_parkir')) {
-        this._bikeUnderlay = this.scene.add.sprite(this.sprite.x, this.sprite.y + 2, 'prop_motor_parkir');
-        this._bikeUnderlay.setOrigin(0.5, 1.0);
-        this._bikeUnderlay.setScale(0.85);
-      }
-      if (this._bikeUnderlay) {
-        this._bikeUnderlay.setVisible(true);
-        this._bikeUnderlay.setDepth(this.sprite.depth - 1);
+      if (this.scene.textures.exists(riderKey)) {
+        this.sprite.setTexture(riderKey);
+        if (this._bikeUnderlay) this._bikeUnderlay.setVisible(false);
+      } else {
+        if (!this._bikeUnderlay && this.scene.textures.exists('prop_motor_parkir')) {
+          this._bikeUnderlay = this.scene.add.sprite(this.sprite.x, this.sprite.y + 2, 'prop_motor_parkir');
+          this._bikeUnderlay.setOrigin(0.5, 1.0);
+          this._bikeUnderlay.setScale(0.85);
+        }
+        if (this._bikeUnderlay) {
+          this._bikeUnderlay.setVisible(true);
+          this._bikeUnderlay.setDepth(this.sprite.depth - 1);
+        }
       }
     } else {
+      if (this.scene.textures.exists(this.textureKey)) {
+        this.sprite.setTexture(this.textureKey);
+      }
       if (this._bikeUnderlay) {
         this._bikeUnderlay.setVisible(false);
       }

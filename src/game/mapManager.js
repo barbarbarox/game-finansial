@@ -91,11 +91,19 @@ export class MapManager {
     // Position player at spawn
     this._positionPlayer(layout, spawnTarget);
 
-    // Update camera bounds
+    // Update camera bounds (User feedback: provide camera padding so room corners are never obscured by HUD)
     const tileSize = layout.world?.tileSize || 32;
     const mapW = (layout.world?.widthTiles || 40) * tileSize;
     const mapH = (layout.world?.heightTiles || 24) * tileSize;
-    this.scene.cameras.main.setBounds(0, 0, mapW, mapH);
+
+    if (layout.type === 'interior') {
+      const padX = tileSize * 8; // 256px padding
+      const padY = tileSize * 5; // 160px padding
+      this.scene.cameras.main.setBounds(-padX, -padY, mapW + padX * 2, mapH + padY * 2);
+    } else {
+      this.scene.cameras.main.setBounds(0, 0, mapW, mapH);
+    }
+
     if (this.scene._player) {
       this.scene.cameras.main.startFollow(this.scene._player.sprite, true, 0.1, 0.1);
     }
@@ -220,10 +228,10 @@ export class MapManager {
     const mapW = (layout.world?.widthTiles || 24) * tileSize;
     const mapH = (layout.world?.heightTiles || 18) * tileSize;
 
-    // Full void background — covers any exterior tiles underneath
+    // Full void background — covers any exterior tiles underneath and margin padding
     const bg = this.scene.add.graphics();
     bg.fillStyle(0x0a0f1a, 1.0);
-    bg.fillRect(0, 0, mapW, mapH);
+    bg.fillRect(-2000, -2000, mapW + 4000, mapH + 4000);
     bg.setDepth(-200);
     this._mapObjects.push(bg);
 

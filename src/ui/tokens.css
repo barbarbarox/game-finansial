@@ -130,6 +130,11 @@ body {
   gap: 4px;
   width: 224px;
   flex-shrink: 0;
+  transition: opacity 0.25s ease;
+}
+
+.hm-status-widget:hover {
+  opacity: 0.35;
 }
 
 /* Day tab on top of the widget */

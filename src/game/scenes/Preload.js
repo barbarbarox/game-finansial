@@ -156,6 +156,8 @@ export class Preload extends Phaser.Scene {
 
     this.load.image('portrait_player_m', 'assets/portraits/portrait_player_m.png');
     this.load.image('portrait_player_f', 'assets/portraits/portrait_player_f.png');
+    this.load.spritesheet('char_rider_m', 'assets/characters/char_rider_m.png', { frameWidth: 48, frameHeight: 64 });
+    this.load.spritesheet('char_rider_f', 'assets/characters/char_rider_f.png', { frameWidth: 48, frameHeight: 64 });
     this.load.image('icon_motor', 'assets/icons/icon_motor.png');
     this.load.image('prop_motor_parkir', 'assets/furniture/props/prop_motor_parkir.png');
 
