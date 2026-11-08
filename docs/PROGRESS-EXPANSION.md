@@ -15,7 +15,7 @@ Kapabilitas gambar: `image-generator` subagent (Gemini Image API) aktif | Tag pr
 ## Log gerbang (terbaru di atas)
 | Tanggal | Gerbang | Hasil | Bukti (file/tangkapan layar/log) | Commit |
 |---|---|---|---|---|
-| 2026-11-08 | E3 Dialog dengan potret | LULUS | 21/21 dialogue-test.html lulus; 4 skema dialog valid; sorotan pembicara aktif (+6px) & redup non-pembicara; menu pilihan vertikal + opsi nonaktif; tangkapan layar desktop & tablet | (commit E3) |
+| 2026-11-08 | E3 Dialog dengan potret | LULUS | 21/21 dialogue-test.html lulus; 4 skema dialog valid; sorotan pembicara aktif (+6px) & redup non-pembicara; menu pilihan vertikal + opsi nonaktif; tangkapan layar desktop & tablet | 515af42 |
 | 2026-11-08 | E2 Kerangka peta interior | LULUS | 27/27 map-check.html lulus; 7 peta termuat (index.json + 6 layout interior + hub); MapManager transisi fade 200ms; verifikasi timbal balik pintu; tangkapan layar 7 peta | bca2119 |
 | 2026-11-08 | E1 Sistem waktu & aktivitas | LULUS | 12/12 test time-test.html lulus; 6/6 self-test.html lulus; tick live real-time terverifikasi; 4 tangkapan layar fase HUD (pagi, siang, sore, malam); advanceTime(60) presisi 60 mnt | 69f3817 |
 | 2026-11-08 | E0 Audit, patch rules, preflight | LULUS | Audit UI manual terjaga di DECISIONS.md (D05); EXPANSION-PATCH diterapkan; self-test.html 6 invarian LULUS 100%; tag git `pre-expansion` dibuat | 287dbee |
