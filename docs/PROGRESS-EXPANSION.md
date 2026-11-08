@@ -15,7 +15,7 @@ Kapabilitas gambar: `image-generator` subagent (Gemini Image API) aktif | Tag pr
 ## Log gerbang (terbaru di atas)
 | Tanggal | Gerbang | Hasil | Bukti (file/tangkapan layar/log) | Commit |
 |---|---|---|---|---|
-| 2026-11-08 | E1 Sistem waktu & aktivitas | LULUS | 12/12 test time-test.html lulus; 6/6 self-test.html lulus; tick live real-time terverifikasi; 4 tangkapan layar fase HUD (pagi, siang, sore, malam); advanceTime(60) presisi 60 mnt | (commit E1) |
+| 2026-11-08 | E1 Sistem waktu & aktivitas | LULUS | 12/12 test time-test.html lulus; 6/6 self-test.html lulus; tick live real-time terverifikasi; 4 tangkapan layar fase HUD (pagi, siang, sore, malam); advanceTime(60) presisi 60 mnt | 69f3817 |
 | 2026-11-08 | E0 Audit, patch rules, preflight | LULUS | Audit UI manual terjaga di DECISIONS.md (D05); EXPANSION-PATCH diterapkan; self-test.html 6 invarian LULUS 100%; tag git `pre-expansion` dibuat | 287dbee |
 
 ## Aset placeholder tersisa
