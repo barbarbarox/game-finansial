@@ -2154,6 +2154,238 @@ body.lj-light .time-bar-track {
   color: #1F2A44;
 }
 
+/* ========================================================
+   Shop & Vendor Panel (Rule 79)
+   ======================================================== */
+.shop-modal-panel {
+  max-width: 600px;
+  width: 92%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-subhead {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(42, 54, 84, 0.6);
+  border: 1px solid #34456B;
+  border-radius: 6px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+}
+
+.shop-vendor-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.shop-vendor-img {
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  border: 1px solid #D9A441;
+  image-rendering: pixelated;
+  background: #1F2A44;
+}
+
+.shop-cash-badge {
+  color: #D9A441;
+  font-weight: bold;
+  font-size: 13px;
+}
+
+.shop-tabs {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #34456B;
+  padding-bottom: 6px;
+  overflow-x: auto;
+}
+
+.shop-tab-btn {
+  background: #2A3654;
+  color: #A4B2C8;
+  border: 1px solid #34456B;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.shop-tab-btn.active {
+  background: #D9A441;
+  color: #1F2A44;
+  border-color: #D9A441;
+}
+
+.shop-items-container {
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-right: 4px;
+  max-height: 48vh;
+}
+
+.shop-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #2A3654;
+  border: 1px solid #34456B;
+  border-radius: 6px;
+  padding: 8px 12px;
+  gap: 10px;
+}
+
+.shop-item-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.shop-item-icon {
+  width: 32px;
+  height: 32px;
+  image-rendering: pixelated;
+  object-fit: contain;
+}
+
+.shop-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.shop-item-name {
+  font-size: 12px;
+  font-weight: bold;
+  color: #F7EEDA;
+}
+
+.shop-item-desc {
+  font-size: 11px;
+  color: #A5BE93;
+}
+
+.shop-item-price {
+  font-size: 12px;
+  font-weight: bold;
+  color: #D9A441;
+}
+
+.shop-item-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.shop-qty-box {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #1F2A44;
+  border: 1px solid #34456B;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
+.shop-qty-btn {
+  background: transparent;
+  border: none;
+  color: #D9A441;
+  font-weight: bold;
+  font-size: 13px;
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shop-qty-text {
+  font-size: 12px;
+  min-width: 16px;
+  text-align: center;
+  color: #F7EEDA;
+}
+
+.shop-mode-select {
+  background: #1F2A44;
+  color: #F7EEDA;
+  border: 1px solid #34456B;
+  border-radius: 4px;
+  font-size: 10px;
+  padding: 3px 6px;
+}
+
+.shop-buy-btn {
+  background: #6F9262;
+  color: #F7EEDA;
+  border: 1px solid #82A974;
+  border-radius: 4px;
+  padding: 5px 12px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.shop-buy-btn:hover:not(:disabled) {
+  background: #7DA470;
+  border-color: #D9A441;
+}
+
+.shop-buy-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #4A566E;
+  border-color: #34456B;
+}
+
+.shop-fuel-presets {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.shop-fuel-btn {
+  background: #2A3654;
+  border: 1px solid #D9A441;
+  border-radius: 6px;
+  padding: 10px;
+  color: #F7EEDA;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.shop-fuel-btn:hover:not(:disabled) {
+  background: #34456B;
+  border-color: #F7EEDA;
+}
+
+.shop-fuel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.shop-fuel-btn-price {
+  color: #D9A441;
+  font-size: 11px;
+}
+
 @media (max-width: 600px) {
   .hud-hotbar-container {
     bottom: 8px;

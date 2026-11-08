@@ -4,3 +4,4 @@
 - **Hasil Aktual:** Tidak ada popup aksi yang muncul (`.item-action-popup` bernilai null / tidak ditemukan di DOM).
 - **Tangkapan Layar:** `docs/regression/a5_item_popup_red.png`
 - **Akar Masalah:** `hotbar.js` hanya menampilkan slot pasif atau shortcut angka tanpa listener klik yang menampilkan modal/popup menu Gunakan / Pindahkan / Buang.
+

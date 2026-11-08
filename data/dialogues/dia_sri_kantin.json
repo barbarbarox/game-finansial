@@ -9,6 +9,16 @@
       "text": "Mau beli makan siang apa nak {player}? Semuanya higienis dan harganya pas di kantong siswa.",
       "choices": [
         {
+          "text": "Beli sesuatu (Buka Menu Kantin)",
+          "next": null,
+          "effects": [
+            {
+              "type": "open_shop",
+              "shopId": "kantin_sekolah"
+            }
+          ]
+        },
+        {
           "text": "Beli Nasi Kuning Komplit (Rp12.000)",
           "requires": {
             "minCash": 12000
@@ -21,6 +31,11 @@
               "categoryId": "BEBAN_JAJAN",
               "amount": 12000,
               "description": "Makan siang nasi kuning kantin"
+            },
+            {
+              "type": "inventory_add",
+              "itemId": "nasi_kuning",
+              "count": 1
             },
             {
               "type": "start_activity",
@@ -41,6 +56,11 @@
               "categoryId": "BEBAN_JAJAN",
               "amount": 3000,
               "description": "Minum teh manis kantin"
+            },
+            {
+              "type": "inventory_add",
+              "itemId": "es_teh",
+              "count": 1
             }
           ]
         },

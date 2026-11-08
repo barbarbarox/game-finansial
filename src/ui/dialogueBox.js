@@ -5,6 +5,7 @@
 
 import { getCash, addEntry, createExpenseEntry, createAllowanceEntry } from '../domain/ledger.js';
 import { refuelPercent, refuelAmount } from '../domain/vehicle.js';
+import { addItem } from '../domain/inventory.js';
 import { showTimeSkip } from './timeSkip.js';
 
 let dialogueContainer = null;
@@ -395,10 +396,21 @@ function executeEffects(effects = []) {
         break;
       }
 
+      case 'inventory_add':
+      case 'add_item': {
+        const res = addItem(state.inventory, eff.itemId, eff.count || 1);
+        if (res.ok) {
+          state = { ...state, inventory: res.inventory };
+          store.setState({ inventory: res.inventory });
+        }
+        break;
+      }
+
       case 'open_shop':
       case 'openShop': {
         const shopId = eff.shopId || eff.targetShop;
         if (shopId) {
+          closeDialogue();
           document.dispatchEvent(new CustomEvent('lj:openShop', { detail: { shopId, category: eff.category } }));
         }
         break;

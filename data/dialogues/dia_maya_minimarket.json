@@ -10,6 +10,16 @@
       "text": "Selamat datang di Minimarket Harmoni! Mau belanja cemilan, alat tulis, atau fotokopi tugas sekolah dek?",
       "choices": [
         {
+          "text": "Beli sesuatu (Buka Katalog Belanja Minimarket)",
+          "next": null,
+          "effects": [
+            {
+              "type": "open_shop",
+              "shopId": "minimarket"
+            }
+          ]
+        },
+        {
           "text": "Beli Roti & Air Mineral (Rp8.000)",
           "requires": {
             "minCash": 8000
@@ -22,6 +32,11 @@
               "categoryId": "BEBAN_JAJAN",
               "amount": 8000,
               "description": "Beli roti dan air mineral di minimarket"
+            },
+            {
+              "type": "inventory_add",
+              "itemId": "roti_isi",
+              "count": 1
             },
             {
               "type": "start_activity",

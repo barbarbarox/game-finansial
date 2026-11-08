@@ -581,15 +581,21 @@ export class World extends Phaser.Scene {
       return;
     }
 
-    // 4. Savings / Shop / Panel
+    // 4. Shop / Vendor / Savings Modal (Rule 79)
     if (int.action === 'savings' || int.type === 'savings') {
-      createShopModal(uiContainer, store, 'rumah', config, null);
+      createShopModal(uiContainer, store, 'rumah');
       return;
     }
 
-    if (int.locationId) {
-      if (int.openingHoursId || DEFAULT_OPENING_HOURS[int.locationId]) {
-        const checkId = int.openingHoursId || int.locationId;
+    if (int.action === 'refuel' || int.activityId === 'isi_bensin') {
+      createShopModal(uiContainer, store, 'spbu');
+      return;
+    }
+
+    const shopId = int.shopId || (int.type === 'shop' ? int.panel || int.id : null) || int.locationId;
+    if (shopId) {
+      if (int.openingHoursId || DEFAULT_OPENING_HOURS[shopId]) {
+        const checkId = int.openingHoursId || shopId;
         const clock = store?.getState()?.clock || {};
         const status = isLocationOpen(checkId, clock);
         if (!status.open) {
@@ -603,7 +609,11 @@ export class World extends Phaser.Scene {
           return;
         }
       }
-      createShopModal(uiContainer, store, int.locationId, config, null);
+      const canonicalShopId = shopId === 'kantin' ? 'kantin_sekolah'
+        : (shopId === 'gamecenter' ? 'game_center_kafe'
+        : (shopId === 'kosmetik' ? 'toko_kosmetik' : shopId));
+      createShopModal(uiContainer, store, canonicalShopId, { categoryFilter: int.categoryFilter || null });
+      return;
     }
   }
 

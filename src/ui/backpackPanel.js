@@ -164,3 +164,4 @@ function renderGrid() {
     grid.appendChild(slotEl);
   });
 }
+

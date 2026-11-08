@@ -4,8 +4,8 @@
 
 | ID | Permintaan Pengguna | Langkah UI yang Diuji | Hasil yang Diharapkan | Status | Nama Tes / Bukti | Tangkapan Layar |
 |---|---|---|---|---|---|---|
-| A1 | Membeli makanan/minuman → item masuk inventaris | Di kantin, minimarket, kafe game center: buka vendor → "Beli sesuatu" → beli item | Ledger tercatat, Kas berkurang tepat, item muncul di hotbar/tas (DOM + state) | BELUM (H0) | `test_h0_red_suite.py` | `docs/regression/a1_shop_purchase_red.png` |
-| A2 | Menu pilihan item beli tersedia | Dialog vendor DAN interaktif rak/kulkas/etalase/konter membuka panel toko; SPBU membuka menu nominal | Panel menampilkan item dengan ikon, harga, efek; tab kategori; jumlah 1–5 | BELUM (H0) | `test_h0_red_suite.py` | `docs/regression/a2_shop_menu_red.png` |
+| A1 | Membeli makanan/minuman → item masuk inventaris | Di kantin, minimarket, kafe game center: buka vendor → "Beli sesuatu" → beli item | Ledger tercatat, Kas berkurang tepat, item muncul di hotbar/tas (DOM + state) | PASS (H4) | `tools/test_h4_shops.py` | `docs/regression/a1_shop_purchase_green.png` |
+| A2 | Menu pilihan item beli tersedia | Dialog vendor DAN interaktif rak/kulkas/etalase/konter membuka panel toko; SPBU membuka menu nominal | Panel menampilkan item dengan ikon, harga, efek; tab kategori; jumlah 1–5 | PASS (H4) | `tools/test_h4_shops.py` | `docs/regression/a2_shop_menu_green.png` |
 | A3 | Hotbar penuh → ransel menampung; hotbar kosong → terisi otomatis | Beli 7 item; pakai 1 dari hotbar | 5 di hotbar + 2 di ransel; setelah pakai, slot terisi otomatis dari ransel; invarian properti hijau | PASS (H3) | `tests/inventory_property_test.mjs` (500 ops), `tools/test_h3_backpack.py` | `docs/regression/a3_backpack_refill_green.png` |
 | A4 | Tombol ransel di sebelah inventaris | Klik tombol ransel (dan tombol B) | Panel ransel 20 slot terbuka; lencana jumlah benar; Esc menutup | PASS (H3) | `tools/test_h3_backpack.py` | `docs/regression/a4_backpack_button_green.png` |
 | A5 | Item disentuh → opsi untuk menggunakannya | Klik slot hotbar dan slot ransel | Popup: Gunakan / Pindahkan / Buang; Gunakan menaikkan energi dan mengurangi jumlah; Buang meminta konfirmasi; 1–5 pakai cepat | PASS (H3) | `tools/test_h3_backpack.py` | `docs/regression/a5_item_popup_green.png` |
@@ -17,7 +17,8 @@
 | A11 | Keaslian aset | Audit piksel + tinjauan visual tiap interior | 0 aset placeholder berstatus ready; contact sheet per peta | PASS (Audit H0) | `tools/audit_asset_authenticity.py` | 301 file, 0 placeholder boks |
 
 **Ringkasan Status Saat Ini:**
-- **PASS:** 1 (A11 Audit Keaslian Aset)
-- **FAIL (Merah Reproduksi):** A1, A2, A3, A5, A7, A8, A9 (Diverifikasi gagal lewat tes merah UI nyata di H0)
-- **BELUM:** A4, A6, A10 (Akan diuji di gerbang H1–H6)
+- **PASS (9/11):** A1, A2, A3, A4, A5, A6, A8, A9, A11
+- **PENDING / AKTIF (2/11):**
+  - A7: Gerak dengan klik titik tujuan (Gate H5)
+  - A10: Full regression suite & E2E (Gate H6)
 

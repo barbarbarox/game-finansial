@@ -10,6 +10,16 @@
       "text": "Yo! Selamat datang di Game Center Harmoni. Mau main arcade balap, rhythm game, atau nonton turnamen?",
       "choices": [
         {
+          "text": "Beli cemilan/minuman kafe",
+          "next": null,
+          "effects": [
+            {
+              "type": "open_shop",
+              "shopId": "game_center_kafe"
+            }
+          ]
+        },
+        {
           "text": "Beli Koin Main Arcade 1 Jam (Rp20.000)",
           "requires": {
             "minCash": 20000

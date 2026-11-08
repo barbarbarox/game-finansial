@@ -195,3 +195,4 @@ function showFloatingToast(text) {
   document.body.appendChild(toast);
   setTimeout(() => toast.remove(), 1800);
 }
+

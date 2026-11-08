@@ -10,6 +10,16 @@
       "text": "Selamat datang di SPBU Harmoni! Mulai dari nol ya dek. Mau isi bensin atau cek ban motor?",
       "choices": [
         {
+          "text": "Isi Bensin (Pilih Nominal / Full Tank)",
+          "next": null,
+          "effects": [
+            {
+              "type": "open_shop",
+              "shopId": "spbu"
+            }
+          ]
+        },
+        {
           "text": "Isi Bensin Pertalite 2 Liter (Rp20.000)",
           "requires": {
             "minCash": 20000

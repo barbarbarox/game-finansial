@@ -4,3 +4,4 @@
 - **Hasil Aktual:** Nilai bensin di HUD tetap 40%, lebar bar bensin tetap 40%, dan `state.gasoline` tetap bernilai 40. Uang berkurang Rp20.000 di buku kas.
 - **Tangkapan Layar:** `docs/regression/a9_gas_bar_red.png`
 - **Akar Masalah:** Pilihan dialog hanya memanggil `ledger_expense` dan `start_activity: "isi_bensin_motor"` tanpa fungsi refuel domain, dan `hud.js` tidak berlangganan event domain `fuelChanged`.
+

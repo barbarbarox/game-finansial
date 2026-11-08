@@ -10,6 +10,16 @@
       "text": "Hai! Selamat datang di Toko Kosmetik Cantik. Ada perawatan kulit dan pelembab harian ramah kantong siswa lho.",
       "choices": [
         {
+          "text": "Beli sesuatu (Buka Katalog Kosmetik)",
+          "next": null,
+          "effects": [
+            {
+              "type": "open_shop",
+              "shopId": "toko_kosmetik"
+            }
+          ]
+        },
+        {
           "text": "Beli Lip Balm & Sunscreen Remaja (Rp25.000)",
           "requires": {
             "minCash": 25000

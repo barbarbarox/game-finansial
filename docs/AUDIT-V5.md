@@ -76,3 +76,4 @@
   - Dari 301 file PNG pada direktori aset, **0 aset furnitur berupa kotak placeholder**.
   - Seluruh 46 perabot yang sebelumnya bermasalah telah diganti dengan sprite pixel art 16-bit asli transparan dengan palet warna kaya.
   - Aset dengan warna rendah hanya ikon energi kecil ($16\times 16$) dan prop bangku jalanan sederhana.
+
