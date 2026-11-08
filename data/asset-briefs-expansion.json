@@ -1,0 +1,922 @@
+{
+ "version": 1,
+ "styleRef": [
+  "docs/STYLE-BIBLE.md",
+  "docs/STYLE-BIBLE-INTERIOR.md"
+ ],
+ "defaults": {
+  "maxRetries": 3,
+  "chromaKey": "#FF00FF",
+  "rawDir": "assets/_raw",
+  "rejectedDir": "assets/_rejected",
+  "uniformScalePerSheet": true
+ },
+ "interiorStyleLock": [
+  "furn_sheet_kamar_pemain",
+  "portrait_sheet_player"
+ ],
+ "generationOrder": [
+  "interior_style_lock",
+  "CHECKPOINT_B",
+  "home",
+  "school",
+  "portraits",
+  "minimarket",
+  "kosmetik",
+  "spbu",
+  "game_center"
+ ],
+ "notes": "Prompt akhir = STYLE BLOCK + subject + NEGATIVE BLOCK. Style lock interior = furn_sheet_kamar_pemain + portrait_sheet_player + render kamar pemain (lantai/dinding prosedural + furnitur) -> CHECKPOINT B manusia. Output ke assets/furniture/ dan assets/portraits/.",
+ "assets": [
+  {
+   "id": "furn_sheet_kamar_pemain",
+   "group": "home",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_kasur_single",
+    "furn_meja_belajar",
+    "furn_kursi_belajar",
+    "furn_lemari_pakaian",
+    "furn_rak_buku",
+    "furn_nakas_lampu"
+   ],
+   "final": {
+    "sizes": {
+     "furn_kasur_single": [
+      64,
+      96
+     ],
+     "furn_meja_belajar": [
+      96,
+      64
+     ],
+     "furn_kursi_belajar": [
+      32,
+      48
+     ],
+     "furn_lemari_pakaian": [
+      64,
+      96
+     ],
+     "furn_rak_buku": [
+      64,
+      96
+     ],
+     "furn_nakas_lampu": [
+      32,
+      48
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six furniture items for a teenager's bedroom in a modest Indonesian home: single bed with cream blanket and pillow (headboard at the top), wooden study desk with a few abstract books, wooden desk chair, tall wooden wardrobe, bookshelf with abstract colored books, small bedside table with a lamp. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_kamar_ortu",
+   "group": "home",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_kasur_besar",
+    "furn_lemari_besar",
+    "furn_meja_rias",
+    "furn_kipas_berdiri"
+   ],
+   "final": {
+    "sizes": {
+     "furn_kasur_besar": [
+      96,
+      112
+     ],
+     "furn_lemari_besar": [
+      96,
+      96
+     ],
+     "furn_meja_rias": [
+      64,
+      80
+     ],
+     "furn_kipas_berdiri": [
+      32,
+      64
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Four furniture items for parents' bedroom: double bed with muted green bedspread, large wooden wardrobe with two doors, dressing table with a blank mirror, standing electric fan. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_ruang_tamu",
+   "group": "home",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_sofa_3dudukan",
+    "furn_sofa_single",
+    "furn_meja_tamu",
+    "furn_tv_dan_rak",
+    "furn_rak_pajangan",
+    "furn_karpet_tamu"
+   ],
+   "final": {
+    "sizes": {
+     "furn_sofa_3dudukan": [
+      128,
+      64
+     ],
+     "furn_sofa_single": [
+      64,
+      64
+     ],
+     "furn_meja_tamu": [
+      64,
+      48
+     ],
+     "furn_tv_dan_rak": [
+      96,
+      64
+     ],
+     "furn_rak_pajangan": [
+      64,
+      96
+     ],
+     "furn_karpet_tamu": [
+      128,
+      96
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six living room items: three-seat fabric sofa in muted green, single armchair, low wooden coffee table, old flat-screen TV on a wooden cabinet (screen dark and blank), display shelf with abstract ornaments, a woven rug seen from above at an angle. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_dapur",
+   "group": "home",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_kompor_counter",
+    "furn_kulkas",
+    "furn_meja_makan",
+    "furn_kursi_makan",
+    "furn_rak_piring",
+    "furn_wastafel_dapur"
+   ],
+   "final": {
+    "sizes": {
+     "furn_kompor_counter": [
+      96,
+      64
+     ],
+     "furn_kulkas": [
+      64,
+      96
+     ],
+     "furn_meja_makan": [
+      96,
+      64
+     ],
+     "furn_kursi_makan": [
+      32,
+      48
+     ],
+     "furn_rak_piring": [
+      64,
+      80
+     ],
+     "furn_wastafel_dapur": [
+      64,
+      64
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six kitchen and dining items in a modest Indonesian home: kitchen counter with a gas stove and a rice cooker, cream refrigerator, wooden dining table with a simple tablecloth, wooden dining chair, dish rack shelf, kitchen sink with a faucet. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_kamar_mandi",
+   "group": "home",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_toilet",
+    "furn_bak_mandi",
+    "furn_wastafel_cermin",
+    "furn_rak_handuk",
+    "furn_ember"
+   ],
+   "final": {
+    "sizes": {
+     "furn_toilet": [
+      32,
+      48
+     ],
+     "furn_bak_mandi": [
+      64,
+      64
+     ],
+     "furn_wastafel_cermin": [
+      64,
+      80
+     ],
+     "furn_rak_handuk": [
+      32,
+      64
+     ],
+     "furn_ember": [
+      32,
+      32
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Five bathroom items, neutral and tasteful: a plain ceramic toilet, a tiled water basin (bak mandi) with a scoop (gayung), a washbasin with a blank mirror above, a towel rack with a folded towel, a plastic bucket. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_pintu_dekor",
+   "group": "home",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_pintu_depan",
+    "furn_pintu_kamar",
+    "furn_jendela",
+    "furn_jam_dinding",
+    "furn_bingkai_kosong"
+   ],
+   "final": {
+    "sizes": {
+     "furn_pintu_depan": [
+      64,
+      96
+     ],
+     "furn_pintu_kamar": [
+      64,
+      96
+     ],
+     "furn_jendela": [
+      64,
+      64
+     ],
+     "furn_jam_dinding": [
+      32,
+      32
+     ],
+     "furn_bingkai_kosong": [
+      32,
+      32
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Five wall and door items: wooden front door with a small window, interior wooden room door, window with curtains, round wall clock (no numbers, abstract ticks only), empty picture frame with a plain cream interior. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_kelas",
+   "group": "school",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_meja_siswa_kursi",
+    "furn_meja_guru",
+    "furn_papan_tulis",
+    "furn_lemari_kelas",
+    "furn_tempat_sampah_kelas",
+    "furn_poster_kosong"
+   ],
+   "final": {
+    "sizes": {
+     "furn_meja_siswa_kursi": [
+      64,
+      64
+     ],
+     "furn_meja_guru": [
+      96,
+      64
+     ],
+     "furn_papan_tulis": [
+      128,
+      64
+     ],
+     "furn_lemari_kelas": [
+      64,
+      96
+     ],
+     "furn_tempat_sampah_kelas": [
+      32,
+      32
+     ],
+     "furn_poster_kosong": [
+      64,
+      48
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six classroom items for an Indonesian senior high school: student desk with attached chair, teacher desk, green blackboard on the wall (blank, no writing), tall wooden classroom cabinet, small waste bin, blank wall poster. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_kantin",
+   "group": "school",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_counter_kantin",
+    "furn_meja_kantin",
+    "furn_bangku_kantin",
+    "furn_kulkas_minuman",
+    "furn_dispenser_galon",
+    "furn_rak_snack"
+   ],
+   "final": {
+    "sizes": {
+     "furn_counter_kantin": [
+      160,
+      80
+     ],
+     "furn_meja_kantin": [
+      96,
+      64
+     ],
+     "furn_bangku_kantin": [
+      96,
+      32
+     ],
+     "furn_kulkas_minuman": [
+      64,
+      96
+     ],
+     "furn_dispenser_galon": [
+      32,
+      64
+     ],
+     "furn_rak_snack": [
+      64,
+      80
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six school canteen items: long food counter with a glass display of generic fried snacks and bowls (no labels), long wooden canteen table, long wooden bench, glass-door drinks refrigerator with generic unlabeled bottles, water dispenser with a gallon, snack rack with generic unlabeled packages. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_lobby_perpus",
+   "group": "school",
+   "priority": 2,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_papan_pengumuman",
+    "furn_bangku_tunggu",
+    "furn_rak_buku_perpus",
+    "furn_meja_baca",
+    "furn_vas_tanaman"
+   ],
+   "final": {
+    "sizes": {
+     "furn_papan_pengumuman": [
+      96,
+      64
+     ],
+     "furn_bangku_tunggu": [
+      96,
+      32
+     ],
+     "furn_rak_buku_perpus": [
+      64,
+      96
+     ],
+     "furn_meja_baca": [
+      96,
+      64
+     ],
+     "furn_vas_tanaman": [
+      32,
+      48
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Five school lobby and library items: cork-style notice board (blank), wooden waiting bench, tall library bookshelf with abstract books, reading table with two chairs, potted indoor plant. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_minimarket",
+   "group": "minimarket",
+   "priority": 2,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_rak_gondola",
+    "furn_rak_alat_tulis",
+    "furn_kulkas_minuman_besar",
+    "furn_kasir_counter",
+    "furn_mesin_fotokopi",
+    "furn_keranjang_belanja"
+   ],
+   "final": {
+    "sizes": {
+     "furn_rak_gondola": [
+      96,
+      64
+     ],
+     "furn_rak_alat_tulis": [
+      64,
+      80
+     ],
+     "furn_kulkas_minuman_besar": [
+      64,
+      96
+     ],
+     "furn_kasir_counter": [
+      96,
+      64
+     ],
+     "furn_mesin_fotokopi": [
+      64,
+      64
+     ],
+     "furn_keranjang_belanja": [
+      32,
+      32
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six minimarket items: aisle shelf with generic unlabeled packages, stationery rack with abstract notebooks and pens, tall glass-door drinks refrigerator, cashier counter with a small register (screen blank), photocopier, stack of shopping baskets. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_kosmetik",
+   "group": "kosmetik",
+   "priority": 2,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_etalase_kaca",
+    "furn_rak_dinding_kosmetik",
+    "furn_meja_cermin",
+    "furn_kasir_kecil",
+    "furn_kursi_tunggu"
+   ],
+   "final": {
+    "sizes": {
+     "furn_etalase_kaca": [
+      96,
+      64
+     ],
+     "furn_rak_dinding_kosmetik": [
+      64,
+      96
+     ],
+     "furn_meja_cermin": [
+      64,
+      80
+     ],
+     "furn_kasir_kecil": [
+      80,
+      64
+     ],
+     "furn_kursi_tunggu": [
+      32,
+      48
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Five cosmetics shop items: glass display counter with generic tubes and bottles in muted colors, wall shelf with generic bottles, vanity table with a blank mirror, small cashier counter, cushioned waiting chair. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_spbu",
+   "group": "spbu",
+   "priority": 2,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_dispenser_bbm",
+    "furn_kiosk_spbu",
+    "furn_rak_oli",
+    "furn_bangku_spbu"
+   ],
+   "final": {
+    "sizes": {
+     "furn_dispenser_bbm": [
+      48,
+      96
+     ],
+     "furn_kiosk_spbu": [
+      128,
+      96
+     ],
+     "furn_rak_oli": [
+      64,
+      80
+     ],
+     "furn_bangku_spbu": [
+      64,
+      32
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Four gas station items: a fuel dispenser pump with hose (no brand marks, no numbers on the display), a small cashier kiosk with a window, a shelf of generic unlabeled oil cans, a waiting bench. Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "furn_sheet_game_center",
+   "group": "game_center",
+   "priority": 2,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_arcade_a",
+    "furn_arcade_b",
+    "furn_meja_kafe",
+    "furn_kursi_kafe",
+    "furn_counter_kafe",
+    "furn_tv_besar"
+   ],
+   "final": {
+    "sizes": {
+     "furn_arcade_a": [
+      48,
+      96
+     ],
+     "furn_arcade_b": [
+      48,
+      96
+     ],
+     "furn_meja_kafe": [
+      48,
+      48
+     ],
+     "furn_kursi_kafe": [
+      32,
+      48
+     ],
+     "furn_counter_kafe": [
+      128,
+      64
+     ],
+     "furn_tv_besar": [
+      96,
+      64
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six game center and cafe items: retro arcade cabinet model A in navy with a blank dark screen, arcade cabinet model B in muted green with a blank dark screen, round cafe table, small cafe chair, cafe counter with generic cups, large wall TV on a stand (screen dark and blank). Items arranged left to right, clearly separated, drawn at consistent real-world scale relative to each other with the same visible pixel size, front-facing top-down 3/4 RPG view, whole items visible with a small margin, flat solid magenta #FF00FF background, no shadows on the background. All labels, screens, frames and book spines blank or abstract. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "dimsMultipleOf": 16
+   }
+  },
+  {
+   "id": "portrait_sheet_player",
+   "group": "portraits",
+   "priority": 1,
+   "kind": "portrait_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "portrait_player_m",
+    "portrait_player_f"
+   ],
+   "final": {
+    "width": 192,
+    "height": 256,
+    "facing": "right",
+    "mirrorForNpc": true,
+    "uniformScalePerSheet": true
+   },
+   "subject": "Two half-body portraits of the SAME two protagonists shown in the reference sprite sheets: the high-school boy and the high-school girl (dark brown hair, cream t-shirt, dark green backpack straps visible over the shoulders). Half-body portraits from head to waist, 3/4 view facing right, friendly neutral expression, arranged left to right with identical scale, flat solid magenta #FF00FF background. Colors and clothing must match the reference sprite sheets exactly. Match the art style, outline weight and palette of the reference image.",
+   "refs": [
+    "char_player_m_casual",
+    "char_player_f_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "identityColors": "from_sprite",
+    "noText": true
+   }
+  },
+  {
+   "id": "portrait_sheet_family",
+   "group": "portraits",
+   "priority": 2,
+   "kind": "portrait_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "portrait_ibu",
+    "portrait_ayah"
+   ],
+   "final": {
+    "width": 192,
+    "height": 256,
+    "facing": "right",
+    "mirrorForNpc": true,
+    "uniformScalePerSheet": true
+   },
+   "subject": "Two half-body portraits matching the reference NPC sprites: the mother (hair in a bun, cream blouse, terracotta apron) and the father (short black hair, muted green polo). Half-body portraits from head to waist, 3/4 view facing right, friendly neutral expression, arranged left to right with identical scale, flat solid magenta #FF00FF background. Colors and clothing must match the reference sprite sheets exactly. Match the art style, outline weight and palette of the reference image.",
+   "refs": [
+    "npc_sheet_family"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "identityColors": "from_sprite",
+    "noText": true
+   }
+  },
+  {
+   "id": "portrait_sheet_friends",
+   "group": "portraits",
+   "priority": 2,
+   "kind": "portrait_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "portrait_teman_l",
+    "portrait_teman_p"
+   ],
+   "final": {
+    "width": 192,
+    "height": 256,
+    "facing": "right",
+    "mirrorForNpc": true,
+    "uniformScalePerSheet": true
+   },
+   "subject": "Two half-body portraits matching the reference NPC sprites: a male and a female classmate in white and grey school uniform. Half-body portraits from head to waist, 3/4 view facing right, friendly neutral expression, arranged left to right with identical scale, flat solid magenta #FF00FF background. Colors and clothing must match the reference sprite sheets exactly. Match the art style, outline weight and palette of the reference image.",
+   "refs": [
+    "npc_sheet_friends"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "identityColors": "from_sprite",
+    "noText": true
+   }
+  },
+  {
+   "id": "portrait_sheet_vendors",
+   "group": "portraits",
+   "priority": 2,
+   "kind": "portrait_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "portrait_penjual_kantin",
+    "portrait_kasir_minimarket",
+    "portrait_penjaga_kosmetik",
+    "portrait_petugas_spbu",
+    "portrait_penjaga_game"
+   ],
+   "final": {
+    "width": 192,
+    "height": 256,
+    "facing": "right",
+    "mirrorForNpc": true,
+    "uniformScalePerSheet": true
+   },
+   "subject": "Five half-body portraits matching the reference NPC sprites: canteen vendor (apron and head cloth), minimarket cashier (muted green vest), cosmetics shop attendant (cream blouse, ponytail), gas station attendant (navy cap and vest), game center clerk (cream hoodie). No brand marks. Half-body portraits from head to waist, 3/4 view facing right, friendly neutral expression, arranged left to right with identical scale, flat solid magenta #FF00FF background. Colors and clothing must match the reference sprite sheets exactly. Match the art style, outline weight and palette of the reference image.",
+   "refs": [
+    "npc_sheet_vendors"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "identityColors": "from_sprite",
+    "noText": true
+   }
+  }
+ ]
+}
