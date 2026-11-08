@@ -1,7 +1,12 @@
 /**
- * hotbar.js — Bottom-center 5-slot item hotbar (Rule 74 §3).
- * Follows design in docs/reference/hotbar-reference.png and preserves user UI.
+ * hotbar.js — Bottom-center 5-slot item hotbar + Backpack Button (Rule 80).
+ * Anti-XSS: textContent only, no innerHTML.
  */
+
+import { normalizeInventory, getBackpackCount } from '../domain/inventory.js';
+import { showItemActionPopup } from './itemActionPopup.js';
+import { openBackpack, initBackpackPanel } from './backpackPanel.js';
+import { subscribe, DOMAIN_EVENTS } from '../domain/events.js';
 
 export function createHotbar(container, store, onUseItem) {
   const hotbarEl = document.createElement('div');
@@ -14,6 +19,10 @@ export function createHotbar(container, store, onUseItem) {
   tooltipEl.style.display = 'none';
   document.body.appendChild(tooltipEl);
 
+  let currentCatalog = {};
+  let currentInventory = normalizeInventory(store?.getState?.()?.inventory);
+
+  // 1. Five Hotbar Slots
   const slots = [];
   for (let i = 0; i < 5; i++) {
     const slot = document.createElement('button');
@@ -42,9 +51,12 @@ export function createHotbar(container, store, onUseItem) {
     badge.textContent = '1';
     slot.appendChild(badge);
 
-    // Click handler
+    // Click handler -> Item action popup (Rule 80 §4)
     slot.addEventListener('click', () => {
-      if (onUseItem) onUseItem(i);
+      const slotData = currentInventory.hotbar[i];
+      if (slotData && slotData.itemId) {
+        showItemActionPopup(slot, 'hotbar', i, slotData, store, currentCatalog);
+      }
     });
 
     // Tooltip handlers
@@ -57,11 +69,46 @@ export function createHotbar(container, store, onUseItem) {
     slots.push({ slot, icon, badge, keyNum });
   }
 
+  // 2. Backpack Button (Rule 80 §3)
+  const backpackBtn = document.createElement('button');
+  backpackBtn.type = 'button';
+  backpackBtn.className = 'hotbar-backpack-btn';
+  backpackBtn.id = 'hud-backpack-btn';
+  backpackBtn.setAttribute('aria-label', 'Buka Ransel [B]');
+  backpackBtn.title = 'Ransel Barang [B]';
+
+  const bpKey = document.createElement('span');
+  bpKey.className = 'hotbar-slot-key';
+  bpKey.textContent = 'B';
+  backpackBtn.appendChild(bpKey);
+
+  const bpIcon = document.createElement('img');
+  bpIcon.className = 'hotbar-slot-icon';
+  bpIcon.src = 'assets/icons/icon_tas.png';
+  bpIcon.alt = 'Ransel';
+  backpackBtn.appendChild(bpIcon);
+
+  const bpBadge = document.createElement('span');
+  bpBadge.className = 'backpack-count-badge';
+  bpBadge.id = 'hud-backpack-badge';
+  bpBadge.style.display = 'none';
+  bpBadge.textContent = '0';
+  backpackBtn.appendChild(bpBadge);
+
+  backpackBtn.addEventListener('click', () => {
+    openBackpack();
+  });
+
+  hotbarEl.appendChild(backpackBtn);
   container.appendChild(hotbarEl);
 
-  // Global keydown listener for 1-5 hotkeys
+  // Initialize Backpack modal panel
+  if (store) {
+    initBackpackPanel(store, currentCatalog);
+  }
+
+  // Global keydown listener for 1-5 hotkeys (Fast use) and B (Backpack)
   function onKeyDown(e) {
-    // Ignore if typing in an input/textarea or if dialog modal is open
     const activeTag = document.activeElement?.tagName?.toLowerCase();
     if (activeTag === 'input' || activeTag === 'textarea') return;
     if (document.querySelector('.dialogue-panel:not([style*="display: none"])')) return;
@@ -76,11 +123,8 @@ export function createHotbar(container, store, onUseItem) {
 
   window.addEventListener('keydown', onKeyDown);
 
-  let currentCatalog = {};
-  let currentInventory = [];
-
   function showTooltip(e, slotIndex) {
-    const itemData = currentInventory[slotIndex];
+    const itemData = currentInventory.hotbar[slotIndex];
     if (!itemData || !itemData.itemId || itemData.count <= 0) {
       hideTooltip();
       return;
@@ -106,17 +150,17 @@ export function createHotbar(container, store, onUseItem) {
 
   function update(state, itemCatalog = {}) {
     currentCatalog = itemCatalog;
-    const inv = state.inventory || [];
+    const inv = normalizeInventory(state.inventory);
     currentInventory = inv;
 
     for (let i = 0; i < 5; i++) {
-      const slotData = inv[i];
+      const slotData = inv.hotbar[i];
       const { slot, icon, badge } = slots[i];
 
       if (slotData && slotData.itemId && slotData.count > 0) {
         const itemDef = itemCatalog[slotData.itemId] || {};
         const assetId = itemDef.iconAsset || `item_${slotData.itemId}`;
-        icon.src = `assets/items/${assetId}.png`;
+        icon.src = itemDef.icon || `assets/items/${assetId}.png`;
         icon.alt = itemDef.label || slotData.itemId;
         icon.style.display = 'block';
 
@@ -131,7 +175,32 @@ export function createHotbar(container, store, onUseItem) {
         slot.classList.remove('has-item');
       }
     }
+
+    // Update backpack badge count
+    const bCount = getBackpackCount(inv);
+    if (bCount > 0) {
+      bpBadge.textContent = String(bCount);
+      bpBadge.style.display = 'block';
+    } else {
+      bpBadge.style.display = 'none';
+    }
   }
+
+  // Subscribe to domain inventory events
+  subscribe(DOMAIN_EVENTS.INVENTORY_CHANGED, (newInv) => {
+    if (store) {
+      update(store.getState(), currentCatalog);
+    }
+  });
+
+  subscribe(DOMAIN_EVENTS.BACKPACK_CHANGED, ({ count }) => {
+    if (count > 0) {
+      bpBadge.textContent = String(count);
+      bpBadge.style.display = 'block';
+    } else {
+      bpBadge.style.display = 'none';
+    }
+  });
 
   return {
     element: hotbarEl,
@@ -146,4 +215,3 @@ export function createHotbar(container, store, onUseItem) {
     }
   };
 }
-

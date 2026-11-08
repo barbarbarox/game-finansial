@@ -1938,6 +1938,222 @@ body.lj-light .time-bar-track {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
+.hotbar-backpack-btn {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  background: #2A3654;
+  border: 2px solid #D9A441;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  outline: none;
+  transition: transform 0.12s ease, background-color 0.12s ease;
+  margin-left: 6px;
+}
+
+.hotbar-backpack-btn:hover,
+.hotbar-backpack-btn:focus-visible {
+  background: #34456B;
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(217, 164, 65, 0.4);
+}
+
+.hotbar-backpack-btn .hotbar-slot-key {
+  color: #D9A441;
+}
+
+.hotbar-backpack-btn .backpack-count-badge {
+  position: absolute;
+  bottom: -4px;
+  right: -4px;
+  background: #D9A441;
+  color: #1F2A44;
+  font-size: 10px;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 0 5px;
+  line-height: 14px;
+  border: 1px solid #1F2A44;
+}
+
+/* Item Action Popup (Rule 80 §4) */
+.item-action-popup {
+  position: fixed;
+  background: #1F2A44;
+  border: 2px solid #D9A441;
+  border-radius: 8px;
+  padding: 10px 14px;
+  z-index: 10005;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 170px;
+  color: #F7EEDA;
+  font-family: inherit;
+}
+
+.item-action-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid #34456B;
+  padding-bottom: 6px;
+}
+
+.item-action-icon {
+  width: 28px;
+  height: 28px;
+  image-rendering: pixelated;
+}
+
+.item-action-title {
+  font-size: 12px;
+  font-weight: bold;
+  color: #F7EEDA;
+}
+
+.item-action-info {
+  font-size: 11px;
+  color: #A5BE93;
+}
+
+.item-action-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.item-action-btn {
+  background: #34456B;
+  color: #F7EEDA;
+  border: 1px solid #445988;
+  border-radius: 4px;
+  padding: 5px 8px;
+  font-size: 11px;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  transition: background 0.1s;
+}
+
+.item-action-btn:hover:not(:disabled) {
+  background: #D9A441;
+  color: #1F2A44;
+}
+
+.item-action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.item-action-btn.btn-discard {
+  border-color: #C0654A;
+  color: #F78E72;
+}
+
+.item-action-btn.btn-discard:hover:not(:disabled) {
+  background: #C0654A;
+  color: #F7EEDA;
+}
+
+/* Backpack Modal Panel (Rule 80 §3) */
+.backpack-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 15, 26, 0.75);
+  backdrop-filter: blur(2px);
+  z-index: 10002;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.backpack-modal-panel {
+  background: #1F2A44;
+  border: 2px solid #D9A441;
+  border-radius: 8px;
+  padding: 16px 20px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+  width: 320px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.backpack-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #34456B;
+  padding-bottom: 8px;
+}
+
+.backpack-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #D9A441;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.backpack-capacity-badge {
+  font-size: 11px;
+  color: #A4B2C8;
+}
+
+.backpack-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px;
+  padding: 6px 0;
+}
+
+.backpack-slot {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background: #2A3654;
+  border: 1px solid #34456B;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.backpack-slot:hover {
+  border-color: #D9A441;
+  background: #34456B;
+}
+
+.backpack-slot.empty {
+  border-style: dashed;
+  opacity: 0.6;
+}
+
+.backpack-close-btn {
+  align-self: flex-end;
+  background: #34456B;
+  color: #F7EEDA;
+  border: 1px solid #445988;
+  border-radius: 4px;
+  padding: 4px 12px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.backpack-close-btn:hover {
+  background: #D9A441;
+  color: #1F2A44;
+}
+
 @media (max-width: 600px) {
   .hud-hotbar-container {
     bottom: 8px;
