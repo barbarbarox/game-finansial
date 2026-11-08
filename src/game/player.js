@@ -74,6 +74,7 @@ export class PlayerController {
     this.facing = 'down';
     this.moving = false;
     this.walkTimer = 0;
+    this.isMounted = false;
 
     const dayDurSec = this.config.dayDurationSeconds || 12;
     this.gasolineDrainRate = (this.config.gasolineDrainPerDay || 5) / (dayDurSec * 1000);
@@ -112,9 +113,9 @@ export class PlayerController {
     const nx = this.sprite.x + this.vx * dt;
     const ny = this.sprite.y + this.vy * dt;
 
-    // Feet collision box (16x10 px at bottom)
-    const hw = 10;
-    const hh = 6;
+    // Feet collision box (Rule 73 §5: 16x10 px normal, 24x12 px mounted)
+    const hw = this.isMounted ? 12 : 8;
+    const hh = this.isMounted ? 6 : 5;
 
     const canX = !this._collidesAt(nx, this.sprite.y, hw, hh, colliders);
     const canY = !this._collidesAt(this.sprite.x, ny, hw, hh, colliders);

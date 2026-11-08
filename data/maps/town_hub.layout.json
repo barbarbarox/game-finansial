@@ -41,38 +41,6 @@
   ],
   "npcs": [
     {
-      "id": "npc_ibu",
-      "name": "Ibu",
-      "role": "Orang Tua di Rumah",
-      "assetId": "npc_sheet_family",
-      "color": 14197368,
-      "x": 8,
-      "y": 20,
-      "dialog": "Jangan lupa sarapan dan bijak menggunakan uang sakumu hari ini ya, nak.",
-      "choices": [
-        {
-          "id": "advice",
-          "label": "💡 Minta Nasihat Menabung",
-          "reply": "Sisihkan minimal 20% uang sakumu ke Celengan Ayam di rumah setiap awal bulan sebelum kamu mulai jajan!"
-        },
-        {
-          "id": "allowance",
-          "label": "💰 Tanya Uang Saku",
-          "reply": "Uang saku bulananmu Rp300.000 sudah Ibu berikan di awal bulan. Selalu pantau saldomu di Buku Kas ya!"
-        },
-        {
-          "id": "sarapan",
-          "label": "🍳 Mau Sarapan di Rumah",
-          "reply": "Sarapan di rumah jauh lebih sehat dan hemat daripada selalu beli makanan di luar!"
-        },
-        {
-          "id": "bye",
-          "label": "🚶 Pamit Berangkat",
-          "reply": "Hati-hati di jalan ya nak! Selalu perhatikan persentase bensin motormu."
-        }
-      ]
-    },
-    {
       "id": "npc_teman",
       "name": "Budi",
       "role": "Teman Sekelas",
@@ -110,7 +78,7 @@
       "role": "Warga & Penjaga Lingkungan",
       "assetId": "npc_sheet_vendors",
       "color": 10100780,
-      "x": 33,
+      "x": 29,
       "y": 14,
       "dialog": "Halo nak! Mau isi bensin di SPBU atau belanja kebutuhan di Minimarket?",
       "choices": [

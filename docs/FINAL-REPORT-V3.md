@@ -1,10 +1,10 @@
 # LAPORAN AKHIR EKSPANSI v3: LIFE JOURNEY
 
-**Proyek:** Life Journey — Simulasi Kehidupan & Literasi Finansial Pelajar SMA  
-**Cakupan:** Ekspansi v3 (Gerbang E0 – E9: Interior, Sistem Waktu, Dialog Potret, 7 Peta, QA Multi-Hari)  
-**Status:** **SELESAI & TERVERIFIKASI PENUH (E0–E9 LULUS 100%)**  
-**Tanggal:** 2026-11-08  
-**Tag Git:** `v3-expansion-complete` (pra-ekspansi: `pre-expansion`)  
+**Proyek:** Life Journey — Simulasi Kehidupan & Literasi Finansial Pelajar SMA
+**Cakupan:** Ekspansi v3 (Gerbang E0 – E9: Interior, Sistem Waktu, Dialog Potret, 7 Peta, QA Multi-Hari)
+**Status:** **SELESAI & TERVERIFIKASI PENUH (E0–E9 LULUS 100%)**
+**Tanggal:** 2026-11-08
+**Tag Git:** `v3-expansion-complete` (pra-ekspansi: `pre-expansion`)
 
 ---
 
@@ -21,6 +21,7 @@ Masalah tampilan map bleed (tampilan interior dan eksterior kota bercampur aduk)
 ## 2. Fitur Utama Ekspansi v3
 
 ### A. Sistem Waktu & Siklus Kehidupan (Rule 72)
+
 - **Rasio Waktu:** 1 detik dunia nyata = 1 menit waktu game (60 detik = 1 jam).
 - **Fase Waktu & Langit Dinamis:** Pagi (06:00–11:59), Siang (12:00–14:59), Sore (15:00–17:59), Malam (18:00–05:59) yang secara dinamis memperbarui warna latar langit dan ikon fase pada widget Harvest Moon.
 - **Jam Operasional Realistis:**
@@ -32,6 +33,7 @@ Masalah tampilan map bleed (tampilan interior dan eksterior kota bercampur aduk)
 - **Aktivitas Berbiaya Waktu:** Belajar di kelas (+420 menit), makan siang (+20 menit), mandi (+15 menit), sarapan (+20 menit), main arcade (+60 menit), tidur malam memajukan hari ke pukul 06:00 hari berikutnya.
 
 ### B. Kerangka Peta Interior & Hub Separation (Rule 70)
+
 - **7 Peta Terintegrasi Penuh:**
   1. `town_hub` (Peta kota luar dengan gedung-gedung dan pintu masuk).
   2. `home` (Rumah 5 ruangan: Kamar Pemain, Kamar Ortu, Ruang Tamu, Dapur, Kamar Mandi).
@@ -44,6 +46,7 @@ Masalah tampilan map bleed (tampilan interior dan eksterior kota bercampur aduk)
 - **Transisi Timbal-Balik:** Seluruh pintu masuk dan keluar memiliki koordinat spawn timbal-balik yang telah diverifikasi keterjangkauannya via algoritma BFS (27/27 titik lolos).
 
 ### C. Sistem Dialog dengan Potret Karakter (Rule 71)
+
 - **Visual Dialog Responsif:** Panel dialog split dua sisi (kiri-kanan) untuk Desktop (1200×800) dan Tablet (768×1024).
 - **Efek Sorotan Pembicara:** Karakter yang sedang berbicara membesar (+6px) dan terang, sedangkan lawan bicara meredup (opasitas 0.55).
 - **Karakter AI Nyata (Bukan Bentuk Primitif):** Mengganti bentuk lingkaran/kotak dengan potret wajah dan sprite karakter pixel-art berkarakter:
@@ -53,6 +56,7 @@ Masalah tampilan map bleed (tampilan interior dan eksterior kota bercampur aduk)
 - **Efek Dialog Whitelist:** Memberi uang saku bulanan, memotong saldo belanja kas, menambah saldo tabungan celengan, memajukan jam, dan berpindah peta.
 
 ### D. Penataan Interior Rumah Teratur & Furnitur Nyata
+
 - **Kamar Pemain:** Tempat tidur single digeser ke koordinat `x:2, y:6` (terlihat jelas di bawah HUD Harvest Moon), meja belajar rapi, rak buku, celengan ayam interaktif, dan lemari pakaian.
 - **Dapur & Ruang Makan:** Kompor counter 2 tungku, wastafel cuci piring, kulkas 2 pintu, meja makan kayu dengan kursi, dan Ibu yang memasak.
 - **Kamar Mandi:** Bak mandi keramik lengkap dengan gayung, toilet duduk putih, wastafel cermin, dan rak handuk.
@@ -64,22 +68,23 @@ Masalah tampilan map bleed (tampilan interior dan eksterior kota bercampur aduk)
 
 Semua pengujian dijalankan langsung pada mesin Chrome headless asli melalui protokol Chrome DevTools (CDP) dengan status **100% HIJAU / LULUS**:
 
-| Rangkaian Pengujian | Jumlah Kasus | Status | Keterangan & Bukti |
-|---|---|---|---|
-| **Accounting Invariants** (`tests/self-test.html`) | 6 Invarian | **LULUS (6/6)** | Debit = Kredit seimbang, Kas ≥ 0, Penolakan saldo defisit, Integritas autosave LocalStorage |
-| **Sistem Waktu & Aktivitas** (`tests/time-test.html`) | 12 Skenario | **LULUS (12/12)** | Live tick 1s=1m, advanceTime, fase langit pagi/siang/sore/malam, jam buka tutup toko, tidur |
-| **Sistem Dialog & Potret** (`tests/dialogue-test.html`) | 21 Validasi | **LULUS (21/21)** | Validasi skema JSON, batas teks ≤140 karakter, transisi simpul, highlight pembicara, pilihan dinamis |
-| **Reachability & Timbal Balik Peta** (`tests/map-check.html`) | 27 Titik / 7 Peta | **LULUS (27/27)** | Algoritma BFS membuktikan semua pintu, spawn, dan furnitur interaktif dapat dijangkau pemain |
-| **Alur Hari 1 Rumah** (`tools/test_home_day1_flow.py`) | 5 Tahap | **LULUS (100%)** | Bangun tidur, sarapan, mandi, uang saku Ibu Rp1.000.000, celengan ayam, transisi hub |
-| **Alur Sekolah Harmoni** (`tools/test_school_flow.py`) | 5 Tahap | **LULUS (100%)** | Jam sekolah, pelajaran kelas (waktu maju ke 14:30), kantin beli makan, dialog Bu Sri & Budi, tutup hari Sabtu |
-| **Bangunan Komersial E8** (`tools/test_commercial_buildings.py`) | 4 Bangunan | **LULUS (100%)** | Minimarket, Toko Kosmetik, SPBU, Game Center; jam buka tertutup di luar jam; dialog potret + transaksi |
-| **Simulasi Multi-Hari E2E E9** (`tools/test_e9_full_simulation.py`) | 3 Hari Penuh | **LULUS (100%)** | Siklus Senin–Rabu: Uang saku (M1), Sekolah, Jajan, Bensin (M3), Tabungan (M4), Game Center (M5), Audit Ledger (M6), Save & Reload |
+| Rangkaian Pengujian                                                         | Jumlah Kasus      | Status                  | Keterangan & Bukti                                                                                                                 |
+| --------------------------------------------------------------------------- | ----------------- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| **Accounting Invariants** (`tests/self-test.html`)                  | 6 Invarian        | **LULUS (6/6)**   | Debit = Kredit seimbang, Kas ≥ 0, Penolakan saldo defisit, Integritas autosave LocalStorage                                       |
+| **Sistem Waktu & Aktivitas** (`tests/time-test.html`)               | 12 Skenario       | **LULUS (12/12)** | Live tick 1s=1m, advanceTime, fase langit pagi/siang/sore/malam, jam buka tutup toko, tidur                                        |
+| **Sistem Dialog & Potret** (`tests/dialogue-test.html`)             | 21 Validasi       | **LULUS (21/21)** | Validasi skema JSON, batas teks ≤140 karakter, transisi simpul, highlight pembicara, pilihan dinamis                              |
+| **Reachability & Timbal Balik Peta** (`tests/map-check.html`)       | 27 Titik / 7 Peta | **LULUS (27/27)** | Algoritma BFS membuktikan semua pintu, spawn, dan furnitur interaktif dapat dijangkau pemain                                       |
+| **Alur Hari 1 Rumah** (`tools/test_home_day1_flow.py`)              | 5 Tahap           | **LULUS (100%)**  | Bangun tidur, sarapan, mandi, uang saku Ibu Rp1.000.000, celengan ayam, transisi hub                                               |
+| **Alur Sekolah Harmoni** (`tools/test_school_flow.py`)              | 5 Tahap           | **LULUS (100%)**  | Jam sekolah, pelajaran kelas (waktu maju ke 14:30), kantin beli makan, dialog Bu Sri & Budi, tutup hari Sabtu                      |
+| **Bangunan Komersial E8** (`tools/test_commercial_buildings.py`)    | 4 Bangunan        | **LULUS (100%)**  | Minimarket, Toko Kosmetik, SPBU, Game Center; jam buka tertutup di luar jam; dialog potret + transaksi                             |
+| **Simulasi Multi-Hari E2E E9** (`tools/test_e9_full_simulation.py`) | 3 Hari Penuh      | **LULUS (100%)**  | Siklus Senin–Rabu: Uang saku (M1), Sekolah, Jajan, Bensin (M3), Tabungan (M4), Game Center (M5), Audit Ledger (M6), Save & Reload |
 
 ---
 
 ## 4. Log Bukti Tangkapan Layar (Screenshots)
 
 ### E9 Multi-Day End-to-End Simulation (`docs/e9-integration/`)
+
 - `01_day1_morning_home.png` — Permainan baru, pemain bangun tidur di kasur Senin 06:00 (di bawah HUD).
 - `02_day1_ibu_allowance.png` — Dialog potret Ibu memberikan uang saku bulanan Rp1.000.000 (M1 selesai).
 - `03_day1_school_arrival.png` — Kedatangan di Sekolah Harmoni jam pelajaran pagi.
@@ -93,6 +98,7 @@ Semua pengujian dijalankan langsung pada mesin Chrome headless asli melalui prot
 - `11_save_continue_restored.png` — Pengujian Save & Reload: Menu 'Lanjutkan Permainan' memulihkan posisi di rumah dan saldo kas Rp815.000 secara persisten.
 
 ### E8 Commercial Buildings (`docs/e8-commercial/`)
+
 - `01_minimarket_interior.png` & `02_minimarket_maya_dialogue.png`
 - `03_kosmetik_interior.png` & `04_kosmetik_cindy_dialogue.png`
 - `05_spbu_interior.png` & `06_spbu_doni_dialogue.png`
@@ -115,6 +121,7 @@ Semua pengujian dijalankan langsung pada mesin Chrome headless asli melalui prot
   "cashPositive": true
 }
 ```
+
 - **Total Pemasukan:** Rp1.000.000 (Uang Saku Ibu)
 - **Total Pengeluaran:** Rp85.000 (Kantin Rp10.000 + Bensin SPBU Rp20.000 + Skincare Rp25.000 + Camilan Minimarket Rp10.000 + Arcade Rp20.000)
 - **Total Tabungan:** Rp100.000 (Celengan Ayam)
@@ -143,6 +150,7 @@ python3 -m http.server 3843
 ```
 
 Akses melalui peramban web:
+
 - **Game Utama:** `http://localhost:3843/`
 - **Uji Invarian Keuangan:** `http://localhost:3843/tests/self-test.html`
 - **Uji Sistem Waktu:** `http://localhost:3843/tests/time-test.html`
@@ -151,7 +159,7 @@ Akses melalui peramban web:
 - **Uji Aset:** `http://localhost:3843/tests/asset-check.html`
 
 Untuk menjalankan simulasi otomatis E2E:
+
 ```bash
 python3 tools/test_e9_full_simulation.py
 ```
-

@@ -50,6 +50,7 @@ export class MapManager {
     // so clearCurrentMap() can destroy them all cleanly.
     this._mapObjects = [];   // generic displayObjects
     this._colliderBodies = []; // physics rectangles
+    this._colliderRects = [];  // pixel rects for player translation collision
     this.isTransitioning = false;
   }
 
@@ -166,6 +167,7 @@ export class MapManager {
       }
     }
     this._colliderBodies = [];
+    this._colliderRects = [];
   }
 
   // ─── Internals ────────────────────────────────────────────────────────────
@@ -389,16 +391,13 @@ export class MapManager {
         container.add(lbl);
       }
 
-      // Physics collider for furniture
-      if (f.collidable && this.scene._player) {
-        const body = this.scene.add.rectangle(
-          px + fw / 2, py + fh / 2, fw, fh
-        );
-        this.scene.physics.add.existing(body, true);
-        this.scene.physics.add.collider(this.scene._player.sprite, body);
-        body.setVisible(false);
-        this._colliderBodies.push(body);
-        this._mapObjects.push(body);
+      // Physics collider for furniture (Rule 73 §5: non-decorative items get collision footprint)
+      if (f.collidable !== false && this.scene._player) {
+        const fpw = f.footprint?.w ? f.footprint.w * tileSize : (fw > 16 ? fw - 8 : fw);
+        const fph = f.footprint?.h ? f.footprint.h * tileSize : Math.max(16, Math.floor(fh * 0.4));
+        const fpx = px + fw / 2;
+        const fpy = py + fh - fph / 2;
+        this._addStaticBody(fpx, fpy, fpw, fph, f.id || f.type || 'furn');
       }
     }
 
@@ -485,13 +484,134 @@ export class MapManager {
     }
   }
 
-  _addStaticBody(cx, cy, w, h) {
+  _addStaticBody(cx, cy, w, h, name = '') {
     const body = this.scene.add.rectangle(cx, cy, w, h);
     this.scene.physics.add.existing(body, true);
-    this.scene.physics.add.collider(this.scene._player.sprite, body);
+    if (this.scene._player?.sprite) {
+      this.scene.physics.add.collider(this.scene._player.sprite, body);
+    }
     body.setVisible(false);
     this._colliderBodies.push(body);
     this._mapObjects.push(body);
+    this._colliderRects.push({
+      x: cx - w / 2,
+      y: cy - h / 2,
+      w,
+      h,
+      cx,
+      cy,
+      name
+    });
+  }
+
+  getColliderRects() {
+    return this._colliderRects || [];
+  }
+
+  getLayout(mapId) {
+    if (!mapId || mapId === this.currentMapId) return this.currentLayout;
+    return this.scene.cache.json.get(`layout_${mapId}`) || null;
+  }
+
+  listNPCs(mapId) {
+    const layout = this.getLayout(mapId);
+    if (layout?.npcs) {
+      return layout.npcs.map(n => n.id);
+    }
+    return [];
+  }
+
+  runCollisionProbe(mapId) {
+    const layout = this.getLayout(mapId) || this.currentLayout;
+    if (!layout) {
+      return { mapId, allPassed: false, error: 'Layout tidak ditemukan' };
+    }
+
+    const colliders = (mapId && mapId !== this.currentMapId)
+      ? this.getCollidersForLayout(layout)
+      : this._colliderRects;
+
+    let testedCount = 0;
+    let passedCount = 0;
+    const details = [];
+
+    for (const c of colliders) {
+      // Skip outer world boundary lines
+      if (c.name?.includes('batas_')) continue;
+
+      testedCount++;
+      const probeX = c.x + c.w / 2;
+      const probeY = c.y + c.h / 2;
+      const hw = 8;
+      const hh = 5;
+
+      const left = probeX - hw;
+      const right = probeX + hw;
+      const top = probeY - hh;
+      const bottom = probeY + hh;
+
+      const isBlocked = (right > c.x && left < c.x + c.w && bottom > c.y && top < c.y + c.h);
+      if (isBlocked) {
+        passedCount++;
+        details.push({ name: c.name || 'unnamed', blocked: true, rect: [c.x, c.y, c.w, c.h] });
+      } else {
+        details.push({ name: c.name || 'unnamed', blocked: false, rect: [c.x, c.y, c.w, c.h] });
+      }
+    }
+
+    return {
+      mapId: mapId || this.currentMapId,
+      totalColliders: colliders.length,
+      testedCount,
+      passedCount,
+      allPassed: testedCount > 0 && passedCount === testedCount,
+      details
+    };
+  }
+
+  getCollidersForLayout(layout) {
+    const tileSize = layout.world?.tileSize || 32;
+    const rects = [];
+    for (const c of layout.colliders || []) {
+      rects.push({
+        name: c.name || 'collider',
+        x: c.x * tileSize,
+        y: c.y * tileSize,
+        w: c.w * tileSize,
+        h: c.h * tileSize
+      });
+    }
+    for (const obj of layout.objects || []) {
+      const x = obj.x * tileSize;
+      const y = obj.y * tileSize;
+      const fw = (obj.footprint?.w || 4) * tileSize;
+      const fh = (obj.footprint?.h || 2) * tileSize;
+      rects.push({
+        name: obj.id || obj.assetId || 'object',
+        x: x - fw / 2,
+        y: y - fh,
+        w: fw,
+        h: fh
+      });
+    }
+    for (const f of layout.furniture || []) {
+      if (f.collidable !== false) {
+        const px = f.x * tileSize;
+        const py = f.y * tileSize;
+        const fw = f.w * tileSize;
+        const fh = f.h * tileSize;
+        const fpw = f.footprint?.w ? f.footprint.w * tileSize : (fw > 16 ? fw - 8 : fw);
+        const fph = f.footprint?.h ? f.footprint.h * tileSize : Math.max(16, Math.floor(fh * 0.4));
+        rects.push({
+          name: f.id || f.type || 'furniture',
+          x: px + (fw - fpw) / 2,
+          y: py + fh - fph,
+          w: fpw,
+          h: fph
+        });
+      }
+    }
+    return rects;
   }
 
   // ── NPCs ─────────────────────────────────────────────────────────────────

@@ -173,6 +173,29 @@
             unreachable.length === 0,
             unreachable.length === 0 ? 'Semua titik interaksi, exit, dan NPC terjangkau dari spawn.' : `Target tak terjangkau: ${unreachable.map(u => u.name).join(', ')}`
           );
+
+          // 1.c Uji Oklusi (Rule 73 §6) — NPC dan interactables tidak boleh tertutup >= 30% oleh objek berdepth lebih tinggi
+          const npcs = layout.npcs || [];
+          let occludedCount = 0;
+          for (const n of npcs) {
+            const ny = n.y;
+            // Check against buildings/objects
+            for (const obj of (layout.objects || [])) {
+              const ox = obj.x;
+              const oy = obj.y;
+              const ow = obj.footprint?.w || 4;
+              const oh = obj.footprint?.h || 2;
+              // If object base is lower than NPC, object is in front of NPC
+              if (oy >= ny && Math.abs(ox - n.x) < ow / 2 && Math.abs(oy - ny) < oh) {
+                occludedCount++;
+              }
+            }
+          }
+          assert(
+            `Peta [${id}]: Uji Oklusi NPC (Rule 73 §6)`,
+            occludedCount === 0,
+            occludedCount === 0 ? 'Semua NPC bebas dari oklusi bangunan/objek di depannya.' : `${occludedCount} NPC terhalang oklusi!`
+          );
         }
 
         // 2. Check reciprocal door transitions
@@ -196,6 +219,20 @@
             );
           }
         }
+
+        // 3. Verifikasi Isolasi NPC Interior (Rule 73 §6)
+        const hubNpcIds = (hubLayout?.npcs || []).map(n => n.id);
+        assert(
+          "Isolasi NPC: 'npc_ibu' tidak berada di peta 'town_hub'",
+          !hubNpcIds.includes('npc_ibu'),
+          `NPC di hub: [${hubNpcIds.join(', ')}]`
+        );
+        const homeNpcIds = (loadedMaps['home']?.layout?.npcs || []).map(n => n.id);
+        assert(
+          "Isolasi NPC: 'npc_ibu' berada di peta interior 'home'",
+          homeNpcIds.includes('npc_ibu'),
+          `NPC di home: [${homeNpcIds.join(', ')}]`
+        );
 
         const allPass = results.every(r => r.pass);
         const summary = document.getElementById('summary');

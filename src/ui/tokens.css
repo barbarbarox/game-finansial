@@ -662,6 +662,20 @@ body {
   text-overflow: ellipsis;
 }
 
+/* Animasi Misi Selesai (Rule 77) */
+.hud-mission-badge.mission-complete-anim {
+  animation: missionPulse 1.2s ease-out;
+  border-color: #D9A441 !important;
+  box-shadow: 0 0 8px rgba(217, 164, 65, 0.6);
+}
+
+@keyframes missionPulse {
+  0% { transform: scale(1.0); }
+  25% { transform: scale(1.08); background-color: #2F3E60; }
+  50% { transform: scale(1.04); }
+  100% { transform: scale(1.0); }
+}
+
 /* Nav group: Tombol aksi HUD */
 .hud-nav {
   gap: 6px;

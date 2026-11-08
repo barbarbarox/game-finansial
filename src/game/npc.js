@@ -92,10 +92,10 @@ export class NPCManager {
     if (textureKey) {
       body = scene.add.sprite(x, y + 4, textureKey, frame);
       body.setOrigin(0.5, 0.95);
-      body.setDepth(500 + y / 1000);
+      body.setDepth(y + 14);
     } else {
       body = scene.add.container(x, y);
-      body.setDepth(500 + y / 1000);
+      body.setDepth(y + 14);
       const torso = scene.add.rectangle(0, 0, 18, 26, def.color ?? 0xC9A27A);
       const head = scene.add.circle(0, -18, 8, def.color ?? 0xC9A27A);
       const outline = scene.add.rectangle(0, 0, 20, 28);
@@ -103,9 +103,14 @@ export class NPCManager {
       body.add([torso, head, outline]);
     }
 
-    // Name label — Diletakkan di atas kepala karakter (bukan menutupi wajah)
-    // Tinggi sprite 64px, kepala berada di ~ (y - 58), label ditempatkan di y - 64
-    const displayName = def.name || def.id || 'NPC';
+    // Name label — Diletakkan di atas kepala karakter (Rule 73 §6: validasi bentrok nama pemain vs NPC)
+    const store = scene.game.registry.get('store');
+    const playerName = store?.getState()?.character?.name;
+    let displayName = def.name || def.id || 'NPC';
+    if (playerName && displayName.trim().toLowerCase() === playerName.trim().toLowerCase()) {
+      displayName = def.altName || `${displayName} (NPC)`;
+    }
+
     const label = scene.add.text(x, y - 64, displayName, {
       font: 'bold 10px sans-serif',
       fill: '#FBF6EA',

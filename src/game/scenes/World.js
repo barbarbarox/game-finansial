@@ -23,6 +23,7 @@ import { advanceTime, isLocationOpen, formatClock, getTimeUntilWakeup, DEFAULT_O
 import { MapManager } from '../mapManager.js';
 import { showTimeSkip } from '../../ui/timeSkip.js';
 import { startDialogue, chooseOption, getDialogueState, closeDialogue } from '../../ui/dialogueBox.js';
+import { MissionFxManager } from '../effects/missionFx.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -36,6 +37,7 @@ export class World extends Phaser.Scene {
     this._currentInteractable = null;
     this._clockTimerMs = 0;
     this._mapManager = null;
+    this._missionFx = null;
     this._feedbackUntil = 0;
   }
 
@@ -95,6 +97,7 @@ export class World extends Phaser.Scene {
       ]
     };
     this._mapManager = new MapManager(this, mapsIndex);
+    this._missionFx = new MissionFxManager(this);
 
     // Load initial map: saved map first, then 'home' for new game, then town_hub
     const savedMap = store?.getState()?.currentMap;
@@ -114,9 +117,23 @@ export class World extends Phaser.Scene {
         () => createSettingsModal(uiContainer, null, () => createCreditsModal(uiContainer), () => this._exitToMainMenu(), store)
       );
 
-      // Auto-save on state change
+      // Auto-save on state change & check mission completion (Rule 77)
+      let prevMissions = store.getState()?.missions || [];
       store.subscribe((st) => {
-        if (st) saveGame(st);
+        if (st) {
+          saveGame(st);
+          if (st.missions && this._missionFx) {
+            for (const m of st.missions) {
+              if (m.completed) {
+                const prev = prevMissions.find(pm => pm.id === m.id);
+                if (!prev || !prev.completed) {
+                  this._missionFx.trigger(m.id, m.title);
+                }
+              }
+            }
+            prevMissions = st.missions;
+          }
+        }
       });
     }
 
@@ -126,7 +143,8 @@ export class World extends Phaser.Scene {
 
   update(time, delta) {
     if (this._player) {
-      this._player.update(delta, []);    // colliders managed by MapManager
+      const colliders = this._mapManager ? this._mapManager.getColliderRects() : [];
+      this._player.update(delta, colliders);
       this._checkInteractables();
       if (this._npcManager) {
         this._npcManager.update(time, this._player);
@@ -417,7 +435,10 @@ export class World extends Phaser.Scene {
       startDialogue: (id, npcId, onClose) => startDialogue(id, npcId, onClose),
       choose: (i) => chooseOption(i),
       getDialogueState: () => getDialogueState(),
-      closeDialogue: () => closeDialogue()
+      closeDialogue: () => closeDialogue(),
+      completeMission: (id, title) => this._missionFx ? this._missionFx.trigger(id, title) : false,
+      listNPCs: (mapId) => this._mapManager ? this._mapManager.listNPCs(mapId) : [],
+      collisionProbe: (mapId) => this._mapManager ? this._mapManager.runCollisionProbe(mapId) : { allPassed: false }
     };
     console.info('[Debug] window.__LJ__ aktif dengan time system, map & dialogue controls');
   }
