@@ -47,7 +47,7 @@ export function loadAssets(scene, manifest) {
 
     registry.set(key, { key, isPlaceholder: !isReady });
 
-    if (isReady && entry.file) {
+    if (entry.file) {
       if (entry.type === 'spritesheet') {
         scene.load.spritesheet(key, entry.file, {
           frameWidth: entry.frameWidth,
@@ -66,7 +66,7 @@ export function loadAssets(scene, manifest) {
 export function createPlaceholders(scene, manifest) {
   for (const entry of manifest) {
     const key = entry.id;
-    if (entry.status !== 'ready') {
+    if (!scene.textures.exists(key)) {
       const w = entry.frameWidth || entry.width || 64;
       const h = entry.frameHeight || entry.height || 64;
       createPlaceholderTexture(scene, key, w, h, key);

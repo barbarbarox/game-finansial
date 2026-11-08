@@ -497,6 +497,1383 @@
       "width": 32,
       "height": 32,
       "kind": "icon"
+    },
+    {
+      "id": "furn_kasur_single",
+      "file": "assets/furniture/kamar_pemain/furn_kasur_single.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_belajar",
+      "file": "assets/furniture/kamar_pemain/furn_meja_belajar.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_belajar",
+      "file": "assets/furniture/kamar_pemain/furn_kursi_belajar.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_lemari_pakaian",
+      "file": "assets/furniture/kamar_pemain/furn_lemari_pakaian.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_buku",
+      "file": "assets/furniture/kamar_pemain/furn_rak_buku.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_nakas_lampu",
+      "file": "assets/furniture/kamar_pemain/furn_nakas_lampu.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kasur_besar",
+      "file": "assets/furniture/home/furn_kasur_besar.png",
+      "type": "image",
+      "width": 96,
+      "height": 112,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_lemari_besar",
+      "file": "assets/furniture/home/furn_lemari_besar.png",
+      "type": "image",
+      "width": 96,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_rias",
+      "file": "assets/furniture/home/furn_meja_rias.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kipas_berdiri",
+      "file": "assets/furniture/home/furn_kipas_berdiri.png",
+      "type": "image",
+      "width": 32,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_sofa_3dudukan",
+      "file": "assets/furniture/home/furn_sofa_3dudukan.png",
+      "type": "image",
+      "width": 128,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_sofa_single",
+      "file": "assets/furniture/home/furn_sofa_single.png",
+      "type": "image",
+      "width": 64,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_tamu",
+      "file": "assets/furniture/home/furn_meja_tamu.png",
+      "type": "image",
+      "width": 64,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tv_dan_rak",
+      "file": "assets/furniture/home/furn_tv_dan_rak.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_pajangan",
+      "file": "assets/furniture/home/furn_rak_pajangan.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_karpet_tamu",
+      "file": "assets/furniture/home/furn_karpet_tamu.png",
+      "type": "image",
+      "width": 128,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kompor_counter",
+      "file": "assets/furniture/home/furn_kompor_counter.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kulkas",
+      "file": "assets/furniture/home/furn_kulkas.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_makan",
+      "file": "assets/furniture/home/furn_meja_makan.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_makan",
+      "file": "assets/furniture/home/furn_kursi_makan.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_piring",
+      "file": "assets/furniture/home/furn_rak_piring.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_wastafel_dapur",
+      "file": "assets/furniture/home/furn_wastafel_dapur.png",
+      "type": "image",
+      "width": 64,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_toilet",
+      "file": "assets/furniture/home/furn_toilet.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_bak_mandi",
+      "file": "assets/furniture/home/furn_bak_mandi.png",
+      "type": "image",
+      "width": 64,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_wastafel_cermin",
+      "file": "assets/furniture/home/furn_wastafel_cermin.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_handuk",
+      "file": "assets/furniture/home/furn_rak_handuk.png",
+      "type": "image",
+      "width": 32,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_ember",
+      "file": "assets/furniture/home/furn_ember.png",
+      "type": "image",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_pintu_depan",
+      "file": "assets/furniture/home/furn_pintu_depan.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_pintu_kamar",
+      "file": "assets/furniture/home/furn_pintu_kamar.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_jendela",
+      "file": "assets/furniture/home/furn_jendela.png",
+      "type": "image",
+      "width": 64,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_jam_dinding",
+      "file": "assets/furniture/home/furn_jam_dinding.png",
+      "type": "image",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_bingkai_kosong",
+      "file": "assets/furniture/home/furn_bingkai_kosong.png",
+      "type": "image",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_siswa_kursi",
+      "file": "assets/furniture/school/furn_meja_siswa_kursi.png",
+      "type": "image",
+      "width": 64,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_guru",
+      "file": "assets/furniture/school/furn_meja_guru.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_papan_tulis",
+      "file": "assets/furniture/school/furn_papan_tulis.png",
+      "type": "image",
+      "width": 128,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_lemari_kelas",
+      "file": "assets/furniture/school/furn_lemari_kelas.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tempat_sampah_kelas",
+      "file": "assets/furniture/school/furn_tempat_sampah_kelas.png",
+      "type": "image",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_poster_kosong",
+      "file": "assets/furniture/school/furn_poster_kosong.png",
+      "type": "image",
+      "width": 64,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_counter_kantin",
+      "file": "assets/furniture/school/furn_counter_kantin.png",
+      "type": "image",
+      "width": 160,
+      "height": 80,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_kantin",
+      "file": "assets/furniture/school/furn_meja_kantin.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_bangku_kantin",
+      "file": "assets/furniture/school/furn_bangku_kantin.png",
+      "type": "image",
+      "width": 96,
+      "height": 32,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kulkas_minuman",
+      "file": "assets/furniture/school/furn_kulkas_minuman.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_dispenser_galon",
+      "file": "assets/furniture/school/furn_dispenser_galon.png",
+      "type": "image",
+      "width": 32,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_snack",
+      "file": "assets/furniture/school/furn_rak_snack.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_papan_pengumuman",
+      "file": "assets/furniture/school/furn_papan_pengumuman.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_bangku_tunggu",
+      "file": "assets/furniture/school/furn_bangku_tunggu.png",
+      "type": "image",
+      "width": 96,
+      "height": 32,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_buku_perpus",
+      "file": "assets/furniture/school/furn_rak_buku_perpus.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_baca",
+      "file": "assets/furniture/school/furn_meja_baca.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_vas_tanaman",
+      "file": "assets/furniture/school/furn_vas_tanaman.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "school",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_gondola",
+      "file": "assets/furniture/minimarket/furn_rak_gondola.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "minimarket",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_alat_tulis",
+      "file": "assets/furniture/minimarket/furn_rak_alat_tulis.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "minimarket",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kulkas_minuman_besar",
+      "file": "assets/furniture/minimarket/furn_kulkas_minuman_besar.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "minimarket",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kasir_counter",
+      "file": "assets/furniture/minimarket/furn_kasir_counter.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "minimarket",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_mesin_fotokopi",
+      "file": "assets/furniture/minimarket/furn_mesin_fotokopi.png",
+      "type": "image",
+      "width": 64,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "minimarket",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_keranjang_belanja",
+      "file": "assets/furniture/minimarket/furn_keranjang_belanja.png",
+      "type": "image",
+      "width": 32,
+      "height": 32,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "minimarket",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_etalase_kaca",
+      "file": "assets/furniture/kosmetik/furn_etalase_kaca.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "kosmetik",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_dinding_kosmetik",
+      "file": "assets/furniture/kosmetik/furn_rak_dinding_kosmetik.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "kosmetik",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_cermin",
+      "file": "assets/furniture/kosmetik/furn_meja_cermin.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "kosmetik",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kasir_kecil",
+      "file": "assets/furniture/kosmetik/furn_kasir_kecil.png",
+      "type": "image",
+      "width": 80,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "kosmetik",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_tunggu",
+      "file": "assets/furniture/kosmetik/furn_kursi_tunggu.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "kosmetik",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_dispenser_bbm",
+      "file": "assets/furniture/spbu/furn_dispenser_bbm.png",
+      "type": "image",
+      "width": 48,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "spbu",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kiosk_spbu",
+      "file": "assets/furniture/spbu/furn_kiosk_spbu.png",
+      "type": "image",
+      "width": 128,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "spbu",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_oli",
+      "file": "assets/furniture/spbu/furn_rak_oli.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "spbu",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_bangku_spbu",
+      "file": "assets/furniture/spbu/furn_bangku_spbu.png",
+      "type": "image",
+      "width": 64,
+      "height": 32,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "spbu",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_arcade_a",
+      "file": "assets/furniture/game_center/furn_arcade_a.png",
+      "type": "image",
+      "width": 48,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "game_center",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_arcade_b",
+      "file": "assets/furniture/game_center/furn_arcade_b.png",
+      "type": "image",
+      "width": 48,
+      "height": 96,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "game_center",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_kafe",
+      "file": "assets/furniture/game_center/furn_meja_kafe.png",
+      "type": "image",
+      "width": 48,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "game_center",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_kafe",
+      "file": "assets/furniture/game_center/furn_kursi_kafe.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "game_center",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_counter_kafe",
+      "file": "assets/furniture/game_center/furn_counter_kafe.png",
+      "type": "image",
+      "width": 128,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "game_center",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_tv_besar",
+      "file": "assets/furniture/game_center/furn_tv_besar.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "game_center",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_player_m",
+      "file": "assets/portraits/portrait_player_m.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_player_f",
+      "file": "assets/portraits/portrait_player_f.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_ibu",
+      "file": "assets/portraits/portrait_ibu.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_ayah",
+      "file": "assets/portraits/portrait_ayah.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_teman_l",
+      "file": "assets/portraits/portrait_teman_l.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_teman_p",
+      "file": "assets/portraits/portrait_teman_p.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_penjual_kantin",
+      "file": "assets/portraits/portrait_penjual_kantin.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_kasir_minimarket",
+      "file": "assets/portraits/portrait_kasir_minimarket.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_penjaga_kosmetik",
+      "file": "assets/portraits/portrait_penjaga_kosmetik.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_petugas_spbu",
+      "file": "assets/portraits/portrait_petugas_spbu.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "portrait_penjaga_game",
+      "file": "assets/portraits/portrait_penjaga_game.png",
+      "type": "image",
+      "width": 192,
+      "height": 256,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "placeholder",
+      "source": "placeholder-generator",
+      "group": "portraits",
+      "qa": {
+        "pass": true
+      }
     }
   ]
 }
