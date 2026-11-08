@@ -183,6 +183,9 @@ export class Preload extends Phaser.Scene {
     this.load.image('portrait_petugas_spbu', 'assets/portraits/portrait_petugas_spbu.png');
     this.load.image('portrait_penjaga_game', 'assets/portraits/portrait_penjaga_game.png');
 
+    // Town Terrain Plate (Rule 76)
+    this.load.image('terrain_plate_hub', 'assets/terrain/terrain_plate_hub.png');
+
     // Retrieve asset manifest loaded in Boot scene
     const manifest = this.cache.json.get('assetManifest');
     const assets = manifest?.assets || [];

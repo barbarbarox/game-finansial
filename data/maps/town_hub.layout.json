@@ -1,5 +1,9 @@
 {
   "version": 1,
+  "terrain": {
+    "mode": "plate",
+    "assetId": "terrain_plate_hub"
+  },
   "world": {
     "widthTiles": 40,
     "heightTiles": 24,

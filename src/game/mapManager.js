@@ -394,25 +394,34 @@ export class MapManager {
     const mapW = (layout.world?.widthTiles || 40) * tileSize;
     const mapH = (layout.world?.heightTiles || 24) * tileSize;
 
-    const gfx = this.scene.add.graphics();
-    gfx.setDepth(-200);
-    this._mapObjects.push(gfx);
+    // Rule 76 §4: Plate terrain with fallback to procedural ground
+    const usePlate = this.scene.textures.exists('terrain_plate_hub') && (layout.terrain?.mode !== 'procedural');
 
-    // Base grass
-    gfx.fillStyle(GROUND_COLORS.rumput, 1.0);
-    gfx.fillRect(0, 0, mapW, mapH);
+    if (usePlate) {
+      const plate = this.scene.add.image(0, 0, 'terrain_plate_hub');
+      plate.setOrigin(0, 0).setDepth(-200);
+      this._mapObjects.push(plate);
+    } else {
+      const gfx = this.scene.add.graphics();
+      gfx.setDepth(-200);
+      this._mapObjects.push(gfx);
 
-    // Zone overrides
-    for (const g of layout.ground || []) {
-      const color = GROUND_COLORS[g.type] ?? GROUND_COLORS.tanah;
-      gfx.fillStyle(color, 1.0);
-      gfx.fillRect(g.x * tileSize, g.y * tileSize, g.w * tileSize, g.h * tileSize);
+      // Base grass
+      gfx.fillStyle(GROUND_COLORS.rumput, 1.0);
+      gfx.fillRect(0, 0, mapW, mapH);
+
+      // Zone overrides
+      for (const g of layout.ground || []) {
+        const color = GROUND_COLORS[g.type] ?? GROUND_COLORS.tanah;
+        gfx.fillStyle(color, 1.0);
+        gfx.fillRect(g.x * tileSize, g.y * tileSize, g.w * tileSize, g.h * tileSize);
+      }
+
+      // Subtle tile grid
+      gfx.lineStyle(1, 0x000000, 0.06);
+      for (let x = 0; x <= mapW; x += tileSize) gfx.lineBetween(x, 0, x, mapH);
+      for (let y = 0; y <= mapH; y += tileSize) gfx.lineBetween(0, y, mapW, y);
     }
-
-    // Subtle tile grid
-    gfx.lineStyle(1, 0x000000, 0.06);
-    for (let x = 0; x <= mapW; x += tileSize) gfx.lineBetween(x, 0, x, mapH);
-    for (let y = 0; y <= mapH; y += tileSize) gfx.lineBetween(0, y, mapW, y);
 
     // Buildings
     for (const obj of layout.objects || []) this._renderExteriorObject(obj, tileSize);

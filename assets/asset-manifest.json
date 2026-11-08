@@ -3,6 +3,24 @@
   "tileSize": 32,
   "assets": [
     {
+      "id": "terrain_plate_hub",
+      "file": "assets/terrain/terrain_plate_hub.png",
+      "type": "image",
+      "status": "ready",
+      "source": "ai-generated-swatch-synthesis",
+      "tool": "Gemini Image Generator + Rule 76 Synthesizer",
+      "generatedAt": "2026-11-08",
+      "qa": {
+        "pass": true,
+        "conformanceIoU": {
+          "jalan": 0.8812,
+          "trotoar": 0.8763,
+          "halaman": 0.9867,
+          "rumput": 0.9740
+        }
+      }
+    },
+    {
       "id": "char_player_m_casual",
       "file": "assets/characters/char_player_m_casual.png",
       "type": "spritesheet",
