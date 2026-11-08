@@ -38,9 +38,19 @@ export class CharacterCreate extends Phaser.Scene {
       ];
 
       const gameState = {
-        schemaVersion: 1,
+        schemaVersion: 2,
         character: charData,
-        clock: { day: 1, month: 1, timeOfDay: 8 * 60 },
+        currentMap: 'home',
+        clock: {
+          gameMinutes: 360, // 06:00
+          day: 1,
+          month: 1,
+          year: 1,
+          timeOfDay: 360,
+          totalDays: 0,
+          paused: false,
+          finished: false
+        },
         ledger: ledger,
         gasoline: config.gasolineStartPercent || 100,
         budget: {},

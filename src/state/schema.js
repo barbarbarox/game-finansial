@@ -1,9 +1,10 @@
 /**
  * schema.js — Save-game schema definition and validation.
  * Protects against tampered/corrupt LocalStorage data.
+ * Complies with Rule 50 (Security) and Rule 72 (Time System v2).
  */
 
-export const SCHEMA_VERSION = 1;
+export const SCHEMA_VERSION = 2;
 
 /**
  * Whitelist of allowed top-level keys and their types.
@@ -27,6 +28,8 @@ export const SAVE_SCHEMA = {
   savingsEver: { type: 'boolean', required: false },
   budgetSet: { type: 'boolean', required: false },
   month1NoBroke: { type: 'boolean', required: false },
+  currentMap: { type: 'string', required: false },
+  playerPos: { type: 'object', required: false },
 };
 
 /** Dangerous prototype-pollution keys */
@@ -51,8 +54,8 @@ export function validateSave(data) {
     }
   }
 
-  // Check schema version first
-  if (typeof data.schemaVersion !== 'number') {
+  // Check schema version
+  if (typeof data.schemaVersion !== 'number' || data.schemaVersion < 1) {
     errors.push('schemaVersion tidak valid.');
   }
 
@@ -115,7 +118,7 @@ export function validateSave(data) {
 }
 
 /**
- * Migrate save data to current schema version.
+ * Migrate save data to current schema version (v2).
  * Returns a clean, whitelisted copy of the data.
  * @param {object} data
  * @returns {object} migrated data
@@ -142,6 +145,7 @@ export function migrateSave(data) {
   clean.gasoline = clean.gasoline ?? 100;
   clean.missions = clean.missions ?? [];
   clean.budget = clean.budget ?? {};
+  clean.currentMap = clean.currentMap ?? 'home';
 
   // Standardize character
   if (!clean.character && clean.playerName) {
@@ -150,6 +154,26 @@ export function migrateSave(data) {
       gender: clean.gender || 'm',
       fatherName: clean.fatherName || 'Ayah',
       motherName: clean.motherName || 'Ibu'
+    };
+  }
+
+  // Standardize clock for v2 (gameMinutes)
+  if (clean.clock) {
+    const day = clean.clock.day ?? 1;
+    const timeOfDay = clean.clock.timeOfDay ?? (clean.clock.gameMinutes ? clean.clock.gameMinutes % 1440 : 360);
+    const gameMinutes = clean.clock.gameMinutes ?? (((day - 1) * 1440) + timeOfDay);
+
+    clean.clock = {
+      ...clean.clock,
+      day,
+      month: clean.clock.month ?? 1,
+      year: clean.clock.year ?? 1,
+      timeOfDay,
+      gameMinutes,
+      accumulatedMs: clean.clock.accumulatedMs ?? 0,
+      totalDays: clean.clock.totalDays ?? (day - 1),
+      paused: false,
+      finished: Boolean(clean.clock.finished)
     };
   }
 

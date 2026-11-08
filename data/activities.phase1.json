@@ -1,0 +1,235 @@
+{
+  "version": 1,
+  "activities": [
+    {
+      "id": "tidur",
+      "label": "Tidur di Kasur",
+      "location": "home",
+      "targetObject": "kasur",
+      "duration": "until_0600",
+      "minDuration": 240,
+      "cost": 0,
+      "description": "Tidur nyenyak hingga pukul 06:00 pagi keesokan harinya.",
+      "effects": [
+        { "type": "energy_restore", "value": 100 },
+        { "type": "day_advance" }
+      ]
+    },
+    {
+      "id": "istirahat",
+      "label": "Istirahat Sejenak",
+      "location": "home",
+      "targetObject": "kasur",
+      "duration": 60,
+      "cost": 0,
+      "description": "Berbaring istirahat santai selama 1 jam.",
+      "effects": []
+    },
+    {
+      "id": "belajar_mandiri",
+      "label": "Belajar Mandiri",
+      "location": "home",
+      "targetObject": "meja_belajar",
+      "durationOptions": [60, 120, 180],
+      "defaultDuration": 60,
+      "cost": 0,
+      "description": "Mempelajari materi pelajaran sekolah di meja belajar.",
+      "effects": [
+        { "type": "study_points", "value": 1 }
+      ]
+    },
+    {
+      "id": "makan_rumah",
+      "label": "Makan Masakan Ibu",
+      "location": "home",
+      "targetObject": "meja_makan",
+      "duration": 20,
+      "cost": 0,
+      "mealWindows": [
+        { "start": 360, "end": 480, "name": "Sarapan Pagi" },
+        { "start": 720, "end": 840, "name": "Makan Siang" },
+        { "start": 1080, "end": 1200, "name": "Makan Malam" }
+      ],
+      "description": "Menikmati makanan bergizi di rumah tanpa biaya (ditanggung orang tua).",
+      "effects": []
+    },
+    {
+      "id": "mandi",
+      "label": "Mandi & Bersih-bersih",
+      "location": "home",
+      "targetObject": "bak_mandi",
+      "duration": 15,
+      "cost": 0,
+      "description": "Mandi segar dengan gayung di kamar mandi.",
+      "effects": []
+    },
+    {
+      "id": "ganti_baju",
+      "label": "Ganti Baju & Merapikan Diri",
+      "location": "home",
+      "targetObject": "lemari",
+      "duration": 5,
+      "cost": 0,
+      "description": "Memakai pakaian bersih dari lemari pakaian.",
+      "effects": []
+    },
+    {
+      "id": "nonton_tv",
+      "label": "Nonton TV di Ruang Tamu",
+      "location": "home",
+      "targetObject": "tv",
+      "durationOptions": [60, 120, 180],
+      "defaultDuration": 60,
+      "cost": 0,
+      "description": "Menikmati hiburan gratis menonton siaran TV.",
+      "effects": []
+    },
+    {
+      "id": "ngobrol_ortu",
+      "label": "Mengobrol dengan Orang Tua",
+      "location": "home",
+      "targetObject": "npc_ortu",
+      "duration": 10,
+      "cost": 0,
+      "description": "Bercengkerama dan mendengarkan nasihat orang tua.",
+      "effects": []
+    },
+    {
+      "id": "ikut_pelajaran",
+      "label": "Mengikuti Pelajaran Kelas",
+      "location": "school",
+      "targetObject": "ruang_kelas",
+      "duration": "until_1430",
+      "schoolDaysOnly": true,
+      "cost": 0,
+      "description": "Mengikuti kegiatan belajar mengajar di sekolah hingga jam pulang (14:30).",
+      "effects": [
+        { "type": "attendance" }
+      ]
+    },
+    {
+      "id": "baca_perpustakaan",
+      "label": "Membaca Buku di Perpustakaan",
+      "location": "school",
+      "targetObject": "perpustakaan",
+      "duration": 60,
+      "cost": 0,
+      "description": "Membaca buku referensi dan ilmu pengetahuan secara gratis.",
+      "effects": []
+    },
+    {
+      "id": "makan_siang_kantin",
+      "label": "Beli Makan Siang di Kantin",
+      "location": "school",
+      "targetObject": "kantin",
+      "duration": 20,
+      "cost": 10000,
+      "category": "jajan",
+      "description": "Membeli paket makan siang nasi hangat dan lauk di kantin sekolah.",
+      "effects": [
+        { "type": "expense", "category": "jajan", "amount": 10000, "label": "Makan siang kantin" }
+      ]
+    },
+    {
+      "id": "jajan_kantin",
+      "label": "Beli Jajanan & Es di Kantin",
+      "location": "school",
+      "targetObject": "kantin",
+      "duration": 10,
+      "cost": 5000,
+      "category": "jajan",
+      "description": "Membeli camilan dan minuman dingin di kantin sekolah.",
+      "effects": [
+        { "type": "expense", "category": "jajan", "amount": 5000, "label": "Jajan kantin" }
+      ]
+    },
+    {
+      "id": "belanja_minimarket",
+      "label": "Belanja Keperluan di Minimarket",
+      "location": "minimarket",
+      "targetObject": "kasir",
+      "duration": 15,
+      "cost": "variable",
+      "description": "Membeli makanan ringan, alat tulis, atau pulsa/kuota.",
+      "effects": []
+    },
+    {
+      "id": "fotokopi",
+      "label": "Fotokopi Materi Pelajaran",
+      "location": "minimarket",
+      "targetObject": "mesin_fotokopi",
+      "duration": 10,
+      "cost": 5000,
+      "category": "sekolah",
+      "description": "Memfotokopi catatan dan tugas sekolah di mesin fotokopi minimarket.",
+      "effects": [
+        { "type": "expense", "category": "sekolah", "amount": 5000, "label": "Fotokopi tugas" }
+      ]
+    },
+    {
+      "id": "beli_kosmetik",
+      "label": "Beli Perawatan Diri di Toko Kosmetik",
+      "location": "toko_kosmetik",
+      "targetObject": "kasir",
+      "duration": 20,
+      "cost": "variable",
+      "category": "perawatanDiri",
+      "description": "Membeli lip tint, sunscreen, atau sabun cuci muka.",
+      "effects": []
+    },
+    {
+      "id": "isi_bensin",
+      "label": "Isi Bensin Motor di SPBU",
+      "location": "spbu",
+      "targetObject": "dispenser_spbu",
+      "duration": 10,
+      "cost": 20000,
+      "category": "bensin",
+      "description": "Mengisi bahan bakar bensin motor (+40%).",
+      "effects": [
+        { "type": "expense", "category": "bensin", "amount": 20000, "label": "Isi bensin motor" },
+        { "type": "gasoline", "amount": 40 }
+      ]
+    },
+    {
+      "id": "main_game",
+      "label": "Bermain Game Arcade",
+      "location": "game_center",
+      "targetObject": "mesin_arcade",
+      "durationOptions": [60, 120, 180],
+      "defaultDuration": 60,
+      "costPerHour": 10000,
+      "category": "hiburan",
+      "description": "Bermain game arcade seru di game center (Rp10.000/jam).",
+      "effects": [
+        { "type": "expense_per_hour", "category": "hiburan", "rate": 10000, "label": "Main arcade game center" }
+      ]
+    },
+    {
+      "id": "nonton_mini",
+      "label": "Nonton Bioskop Mini",
+      "location": "game_center",
+      "targetObject": "tv_game_center",
+      "duration": 120,
+      "cost": 40000,
+      "category": "hiburan",
+      "description": "Menonton film durasi 2 jam di ruang bioskop mini.",
+      "effects": [
+        { "type": "expense", "category": "hiburan", "amount": 40000, "label": "Nonton bioskop mini" }
+      ]
+    },
+    {
+      "id": "nongkrong_kafe",
+      "label": "Nongkrong di Kafe Game Center",
+      "location": "game_center",
+      "targetObject": "meja_kafe",
+      "duration": 90,
+      "cost": 30000,
+      "category": "hiburan",
+      "description": "Duduk santai sambil memesan minuman dan camilan di kafe.",
+      "effects": [
+        { "type": "expense", "category": "hiburan", "amount": 30000, "label": "Nongkrong kafe game center" }
+      ]
+    }
+  ]
+}

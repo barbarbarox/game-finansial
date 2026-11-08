@@ -49,6 +49,7 @@ export function addEntry(ledger, entry) {
     id: entry.id ?? `E${++_entryCounter}`,
     day: entry.day,
     month: entry.month,
+    minuteOfDay: entry.minuteOfDay ?? 360,
     categoryId: entry.categoryId ?? null,
     kind: entry.kind,
     description: entry.description,
@@ -166,11 +167,12 @@ export function getNetWorth(ledger) {
 }
 
 /** Create allowance entry: Rp1.000.000 uang saku per month */
-export function createAllowanceEntry(day, month) {
+export function createAllowanceEntry(day, month, minuteOfDay = 360) {
   const amount = 1000000;
   return {
     day,
     month,
+    minuteOfDay,
     kind: 'allowance',
     description: 'Uang saku bulanan',
     categoryId: null,
@@ -188,12 +190,14 @@ export function createAllowanceEntry(day, month) {
  * @param {string} categoryId
  * @param {number} amount - positive integer rupiah
  * @param {string} description
+ * @param {number} [minuteOfDay=360]
  */
-export function createExpenseEntry(day, month, categoryId, amount, description) {
+export function createExpenseEntry(day, month, categoryId, amount, description, minuteOfDay = 360) {
   const bebanAccount = CATEGORY_ACCOUNT_MAP[categoryId] ?? AccountId.BEBAN_LAIN;
   return {
     day,
     month,
+    minuteOfDay,
     kind: 'expense',
     description,
     categoryId,
@@ -207,10 +211,11 @@ export function createExpenseEntry(day, month, categoryId, amount, description) 
 /**
  * Create savings deposit entry: transfer from kas to tabungan.
  */
-export function createSavingsDepositEntry(day, month, amount) {
+export function createSavingsDepositEntry(day, month, amount, minuteOfDay = 360) {
   return {
     day,
     month,
+    minuteOfDay,
     kind: 'savings_deposit',
     description: 'Setor tabungan',
     categoryId: null,
@@ -224,10 +229,11 @@ export function createSavingsDepositEntry(day, month, amount) {
 /**
  * Create savings withdraw entry: transfer from tabungan to kas.
  */
-export function createSavingsWithdrawEntry(day, month, amount) {
+export function createSavingsWithdrawEntry(day, month, amount, minuteOfDay = 360) {
   return {
     day,
     month,
+    minuteOfDay,
     kind: 'savings_withdraw',
     description: 'Tarik tabungan',
     categoryId: null,
@@ -241,10 +247,11 @@ export function createSavingsWithdrawEntry(day, month, amount) {
 /**
  * Create income entry (bonus/windfall): credit revenue, debit kas.
  */
-export function createIncomeEntry(day, month, amount, description) {
+export function createIncomeEntry(day, month, amount, description, minuteOfDay = 360) {
   return {
     day,
     month,
+    minuteOfDay,
     kind: 'income',
     description,
     categoryId: null,

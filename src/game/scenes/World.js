@@ -16,6 +16,7 @@ import { createCreditsModal } from '../../ui/credits.js';
 import { createProceduralTiles } from '../../assets-gen/groundTiles.js';
 import { saveGame } from '../../state/persistence.js';
 import { addEntry, createAllowanceEntry } from '../../domain/ledger.js';
+import { advanceTime, isLocationOpen, formatClock, DEFAULT_OPENING_HOURS } from '../../domain/clock.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -129,9 +130,7 @@ export class World extends Phaser.Scene {
   _updateGameClock(delta) {
     this._clockTimerMs += delta;
 
-    // 1000ms real time = 1 menit dalam game
-    // 60 detik real time = 1 jam dalam game
-    // 24 menit real time = 24 jam (1 hari penuh) dalam game
+    // 1000ms real time = 1 menit game (1 real second = 1 game min)
     if (this._clockTimerMs >= 1000) {
       const minutesToAdvance = Math.floor(this._clockTimerMs / 1000);
       this._clockTimerMs %= 1000;
@@ -139,27 +138,15 @@ export class World extends Phaser.Scene {
       const store = this.game.registry.get('store');
       if (!store) return;
       const state = store.getState();
-      if (!state) return;
+      if (!state || !state.clock) return;
 
-      const clock = state.clock || { day: 1, month: 1, timeOfDay: 8 * 60 };
-      let timeOfDay = (clock.timeOfDay ?? (8 * 60)) + minutesToAdvance;
-      let day = clock.day || 1;
-      let month = clock.month || 1;
+      const { clock: newClock, events } = advanceTime(state.clock, minutesToAdvance, 'tick');
       let ledger = state.ledger;
 
-      if (timeOfDay >= 24 * 60) {
-        const daysPassed = Math.floor(timeOfDay / (24 * 60));
-        timeOfDay %= (24 * 60);
-        day += daysPassed;
-
-        if (day > 30) {
-          const monthsPassed = Math.floor((day - 1) / 30);
-          day = ((day - 1) % 30) + 1;
-          month += monthsPassed;
-
-          // Uang saku bulanan cair di hari ke-1 setiap bulan baru
+      for (const ev of events) {
+        if (ev.type === 'allowance_due') {
           if (ledger) {
-            const allowanceEntry = createAllowanceEntry(day, month);
+            const allowanceEntry = createAllowanceEntry(newClock.day, newClock.month, newClock.timeOfDay);
             const res = addEntry(ledger, allowanceEntry);
             if (res.ok) ledger = res.ledger;
           }
@@ -167,16 +154,11 @@ export class World extends Phaser.Scene {
       }
 
       store.setState({
-        clock: {
-          ...clock,
-          day,
-          month,
-          timeOfDay
-        },
+        clock: newClock,
         ledger
       });
 
-      this._updateAmbientLight(timeOfDay);
+      this._updateAmbientLight(newClock.timeOfDay);
     }
   }
 
@@ -381,21 +363,48 @@ export class World extends Phaser.Scene {
   }
 
   _setupDebug(config) {
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('debug') === '1' || config?.debugEnabled === true) {
-      window.__LJ__ = {
-        scene: this,
-        getStore: () => this.game.registry.get('store'),
-        getLedger: () => this.game.registry.get('store')?.getState()?.ledger,
-        getPlayer: () => this._player,
-        teleportTo: (tx, ty) => {
-          if (this._player) {
-            this._player.sprite.x = tx * this._tileSize;
-            this._player.sprite.y = ty * this._tileSize;
+    window.__LJ__ = {
+      scene: this,
+      getStore: () => this.game.registry.get('store'),
+      getState: () => this.game.registry.get('store')?.getState(),
+      getLedger: () => this.game.registry.get('store')?.getState()?.ledger,
+      getPlayer: () => this._player,
+      teleportTo: (tx, ty) => {
+        if (this._player) {
+          this._player.sprite.x = tx * this._tileSize;
+          this._player.sprite.y = ty * this._tileSize;
+        }
+      },
+      advanceTime: (minutes, reason = 'debug') => {
+        const store = this.game.registry.get('store');
+        if (!store) return null;
+        const state = store.getState();
+        if (!state || !state.clock) return null;
+
+        const { clock: newClock, events } = advanceTime(state.clock, minutes, reason);
+        let ledger = state.ledger;
+        for (const ev of events) {
+          if (ev.type === 'allowance_due') {
+            if (ledger) {
+              const allowanceEntry = createAllowanceEntry(newClock.day, newClock.month, newClock.timeOfDay);
+              const res = addEntry(ledger, allowanceEntry);
+              if (res.ok) ledger = res.ledger;
+            }
           }
         }
-      };
-      console.info('[Debug] window.__LJ__ aktif');
-    }
+        store.setState({ clock: newClock, ledger });
+        this._updateAmbientLight(newClock.timeOfDay);
+        return { clock: newClock, events };
+      },
+      getTime: () => {
+        const store = this.game.registry.get('store');
+        return formatClock(store?.getState()?.clock || {});
+      },
+      isLocationOpen: (locId) => {
+        const store = this.game.registry.get('store');
+        return isLocationOpen(locId, store?.getState()?.clock || {});
+      }
+    };
+    console.info('[Debug] window.__LJ__ aktif dengan time system controls');
   }
 }

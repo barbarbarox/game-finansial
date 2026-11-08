@@ -228,7 +228,7 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
     const clock = state.clock || {};
     const day = clock.day || 1;
     const month = clock.month || 1;
-    const totalMin = clock.timeOfDay ?? (8 * 60);
+    const totalMin = (clock.gameMinutes !== undefined) ? (clock.gameMinutes % 1440) : (clock.timeOfDay ?? (6 * 60));
 
     const hours = Math.floor(totalMin / 60) % 24;
     const mins = Math.floor(totalMin % 60);
@@ -240,20 +240,20 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
     dateText.textContent = `Hari ${day} · Bln ${month}`;
     digitalVal.textContent = `${hh}:${mm}`;
 
-    // Period of day & sky theme
+    // Period of day & sky theme (Rule 72 §2: Pagi 06-12, Siang 12-17, Sore 17-19, Malam 19-06)
     let period = 'PAGI';
     let skyClass = 'sky-pagi';
-    let markerEmoji = '☀️';
+    let markerEmoji = '🌅';
 
-    if (hours >= 6 && hours < 11) {
+    if (hours >= 6 && hours < 12) {
       period = 'PAGI';
       skyClass = 'sky-pagi';
       markerEmoji = '🌅';
-    } else if (hours >= 11 && hours < 15) {
+    } else if (hours >= 12 && hours < 17) {
       period = 'SIANG';
       skyClass = 'sky-siang';
       markerEmoji = '☀️';
-    } else if (hours >= 15 && hours < 18) {
+    } else if (hours >= 17 && hours < 19) {
       period = 'SORE';
       skyClass = 'sky-sore';
       markerEmoji = '🌇';

@@ -1415,3 +1415,94 @@ body.lj-light .time-bar-track {
   background: #EAE6DE;
   border-color: #C4BAA4;
 }
+
+/* TimeSkip Overlay (Rule 72 §5) */
+.timeskip-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(10, 15, 26, 0.88);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.25s ease;
+}
+
+.timeskip-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.timeskip-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.timeskip-card {
+  background: var(--color-navy-dark, #1B2838);
+  border: 3px solid var(--color-gold, #D9A441);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.7);
+  border-radius: 8px;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  min-width: 280px;
+  text-align: center;
+  animation: timeskipPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes timeskipPop {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.timeskip-icon {
+  width: 48px;
+  height: 48px;
+  image-rendering: pixelated;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+}
+
+.timeskip-title {
+  color: var(--color-gold, #D9A441);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  font-family: inherit;
+}
+
+.timeskip-time {
+  color: #F7EEDA;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.timeskip-cost {
+  background: rgba(192, 101, 74, 0.2);
+  color: #E28D75;
+  border: 1px solid rgba(192, 101, 74, 0.5);
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: bold;
+}
+
+.timeskip-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.timeskip-progress-fill {
+  width: 0%;
+  height: 100%;
+  background: var(--color-gold, #D9A441);
+  transition: width 0.8s ease-in-out;
+}
+

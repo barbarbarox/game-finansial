@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Life Journey — Time System & Activities Test (Rule 72)</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 24px;
+      background: #121A2E;
+      color: #F7EEDA;
+    }
+    h1 { color: #D9A441; margin-bottom: 16px; }
+    .test-card {
+      background: #1F2A44;
+      border: 1px solid #34456B;
+      padding: 10px 14px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+    }
+    .pass { color: #A5BE93; font-weight: bold; }
+    .fail { color: #C0654A; font-weight: bold; }
+    #summary {
+      font-size: 1.1rem;
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 4px;
+    }
+    .summary-pass { background: #44603F; color: #F7EEDA; }
+    .summary-fail { background: #9E4A33; color: #F7EEDA; }
+  </style>
+</head>
+<body>
+  <h1>Life Journey · Test Sistem Waktu (Rule 72)</h1>
+  <div id="results"></div>
+  <div id="summary">Menjalankan pengujian sistem waktu...</div>
+
+  <script type="module">
+    import {
+      createClock,
+      advanceTime,
+      tick,
+      isLocationOpen,
+      getTimeUntilWakeup,
+      formatClock,
+      getTimeOfDayPhase,
+      DEFAULT_OPENING_HOURS,
+      DAYS_PER_MONTH
+    } from '../src/domain/clock.js';
+
+    import {
+      createLedger,
+      addEntry,
+      createAllowanceEntry,
+      createExpenseEntry,
+      getCash,
+      runInvariants
+    } from '../src/domain/ledger.js';
+
+    import { saveGame, loadGame, resetSave } from '../src/state/persistence.js';
+
+    const results = [];
+    const container = document.getElementById('results');
+
+    function assert(name, condition, details = '') {
+      results.push({ name, pass: Boolean(condition), details });
+      const card = document.createElement('div');
+      card.className = 'test-card';
+      card.innerHTML = `<strong>${condition ? '<span class="pass">[LULUS]</span>' : '<span class="fail">[GAGAL]</span>'}</strong> ${name} ${details ? `<br><small style="color:#A4B2C8">${details}</small>` : ''}`;
+      container.appendChild(card);
+    }
+
+    try {
+      // 1. Initial State Check
+      const clock0 = createClock();
+      assert(
+        'Skenario 1.1: Clock awal mulai di Hari 1 (Senin), 06:00 (menit 360)',
+        clock0.day === 1 && clock0.gameMinutes === 360 && clock0.timeOfDay === 360,
+        `Day: ${clock0.day}, Min: ${clock0.gameMinutes}`
+      );
+
+      // Advance normal 30 min
+      const { clock: c1, events: ev1 } = advanceTime(clock0, 30, 'walk');
+      assert(
+        'Skenario 1.2: advanceTime(30) menambah tepat 30 menit ke gameMinutes & timeOfDay',
+        c1.gameMinutes === 390 && c1.timeOfDay === 390,
+        `Waktu sekarang: 06:30 (${c1.timeOfDay})`
+      );
+
+      // 2. Transisi 4 fase langit
+      const phasePagi = getTimeOfDayPhase(6 * 60); // 06:00
+      const phaseSiang = getTimeOfDayPhase(12 * 60); // 12:00
+      const phaseSore = getTimeOfDayPhase(17 * 60); // 17:00
+      const phaseMalam = getTimeOfDayPhase(20 * 60); // 20:00
+      assert(
+        'Skenario 2.1: 4 fase langit terdefinisi presisi (pagi, siang, sore, malam)',
+        phasePagi.phase === 'pagi' &&
+        phaseSiang.phase === 'siang' &&
+        phaseSore.phase === 'sore' &&
+        phaseMalam.phase === 'malam'
+      );
+
+      // Phase change event on crossing 12:00
+      // clock at 390 (06:30), advancing 330 min -> 720 (12:00)
+      const { clock: cNoon, events: evNoon } = advanceTime(c1, 330, 'school_to_noon');
+      const phaseEv = evNoon.find(e => e.type === 'phaseChanged');
+      assert(
+        'Skenario 2.2: Pemicu phaseChanged terpancar tepat saat melintasi batas fase (pagi -> siang)',
+        phaseEv && phaseEv.to === 'siang' && cNoon.timeOfDay === 720,
+        `Phase: ${phaseEv?.to}`
+      );
+
+      // 3. Jam buka sekolah (07:00 - 15:00 hari 1-5, Sabtu/Minggu tutup)
+      const schoolAt06 = isLocationOpen('school', { day: 1, timeOfDay: 6 * 60 });
+      const schoolAt08 = isLocationOpen('school', { day: 1, timeOfDay: 8 * 60 });
+      const schoolAt16 = isLocationOpen('school', { day: 1, timeOfDay: 16 * 60 });
+      const schoolWeekend = isLocationOpen('school', { day: 6, timeOfDay: 10 * 60 }); // Sabtu
+      assert(
+        'Skenario 3: Sekolah buka 07:00-15:00 hari kerja, dan TUTUP di luar jam/akhir pekan',
+        !schoolAt06.open && schoolAt08.open && !schoolAt16.open && !schoolWeekend.open,
+        `06:00=${schoolAt06.open}, 08:00=${schoolAt08.open}, 16:00=${schoolAt16.open}, Sabtu=${schoolWeekend.open}`
+      );
+
+      // 4. Jam buka fasilitas komersial (minimarket, toko_kosmetik, game_center, spbu)
+      const miniMorning = isLocationOpen('minimarket', { day: 1, timeOfDay: 6 * 60 + 30 }); // 06:30
+      const miniOpen = isLocationOpen('minimarket', { day: 1, timeOfDay: 8 * 60 }); // 08:00
+      const gameCenterMorn = isLocationOpen('game_center', { day: 1, timeOfDay: 9 * 60 }); // 09:00
+      const gameCenterOpen = isLocationOpen('game_center', { day: 1, timeOfDay: 11 * 60 }); // 11:00
+      assert(
+        'Skenario 4: Jam buka minimarket (07:00-22:00) & Game Center (10:00-22:00) dievaluasi akurat',
+        !miniMorning.open && miniOpen.open && !gameCenterMorn.open && gameCenterOpen.open
+      );
+
+      // 5. Aktivitas berbiaya waktu (contoh: Belajar di kelas 120 menit)
+      const { clock: cAfterClass, events: evClass } = advanceTime(cNoon, 120, 'activity_study');
+      assert(
+        'Skenario 5: Aktivitas belajar 120 menit memajukan waktu dari 12:00 ke 14:00 + memicu hook jam',
+        cAfterClass.timeOfDay === 14 * 60 && evClass.some(e => e.type === 'hourChanged'),
+        `Waktu akhir: ${formatClock(cAfterClass).timeString}`
+      );
+
+      // 6. Tidur di kasur rumah (lompat ke 06:00 pagi berikutnya)
+      const sleepMin = getTimeUntilWakeup(cAfterClass); // from 14:00 to next 06:00 = 16 hours = 960 min
+      const { clock: cWake, events: evWake } = advanceTime(cAfterClass, sleepMin, 'sleep');
+      assert(
+        'Skenario 6: Tidur di kasur menghitung selisih tepat dan bangun pukul 06:00 hari berikutnya',
+        cWake.timeOfDay === 6 * 60 && cWake.day === 2 && evWake.some(e => e.type === 'dayChanged'),
+        `Bangun di Hari ${cWake.day} jam ${formatClock(cWake).timeString}`
+      );
+
+      // 7. Siklus Mingguan & Allowance Due di hari Senin (Hari 8)
+      // Majukan 6 hari lagi (6 * 1440 min) ke Hari 8 (Senin minggu ke-2)
+      const { clock: cWeek2, events: evWeek2 } = advanceTime(cWake, 6 * 1440, 'advance_week');
+      const allowanceEv = evWeek2.find(e => e.type === 'allowance_due');
+      assert(
+        'Skenario 7: Siklus 7 hari berjalan deterministik dan pemicu uang saku mingguan terbit di hari Senin',
+        cWeek2.day === 8 && allowanceEv !== undefined,
+        `Day: ${cWeek2.day} (${formatClock(cWeek2).dayName}), allowance_due: ${Boolean(allowanceEv)}`
+      );
+
+      // 8. Pergantian Bulan (28 hari per bulan)
+      // Dari Hari 8, majukan 21 hari (ke hari 29 -> Bulan 2, Hari 1)
+      const { clock: cMonth2, events: evMonth2 } = advanceTime(cWeek2, 21 * 1440, 'advance_month');
+      const monthEv = evMonth2.find(e => e.type === 'monthChanged');
+      assert(
+        'Skenario 8: Pergantian bulan terjadi setelah 28 hari (Bulan 2, Hari 1) memancarkan monthChanged',
+        cMonth2.month === 2 && cMonth2.day === 1 && monthEv !== undefined,
+        `Bulan: ${cMonth2.month}, Hari: ${cMonth2.day}`
+      );
+
+      // 9. Transaksi Ledger Bertanda Waktu (minuteOfDay) & Validasi Invarian
+      let ledger = createLedger();
+      const allowEntry = createAllowanceEntry(1, 1, 360);
+      const buyBreakfast = createExpenseEntry(1, 1, 'BEBAN_JAJAN', 15000, 'Sarapan lontong sayur', 400); // 06:40
+      const buyPen = createExpenseEntry(1, 1, 'BEBAN_SEKOLAH', 5000, 'Beli pulpen', 450); // 07:30
+
+      const r1 = addEntry(ledger, allowEntry);
+      const r2 = addEntry(r1.ledger, buyBreakfast);
+      const r3 = addEntry(r2.ledger, buyPen);
+      ledger = r3.ledger;
+
+      const invCheck = runInvariants(ledger);
+      const eBreakfast = ledger.entries.find(e => e.description === 'Sarapan lontong sayur');
+
+      assert(
+        'Skenario 9: Transaksi ledger mencatat minuteOfDay akurat dan 6 invarian keuangan 100% lulus',
+        invCheck.pass && eBreakfast && eBreakfast.minuteOfDay === 400 && getCash(ledger) === 980000,
+        `Kas: ${getCash(ledger)}, Minute: ${eBreakfast?.minuteOfDay}`
+      );
+
+      // 10. Persistence v2 migration & schema check
+      resetSave();
+      const saveState = {
+        schemaVersion: 2,
+        playerName: 'Budi',
+        gender: 'm',
+        currentMap: 'home',
+        clock: cMonth2,
+        ledger: ledger
+      };
+      const saveRes = saveGame(saveState);
+      const loadRes = loadGame();
+      assert(
+        'Skenario 10: Persistence lj_save_v2 menyimpan dan memuat state waktu & peta dengan utuh',
+        saveRes.success && loadRes.success && loadRes.state?.clock?.month === 2 && loadRes.state?.currentMap === 'home',
+        `Save success: ${saveRes.success}, Loaded Month: ${loadRes.state?.clock?.month}`
+      );
+
+      const allPass = results.every(r => r.pass);
+      const summary = document.getElementById('summary');
+      summary.className = allPass ? 'summary-pass' : 'summary-fail';
+      summary.textContent = allPass
+        ? `LULUS SEMUA (${results.filter(r => r.pass).length}/${results.length}) — Sistem Waktu & Aktivitas Rule 72 Terverifikasi Penuh!`
+        : `GAGAL (${results.filter(r => !r.pass).length}/${results.length}) pengujian.`;
+
+    } catch (err) {
+      assert('Kesalahan Eksekusi Pengujian', false, err.stack || err.message);
+    }
+  </script>
+</body>
+</html>

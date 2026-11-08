@@ -113,7 +113,11 @@ export function createCashbookModal(container, store, onClose) {
       const tr = document.createElement('tr');
 
       const tdTime = document.createElement('td');
-      tdTime.textContent = `Bln ${entry.month} · Hari ${entry.day}`;
+      const minute = entry.minuteOfDay ?? 360;
+      const hh = String(Math.floor(minute / 60) % 24).padStart(2, '0');
+      const mm = String(Math.floor(minute % 60)).padStart(2, '0');
+      tdTime.textContent = `H${entry.day} · ${hh}:${mm}`;
+      tdTime.title = `Bulan ${entry.month}, Hari ${entry.day} pukul ${hh}:${mm}`;
 
       const tdDesc = document.createElement('td');
       tdDesc.textContent = entry.description || '-';
