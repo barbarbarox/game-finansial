@@ -13,7 +13,7 @@ Proses pembuatan/perbaikan aset ada di `60-asset-generation-qa.md`. File ini men
 - Aset belum ada / gagal QA → loader memakai **placeholder berlabel** (mode debug) + peringatan konsol. Mengganti placeholder dengan aset final = taruh file + ubah `status` di manifest, tanpa ubah kode.
 
 ## 2. Folder
-`assets/` → `characters/`, `npcs/`, `portraits/`, `buildings/`, `furniture/`, `props/`, `backgrounds/` (key art, panel lokasi), `icons/`, `fonts/`, `audio/` (opsional), `_raw/` (keluaran mentah generator, tidak dimuat runtime), `_rejected/` (gagal QA, untuk analisis), `palette.json`.
+`assets/` → `characters/`, `npcs/`, `portraits/`, `buildings/`, `furniture/`, `props/`, `vehicles/`, `items/`, `terrain/` (guide, mask, plate, swatch), `decals/`, `backgrounds/` (key art, panel lokasi), `icons/`, `fonts/`, `audio/` (opsional), `_raw/` (keluaran mentah generator, tidak dimuat runtime), `_rejected/` (gagal QA, untuk analisis), `palette.json`.
 Lainnya: `data/maps/town_hub.layout.json`, `data/asset-briefs.json`, `tools/`.
 
 ## 3. Penamaan (snake_case)

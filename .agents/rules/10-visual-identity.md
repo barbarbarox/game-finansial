@@ -68,3 +68,6 @@ Aturan warna: nilai positif = hijau, negatif = terracotta, netral = navy. Mustar
 - [ ] Font pixel tidak bocor ke tabel/dashboard.
 - [ ] Tidak ada emoji, gradient, bayangan blur.
 - [ ] Teks memenuhi kontras; panel dapat dioperasikan keyboard.
+
+## 9. Komponen HUD v4
+Bar energi, hotbar (bawah-tengah), dan tombol motor mengikuti **gaya UI buatan pengguna** dan `docs/reference/hotbar-reference.png`; ikon pixel (bukan emoji); jangan menata ulang HUD yang ada. Efek prosedural (partikel, cincin, kilau, debu) hanya memakai token palet (rule 77).

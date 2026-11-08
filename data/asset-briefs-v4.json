@@ -1,0 +1,583 @@
+{
+ "version": 1,
+ "styleRef": [
+  "docs/STYLE-BIBLE.md",
+  "docs/STYLE-BIBLE-INTERIOR.md",
+  "docs/STYLE-BIBLE-V4.md"
+ ],
+ "defaults": {
+  "maxRetries": 3,
+  "chromaKey": "#FF00FF",
+  "rawDir": "assets/_raw",
+  "rejectedDir": "assets/_rejected",
+  "uniformScalePerSheet": true
+ },
+ "generationOrder": [
+  "furniture_home_slots",
+  "items",
+  "vehicle_style_lock",
+  "CHECKPOINT_C",
+  "vehicle",
+  "buildings_redo",
+  "furniture_other_slots",
+  "decor",
+  "terrain",
+  "CHECKPOINT_D"
+ ],
+ "furnitureBriefTemplate": {
+  "note": "Dipakai tools/derive_briefs_from_layout.py: satu sheet = 4-6 item dari satu ruang/kelas slot yang sama. Ukuran, kelas, dan arah diambil dari slot di layout; JANGAN menebak.",
+  "promptPerSheet": "[STYLE BLOCK] Furniture sprite sheet for {roomLabel}. Items left to right: {itemList with exact sizes in px and role}. Every item is front-facing (facing the camera), top-down 3/4 RPG view, drawn as ONE separate object with a flat straight base along its bottom edge, no walls, no floor, no surrounding room. {moduleRule} Items are drawn at consistent real-world scale relative to each other with the same visible pixel size. All screens, labels, frames and book spines blank or abstract. Flat solid magenta #FF00FF background, no shadows on the background. Match the art style, pixel size, outline weight and palette of the reference image exactly. [NEGATIVE BLOCK]",
+  "moduleRule_counter": "These are kitchen counter MODULES that must butt together into one continuous row: identical total height, identical top-surface level and base line, plain flat vertical cut on the left and right edges, no side panels, same wood and cream materials.",
+  "itemListFormat": "name (W x H px, role: wall_back|counter_module|free|cluster)",
+  "qa": "skala seragam per sheet; tiap item ±20% dari ukuran slot; modul counter: tinggi identik (±2 px) dan sisi kiri/kanan datar; dasar rata baris terbawah"
+ },
+ "assets": [
+  {
+   "id": "vehicle_motor_ref",
+   "group": "vehicle_style_lock",
+   "priority": 1,
+   "kind": "vehicle_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "front",
+    "back",
+    "left"
+   ],
+   "final": {
+    "frameWidth": 80,
+    "frameHeight": 64,
+    "rightView": "mirror_of_left",
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "sizes": {
+     "front": [
+      40,
+      64
+     ],
+     "back": [
+      40,
+      64
+     ],
+     "left": [
+      80,
+      64
+     ]
+    }
+   },
+   "subject": "Vehicle turnaround reference of ONE simple automatic-transmission scooter-style motorbike (matic), no brand marks, no logos, no text: navy blue (#34456B) body panels with cream (#F7EEDA) seat and trim, dark grey wheels, small round headlight, simple mirrors. Exactly THREE views of the SAME motorbike in one horizontal row, evenly spaced, identical scale: front view, back view, left-side view. Parked, no rider. Wheelbase about 80 px at final scale, height about 64 px. Flat solid magenta #FF00FF background.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "viewsHeightTolerance": 0.08
+   }
+  },
+  {
+   "id": "vehicle_rider_m",
+   "group": "vehicle",
+   "priority": 1,
+   "kind": "vehicle_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "front",
+    "back",
+    "left"
+   ],
+   "final": {
+    "frameWidth": 80,
+    "frameHeight": 64,
+    "rightView": "mirror_of_left",
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "sizes": {
+     "front": [
+      40,
+      64
+     ],
+     "back": [
+      40,
+      64
+     ],
+     "left": [
+      80,
+      64
+     ]
+    }
+   },
+   "subject": "Turnaround of the SAME high-school boy from the character reference sitting on the SAME motorbike as in the motor reference image (identical colors, shape and proportions): rider in cream t-shirt (#F7EEDA), navy trousers (#1F2A44), brown sneakers (#9A6F4C), dark green backpack (#44603F) visible, dark brown hair (#5E3F2A), hands on handlebars. Exactly THREE views in one row, identical scale: front, back, left-side. Flat solid magenta #FF00FF background. No text.",
+   "refs": [
+    "char_player_m_casual",
+    "vehicle_motor_ref"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "identityColors": [
+     "hair:#5E3F2A",
+     "shirt:#F7EEDA",
+     "pants:#1F2A44",
+     "bag:#44603F",
+     "motor:#34456B"
+    ],
+    "noText": true
+   }
+  },
+  {
+   "id": "vehicle_rider_f",
+   "group": "vehicle",
+   "priority": 1,
+   "kind": "vehicle_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "front",
+    "back",
+    "left"
+   ],
+   "final": {
+    "frameWidth": 80,
+    "frameHeight": 64,
+    "rightView": "mirror_of_left",
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "sizes": {
+     "front": [
+      40,
+      64
+     ],
+     "back": [
+      40,
+      64
+     ],
+     "left": [
+      80,
+      64
+     ]
+    }
+   },
+   "subject": "Turnaround of the SAME high-school girl from the character reference sitting on the SAME motorbike as in the motor reference image (identical colors, shape and proportions): rider in cream t-shirt (#F7EEDA), navy trousers (#1F2A44), brown sneakers (#9A6F4C), dark green backpack (#44603F) visible, dark brown hair (#5E3F2A), hands on handlebars. Exactly THREE views in one row, identical scale: front, back, left-side. Flat solid magenta #FF00FF background. No text.",
+   "refs": [
+    "char_player_f_casual",
+    "vehicle_motor_ref"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "identityColors": [
+     "hair:#5E3F2A",
+     "shirt:#F7EEDA",
+     "pants:#1F2A44",
+     "bag:#44603F",
+     "motor:#34456B"
+    ],
+    "noText": true
+   }
+  },
+  {
+   "id": "prop_motor_parkir_v4",
+   "group": "vehicle",
+   "priority": 2,
+   "kind": "prop_sheet",
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "prop_motor_parkir_side",
+    "prop_motor_parkir_front"
+   ],
+   "final": {
+    "sizes": {
+     "prop_motor_parkir_side": [
+      80,
+      64
+     ],
+     "prop_motor_parkir_front": [
+      40,
+      64
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ]
+   },
+   "subject": "Two views of the SAME parked motorbike as the motor reference image: left-side view and front view, no rider, kickstand down. Flat solid magenta #FF00FF background. No text.",
+   "refs": [
+    "vehicle_motor_ref"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "item_icon_sheet",
+   "group": "items",
+   "priority": 1,
+   "kind": "icon_sheet",
+   "generate": {
+    "aspectRatio": "1:1",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "item_nasi_goreng",
+    "item_mie_goreng",
+    "item_nasi_kuning",
+    "item_bakso",
+    "item_roti_isi",
+    "item_pisang",
+    "item_keripik",
+    "item_gorengan",
+    "item_mie_cup",
+    "item_air_mineral",
+    "item_isotonik",
+    "item_susu_kotak",
+    "item_teh_kemasan",
+    "item_jus_kotak",
+    "item_es_teh",
+    "item_coklat_batang"
+   ],
+   "final": {
+    "grid": [
+     4,
+     4
+    ],
+    "iconSize": 32
+   },
+   "subject": "Food and drink item icon sheet, exactly 4 columns by 4 rows, 16 separate icons each centered in an equal square cell, flat colors from the palette, 1px dark outline, very simple readable silhouettes, generic unbranded packaging with NO text, in this reading order: plate of fried rice with a fried egg; plate of fried noodles; small plate of yellow rice with side dishes; bowl of meatball soup; sandwich bread with filling; a banana; a bag of chips (blank package); three fried fritters; instant noodle cup (blank label); mineral water bottle (blank label); sports drink bottle (blank label); small milk carton (blank); bottled tea (blank label); juice carton with straw (blank); iced tea in a plastic cup with straw; chocolate bar (blank wrapper).",
+   "refs": [
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "iconFill": 0.6,
+    "noText": true
+   }
+  },
+  {
+   "id": "icon_motor",
+   "group": "items",
+   "priority": 1,
+   "kind": "icon_sheet",
+   "generate": {
+    "aspectRatio": "1:1",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "icon_motor",
+    "icon_energi",
+    "icon_bensin_v4",
+    "icon_tas"
+   ],
+   "final": {
+    "grid": [
+     2,
+     2
+    ],
+    "iconSize": 32
+   },
+   "subject": "Icon sheet, exactly 2 columns by 2 rows, 4 separate icons each centered in an equal square cell, flat palette colors, 1px dark outline, simple silhouettes: a scooter motorbike side view, a lightning bolt (energy), a fuel pump, a small backpack.",
+   "refs": [
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "iconFill": 0.6,
+    "noText": true
+   }
+  },
+  {
+   "id": "bld_game_center_v4",
+   "group": "buildings_redo",
+   "priority": 1,
+   "kind": "building",
+   "candidates": 2,
+   "generate": {
+    "aspectRatio": "4:3",
+    "background": "#FF00FF"
+   },
+   "final": {
+    "width": 288,
+    "height": 224,
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "footprintHint": "bottom 35% of width, inset 6%",
+    "doorAnchor": "detect_from_image",
+    "replaces": "bld_game_center",
+    "autoTrimTop": true
+   },
+   "subject": "A game center and cafe building for a small Indonesian town: two-story-looking narrow shop with a flat roof and a navy (#1F2A44) and cream (#F7EEDA) facade, a wide blank signboard band above the entrance (no text, no neon, no glow), a striped muted-green awning, large front windows showing the silhouettes of arcade cabinets with flat colored screens (no glow), a glass double door at the bottom center about 64 px tall, two small round cafe tables with chairs outside. Single building, whole building visible with small margin, perfectly flat base along the bottom edge, flat solid magenta #FF00FF background. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "bld_minimarket"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "dimsMultipleOf": 32,
+    "baseFlushBottom": true,
+    "noText": true,
+    "note": "Bandingkan dengan docs/reference/ dan bangunan lain; pilih kandidat terbaik lewat tinjauan visual; dasar WAJIB menempel baris terbawah; bersihkan artefak tepi"
+   }
+  },
+  {
+   "id": "prop_sheet_nature_v4",
+   "group": "decor",
+   "priority": 2,
+   "kind": "prop_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "prop_pohon_mangga_besar_v4",
+    "prop_pohon_rindang_v4",
+    "prop_pohon_palem_v4",
+    "prop_pohon_kecil_v4",
+    "prop_semak_bunga_v4",
+    "prop_rumpun_bunga_v4"
+   ],
+   "final": {
+    "sizes": {
+     "prop_pohon_mangga_besar_v4": [
+      128,
+      160
+     ],
+     "prop_pohon_rindang_v4": [
+      112,
+      144
+     ],
+     "prop_pohon_palem_v4": [
+      64,
+      160
+     ],
+     "prop_pohon_kecil_v4": [
+      64,
+      96
+     ],
+     "prop_semak_bunga_v4": [
+      64,
+      48
+     ],
+     "prop_rumpun_bunga_v4": [
+      48,
+      32
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six nature props for an Indonesian small town: a large leafy mango tree, a broad shade tree, a tall coconut palm, a small young tree, a flowering bush, a flower clump. Objects arranged left to right, well separated, consistent scale relative to each other, top-down 3/4 RPG view, flat solid magenta #FF00FF background, no ground shadow on the background, no text. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "prop_sheet_street_v4",
+   "group": "decor",
+   "priority": 2,
+   "kind": "prop_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "prop_tiang_lampu_v4",
+    "prop_bangku_taman_v4",
+    "prop_tong_sampah_ganda_v4",
+    "prop_halte_kosong_v4",
+    "prop_kotak_surat_v4",
+    "prop_pagar_segmen_v4"
+   ],
+   "final": {
+    "sizes": {
+     "prop_tiang_lampu_v4": [
+      32,
+      112
+     ],
+     "prop_bangku_taman_v4": [
+      64,
+      40
+     ],
+     "prop_tong_sampah_ganda_v4": [
+      48,
+      40
+     ],
+     "prop_halte_kosong_v4": [
+      128,
+      96
+     ],
+     "prop_kotak_surat_v4": [
+      32,
+      48
+     ],
+     "prop_pagar_segmen_v4": [
+      64,
+      40
+     ]
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six street props: a lamp post, a wooden park bench, a pair of sorting trash bins, a small blank bus shelter, a mailbox, a low fence segment. Objects arranged left to right, well separated, consistent scale relative to each other, top-down 3/4 RPG view, flat solid magenta #FF00FF background, no ground shadow on the background, no text. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "decal_sheet_v4",
+   "group": "decor",
+   "priority": 2,
+   "kind": "decal_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "decal_zebra_cross",
+    "decal_panah_jalan",
+    "decal_bunga_rumput",
+    "decal_kerikil",
+    "decal_daun",
+    "decal_drainase"
+   ],
+   "final": {
+    "sizes": {
+     "decal_zebra_cross": [
+      128,
+      64
+     ],
+     "decal_panah_jalan": [
+      64,
+      64
+     ],
+     "decal_bunga_rumput": [
+      96,
+      64
+     ],
+     "decal_kerikil": [
+      64,
+      48
+     ],
+     "decal_daun": [
+      64,
+      48
+     ],
+     "decal_drainase": [
+      48,
+      32
+     ]
+    },
+    "flat": true,
+    "anchor": [
+     0.5,
+     0.5
+    ]
+   },
+   "subject": "Six flat ground decals seen from directly above at a slight angle, to be placed on roads and grass: a zebra crossing, a painted road arrow, a patch of grass with tiny flowers, a scatter of small pebbles, a few fallen leaves, a street drain grate. Arranged left to right, flat solid magenta #FF00FF background, no text. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true
+   }
+  },
+  {
+   "id": "terrain_swatch_sheet",
+   "group": "terrain_fallback",
+   "priority": 3,
+   "kind": "swatch_sheet",
+   "generate": {
+    "aspectRatio": "1:1",
+    "background": "none"
+   },
+   "subjects": [
+    "swatch_aspal",
+    "swatch_trotoar",
+    "swatch_rumput",
+    "swatch_halaman"
+   ],
+   "final": {
+    "grid": [
+     2,
+     2
+    ],
+    "swatchSize": 256,
+    "seamless": true,
+    "opaque": true
+   },
+   "subject": "Four seamless tileable ground texture swatches in a 2 by 2 grid, each filling its entire cell edge to edge with no borders: asphalt road, paved sidewalk with a subtle brick pattern, grass with tiny tufts and a few flowers, packed dirt yard. Top-down view, flat shading, same pixel size across swatches, no objects, no text. Match the art style, pixel size and palette of the reference image.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "seamlessEdgeDiffMax": 0.08,
+    "opaque": true
+   }
+  },
+  {
+   "id": "terrain_plate_hub",
+   "group": "terrain",
+   "priority": 1,
+   "kind": "terrain_plate_guided",
+   "generate": {
+    "aspectRatio": "16:9",
+    "guide": "assets/terrain/guide_hub.png",
+    "padToAspect": true,
+    "background": "none"
+   },
+   "final": {
+    "width": "from_layout",
+    "height": "from_layout",
+    "opaque": true,
+    "mode": "plate"
+   },
+   "subject": "Repaint this schematic as cozy chunky pixel-art terrain, top-down 3/4 ground only. Keep every colored region exactly where it is: asphalt roads, sidewalks, grass areas and yard pads. Add texture and small ground details only (paving pattern, cracks, road markings, grass tufts, tiny flowers, curb edges, soft contact shadows under the building pads). Do not add buildings, trees, bushes, vehicles, people, signs or text. Regions marked as outside the world must stay a flat dark navy.",
+   "refs": [
+    "bld_sekolah"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "conformanceIoUMin": 0.85,
+    "edgeTolerancePx": 6,
+    "noForeignObjects": true,
+    "fallback": "terrain_swatch_sheet"
+   }
+  }
+ ]
+}

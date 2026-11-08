@@ -14,7 +14,7 @@ Tujuan belajar: (1) membedakan kebutuhan dan keinginan; (2) mencatat pemasukan d
 ## 2. Parameter default
 - Durasi Fase 1: `months` (default 2) × 30 hari. Pengaturan waktu mengikuti `72-time-system.md` (siklus 24 jam, aktivitas memakan waktu); total waktu bermain jauh lebih panjang daripada versi lama, jadi untuk demo kompetisi disarankan `months: 1`.
 - Uang saku: Rp1.000.000 pada hari ke-1 tiap bulan. Saldo awal Kas Rp0 sebelum uang saku pertama; Tabungan awal Rp0.
-- Bensin: indikator 0–100%, turun 5%/hari; isi Rp20.000 = +40%. Bensin 0% → pemain berjalan kaki lebih lambat dan memicu kejadian "terlambat".
+- Bensin: indikator 0–100%; **turun hanya saat bermotor** (per 5 detik penggunaan, lihat `75-vehicle-motor.md`; penurunan harian lama dihapus); isi Rp20.000 = +40%. Bensin 0% → pengendara dipaksa turun dan tombol motor nonaktif hingga diisi. Energi pemain (rule 74): 0–100, turun karena aktivitas, terisi dengan makan/minum/tidur.
 - Kenaikan nominal beli kelipatan Rp5.000; tabung kelipatan Rp10.000.
 - Anggaran saran bulanan: Tabungan 100.000 · Jajan 250.000 · Bensin 100.000 · Kebutuhan sekolah 100.000 · Perawatan diri 100.000 · Hiburan 150.000 · Cadangan 200.000 (total 1.000.000). Anggaran awal kosong; tombol "Gunakan saran". Anggaran **memperingatkan**, tidak memblokir.
 

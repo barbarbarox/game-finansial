@@ -1,0 +1,1586 @@
+{
+ "version": 1,
+ "note": "Katalog MINIMUM per ruang untuk menyusun Layout Spec (rule 73). class_: wall_back | counter_module | free | cluster | wall_decor | floor_decal | grid. Boleh ditambah, tidak boleh dikurangi tanpa catatan di DECISIONS.md. Aset baru memakai id berakhiran _v4.",
+ "sizesUnit": "px @ tileSize 32",
+ "rooms": {
+  "home.kamar_pemain": {
+   "roomTilesApprox": [
+    8,
+    6
+   ],
+   "floor": "kayu",
+   "items": [
+    {
+     "id": "furn_kasur_single_v4",
+     "label": "Kasur single",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "tidur/istirahat"
+    },
+    {
+     "id": "furn_nakas_lampu_v4",
+     "label": "Nakas dengan lampu",
+     "class_": "wall_back",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_lemari_pakaian_v4",
+     "label": "Lemari pakaian",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "ganti_baju"
+    },
+    {
+     "id": "furn_rak_buku_v4",
+     "label": "Rak buku",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_meja_belajar_v4",
+     "label": "Meja belajar",
+     "class_": "cluster",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "belajar_mandiri + anggaran",
+     "notes": "cluster dengan kursi"
+    },
+    {
+     "id": "furn_kursi_belajar_v4",
+     "label": "Kursi belajar",
+     "class_": "cluster",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_celengan_ayam_v4",
+     "label": "Celengan ayam",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "tabung/tarik"
+    },
+    {
+     "id": "furn_cermin_berdiri_v4",
+     "label": "Cermin berdiri",
+     "class_": "wall_back",
+     "size": [
+      32,
+      80
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_keranjang_baju_v4",
+     "label": "Keranjang baju",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tempat_sampah_v4",
+     "label": "Tempat sampah kecil",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_karpet_kecil_v4",
+     "label": "Karpet kecil",
+     "class_": "floor_decal",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_jendela_v4",
+     "label": "Jendela bergorden",
+     "class_": "wall_decor",
+     "size": [
+      64,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_poster_kosong_v4",
+     "label": "Poster kosong",
+     "class_": "wall_decor",
+     "size": [
+      48,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_jam_dinding_v4",
+     "label": "Jam dinding",
+     "class_": "wall_decor",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    }
+   ]
+  },
+  "home.kamar_ortu": {
+   "roomTilesApprox": [
+    8,
+    6
+   ],
+   "floor": "kayu",
+   "items": [
+    {
+     "id": "furn_kasur_besar_v4",
+     "label": "Kasur besar",
+     "class_": "wall_back",
+     "size": [
+      96,
+      112
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_nakas_lampu_v4",
+     "label": "Nakas dengan lampu",
+     "class_": "wall_back",
+     "size": [
+      32,
+      48
+     ],
+     "count": 2,
+     "facing": "front"
+    },
+    {
+     "id": "furn_lemari_besar_v4",
+     "label": "Lemari besar",
+     "class_": "wall_back",
+     "size": [
+      96,
+      96
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_meja_rias_v4",
+     "label": "Meja rias",
+     "class_": "wall_back",
+     "size": [
+      64,
+      80
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_kursi_rias_v4",
+     "label": "Kursi rias",
+     "class_": "cluster",
+     "size": [
+      32,
+      40
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_kipas_berdiri_v4",
+     "label": "Kipas berdiri",
+     "class_": "free",
+     "size": [
+      32,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_karpet_besar_v4",
+     "label": "Karpet",
+     "class_": "floor_decal",
+     "size": [
+      128,
+      80
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_jendela_v4",
+     "label": "Jendela bergorden",
+     "class_": "wall_decor",
+     "size": [
+      64,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_bingkai_kosong_v4",
+     "label": "Bingkai kosong",
+     "class_": "wall_decor",
+     "size": [
+      32,
+      32
+     ],
+     "count": 2,
+     "facing": "front"
+    }
+   ]
+  },
+  "home.ruang_tamu": {
+   "roomTilesApprox": [
+    12,
+    7
+   ],
+   "floor": "kayu",
+   "items": [
+    {
+     "id": "furn_tv_dan_rak_v4",
+     "label": "TV dengan rak",
+     "class_": "wall_back",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "nonton_tv"
+    },
+    {
+     "id": "furn_sofa_3dudukan_v4",
+     "label": "Sofa 3 dudukan",
+     "class_": "wall_back",
+     "size": [
+      128,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_sofa_single_v4",
+     "label": "Sofa single",
+     "class_": "wall_back",
+     "size": [
+      64,
+      64
+     ],
+     "count": 2,
+     "facing": "front"
+    },
+    {
+     "id": "furn_meja_tamu_v4",
+     "label": "Meja tamu",
+     "class_": "free",
+     "size": [
+      64,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_rak_pajangan_v4",
+     "label": "Rak pajangan",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_kipas_berdiri_v4",
+     "label": "Kipas berdiri",
+     "class_": "free",
+     "size": [
+      32,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tanaman_pot_v4",
+     "label": "Tanaman pot",
+     "class_": "free",
+     "size": [
+      32,
+      48
+     ],
+     "count": 2,
+     "facing": "front"
+    },
+    {
+     "id": "furn_rak_sepatu_v4",
+     "label": "Rak sepatu",
+     "class_": "wall_back",
+     "size": [
+      64,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_karpet_tamu_v4",
+     "label": "Karpet ruang tamu",
+     "class_": "floor_decal",
+     "size": [
+      128,
+      96
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_jam_dinding_v4",
+     "label": "Jam dinding",
+     "class_": "wall_decor",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_bingkai_kosong_v4",
+     "label": "Bingkai kosong",
+     "class_": "wall_decor",
+     "size": [
+      32,
+      32
+     ],
+     "count": 2,
+     "facing": "front"
+    },
+    {
+     "id": "furn_jendela_v4",
+     "label": "Jendela bergorden",
+     "class_": "wall_decor",
+     "size": [
+      64,
+      64
+     ],
+     "count": 2,
+     "facing": "front"
+    }
+   ]
+  },
+  "home.dapur_makan": {
+   "roomTilesApprox": [
+    10,
+    7
+   ],
+   "floor": "ubin_hijau_muda",
+   "items": [
+    {
+     "id": "furn_kulkas_v4",
+     "label": "Kulkas 2 pintu",
+     "class_": "counter_module",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front",
+     "notes": "ujung kiri deretan"
+    },
+    {
+     "id": "furn_counter_polos_v4",
+     "label": "Counter polos",
+     "class_": "counter_module",
+     "size": [
+      64,
+      64
+     ],
+     "count": 2,
+     "facing": "front",
+     "notes": "tinggi dasar sama dengan counter lain"
+    },
+    {
+     "id": "furn_counter_kompor_v4",
+     "label": "Counter kompor + rice cooker",
+     "class_": "counter_module",
+     "size": [
+      64,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "ibu memasak"
+    },
+    {
+     "id": "furn_counter_wastafel_v4",
+     "label": "Counter wastafel",
+     "class_": "counter_module",
+     "size": [
+      64,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_dispenser_galon_v4",
+     "label": "Dispenser galon",
+     "class_": "wall_back",
+     "size": [
+      32,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_rak_piring_dinding_v4",
+     "label": "Rak piring dinding",
+     "class_": "wall_decor",
+     "size": [
+      64,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_rak_bumbu_dinding_v4",
+     "label": "Rak bumbu dinding",
+     "class_": "wall_decor",
+     "size": [
+      64,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_jendela_dapur_v4",
+     "label": "Jendela dapur",
+     "class_": "wall_decor",
+     "size": [
+      64,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_meja_makan_v4",
+     "label": "Meja makan bertaplak",
+     "class_": "cluster",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "makan_rumah"
+    },
+    {
+     "id": "furn_kursi_makan_kiri_v4",
+     "label": "Kursi makan (samping kiri)",
+     "class_": "cluster",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "right"
+    },
+    {
+     "id": "furn_kursi_makan_kanan_v4",
+     "label": "Kursi makan (samping kanan)",
+     "class_": "cluster",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "left"
+    },
+    {
+     "id": "furn_kursi_makan_depan_v4",
+     "label": "Kursi makan (depan)",
+     "class_": "cluster",
+     "size": [
+      32,
+      48
+     ],
+     "count": 2,
+     "facing": "front",
+     "notes": "dua kursi sisi depan/belakang bila sprite tersedia"
+    },
+    {
+     "id": "furn_tempat_sampah_v4",
+     "label": "Tempat sampah",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    }
+   ]
+  },
+  "home.kamar_mandi": {
+   "roomTilesApprox": [
+    6,
+    5
+   ],
+   "floor": "ubin_hijau_muda",
+   "items": [
+    {
+     "id": "furn_toilet_v4",
+     "label": "Toilet duduk",
+     "class_": "wall_back",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_bak_mandi_v4",
+     "label": "Bak mandi + gayung",
+     "class_": "wall_back",
+     "size": [
+      64,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "mandi"
+    },
+    {
+     "id": "furn_wastafel_cermin_v4",
+     "label": "Wastafel + cermin",
+     "class_": "wall_back",
+     "size": [
+      64,
+      80
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_rak_handuk_v4",
+     "label": "Rak handuk",
+     "class_": "wall_back",
+     "size": [
+      32,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_ember_v4",
+     "label": "Ember",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tempat_sampah_v4",
+     "label": "Tempat sampah kecil",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_keset_v4",
+     "label": "Keset",
+     "class_": "floor_decal",
+     "size": [
+      64,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_jendela_ventilasi_v4",
+     "label": "Jendela ventilasi",
+     "class_": "wall_decor",
+     "size": [
+      48,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    }
+   ]
+  },
+  "home.lorong_pintu_depan": {
+   "roomTilesApprox": [
+    6,
+    3
+   ],
+   "floor": "kayu",
+   "items": [
+    {
+     "id": "furn_pintu_depan_v4",
+     "label": "Pintu depan",
+     "class_": "wall_decor",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "exit hub"
+    },
+    {
+     "id": "furn_rak_sepatu_v4",
+     "label": "Rak sepatu",
+     "class_": "wall_back",
+     "size": [
+      64,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tanaman_pot_v4",
+     "label": "Tanaman pot",
+     "class_": "free",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    }
+   ]
+  },
+  "school.kelas": {
+   "roomTilesApprox": [
+    16,
+    10
+   ],
+   "floor": "ubin_kelas",
+   "items": [
+    {
+     "id": "furn_papan_tulis_v4",
+     "label": "Papan tulis",
+     "class_": "wall_decor",
+     "size": [
+      128,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_meja_guru_v4",
+     "label": "Meja guru",
+     "class_": "free",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "ngobrol Bu Sri"
+    },
+    {
+     "id": "furn_kursi_guru_v4",
+     "label": "Kursi guru",
+     "class_": "cluster",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_meja_siswa_kursi_v4",
+     "label": "Meja siswa + kursi",
+     "class_": "grid",
+     "size": [
+      64,
+      64
+     ],
+     "count": 24,
+     "facing": "front",
+     "notes": "grid 6x4 rapi; 2 varian visual boleh"
+    },
+    {
+     "id": "furn_lemari_kelas_v4",
+     "label": "Lemari kelas",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_rak_buku_kelas_v4",
+     "label": "Rak buku kelas",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tempat_sampah_v4",
+     "label": "Tempat sampah",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_poster_kosong_v4",
+     "label": "Poster kosong",
+     "class_": "wall_decor",
+     "size": [
+      64,
+      48
+     ],
+     "count": 3,
+     "facing": "front"
+    },
+    {
+     "id": "furn_jam_dinding_v4",
+     "label": "Jam dinding",
+     "class_": "wall_decor",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_jendela_v4",
+     "label": "Jendela kelas",
+     "class_": "wall_decor",
+     "size": [
+      64,
+      64
+     ],
+     "count": 4,
+     "facing": "front"
+    }
+   ]
+  },
+  "school.kantin": {
+   "roomTilesApprox": [
+    14,
+    8
+   ],
+   "floor": "tegel_kantin",
+   "items": [
+    {
+     "id": "furn_counter_kantin_etalase_v4",
+     "label": "Counter kantin + etalase",
+     "class_": "wall_back",
+     "size": [
+      160,
+      80
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "beli makanan (satu-satunya tempat)"
+    },
+    {
+     "id": "furn_kulkas_minuman_v4",
+     "label": "Kulkas minuman",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_dispenser_galon_v4",
+     "label": "Dispenser galon",
+     "class_": "wall_back",
+     "size": [
+      32,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_rak_snack_v4",
+     "label": "Rak snack",
+     "class_": "wall_back",
+     "size": [
+      64,
+      80
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_wastafel_cuci_tangan_v4",
+     "label": "Wastafel cuci tangan",
+     "class_": "wall_back",
+     "size": [
+      48,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_papan_menu_kosong_v4",
+     "label": "Papan menu kosong",
+     "class_": "wall_decor",
+     "size": [
+      96,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_meja_kantin_panjang_v4",
+     "label": "Meja kantin panjang",
+     "class_": "free",
+     "size": [
+      96,
+      64
+     ],
+     "count": 3,
+     "facing": "front"
+    },
+    {
+     "id": "furn_bangku_kantin_v4",
+     "label": "Bangku kantin",
+     "class_": "free",
+     "size": [
+      96,
+      32
+     ],
+     "count": 6,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tempat_sampah_v4",
+     "label": "Tempat sampah",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 2,
+     "facing": "front"
+    }
+   ]
+  },
+  "school.perpustakaan": {
+   "roomTilesApprox": [
+    12,
+    8
+   ],
+   "floor": "kayu",
+   "items": [
+    {
+     "id": "furn_rak_buku_perpus_v4",
+     "label": "Rak buku perpustakaan",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 4,
+     "facing": "front"
+    },
+    {
+     "id": "furn_meja_baca_v4",
+     "label": "Meja baca",
+     "class_": "cluster",
+     "size": [
+      96,
+      64
+     ],
+     "count": 2,
+     "facing": "front",
+     "interaction": "baca_perpustakaan"
+    },
+    {
+     "id": "furn_kursi_baca_v4",
+     "label": "Kursi baca",
+     "class_": "cluster",
+     "size": [
+      32,
+      48
+     ],
+     "count": 4,
+     "facing": "front"
+    },
+    {
+     "id": "furn_counter_pustakawan_v4",
+     "label": "Counter pustakawan",
+     "class_": "wall_back",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_komputer_meja_v4",
+     "label": "Komputer + meja kecil",
+     "class_": "free",
+     "size": [
+      48,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_papan_info_v4",
+     "label": "Papan info kosong",
+     "class_": "wall_decor",
+     "size": [
+      96,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_vas_tanaman_v4",
+     "label": "Vas tanaman",
+     "class_": "free",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    }
+   ]
+  },
+  "school.lobby": {
+   "roomTilesApprox": [
+    12,
+    6
+   ],
+   "floor": "tegel_kantin",
+   "items": [
+    {
+     "id": "furn_papan_pengumuman_v4",
+     "label": "Papan pengumuman kosong",
+     "class_": "wall_decor",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_bangku_tunggu_v4",
+     "label": "Bangku tunggu",
+     "class_": "wall_back",
+     "size": [
+      96,
+      32
+     ],
+     "count": 2,
+     "facing": "front"
+    },
+    {
+     "id": "furn_rak_piala_v4",
+     "label": "Rak piala",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_vas_tanaman_v4",
+     "label": "Vas tanaman",
+     "class_": "free",
+     "size": [
+      32,
+      48
+     ],
+     "count": 2,
+     "facing": "front"
+    }
+   ]
+  },
+  "minimarket": {
+   "roomTilesApprox": [
+    12,
+    9
+   ],
+   "floor": "ubin_abu_krem",
+   "items": [
+    {
+     "id": "furn_rak_gondola_v4",
+     "label": "Rak gondola",
+     "class_": "free",
+     "size": [
+      96,
+      64
+     ],
+     "count": 4,
+     "facing": "front",
+     "interaction": "belanja",
+     "notes": "baris paralel, lorong >= 2 tile"
+    },
+    {
+     "id": "furn_rak_dinding_snack_v4",
+     "label": "Rak snack dinding",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 2,
+     "facing": "front",
+     "interaction": "belanja"
+    },
+    {
+     "id": "furn_kulkas_minuman_besar_v4",
+     "label": "Kulkas minuman besar",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 2,
+     "facing": "front",
+     "interaction": "belanja minuman"
+    },
+    {
+     "id": "furn_rak_mie_instan_v4",
+     "label": "Rak mie instan",
+     "class_": "wall_back",
+     "size": [
+      64,
+      80
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_rak_roti_v4",
+     "label": "Rak roti",
+     "class_": "wall_back",
+     "size": [
+      64,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_etalase_makanan_siap_saji_v4",
+     "label": "Etalase makanan siap saji",
+     "class_": "wall_back",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "nasi goreng / mie goreng"
+    },
+    {
+     "id": "furn_rak_alat_tulis_v4",
+     "label": "Rak alat tulis",
+     "class_": "wall_back",
+     "size": [
+      64,
+      80
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "alat tulis"
+    },
+    {
+     "id": "furn_mesin_fotokopi_v4",
+     "label": "Mesin fotokopi",
+     "class_": "wall_back",
+     "size": [
+      64,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "fotokopi"
+    },
+    {
+     "id": "furn_kasir_counter_v4",
+     "label": "Kasir counter",
+     "class_": "free",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "kasir"
+    },
+    {
+     "id": "furn_keranjang_belanja_v4",
+     "label": "Tumpukan keranjang",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_galon_tumpuk_v4",
+     "label": "Tumpukan galon",
+     "class_": "free",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tempat_sampah_v4",
+     "label": "Tempat sampah",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    }
+   ]
+  },
+  "toko_kosmetik": {
+   "roomTilesApprox": [
+    10,
+    8
+   ],
+   "floor": "ubin_abu_krem",
+   "items": [
+    {
+     "id": "furn_etalase_kaca_v4",
+     "label": "Etalase kaca",
+     "class_": "free",
+     "size": [
+      96,
+      64
+     ],
+     "count": 2,
+     "facing": "front",
+     "interaction": "beli kosmetik"
+    },
+    {
+     "id": "furn_rak_dinding_kosmetik_v4",
+     "label": "Rak dinding kosmetik",
+     "class_": "wall_back",
+     "size": [
+      64,
+      96
+     ],
+     "count": 3,
+     "facing": "front"
+    },
+    {
+     "id": "furn_meja_cermin_v4",
+     "label": "Meja cermin",
+     "class_": "cluster",
+     "size": [
+      64,
+      80
+     ],
+     "count": 2,
+     "facing": "front"
+    },
+    {
+     "id": "furn_kursi_cermin_v4",
+     "label": "Kursi meja cermin",
+     "class_": "cluster",
+     "size": [
+      32,
+      48
+     ],
+     "count": 2,
+     "facing": "front"
+    },
+    {
+     "id": "furn_kasir_kecil_v4",
+     "label": "Kasir kecil",
+     "class_": "free",
+     "size": [
+      80,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "kasir"
+    },
+    {
+     "id": "furn_sofa_tunggu_v4",
+     "label": "Sofa tunggu",
+     "class_": "wall_back",
+     "size": [
+      64,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tanaman_pot_v4",
+     "label": "Tanaman pot",
+     "class_": "free",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_poster_kosong_v4",
+     "label": "Poster kosong",
+     "class_": "wall_decor",
+     "size": [
+      48,
+      64
+     ],
+     "count": 2,
+     "facing": "front"
+    },
+    {
+     "id": "furn_keranjang_belanja_v4",
+     "label": "Keranjang",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    }
+   ]
+  },
+  "spbu": {
+   "roomTilesApprox": [
+    14,
+    10
+   ],
+   "floor": "beton",
+   "items": [
+    {
+     "id": "furn_dispenser_bbm_v4",
+     "label": "Dispenser BBM",
+     "class_": "free",
+     "size": [
+      48,
+      96
+     ],
+     "count": 2,
+     "facing": "front",
+     "interaction": "isi bensin"
+    },
+    {
+     "id": "furn_kiosk_spbu_v4",
+     "label": "Kiosk SPBU + kasir",
+     "class_": "wall_back",
+     "size": [
+      128,
+      96
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "kasir"
+    },
+    {
+     "id": "furn_rak_oli_v4",
+     "label": "Rak oli",
+     "class_": "wall_back",
+     "size": [
+      64,
+      80
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_bangku_spbu_v4",
+     "label": "Bangku tunggu",
+     "class_": "wall_back",
+     "size": [
+      64,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tiang_kanopi_v4",
+     "label": "Tiang kanopi",
+     "class_": "free",
+     "size": [
+      32,
+      128
+     ],
+     "count": 4,
+     "facing": "front"
+    },
+    {
+     "id": "furn_kompresor_angin_v4",
+     "label": "Kompresor angin",
+     "class_": "free",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tong_pemadam_v4",
+     "label": "Tabung pemadam",
+     "class_": "wall_back",
+     "size": [
+      32,
+      40
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tempat_sampah_v4",
+     "label": "Tempat sampah",
+     "class_": "free",
+     "size": [
+      32,
+      32
+     ],
+     "count": 1,
+     "facing": "front"
+    }
+   ]
+  },
+  "game_center": {
+   "roomTilesApprox": [
+    14,
+    10
+   ],
+   "floor": "lantai_navy",
+   "items": [
+    {
+     "id": "furn_arcade_a_v4",
+     "label": "Mesin arcade A",
+     "class_": "wall_back",
+     "size": [
+      48,
+      96
+     ],
+     "count": 3,
+     "facing": "front",
+     "interaction": "main_game"
+    },
+    {
+     "id": "furn_arcade_b_v4",
+     "label": "Mesin arcade B",
+     "class_": "wall_back",
+     "size": [
+      48,
+      96
+     ],
+     "count": 3,
+     "facing": "front",
+     "interaction": "main_game"
+    },
+    {
+     "id": "furn_mesin_capit_v4",
+     "label": "Mesin capit",
+     "class_": "free",
+     "size": [
+      64,
+      96
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_counter_kafe_v4",
+     "label": "Counter kafe",
+     "class_": "wall_back",
+     "size": [
+      128,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "minuman/camilan"
+    },
+    {
+     "id": "furn_meja_kafe_v4",
+     "label": "Meja kafe bulat",
+     "class_": "cluster",
+     "size": [
+      48,
+      48
+     ],
+     "count": 3,
+     "facing": "front",
+     "interaction": "nongkrong_kafe"
+    },
+    {
+     "id": "furn_kursi_kafe_v4",
+     "label": "Kursi kafe",
+     "class_": "cluster",
+     "size": [
+      32,
+      48
+     ],
+     "count": 6,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tv_besar_v4",
+     "label": "TV besar + stand",
+     "class_": "wall_back",
+     "size": [
+      96,
+      64
+     ],
+     "count": 1,
+     "facing": "front",
+     "interaction": "nonton_mini"
+    },
+    {
+     "id": "furn_sofa_nonton_v4",
+     "label": "Sofa nonton",
+     "class_": "free",
+     "size": [
+      96,
+      64
+     ],
+     "count": 2,
+     "facing": "front"
+    },
+    {
+     "id": "furn_dispenser_galon_v4",
+     "label": "Dispenser galon",
+     "class_": "wall_back",
+     "size": [
+      32,
+      64
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_tanaman_pot_v4",
+     "label": "Tanaman pot",
+     "class_": "free",
+     "size": [
+      32,
+      48
+     ],
+     "count": 1,
+     "facing": "front"
+    },
+    {
+     "id": "furn_poster_kosong_v4",
+     "label": "Poster kosong",
+     "class_": "wall_decor",
+     "size": [
+      48,
+      64
+     ],
+     "count": 2,
+     "facing": "front"
+    }
+   ]
+  }
+ }
+}

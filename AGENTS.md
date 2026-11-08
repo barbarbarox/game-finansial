@@ -12,7 +12,7 @@ Anda adalah Senior Game Developer + Frontend Architect + Technical Artist dengan
 ## 3. Aturan keras
 1. **Stack:** HTML5, CSS3, JavaScript (ES Modules), Phaser 3. Tanpa backend, database eksternal, autentikasi, API berbayar, atau build step wajib. Progres di LocalStorage.
 2. **Offline-first:** Phaser dan font disimpan lokal (`vendor/`, `assets/fonts/`) dengan versi dipin. DILARANG memuat skrip/font/gambar dari URL eksternal saat runtime (termasuk CDN dan Tailwind Play CDN). Tailwind tidak dipakai.
-3. **Aset visual:** Anda BOLEH menghasilkan aset dengan kemampuan image generation yang tersedia, **hanya** lewat pipeline `60-asset-generation-qa.md` dan brief `data/asset-briefs.json`, dengan gaya dari `docs/STYLE-BIBLE.md`. DILARANG: menggambar sprite/ilustrasi dengan kode sebagai pengganti final (pengecualian: tile tanah, lantai, dan dinding prosedural sesuai `20-asset-pipeline.md` dan `70-interior-maps-and-buildings.md`), mengubah gaya/identitas karakter antar-aset, atau memakai aset tanpa entri manifest. Jika sebuah aset gagal QA setelah batas percobaan → placeholder berlabel + catat di laporan; jangan mengarang lolos.
+3. **Aset visual:** Anda BOLEH menghasilkan aset dengan kemampuan image generation yang tersedia, **hanya** lewat pipeline `60-asset-generation-qa.md` dan brief `data/asset-briefs.json`, dengan gaya dari `docs/STYLE-BIBLE.md`. DILARANG: menggambar sprite/ilustrasi dengan kode sebagai pengganti final (pengecualian: tile tanah, lantai, dan dinding prosedural sesuai `20-asset-pipeline.md` dan `70-interior-maps-and-buildings.md`; serta efek visual prosedural berupa partikel, cincin, kilau, dan debu sesuai `77-mission-complete-fx.md`), mengubah gaya/identitas karakter antar-aset, atau memakai aset tanpa entri manifest. Jika sebuah aset gagal QA setelah batas percobaan → placeholder berlabel + catat di laporan; jangan mengarang lolos.
 4. **Satu sumber kebenaran uang:** ledger append-only. Saldo, tabungan, total, riwayat, HUD, evaluasi seluruhnya **diturunkan** dari ledger.
 5. **Uang = bilangan bulat rupiah.** Format tampilan `Intl.NumberFormat('id-ID')`.
 6. **Pemisahan lapisan:** `src/domain/` tidak mengimpor Phaser/DOM. Phaser hanya untuk dunia; panel (dashboard, toko, dialog, menu) adalah DOM overlay. Komunikasi lewat store/pub-sub.
@@ -23,7 +23,9 @@ Anda adalah Senior Game Developer + Frontend Architect + Technical Artist dengan
 11. **Ambigu ≠ berhenti.** Ambil keputusan terbaik, catat di `docs/DECISIONS.md`, lanjutkan. Berhenti hanya pada: checkpoint manusia yang ditetapkan AUTOPILOT, isu lisensi/keamanan yang tidak dapat dibalik, atau alat esensial tidak tersedia.
 12. **Disiplin repo:** `git init` bila belum ada; commit di setiap gerbang dengan pesan jelas; jangan menghapus aset hasil generate yang sudah lolos QA tanpa alasan tercatat.
 13. **Perubahan manual pengguna bersifat otoritatif.** Pengguna telah mengubah UI (tombol, menu) dan widget waktu. Sebelum mengubah file yang mungkin telah disunting manual, audit (`git log`, `git diff`, baca kode), pertahankan tampilan/perilaku yang ada, dan hanya refactor bila perlu untuk integrasi. Catat apa yang dipertahankan di `docs/DECISIONS.md`.
-13. **Perubahan manual pengguna bersifat otoritatif.** Pengguna telah mengubah UI (tombol, menu) dan widget waktu. Sebelum mengubah file yang mungkin telah disunting manual, audit (, , baca kode), pertahankan tampilan/perilaku yang ada, dan hanya refactor bila perlu untuk integrasi. Catat apa yang dipertahankan di .
+14. **Tata letak dulu, aset menyusul; semua objek berkolisi dan teruji.** Rancang Layout Spec berbasis slot, generate aset untuk slot (bukan sebaliknya), validasi otomatis + tinjauan visual. Setiap objek non-dekoratif memiliki footprint kolisi dan lolos probe kolisi (`73-room-layout-and-collision.md`).
+15. **Tidak ada NPC/objek hilang atau tertimpa.** Tiap NPC milik tepat satu peta; uji oklusi wajib hijau.
+16. **Jangan mengklaim aset visual "sesuai" tanpa bukti:** tangkapan layar dengan overlay, hasil validator, dan perbandingan dengan `docs/reference/`. Aset lama dipertahankan sampai E2E lulus; aset baru bersufiks `_v4`.
 
 ## 4. Peta rules
 - `10-visual-identity.md` — palet, resolusi, tipografi, UI, karakter (selalu aktif)
@@ -35,6 +37,11 @@ Anda adalah Senior Game Developer + Frontend Architect + Technical Artist dengan
 - `70-interior-maps-and-buildings.md` — peta interior, perpindahan peta, fitur bangunan, awal permainan di rumah
 - `71-dialogue-system.md` — dialog dengan potret kiri-kanan dan menu pilihan
 - `72-time-system.md` — jam 24 jam, widget waktu, aktivitas yang memakan waktu, jam buka
+- `73-room-layout-and-collision.md` — tata letak berbasis slot, kolisi, NPC dan oklusi
+- `74-energy-inventory-items.md` — energi, inventaris/hotbar, item makanan-minuman
+- `75-vehicle-motor.md` — motor pemain, bensin per 5 detik
+- `76-terrain-plate.md` — tanah peta kota dari image generation yang mengikuti layout
+- `77-mission-complete-fx.md` — penanda misi selesai dan efek visual prosedural
 
 ## 5. Definition of Done (per gerbang)
 Fitur/aset berjalan tanpa error konsol; diuji dengan skenario nyata; invarian lulus; tidak ada sumber eksternal runtime; tidak ada `innerHTML` dengan data dinamis; `PROGRESS.md` diperbarui; commit dibuat; daftar placeholder tersisa dilaporkan.

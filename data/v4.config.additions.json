@@ -1,0 +1,72 @@
+{
+ "energy": {
+  "max": 100,
+  "start": 100,
+  "passiveDrainPerGameHour": 2,
+  "warnAt": 25,
+  "criticalAt": 10,
+  "exhaustedSpeedMultiplier": 0.7,
+  "sleepRecoveryPerHour": 10,
+  "restRecoveryPerHour": 5,
+  "walkDrainPerMovingMinute": 0,
+  "activityEnergyCostPerHour": {
+   "belajar_mandiri": 10,
+   "ikut_pelajaran": 5,
+   "main_game": 4,
+   "nongkrong_kafe": 2,
+   "baca_perpustakaan": 3,
+   "nonton_tv": 1
+  },
+  "heavyActivities": [
+   "belajar_mandiri",
+   "ikut_pelajaran",
+   "main_game"
+  ],
+  "makan_rumah": {
+   "energy": 40,
+   "minutes": 20,
+   "cost": 0
+  }
+ },
+ "inventory": {
+  "slots": 5,
+  "stackMax": 5,
+  "hotkeys": [
+   "1",
+   "2",
+   "3",
+   "4",
+   "5"
+  ]
+ },
+ "vehicle": {
+  "speedMultiplier": 1.8,
+  "fuelTickSeconds": 5,
+  "fuelPerTick": 2,
+  "toggleKey": "V",
+  "allowedMapKinds": [
+   "hub"
+  ],
+  "autoDismountOnInterior": true,
+  "parkedMotorAfterDismount": true,
+  "mountAnimationMs": 350,
+  "riderColliderPx": [
+   24,
+   12
+  ],
+  "replaceDailyFuelDecay": true
+ },
+ "missionFx": {
+  "durationMs": 1200,
+  "queueMax": 3,
+  "flashMs": 80
+ },
+ "terrain": {
+  "mode": "plate",
+  "fallback": "procedural",
+  "conformanceIoUMin": 0.85,
+  "edgeTolerancePx": 6,
+  "maxAttempts": 3
+ },
+ "notes": "Gabungkan ke data/phase1.config.json (jangan menimpa nilai pengguna; baca dulu laju/kecepatan eksisting)."
+}

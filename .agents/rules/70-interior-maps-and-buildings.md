@@ -62,3 +62,6 @@ Penempatan awal dari layout; dialog lewat sistem `71-dialogue-system.md`. Jadwal
 - Hook `window.__LJ__`: `teleportToMap(mapId, spawnId)`, `listInteractables()`, `interact(id)`.
 - Tangkapan layar tiap peta dengan overlay kolisi; periksa kedalaman (pemain di belakang/di depan furnitur), pintu, dan keterbacaan.
 - Skenario E2E: bangun di rumah → ibu (uang saku) → anggaran → keluar → sekolah (kelas → kantin beli) → minimarket → SPBU → game center → pulang → tidur → hari berikutnya; invarian ledger dan jam diperiksa di tiap langkah.
+
+## 11. Pembaruan v4
+Tata letak seluruh peta mengikuti `73-room-layout-and-collision.md` (Layout Spec berbasis slot, dinding belakang tampak, kolisi, oklusi). **Katalog `data/furniture-catalog-v4.json` menggantikan daftar furnitur di §6–7 sebagai acuan minimum**; interior memakai aset `_v4`. Eksterior game center memakai `bld_game_center_v4` (menggantikan `bld_game_center` setelah lolos QA). NPC interior tidak boleh ada di layout hub.

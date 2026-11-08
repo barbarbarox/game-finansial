@@ -34,37 +34,139 @@
   },
   "maxSaveSize": 524288,
   "locations": {
-    "rumah": { "name": "Rumah", "panelBg": "bg_panel_rumah" },
-    "kantin": { "name": "Kantin Sekolah", "panelBg": "bg_panel_kantin" },
-    "minimarket": { "name": "Mini Mart Harapan", "panelBg": "bg_panel_minimarket" },
-    "kosmetik": { "name": "Toko Cantik Sari", "panelBg": "bg_panel_kosmetik" },
-    "spbu": { "name": "SPBU Mini", "panelBg": "bg_panel_spbu" },
-    "gamecenter": { "name": "Game Center", "panelBg": "bg_panel_game_center" }
+    "rumah": {
+      "name": "Rumah",
+      "panelBg": "bg_panel_rumah"
+    },
+    "kantin": {
+      "name": "Kantin Sekolah",
+      "panelBg": "bg_panel_kantin"
+    },
+    "minimarket": {
+      "name": "Mini Mart Harapan",
+      "panelBg": "bg_panel_minimarket"
+    },
+    "kosmetik": {
+      "name": "Toko Cantik Sari",
+      "panelBg": "bg_panel_kosmetik"
+    },
+    "spbu": {
+      "name": "SPBU Mini",
+      "panelBg": "bg_panel_spbu"
+    },
+    "gamecenter": {
+      "name": "Game Center",
+      "panelBg": "bg_panel_game_center"
+    }
   },
   "shopItems": {
     "kantin": [
-      { "id": "makan_siang", "name": "Makan Siang", "price": 10000, "categoryId": "jajan", "isNeed": true },
-      { "id": "jajan_kantin", "name": "Jajan", "price": 5000, "categoryId": "jajan", "isNeed": false },
-      { "id": "minuman", "name": "Minuman", "price": 5000, "categoryId": "jajan", "isNeed": false }
+      {
+        "id": "makan_siang",
+        "name": "Makan Siang",
+        "price": 10000,
+        "categoryId": "jajan",
+        "isNeed": true
+      },
+      {
+        "id": "jajan_kantin",
+        "name": "Jajan",
+        "price": 5000,
+        "categoryId": "jajan",
+        "isNeed": false
+      },
+      {
+        "id": "minuman",
+        "name": "Minuman",
+        "price": 5000,
+        "categoryId": "jajan",
+        "isNeed": false
+      }
     ],
     "minimarket": [
-      { "id": "alat_tulis", "name": "Alat Tulis", "price": 15000, "categoryId": "sekolah", "isNeed": true },
-      { "id": "fotokopi", "name": "Fotokopi", "price": 5000, "categoryId": "sekolah", "isNeed": true },
-      { "id": "kuota_hemat", "name": "Paket Kuota Hemat", "price": 15000, "categoryId": "komunikasi", "isNeed": true },
-      { "id": "kuota_besar", "name": "Paket Kuota Besar", "price": 35000, "categoryId": "komunikasi", "isNeed": false },
-      { "id": "camilan", "name": "Camilan", "price": 8000, "categoryId": "jajan", "isNeed": false }
+      {
+        "id": "alat_tulis",
+        "name": "Alat Tulis",
+        "price": 15000,
+        "categoryId": "sekolah",
+        "isNeed": true
+      },
+      {
+        "id": "fotokopi",
+        "name": "Fotokopi",
+        "price": 5000,
+        "categoryId": "sekolah",
+        "isNeed": true
+      },
+      {
+        "id": "kuota_hemat",
+        "name": "Paket Kuota Hemat",
+        "price": 15000,
+        "categoryId": "komunikasi",
+        "isNeed": true
+      },
+      {
+        "id": "kuota_besar",
+        "name": "Paket Kuota Besar",
+        "price": 35000,
+        "categoryId": "komunikasi",
+        "isNeed": false
+      },
+      {
+        "id": "camilan",
+        "name": "Camilan",
+        "price": 8000,
+        "categoryId": "jajan",
+        "isNeed": false
+      }
     ],
     "kosmetik": [
-      { "id": "lip_tint", "name": "Lip Tint", "price": 35000, "categoryId": "perawatanDiri", "isNeed": false },
-      { "id": "skincare", "name": "Skincare", "price": 75000, "categoryId": "perawatanDiri", "isNeed": false }
+      {
+        "id": "lip_tint",
+        "name": "Lip Tint",
+        "price": 35000,
+        "categoryId": "perawatanDiri",
+        "isNeed": false
+      },
+      {
+        "id": "skincare",
+        "name": "Skincare",
+        "price": 75000,
+        "categoryId": "perawatanDiri",
+        "isNeed": false
+      }
     ],
     "spbu": [
-      { "id": "bensin", "name": "Isi Bensin", "price": 20000, "categoryId": "transportasi", "isNeed": true }
+      {
+        "id": "bensin",
+        "name": "Isi Bensin",
+        "price": 20000,
+        "categoryId": "transportasi",
+        "isNeed": true
+      }
     ],
     "gamecenter": [
-      { "id": "game_1jam", "name": "Main Game 1 Jam", "price": 10000, "categoryId": "hiburan", "isNeed": false },
-      { "id": "nonton", "name": "Nonton Film", "price": 40000, "categoryId": "hiburan", "isNeed": false },
-      { "id": "nongkrong", "name": "Nongkrong", "price": 30000, "categoryId": "hiburan", "isNeed": false }
+      {
+        "id": "game_1jam",
+        "name": "Main Game 1 Jam",
+        "price": 10000,
+        "categoryId": "hiburan",
+        "isNeed": false
+      },
+      {
+        "id": "nonton",
+        "name": "Nonton Film",
+        "price": 40000,
+        "categoryId": "hiburan",
+        "isNeed": false
+      },
+      {
+        "id": "nongkrong",
+        "name": "Nongkrong",
+        "price": 30000,
+        "categoryId": "hiburan",
+        "isNeed": false
+      }
     ]
   },
   "categories": {
@@ -75,5 +177,74 @@
     "hiburan": "Hiburan",
     "komunikasi": "Komunikasi",
     "lainLain": "Lain-lain"
+  },
+  "energy": {
+    "max": 100,
+    "start": 100,
+    "passiveDrainPerGameHour": 2,
+    "warnAt": 25,
+    "criticalAt": 10,
+    "exhaustedSpeedMultiplier": 0.7,
+    "sleepRecoveryPerHour": 10,
+    "restRecoveryPerHour": 5,
+    "walkDrainPerMovingMinute": 0,
+    "activityEnergyCostPerHour": {
+      "belajar_mandiri": 10,
+      "ikut_pelajaran": 5,
+      "main_game": 4,
+      "nongkrong_kafe": 2,
+      "baca_perpustakaan": 3,
+      "nonton_tv": 1
+    },
+    "heavyActivities": [
+      "belajar_mandiri",
+      "ikut_pelajaran",
+      "main_game"
+    ],
+    "makan_rumah": {
+      "energy": 40,
+      "minutes": 20,
+      "cost": 0
+    }
+  },
+  "inventory": {
+    "slots": 5,
+    "stackMax": 5,
+    "hotkeys": [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ]
+  },
+  "vehicle": {
+    "speedMultiplier": 1.8,
+    "fuelTickSeconds": 5,
+    "fuelPerTick": 2,
+    "toggleKey": "V",
+    "allowedMapKinds": [
+      "hub"
+    ],
+    "autoDismountOnInterior": true,
+    "parkedMotorAfterDismount": true,
+    "mountAnimationMs": 350,
+    "riderColliderPx": [
+      24,
+      12
+    ],
+    "replaceDailyFuelDecay": true
+  },
+  "missionFx": {
+    "durationMs": 1200,
+    "queueMax": 3,
+    "flashMs": 80
+  },
+  "terrain": {
+    "mode": "plate",
+    "fallback": "procedural",
+    "conformanceIoUMin": 0.85,
+    "edgeTolerancePx": 6,
+    "maxAttempts": 3
   }
 }

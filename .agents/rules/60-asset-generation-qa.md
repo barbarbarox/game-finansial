@@ -76,3 +76,11 @@ Catatan: validator menangkap cacat teknis; kemiripan gaya dan identitas bergantu
 - **Skala seragam per sheet:** untuk sheet berisi banyak item (furnitur, prop, potret), hitung SATU faktor skala untuk seluruh sheet (median dari ), bukan skala per item, supaya ukuran piksel tampak antar-item seragam. Setelah diskalakan, tiap item harus berada dalam ±20% dari ukuran target brief; item yang menyimpang digenerate ulang (bukan di-skala sendiri). Berlaku juga untuk  yang sudah ada.
 - Brief tambahan: ; gaya: . Furnitur keluar ke , potret ke  (192×256, menghadap kanan).
 - Validator tambahan:  diperiksa visual; dasar furnitur rata di baris terbawah; potret mengisi ≥ 85% tinggi dan identitas warna cocok dengan sprite.
+
+## 11. Mode generate v4
+- **Furnitur turunan slot:** brief dibuat dari slot layout (`tools/derive_briefs_from_layout.py`) memakai `furnitureBriefTemplate` di `data/asset-briefs-v4.json`; satu sheet = 4–6 item dari ruang yang sama. Ukuran/kelas/arah dari slot. **Modul counter** harus tinggi dan garis dasarnya identik (±2 px) dengan sisi kiri/kanan dipotong datar agar menyambung; validator menghitung deretan.
+- **Validator wajib (pelajaran Checkpoint A):** dasar sprite menempel baris terbawah untuk semua objek berkolisi; tidak ada komponen terhubung kecil (< 12 piksel) di luar subjek utama; tidak ada garis/titik artefak di tepi gambar; padding transparan hanya di atas/samping, tidak di bawah. Jangan menulis "N/A" untuk kelas aset apa pun.
+- **Kandidat:** bila brief memuat `candidates: N`, hasilkan N variasi, bandingkan lewat QA + tinjauan visual terhadap `docs/reference/` dan bangunan lain, pilih satu, simpan sisanya di `assets/_rejected/`.
+- **Generate terpandu:** terrain plate memakai gambar guide sebagai referensi dan uji kesesuaian (rule 76); tool tambahan `render_layout_guide`, `check_plate_conformance`, `check_swatch_seamless`.
+- **Kendaraan multi-tampak:** motor (jangkar) → pengendara L/P dengan motor yang sama; QA warna motor konsisten antar-tampak dan antar-sheet.
+- **Sheet ikon grid:** potong per sel, normalisasi 32×32, QA isi ≥ 60% sel, tanpa teks.

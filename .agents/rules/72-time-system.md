@@ -66,3 +66,6 @@ Biaya mengikuti `40-phase1-game-design.md`; angka ini default yang boleh disetel
 7. Simpan/muat mempertahankan menit; migrasi save lama berhasil.
 8. Lompat waktu tidak melewatkan `openStateChanged` atau `dayChanged`.
 9. Tangkapan layar widget pada keempat fase hari; titik dua berkedip; bar halus.
+
+## 7. Integrasi energi (v4)
+`advanceTime` memancarkan `energyChanged`; penguras pasif per jam, `energyCostPerHour` per aktivitas, dan pemulihan tidur/istirahat mengikuti `74-energy-inventory-items.md`. Katalog aktivitas mendapat field `energyCostPerHour` dan aturan penolakan bila energi tidak cukup. Makan/minum item memakai `advanceTime` untuk `consumeMinutes`. Konsumsi bensin motor **tidak** melalui `advanceTime` harian; ia mengikuti akumulator 5 detik di rule 75 (hanya saat bermotor).

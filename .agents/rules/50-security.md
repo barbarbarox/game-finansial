@@ -22,4 +22,6 @@ Aplikasi client-side tanpa backend. Permukaan serangan kecil tetapi nyata. Pemet
 13. **Aset hasil generate:** periksa berkas keluaran hanya berupa gambar (PNG/JPEG/WebP), konversi ke PNG murni dan buang metadata sebelum masuk `assets/`; catat sumber `ai-generated`, alat, tanggal, dan prompt.
 
 14. **Data peta dan dialog:** layout peta dan dialog divalidasi skema saat dimuat (tipe, rentang, referensi aset/peta yang ada, efek dialog di whitelist). Teks dialog dan nama dirender hanya lewat .
-15. **Hook uji tambahan** (, , , ) tunduk pada aturan hook debug yang sama: hanya aktif dengan  dan .
+15. **Hook uji tambahan** (`advanceTime`, `openDialogue`, `selectChoice`, `teleportToMap`) tunduk pada aturan hook debug yang sama: hanya aktif dengan `?debug=1` dan `debugEnabled: true`.
+16. **Data inventaris/item/save v3:** validasi skema (itemId harus ada di katalog, jumlah bilangan bulat 1..stackMax, jumlah slot ≤ batas), tolak kunci berbahaya; teks tooltip/efek lewat `textContent`.
+17. **Hook uji v4** (`giveItem`, `setEnergy`, `setFuel`, `completeMission`, `advanceRealSeconds`, dsb.) hanya aktif dengan `?debug=1` dan `debugEnabled: true`; audit akhir memastikan nonaktif pada rilis dan tidak ada jalan pintas yang melewati domain.

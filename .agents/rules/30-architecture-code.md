@@ -46,3 +46,6 @@ Key `lj_save_v2` (satu objek; migrasi dari `lj_save_v1` wajib, lihat 70 dan 72).
 ## 9. Tools dan repo
 - Skrip pipeline aset di `tools/` (lihat `60-asset-generation-qa.md`). Server statis untuk uji: perintah sederhana tanpa dependensi berat.
 - Commit git di tiap gerbang; `.gitignore` memuat `assets/_raw/` bila besar.
+
+## 10. Save v3 dan hook uji (v4)
+Save v3 menambah: `energy`, `inventory[{itemId,count}]`, `vehicle{mounted,parked{map,x,y}}`, `missionsCompleted[]`, `terrain.mode`; migrasi dari v2 (energi 100, tas kosong, motor turun). Hook debug tambahan (aturan keamanan sama, hanya `?debug=1` + `debugEnabled:true`): `collisionProbe(mapId)`, `listNPCs(mapId)`, `completeMission(id)`, `useItem(slot)`, `giveItem(id,n)`, `setEnergy(n)`, `toggleVehicle()`, `measureSpeed()`, `setFuel(n)`, `advanceRealSeconds(n)` (jam palsu untuk uji bensin).
