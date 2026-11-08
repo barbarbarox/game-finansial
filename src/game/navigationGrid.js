@@ -269,3 +269,4 @@ export class NavigationGrid {
     return smoothed;
   }
 }
+

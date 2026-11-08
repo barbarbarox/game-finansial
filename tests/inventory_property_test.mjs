@@ -140,3 +140,4 @@ Summary:
  - Discards: ${opCounts.discard}
  - Full/Rejected Adds: ${opCounts.rejected}
  - Total Invariant Checks: 500 (100% PASS)`);
+
