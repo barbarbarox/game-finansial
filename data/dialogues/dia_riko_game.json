@@ -1,0 +1,66 @@
+{
+  "id": "dia_riko_game",
+  "npcId": "npc_riko",
+  "npcName": "Kak Riko",
+  "portrait": "assets/portraits/portrait_penjaga_game.png",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Yo! Selamat datang di Game Center Harmoni. Mau main arcade balap, rhythm game, atau nonton turnamen?",
+      "choices": [
+        {
+          "text": "Beli Koin Main Arcade 1 Jam (Rp20.000)",
+          "requires": { "minCash": 20000 },
+          "disabledReason": "Uang kas tidak cukup (butuh Rp20.000)",
+          "next": "play_game",
+          "effects": [
+            {
+              "type": "ledger_expense",
+              "categoryId": "BEBAN_HIBURAN",
+              "amount": 20000,
+              "description": "Main game arcade 1 jam"
+            },
+            {
+              "type": "start_activity",
+              "activityId": "main_game"
+            }
+          ]
+        },
+        {
+          "text": "Nonton Teman Tanding E-Sports (Gratis / 30 Mnt)",
+          "next": "watch_tournament",
+          "effects": [
+            {
+              "type": "start_activity",
+              "activityId": "nonton_turnamen"
+            }
+          ]
+        },
+        {
+          "text": "Cuma mampir lihat-lihat dulu Kak Riko.",
+          "next": "just_looking"
+        }
+      ]
+    },
+    "play_game": {
+      "id": "play_game",
+      "speaker": "npc",
+      "text": "Ini koin arcadenya! Ingat waktu ya, refreshing boleh tapi tugas sekolah jangan sampai terbengkalai.",
+      "next": null
+    },
+    "watch_tournament": {
+      "id": "watch_tournament",
+      "speaker": "npc",
+      "text": "Pertandingan seru banget! Hiburan gratis sambil belajar strategi tim e-sports sekolah.",
+      "next": null
+    },
+    "just_looking": {
+      "id": "just_looking",
+      "speaker": "npc",
+      "text": "Sip, kalau mau mabar atau sewa mesin arcade langsung panggil kasir ya bro!",
+      "next": null
+    }
+  }
+}
+

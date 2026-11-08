@@ -502,7 +502,8 @@ export async function startDialogue(dialogueOrId, npcId = null, onClose = null) 
       'npc_petugas_spbu': 'assets/portraits/portrait_petugas_spbu.png',
       'npc_pak_anto': 'assets/portraits/portrait_petugas_spbu.png',
       'npc_riko': 'assets/portraits/portrait_penjaga_game.png',
-      'npc_penjaga_game': 'assets/portraits/portrait_penjaga_game.png'
+      'npc_penjaga_game': 'assets/portraits/portrait_penjaga_game.png',
+      'npc_rani': 'assets/portraits/portrait_teman_p.png'
     };
     portraitSrc = portraitMap[npcId] || portraitMap[dialogue.npcId];
   }

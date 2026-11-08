@@ -1,0 +1,46 @@
+{
+  "id": "dia_rani_game",
+  "npcId": "npc_rani",
+  "npcName": "Rani",
+  "portrait": "assets/portraits/portrait_teman_p.png",
+  "nodes": {
+    "start": {
+      "id": "start",
+      "speaker": "npc",
+      "text": "Eh, {player}! Kamu lagi di game center juga? Aku lagi latihan game rhythm nih buat turnamen antarkelas.",
+      "choices": [
+        {
+          "text": "Wah keren! Semangat ya Rani, semoga juara!",
+          "next": "cheer_rani"
+        },
+        {
+          "text": "Jangan lupa batasi anggaran koin game-mu ya Rani.",
+          "next": "budget_advice"
+        },
+        {
+          "text": "Aku lanjut keliling dulu ya Rani.",
+          "next": "goodbye"
+        }
+      ]
+    },
+    "cheer_rani": {
+      "id": "cheer_rani",
+      "speaker": "npc",
+      "text": "Makasih banyak {player}! Doain ya, nanti kalau menang hadiahnya mau aku tabung di celengan.",
+      "next": null
+    },
+    "budget_advice": {
+      "id": "budget_advice",
+      "speaker": "npc",
+      "text": "Betul banget! Aku cuma alokasikan Rp20.000 per minggu buat hiburan biar kas tetap aman.",
+      "next": null
+    },
+    "goodbye": {
+      "id": "goodbye",
+      "speaker": "npc",
+      "text": "Oke {player}, sampai ketemu lagi di sekolah besok!",
+      "next": null
+    }
+  }
+}
+
