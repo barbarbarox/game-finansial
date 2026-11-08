@@ -328,7 +328,7 @@
           }
           const spawn = layout.world?.spawns?.default || layout.world?.spawn || { x: 5, y: 5 };
           const targets = (layout.interactables || []).map(i => ({ name: `Interactable ${i.id}`, x: i.x, y: i.y, w: i.w, h: i.h }));
-          const { unreachable } = checkBfs(w, h, blocked, Math.floor(spawn.x), Math.floor(spawn.y), targets);
+          const { unreachable, visited } = checkBfs(w, h, blocked, Math.floor(spawn.x), Math.floor(spawn.y), targets);
           const checkD = unreachable.length === 0;
           mapChecks.push({
             name: `(d) Keterjangkauan BFS: Seluruh titik interaksi & pintu keluar terjangkau (${targets.length} target)`,
@@ -360,7 +360,7 @@
           const allFurnitureAssets = (layout.furniture || []).map(f => f.assetId || f.id);
           const missingAssets = allFurnitureAssets.filter(aid => !aid.endsWith('_v4') && !manifestAssetIds.has(aid));
           const checkG = missingAssets.length === 0;
-          mapChecks.push({ name: '(g) Integritas AssetId: Semua slot merujuk ke ID katalog v4 (_v4) atau manifest', pass: checkG, detail: `${allFurnitureAssets.length} slot terdaftar rapi` });
+          mapChecks.push({ name: '(g) Integritas AssetId: Semua slot merujuk ke ID katalog v4 (_v4) atau manifest', pass: checkG, detail: checkG ? `${allFurnitureAssets.length} slot terdaftar rapi` : `Tidak di manifest: ${missingAssets.join(', ')}` });
 
           // (h) Daftar item minimum dari katalog terpenuhi
           const roomKeys = Object.keys(catalog.rooms || {}).filter(k => k.startsWith(mapId));
@@ -383,6 +383,36 @@
             if (hasIbu) npcMapPass = false;
           }
           mapChecks.push({ name: '(i) Isolasi NPC: Tidak ada NPC interior yang berada di hub kota', pass: npcMapPass, detail: `NPC di peta ini: ${(layout.npcs || []).map(n => n.name).join(', ') || 'Tidak ada'}` });
+
+          // (j) Approach Check: Semua interactable memiliki titik pendekatan bebas kolisi (lebar >= 1 tile)
+          const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+          let approachFailed = [];
+          for (const int of layout.interactables || []) {
+            let hasFreeApproach = false;
+            for (let tx = Math.floor(int.x); tx < Math.ceil(int.x + (int.w || 1)); tx++) {
+              for (let ty = Math.floor(int.y); ty < Math.ceil(int.y + (int.h || 1)); ty++) {
+                for (const [dx, dy] of dirs) {
+                  const ax = tx + dx;
+                  const ay = ty + dy;
+                  if (ax >= 0 && ax < w && ay >= 0 && ay < h && !blocked[ay][ax] && visited[ay][ax]) {
+                    hasFreeApproach = true;
+                    break;
+                  }
+                }
+                if (hasFreeApproach) break;
+              }
+              if (hasFreeApproach) break;
+            }
+            if (!hasFreeApproach) {
+              approachFailed.push(int.id);
+            }
+          }
+          const checkJ = approachFailed.length === 0;
+          mapChecks.push({
+            name: '(j) Uji Pendekatan Bebas (ApproachCheck): Koridor interaksi bebas kolisi lebar >= 1 tile (Rule 73 §8)',
+            pass: checkJ,
+            detail: checkJ ? `Semua ${(layout.interactables || []).length} interactable memiliki akses bebas` : `Terblokir: ${approachFailed.join(', ')}`
+          });
 
           // Append rows to card
           for (const chk of mapChecks) {

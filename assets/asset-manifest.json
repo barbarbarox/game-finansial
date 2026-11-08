@@ -909,6 +909,40 @@
       }
     },
     {
+      "id": "furn_kursi_makan_kiri",
+      "file": "assets/furniture/home/furn_kursi_makan_kiri.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_makan_kanan",
+      "file": "assets/furniture/home/furn_kursi_makan_kanan.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "anchor": [
+        0.5,
+        1.0
+      ],
+      "status": "ready",
+      "source": "ai-generated",
+      "group": "home",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
       "id": "furn_rak_piring",
       "file": "assets/furniture/home/furn_rak_piring.png",
       "type": "image",

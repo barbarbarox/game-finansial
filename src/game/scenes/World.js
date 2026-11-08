@@ -445,9 +445,13 @@ export class World extends Phaser.Scene {
 
     let nearby = null;
     for (const int of (this._interactables || [])) {
-      const ix = (int.x || 0) * ts;
-      const iy = (int.y || 0) * ts;
-      const dist = Phaser.Math.Distance.Between(px, py, ix, iy);
+      const rx0 = (int.x || 0) * ts;
+      const ry0 = (int.y || 0) * ts;
+      const rx1 = rx0 + (int.w || 1) * ts;
+      const ry1 = ry0 + (int.h || 1) * ts;
+      const closestX = Math.max(rx0, Math.min(px, rx1));
+      const closestY = Math.max(ry0, Math.min(py, ry1));
+      const dist = Phaser.Math.Distance.Between(px, py, closestX, closestY);
       if (dist < 50) {
         nearby = int;
         break;

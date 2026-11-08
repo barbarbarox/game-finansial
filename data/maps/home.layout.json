@@ -327,7 +327,7 @@
       "label": "Nakas Lampu",
       "class_": "wall_back",
       "x": 6.8,
-      "y": 3.5,
+      "y": 2.0,
       "w": 1,
       "h": 1.5,
       "collidable": true
@@ -664,7 +664,7 @@
     },
     {
       "id": "fur_kursi_makan_1",
-      "assetId": "furn_kursi_makan_kiri",
+      "assetId": "furn_kursi_makan_kiri_v4",
       "label": "Kursi Makan Kiri",
       "class_": "cluster",
       "x": 19.3,
@@ -675,7 +675,7 @@
     },
     {
       "id": "fur_kursi_makan_2",
-      "assetId": "furn_kursi_makan_kanan",
+      "assetId": "furn_kursi_makan_kanan_v4",
       "label": "Kursi Makan Kanan",
       "class_": "cluster",
       "x": 22.7,
