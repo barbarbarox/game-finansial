@@ -13,3 +13,4 @@
   3. Diletakkan simetris di bagian depan ruang kelas: papan tulis pada dinding belakang ($y=1.5$), meja guru di depannya ($y=3.5$), kursi guru di balik meja ($y=2.8$).
 - **Hasil Verifikasi:**
   Pengujian runtime via CDP memvalidasi texture `furn_papan_tulis_v6` dan `furn_meja_guru_v6` berhasil dimuat dan dirender di koordinat kelas dengan simetri frontal penuh tanpa kemiringan serong.
+

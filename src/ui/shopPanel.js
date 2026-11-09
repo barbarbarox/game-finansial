@@ -548,6 +548,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
             emit(DOMAIN_EVENTS.ITEM_ACQUIRED, { itemId: item.id, count: qty });
             emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(ledgerRes.ledger));
             emit(DOMAIN_EVENTS.INVENTORY_CHANGED, invRes.inventory);
+            emit(DOMAIN_EVENTS.PURCHASE_COMPLETED, { shopId, item, quantity: qty });
 
             setVendorSpeech(vendor.bought);
             updateStatusBadges();
@@ -587,6 +588,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
 
             emit(DOMAIN_EVENTS.ENERGY_CHANGED, newEnergy);
             emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(ledgerRes.ledger));
+            emit(DOMAIN_EVENTS.PURCHASE_COMPLETED, { shopId, item, quantity: qty });
 
             setVendorSpeech(vendor.bought);
             updateStatusBadges();
@@ -688,6 +690,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
 
           store.setState(updates);
           emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(ledgerRes.ledger));
+          emit(DOMAIN_EVENTS.PURCHASE_COMPLETED, { shopId, item: good, quantity: 1 });
           setVendorSpeech(vendor.bought);
           updateStatusBadges();
           renderItems();
@@ -838,6 +841,7 @@ function renderFuelPanel(contentCol, store, shopDef, rupiah, setVendorSpeech, ve
         });
 
         emit(DOMAIN_EVENTS.FUEL_CHANGED, { gasoline: res.newGasoline, percent: res.newGasoline });
+        emit(DOMAIN_EVENTS.REFUELED, { amount: res.cost, addedPercent: res.addedPercent });
         emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(ledgerRes.ledger));
 
         setVendorSpeech(vendor.bought);

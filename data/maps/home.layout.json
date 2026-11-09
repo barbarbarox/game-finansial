@@ -694,6 +694,17 @@
   ],
   "interactables": [
     {
+      "id": "int_celengan",
+      "type": "activity",
+      "activityId": "celengan_ayam",
+      "x": 6.8,
+      "y": 2.5,
+      "w": 1.5,
+      "h": 1.5,
+      "prompt": "Tekan [E] Menabung di Celengan Ayam",
+      "action": "deposit_savings"
+    },
+    {
       "id": "int_kasur",
       "type": "activity",
       "activityId": "tidur",

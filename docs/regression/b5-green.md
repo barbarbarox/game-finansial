@@ -14,3 +14,4 @@
   4. Memperbarui `home.layout.json` sehingga `fur_bak_mandi` merujuk ke `furn_bak_mandi_v6` dan `fur_rak_piring` merujuk ke `furn_rak_piring_dinding_v6`.
 - **Hasil Verifikasi:**
   Pengujian runtime via CDP membuktikan bak mandi di kamar mandi merender `furn_bak_mandi_v6` (bak air) dan rak piring di dapur merender `furn_rak_piring_dinding_v6` (rak piring nyata).
+

@@ -102,6 +102,7 @@ export function showItemActionPopup(anchorEl, location, slotIndex, slotData, sto
       });
 
       emit(DOMAIN_EVENTS.ENERGY_CHANGED, updatedEnergyState);
+      emit(DOMAIN_EVENTS.ITEM_USED, { item: itemDef });
 
       // Toast feedback
       showFloatingToast(`+${itemDef.energy || 15} Energi`);

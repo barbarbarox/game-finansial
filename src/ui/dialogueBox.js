@@ -7,6 +7,7 @@ import { getCash, addEntry, createExpenseEntry, createAllowanceEntry } from '../
 import { refuelPercent, refuelAmount } from '../domain/vehicle.js';
 import { addItem } from '../domain/inventory.js';
 import { showTimeSkip } from './timeSkip.js';
+import { emit, DOMAIN_EVENTS } from '../domain/events.js';
 
 let dialogueContainer = null;
 let currentDialogue = null;
@@ -373,6 +374,7 @@ function executeEffects(effects = []) {
               );
               state = { ...state, ledger: res.ledger, missions: updatedMissions };
               store.setState({ ledger: res.ledger, missions: updatedMissions });
+              emit(DOMAIN_EVENTS.ALLOWANCE_GRANTED, { amount: 1000000 });
             }
           }
         }
@@ -392,6 +394,7 @@ function executeEffects(effects = []) {
         if (res) {
           state = { ...state, gasoline: res.newGasoline };
           store.setState({ gasoline: res.newGasoline });
+          emit(DOMAIN_EVENTS.REFUELED, { gasoline: res.newGasoline });
         }
         break;
       }
@@ -423,6 +426,7 @@ function executeEffects(effects = []) {
           const res = refuelPercent(state, 40, state.config?.spbu?.pricePerPercent || 500);
           state = { ...state, gasoline: res.newGasoline };
           store.setState({ gasoline: res.newGasoline });
+          emit(DOMAIN_EVENTS.REFUELED, { gasoline: res.newGasoline });
         }
         const minutes = actId === 'pelajaran_sekolah' ? 120 : (actId === 'main_game' ? 60 : 30);
         showTimeSkip({
@@ -508,6 +512,11 @@ export async function startDialogue(dialogueOrId, npcId = null, onClose = null) 
 
   currentDialogue = dialogue;
   onDialogueClose = onClose;
+
+  emit(DOMAIN_EVENTS.DIALOGUE_OPENED, {
+    dialogueId: typeof dialogueOrId === 'string' ? dialogueOrId : (dialogue?.id || ''),
+    npcId: npcId || ''
+  });
 
   const hotbar = document.getElementById('hud-hotbar');
   if (hotbar) hotbar.style.display = 'none';

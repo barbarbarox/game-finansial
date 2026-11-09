@@ -18,7 +18,7 @@ import { createSettingsModal } from '../../ui/settings.js';
 import { createCreditsModal } from '../../ui/credits.js';
 import { createProceduralTiles } from '../../assets-gen/groundTiles.js';
 import { saveGame } from '../../state/persistence.js';
-import { addEntry, createAllowanceEntry } from '../../domain/ledger.js';
+import { addEntry, createAllowanceEntry, createSavingsDepositEntry, getCash } from '../../domain/ledger.js';
 import { advanceTime, isLocationOpen, formatClock, getTimeUntilWakeup, DEFAULT_OPENING_HOURS } from '../../domain/clock.js';
 import { MapManager } from '../mapManager.js';
 import { showTimeSkip } from '../../ui/timeSkip.js';
@@ -31,7 +31,10 @@ import { ITEMS_MAP } from '../../domain/itemsCatalog.js';
 import { canMountVehicle } from '../../domain/vehicle.js';
 import { NavigationGrid } from '../navigationGrid.js';
 import { findBestInteractionTarget } from '../interactionTarget.js';
-import { emit, DOMAIN_EVENTS } from '../../domain/events.js';
+import { emit, subscribe, DOMAIN_EVENTS } from '../../domain/events.js';
+import { TutorialManager, createTutorialState } from '../../domain/tutorial.js';
+import { GuidanceArrowManager } from '../effects/guidanceArrow.js';
+import { TutorialBanner } from '../../ui/tutorialBanner.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -43,6 +46,9 @@ export class World extends Phaser.Scene {
     this._tileSize = 32;
     this._promptText = null;
     this._currentInteractable = null;
+    this._tutorialManager = null;
+    this._guidanceArrow = null;
+    this._tutorialBanner = null;
     this._clockTimerMs = 0;
     this._mapManager = null;
     this._missionFx = null;
@@ -169,6 +175,20 @@ export class World extends Phaser.Scene {
           }
         }
       });
+
+      // 10. Tutorial System (Rule 82)
+      const tutData = this.cache.json.get('tutorialPhase1') || {};
+      this._tutorialManager = new TutorialManager(store, tutData);
+      this._tutorialManager.init();
+      this._guidanceArrow = new GuidanceArrowManager(this, this._tutorialManager);
+      this._tutorialBanner = new TutorialBanner(store, this._tutorialManager);
+
+      // Trigger mission complete FX on tutorial step change
+      subscribe(DOMAIN_EVENTS.TUTORIAL_STEP_CHANGED, (payload) => {
+        if (payload?.prevStep && this._missionFx) {
+          this._missionFx.trigger(payload.prevStep.id, payload.prevStep.title);
+        }
+      });
     }
 
     // 9. Click-to-Move Pathfinding & Interaction (Gate H5)
@@ -193,15 +213,25 @@ export class World extends Phaser.Scene {
       }
       const colliders = this._mapManager ? this._mapManager.getColliderRects() : [];
       this._player.update(delta, colliders);
+      if (this._player.moving && this._player.sprite) {
+        emit(DOMAIN_EVENTS.PLAYER_MOVED, { x: this._player.sprite.x, y: this._player.sprite.y });
+      }
       this._checkInteractables();
       if (this._npcManager) {
         this._npcManager.update(time, this._player);
+      }
+      if (this._guidanceArrow) {
+        this._guidanceArrow.update(this._mapManager?.currentMapId || 'home');
       }
       this._updateGameClock(delta);
     }
   }
 
   _updateGameClock(delta) {
+    if (this._tutorialManager?.isClockPaused()) {
+      this._clockTimerMs = 0;
+      return;
+    }
     this._clockTimerMs += delta;
 
     // 1000ms real time = 1 menit game (1 real second = 1 game min)
@@ -676,6 +706,13 @@ export class World extends Phaser.Scene {
     // 1. Door / Exit transition
     if (int.type === 'door' || int.type === 'exit') {
       if (int.targetMap && this._mapManager) {
+        if (this._tutorialManager) {
+          const check = this._tutorialManager.canEnterBuilding(this._mapManager.currentMapId, int.targetMap);
+          if (!check.allowed) {
+            this.showPromptFeedback(check.reason, 3000);
+            return;
+          }
+        }
         // Auto-dismount and park motor outside when entering building (Rule 75 §1 & §6)
         if (this._player?.isMounted) {
           this._player.dismount('Motor diparkir di depan pintu');
@@ -714,6 +751,7 @@ export class World extends Phaser.Scene {
               energy: { current: 100, max: 100, exhaustionCount: st?.energy?.exhaustionCount || 0 }
             });
           }
+          emit(DOMAIN_EVENTS.ACTIVITY_COMPLETED, { activityId: 'tidur', action: 'sleep' });
         }
       });
       return;
@@ -728,8 +766,31 @@ export class World extends Phaser.Scene {
         onComplete: () => {
           if (window.__LJ__) window.__LJ__.advanceTime(20, 'makan_rumah');
           this.showPromptFeedback('Makan masakan Ibu yang lezat (+40 Energi)');
+          emit(DOMAIN_EVENTS.ACTIVITY_COMPLETED, { activityId: 'makan_rumah', action: 'eat_home' });
         }
       });
+      return;
+    }
+
+    // 2c. Celengan Ayam (Rule 82 T06)
+    if (int.activityId === 'celengan_ayam' || int.action === 'deposit_savings') {
+      const state = store?.getState();
+      const currentCash = getCash(state?.ledger);
+      if (currentCash < 100000) {
+        this.showPromptFeedback('Uang kas kamu kurang dari Rp100.000 untuk ditabung.');
+        return;
+      }
+      const clock = state?.clock || {};
+      const depositEntry = createSavingsDepositEntry(clock.day || 1, clock.month || 1, 100000, clock.timeOfDay || 480);
+      const res = addEntry(state.ledger, depositEntry);
+      if (res.error) {
+        this.showPromptFeedback(res.error);
+        return;
+      }
+      store.setState({ ledger: res.ledger, savingsEver: true });
+      emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(res.ledger));
+      emit(DOMAIN_EVENTS.SAVINGS_DEPOSITED, { amount: 100000 });
+      this.showPromptFeedback('Menyisihkan Rp100.000 ke Celengan Ayam!');
       return;
     }
 
@@ -755,7 +816,18 @@ export class World extends Phaser.Scene {
         }
       } else {
         // Fallback: hardcoded for known types
-        actMinutes = int.activityId === 'pelajaran_sekolah' ? 120 : (int.activityId === 'main_game' ? 60 : 30);
+        if (int.activityId === 'pelajaran_sekolah') {
+          const tutStep = this._tutorialManager?.getCurrentStep();
+          if (tutStep?.id === 'T09') {
+            actMinutes = 180; // Sesi 1: 07:00 -> 10:00
+          } else if (tutStep?.id === 'T12') {
+            actMinutes = 240; // Sesi 2: 10:30 -> 14:30
+          } else {
+            actMinutes = 120;
+          }
+        } else {
+          actMinutes = int.activityId === 'main_game' ? 60 : (int.activityId === 'baca_buku' ? 60 : 30);
+        }
       }
 
       // Check energy (Rule 74 §1: disable heavy activities if exhausted or insufficient)
@@ -771,6 +843,7 @@ export class World extends Phaser.Scene {
         minutes: actMinutes,
         onComplete: () => {
           if (window.__LJ__) window.__LJ__.advanceTime(actMinutes, int.activityId);
+          emit(DOMAIN_EVENTS.ACTIVITY_COMPLETED, { activityId: int.activityId, action: int.action });
         }
       });
       return;
@@ -843,6 +916,8 @@ export class World extends Phaser.Scene {
       getStore: () => this.game.registry.get('store'),
       getState: () => this.game.registry.get('store')?.getState(),
       getLedger: () => this.game.registry.get('store')?.getState()?.ledger,
+      getCash: () => getCash(this.game.registry.get('store')?.getState()?.ledger),
+      chooseOption: (i) => chooseOption(i),
       getPlayer: () => this._player,
       getMapManager: () => this._mapManager,
       teleportTo: (tx, ty) => {

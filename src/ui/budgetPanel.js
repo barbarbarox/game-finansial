@@ -5,6 +5,7 @@
  */
 
 import { getTotalExpense } from '../domain/ledger.js';
+import { emit, DOMAIN_EVENTS } from '../domain/events.js';
 
 export function createBudgetModal(container, store, config, onClose) {
   if (!store) return;
@@ -132,6 +133,7 @@ export function createBudgetModal(container, store, config, onClose) {
       newBudget[key] = parseInt(inp.value, 10) || 0;
     });
     store.setState({ budget: newBudget });
+    emit(DOMAIN_EVENTS.BUDGET_SET, { budget: newBudget });
     backdrop.remove();
     if (onClose) onClose();
   });

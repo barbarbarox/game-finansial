@@ -13,3 +13,4 @@
   3. Menggantikan slot furnitur di `school.layout.json` dengan set `_v6` baru, teratur dalam grid 2x2 rapi dengan walkway tengah menuju pintu masuk.
 - **Hasil Verifikasi:**
   Pengujian runtime via CDP membuktikan meja siswa menggunakan `furn_meja_siswa_kursi_a_v6` dan `b_v6`, seluruh kursi menghadap depan (tampak belakang), tidak serong, dan simetri horizontal $IoU \ge 0.98$.
+

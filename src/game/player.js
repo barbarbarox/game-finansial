@@ -191,6 +191,7 @@ export class PlayerController {
       if (this._store) {
         this._store.setState({ vehicle: { mounted: true } });
       }
+      emit(DOMAIN_EVENTS.VEHICLE_MOUNTED, {});
       if (callback) callback();
       return;
     }
@@ -213,6 +214,7 @@ export class PlayerController {
         if (this._store) {
           this._store.setState({ vehicle: { mounted: true } });
         }
+        emit(DOMAIN_EVENTS.VEHICLE_MOUNTED, {});
         if (callback) callback();
       }
     });

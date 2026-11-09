@@ -10,6 +10,7 @@
  */
 
 import { isLocationOpen, DEFAULT_OPENING_HOURS } from '../domain/clock.js';
+import { emit, DOMAIN_EVENTS } from '../domain/events.js';
 
 /** Floor colour palette for interior tiles */
 const FLOOR_COLORS = {
@@ -111,6 +112,7 @@ export class MapManager {
     // Persist current map in store
     const store = this.scene.game.registry.get('store');
     if (store) store.setState({ currentMap: mapId });
+    emit(DOMAIN_EVENTS.MAP_CHANGED, { mapId });
 
     if (this.scene._initNavGrid) {
       this.scene._initNavGrid();

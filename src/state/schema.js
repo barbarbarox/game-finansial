@@ -33,6 +33,7 @@ export const SAVE_SCHEMA = {
   month1NoBroke: { type: 'boolean', required: false },
   currentMap: { type: 'string', required: false },
   playerPos: { type: 'object', required: false },
+  tutorial: { type: 'object', required: false }
 };
 
 /** Dangerous prototype-pollution keys */
@@ -149,6 +150,21 @@ export function migrateSave(data) {
   clean.missions = clean.missions ?? [];
   clean.budget = clean.budget ?? {};
   clean.currentMap = clean.currentMap ?? 'home';
+
+  // Tutorial v6 (Rule 82 §6: old save -> completed: true)
+  clean.tutorial = clean.tutorial ? {
+    active: Boolean(clean.tutorial.active),
+    stepIndex: clean.tutorial.stepIndex ?? 0,
+    completedSteps: clean.tutorial.completedSteps ?? [],
+    completed: Boolean(clean.tutorial.completed),
+    pausedClock: Boolean(clean.tutorial.pausedClock)
+  } : {
+    active: false,
+    stepIndex: 20,
+    completedSteps: [],
+    completed: true,
+    pausedClock: false
+  };
 
   // Energy & Inventory (Rule 74, Save v3)
   clean.energy = clean.energy ? {

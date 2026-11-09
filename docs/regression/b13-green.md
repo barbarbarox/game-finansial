@@ -14,3 +14,4 @@
   4. Mengatur `assetId: "npc_budi_v6"` di `school.layout.json` dan `town_hub.layout.json`.
 - **Hasil Verifikasi:**
   Pengujian runtime via CDP membuktikan NPC Budi di lorong sekolah berhasil merender sprite `npc_budi_v6` dengan gaya pixel art proporsional yang menyatu sempurna dengan visual pemain.
+

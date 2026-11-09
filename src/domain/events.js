@@ -14,7 +14,21 @@ export const DOMAIN_EVENTS = {
   BACKPACK_CHANGED: 'backpackChanged',
   MAP_CHANGED: 'mapChanged',
   MISSION_CHANGED: 'missionChanged',
-  TIME_CHANGED: 'timeChanged'
+  TIME_CHANGED: 'timeChanged',
+  // Tutorial & Interaction Events (Rule 82)
+  PLAYER_MOVED: 'playerMoved',
+  DIALOGUE_OPENED: 'dialogueOpened',
+  ALLOWANCE_GRANTED: 'allowanceGranted',
+  ACTIVITY_COMPLETED: 'activityCompleted',
+  BUDGET_SET: 'budgetSet',
+  SAVINGS_DEPOSITED: 'savingsDeposited',
+  PURCHASE_COMPLETED: 'purchaseCompleted',
+  ITEM_USED: 'itemUsed',
+  VEHICLE_MOUNTED: 'vehicleMounted',
+  REFUELED: 'refueled',
+  BACKPACK_OPENED: 'backpackOpened',
+  TUTORIAL_STEP_CHANGED: 'tutorialStepChanged',
+  TUTORIAL_COMPLETED: 'tutorialCompleted'
 };
 
 /**

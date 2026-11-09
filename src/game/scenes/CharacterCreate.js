@@ -46,7 +46,7 @@ export class CharacterCreate extends Phaser.Scene {
           finished: false
         },
         ledger: ledger,
-        gasoline: config.gasolineStartPercent || 100,
+        gasoline: 60, // Rule 82 §5: Initial fuel 60% for SPBU tutorial
         energy: {
           current: 100,
           max: 100,
@@ -61,6 +61,15 @@ export class CharacterCreate extends Phaser.Scene {
         ],
         budget: {},
         missions: initialMissions,
+        tutorial: {
+          active: true,
+          stepIndex: 0,
+          completedSteps: [],
+          completed: false,
+          pausedClock: true,
+          stepStartTime: Date.now(),
+          stepProgress: {}
+        },
         flags: {},
         seed: 12345
       };

@@ -14,3 +14,4 @@
   4. Memperbarui `home.layout.json` menggunakan aset kamar mandi `_v6` baru.
 - **Hasil Verifikasi:**
   Pengujian runtime via CDP memvalidasi `fur_toilet` dan `fur_wastafel_cermin` di kamar mandi rumah merender aset `_v6` dengan orientasi frontal sempurna ($IoU \ge 0.99$).
+

@@ -168,6 +168,45 @@ export function createSettingsModal(container, onClose, onOpenCredits, onExitToM
   audioSection.appendChild(audioGrid);
   body.appendChild(audioSection);
 
+  // Section 2b: Tutorial & Bantuan (Rule 82)
+  if (store) {
+    const tutSection = document.createElement('div');
+    tutSection.className = 'settings-section';
+    const tutTitle = document.createElement('h3');
+    tutTitle.textContent = 'Tutorial & Panduan';
+    tutSection.appendChild(tutTitle);
+
+    const tutRow = document.createElement('div');
+    tutRow.className = 'settings-row';
+    const tutLbl = document.createElement('span');
+    tutLbl.textContent = 'Mulai Ulang Tutorial:';
+    const tutBtn = document.createElement('button');
+    tutBtn.type = 'button';
+    tutBtn.className = 'btn btn-sm btn-secondary';
+    tutBtn.textContent = 'Ulangi Tutorial';
+    tutBtn.addEventListener('click', () => {
+      store.setState({
+        tutorial: {
+          active: true,
+          stepIndex: 0,
+          completedSteps: [],
+          completed: false,
+          pausedClock: true,
+          stepStartTime: Date.now(),
+          stepProgress: {}
+        }
+      });
+      statusToast.textContent = '✓ Tutorial dimulai ulang!';
+      statusToast.className = 'settings-toast success';
+      statusToast.style.display = 'block';
+      setTimeout(() => { statusToast.style.display = 'none'; }, 2500);
+    });
+    tutRow.appendChild(tutLbl);
+    tutRow.appendChild(tutBtn);
+    tutSection.appendChild(tutRow);
+    body.appendChild(tutSection);
+  }
+
   // Section 3: Petunjuk & Panduan Singkat
   const guideSection = document.createElement('div');
   guideSection.className = 'settings-section';

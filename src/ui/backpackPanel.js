@@ -45,6 +45,7 @@ export function openBackpack() {
   }
   modalOverlay.style.display = 'flex';
   renderGrid();
+  emit(DOMAIN_EVENTS.BACKPACK_OPENED, {});
 }
 
 export function closeBackpack() {
