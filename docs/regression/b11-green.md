@@ -17,3 +17,4 @@
   - Red: `docs/regression/b11_peringatan_energi_50_red.png`
   - Green: `docs/regression/b11_peringatan_energi_50_green.png`
 - **Hasil:** PASS (100% konsisten dengan Rule 83 §2).
+

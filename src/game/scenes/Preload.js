@@ -209,6 +209,7 @@ export class Preload extends Phaser.Scene {
     this.load.image('npc_ibu', 'assets/npcs/npc_ibu.png');
     this.load.image('npc_ayah', 'assets/npcs/npc_ayah.png');
     this.load.image('npc_budi', 'assets/npcs/npc_budi.png');
+    this.load.image('npc_budi_v6', 'assets/npcs/npc_budi_v6.png');
     this.load.image('npc_siti', 'assets/npcs/npc_siti.png');
     this.load.image('npc_penjual_kantin', 'assets/npcs/npc_penjual_kantin.png');
     this.load.image('npc_kasir_minimarket', 'assets/npcs/npc_kasir_minimarket.png');

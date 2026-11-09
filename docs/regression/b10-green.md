@@ -20,3 +20,4 @@
   - Red: `docs/regression/b10_biaya_energi_red.png`
   - Green: `docs/regression/b10_biaya_energi_green.png`
 - **Hasil:** PASS (100% konsisten dengan Rule 83).
+

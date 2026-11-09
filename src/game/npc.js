@@ -52,8 +52,23 @@ export class NPCManager {
     let textureKey = null;
     let frame = def.frame ?? 0;
 
-    // 1. Direct match by def.id
-    if (scene.textures.exists(def.id)) {
+    // 0. Explicit assetId match (highest priority, e.g. npc_budi_v6)
+    if (def.assetId && scene.textures.exists(def.assetId)) {
+      textureKey = def.assetId;
+      if (def.assetId === 'npc_sheet_family') {
+        frame = def.id === 'npc_ayah' ? 1 : 0;
+      } else if (def.assetId === 'npc_sheet_friends') {
+        frame = def.id === 'npc_siti' ? 1 : 0;
+      } else if (def.assetId === 'npc_sheet_vendors') {
+        if (def.id === 'npc_kasir_minimarket' || def.id === 'npc_kasir') frame = 1;
+        else if (def.id === 'npc_cindy' || def.id === 'npc_penjaga_kosmetik') frame = 2;
+        else if (def.id === 'npc_doni' || def.id === 'npc_petugas_spbu' || def.id === 'npc_pak_anto') frame = 3;
+        else if (def.id === 'npc_riko' || def.id === 'npc_penjaga_game') frame = 4;
+        else frame = 0;
+      }
+    } else if ((def.id === 'npc_budi' || def.id === 'npc_teman') && scene.textures.exists('npc_budi_v6')) {
+      textureKey = 'npc_budi_v6';
+    } else if (scene.textures.exists(def.id)) {
       textureKey = def.id;
       frame = 0;
     } else if (def.id === 'npc_ibu' && scene.textures.exists('npc_ibu')) {

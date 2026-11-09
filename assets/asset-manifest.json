@@ -2647,6 +2647,391 @@
       "qa": {
         "pass": true
       }
+    },
+    {
+      "id": "furn_meja_siswa_kursi_a_v6",
+      "file": "assets/furniture/school/furn_meja_siswa_kursi_a_v6.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "facing": "composite",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_siswa_kursi_b_v6",
+      "file": "assets/furniture/school/furn_meja_siswa_kursi_b_v6.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "facing": "composite",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_guru_v6",
+      "file": "assets/furniture/school/furn_meja_guru_v6.png",
+      "type": "image",
+      "width": 96,
+      "height": 64,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_guru_v6",
+      "file": "assets/furniture/school/furn_kursi_guru_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_papan_tulis_v6",
+      "file": "assets/furniture/school/furn_papan_tulis_v6.png",
+      "type": "image",
+      "width": 128,
+      "height": 64,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_buku_kelas_v6",
+      "file": "assets/furniture/school/furn_rak_buku_kelas_v6.png",
+      "type": "image",
+      "width": 64,
+      "height": 96,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_kantin_set_a_v6",
+      "file": "assets/furniture/school/furn_meja_kantin_set_a_v6.png",
+      "type": "image",
+      "width": 128,
+      "height": 80,
+      "facing": "composite",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_kantin_set_b_v6",
+      "file": "assets/furniture/school/furn_meja_kantin_set_b_v6.png",
+      "type": "image",
+      "width": 128,
+      "height": 80,
+      "facing": "composite",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_bangku_dinding_v6",
+      "file": "assets/furniture/school/furn_bangku_dinding_v6.png",
+      "type": "image",
+      "width": 96,
+      "height": 32,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_baca_set_a_v6",
+      "file": "assets/furniture/school/furn_meja_baca_set_a_v6.png",
+      "type": "image",
+      "width": 112,
+      "height": 80,
+      "facing": "composite",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_meja_baca_set_b_v6",
+      "file": "assets/furniture/school/furn_meja_baca_set_b_v6.png",
+      "type": "image",
+      "width": 112,
+      "height": 80,
+      "facing": "composite",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_baca_back_v6",
+      "file": "assets/furniture/school/furn_kursi_baca_back_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "facing": "back",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_bak_mandi_v6",
+      "file": "assets/furniture/home/furn_bak_mandi_v6.png",
+      "type": "image",
+      "width": 64,
+      "height": 64,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_toilet_v6",
+      "file": "assets/furniture/home/furn_toilet_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_wastafel_cermin_v6",
+      "file": "assets/furniture/home/furn_wastafel_cermin_v6.png",
+      "type": "image",
+      "width": 64,
+      "height": 80,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_handuk_v6",
+      "file": "assets/furniture/home/furn_rak_handuk_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 64,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_ember_v6",
+      "file": "assets/furniture/home/furn_ember_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 32,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_rak_piring_dinding_v6",
+      "file": "assets/furniture/home/furn_rak_piring_dinding_v6.png",
+      "type": "image",
+      "width": 64,
+      "height": 48,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_jendela_dapur_v6",
+      "file": "assets/furniture/home/furn_jendela_dapur_v6.png",
+      "type": "image",
+      "width": 64,
+      "height": 48,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_makan_front_v6",
+      "file": "assets/furniture/home/furn_kursi_makan_front_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_makan_back_v6",
+      "file": "assets/furniture/home/furn_kursi_makan_back_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "facing": "back",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_makan_kiri_v6",
+      "file": "assets/furniture/home/furn_kursi_makan_kiri_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "facing": "left",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "furn_kursi_makan_kanan_v6",
+      "file": "assets/furniture/home/furn_kursi_makan_kanan_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 48,
+      "facing": "right",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "npc_budi_v6",
+      "file": "assets/npcs/npc_budi_v6.png",
+      "type": "image",
+      "width": 32,
+      "height": 64,
+      "facing": "front",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      }
+    },
+    {
+      "id": "npc_sheet_budi_v6",
+      "file": "assets/npcs/npc_sheet_budi_v6.png",
+      "type": "spritesheet",
+      "width": 96,
+      "height": 64,
+      "facing": "3-views",
+      "status": "ready",
+      "identityVerified": true,
+      "source": "v6-regenerated-clean",
+      "generatedAt": "2026-11-10",
+      "qa": {
+        "pass": true
+      },
+      "frameWidth": 32,
+      "frameHeight": 64,
+      "frames": {
+        "idle_down": 0,
+        "idle_up": 1,
+        "idle_left": 2,
+        "idle_right": {
+          "mirrorOf": "idle_left"
+        }
+      }
     }
   ]
 }

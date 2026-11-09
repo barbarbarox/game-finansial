@@ -19,3 +19,4 @@
   - Red: `docs/regression/b12_bangun_kesiangan_red.png`
   - Green: `docs/regression/b12_bangun_kesiangan_green.png`
 - **Hasil:** PASS (100% konsisten dengan Rule 83 §3).
+

@@ -509,6 +509,8 @@ export class MapManager {
         }
       }
 
+      container.furnitureData = { ...f, resolvedTexture: textureKey, hasSprite: this.scene.textures.exists(textureKey) };
+
       if (this.scene.textures.exists(textureKey)) {
         const sprite = this.scene.add.sprite(fw / 2, fh, textureKey);
         sprite.setOrigin(0.5, 1.0);

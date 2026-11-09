@@ -444,58 +444,63 @@
     },
     {
       "id": "fur_bak_mandi",
-      "assetId": "furn_bak_mandi",
+      "assetId": "furn_bak_mandi_v6",
       "label": "Bak Mandi",
       "class_": "wall_back",
       "x": 21,
       "y": 2,
       "w": 2,
       "h": 2,
-      "collidable": true
+      "collidable": true,
+      "fallbackAssetId": "furn_bak_mandi"
     },
     {
       "id": "fur_ember",
-      "assetId": "furn_ember",
+      "assetId": "furn_ember_v6",
       "label": "Ember Mandi",
       "class_": "free",
       "x": 23.5,
       "y": 2.5,
       "w": 1,
       "h": 1,
-      "collidable": true
+      "collidable": true,
+      "fallbackAssetId": "furn_ember"
     },
     {
       "id": "fur_toilet",
-      "assetId": "furn_toilet",
+      "assetId": "furn_toilet_v6",
       "label": "Toilet Duduk",
       "class_": "wall_back",
       "x": 26,
       "y": 2.5,
       "w": 1,
       "h": 1.5,
-      "collidable": true
+      "collidable": true,
+      "fallbackAssetId": "furn_toilet"
     },
     {
       "id": "fur_rak_handuk",
-      "assetId": "furn_rak_handuk",
+      "assetId": "furn_rak_handuk_v6",
       "label": "Rak Handuk",
       "class_": "wall_back",
       "x": 26,
       "y": 5.5,
       "w": 1,
       "h": 2,
-      "collidable": true
+      "collidable": true,
+      "fallbackAssetId": "furn_rak_handuk"
     },
     {
       "id": "fur_wastafel_cermin",
-      "assetId": "furn_wastafel_cermin",
+      "assetId": "furn_wastafel_cermin_v6",
       "label": "Wastafel Cermin",
       "class_": "wall_back",
       "x": 21,
       "y": 5.5,
       "w": 2,
       "h": 2.5,
-      "collidable": true
+      "collidable": true,
+      "fallbackAssetId": "furn_wastafel_cermin"
     },
     {
       "id": "fur_rak_pajangan",
@@ -631,25 +636,27 @@
     },
     {
       "id": "fur_jendela_dapur",
-      "assetId": "furn_jendela",
+      "assetId": "furn_jendela_dapur_v6",
       "label": "Jendela Dapur",
       "class_": "wall_decor",
       "x": 19,
       "y": 9.5,
       "w": 2,
       "h": 1.5,
-      "collidable": false
+      "collidable": false,
+      "fallbackAssetId": "furn_jendela"
     },
     {
       "id": "fur_rak_piring",
-      "assetId": "furn_rak_piring",
+      "assetId": "furn_rak_piring_dinding_v6",
       "label": "Rak Piring Dinding",
       "class_": "wall_decor",
       "x": 22.5,
       "y": 9.5,
       "w": 2,
       "h": 1.5,
-      "collidable": false
+      "collidable": false,
+      "fallbackAssetId": "furn_rak_piring"
     },
     {
       "id": "fur_meja_makan",
@@ -664,7 +671,7 @@
     },
     {
       "id": "fur_kursi_makan_1",
-      "assetId": "furn_kursi_makan_kiri_v4",
+      "assetId": "furn_kursi_makan_kiri_v6",
       "label": "Kursi Makan Kiri",
       "class_": "cluster",
       "x": 19.3,
@@ -675,7 +682,7 @@
     },
     {
       "id": "fur_kursi_makan_2",
-      "assetId": "furn_kursi_makan_kanan_v4",
+      "assetId": "furn_kursi_makan_kanan_v6",
       "label": "Kursi Makan Kanan",
       "class_": "cluster",
       "x": 22.7,
