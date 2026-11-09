@@ -26,3 +26,4 @@
   - `tools/test_j7_e2e_regression.py` menyelesaikan seluruh 3 tahapan pengujian tanpa error (`Exit code: 0`).
   - Nol regresi (0 failures) di seluruh suite pengujian inti.
   - Tangkapan layar hijau tersimpan di `docs/regression/b17_e2e_multiday_green.png`.
+

@@ -141,3 +141,4 @@ Sesuai standar Autopilot V6 (§3):
 Ekspansi V6 telah memenuhi seluruh kriteria fungsional, visual, dan arsitektural yang ditetapkan. Game ini kini memiliki pengalaman awal bermain (onboarding) yang sangat ramah pemula, perspektif visual interior yang konsisten dan rapi, mekanik energi yang menantang dan realistis, serta interaksi belanja toko yang hidup dengan kehadiran NPC pedagang.
 
 Kode telah siap untuk tahap rilis berikutnya atau penambahan konten cerita lanjutan.
+
