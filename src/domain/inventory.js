@@ -147,7 +147,7 @@ export function canAdd(inventory, itemId, count = 1, stackMax = INVENTORY_CONFIG
 export function addItem(inventory, itemId, count = 1, stackMax = INVENTORY_CONFIG.stackMax) {
   const check = canAdd(inventory, itemId, count, stackMax);
   if (!check.canAdd) {
-    return { ok: false, inventory, reason: check.reason };
+    return { ok: false, success: false, inventory, reason: check.reason };
   }
 
   const norm = normalizeInventory(inventory);
@@ -201,7 +201,7 @@ export function addItem(inventory, itemId, count = 1, stackMax = INVENTORY_CONFI
     count: getBackpackCount(result)
   });
 
-  return { ok: true, inventory: result, reason: null };
+  return { ok: true, success: true, inventory: result, reason: null };
 }
 
 /**

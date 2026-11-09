@@ -535,7 +535,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
             }
 
             const invRes = addItem(freshState.inventory, item.id, qty);
-            if (!invRes.success) {
+            if (!invRes.ok && !invRes.success) {
               alert(invRes.reason || 'Gagal menambahkan item ke tas!');
               return;
             }

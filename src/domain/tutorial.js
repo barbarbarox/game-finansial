@@ -133,6 +133,14 @@ export class TutorialManager {
   }
 
   /**
+   * Check if tutorial is currently active.
+   */
+  isActive() {
+    const tut = this.store.getState()?.tutorial;
+    return Boolean(tut && tut.active && !tut.completed);
+  }
+
+  /**
    * Check if clock should be paused.
    */
   isClockPaused() {

@@ -193,9 +193,9 @@
       "label": "Meja Guru",
       "class_": "cluster",
       "x": 6.5,
-      "y": 3.5,
+      "y": 3.0,
       "w": 3,
-      "h": 2,
+      "h": 1.2,
       "collidable": true
     },
     {
@@ -204,9 +204,9 @@
       "label": "Kursi Guru",
       "class_": "cluster",
       "x": 7.5,
-      "y": 2.8,
+      "y": 2.3,
       "w": 1,
-      "h": 1.5,
+      "h": 1.0,
       "collidable": false
     },
     {
@@ -532,10 +532,10 @@
       "id": "int_belajar_kelas",
       "type": "activity",
       "activityId": "pelajaran_sekolah",
-      "x": 7,
-      "y": 4,
+      "x": 6.5,
+      "y": 3.5,
       "w": 3,
-      "h": 1,
+      "h": 2.5,
       "prompt": "Tekan [E] Ikuti Pelajaran Sekolah",
       "action": "school_lesson"
     },
@@ -582,7 +582,7 @@
       "role": "Ketua Kelas",
       "assetId": "npc_budi_v6",
       "color": 7288674,
-      "x": 10,
+      "x": 7.5,
       "y": 6,
       "dialog": "Halo! Pelajaran hari ini tentang pengelolaan uang saku dan investasi sederhana. Duduk yuk!",
       "choices": [

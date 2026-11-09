@@ -23,3 +23,4 @@
   - T06 Celengan Ayam menerima setoran tabungan awal Rp100.000.
   - Progres tersimpan di `localStorage` dan dapat dilanjutkan tanpa kehilangan status.
   - Seluruh langkah T07–T20 selesai secara berurutan, modal kelulusan tutorial tampil (`.tutorial-finish-modal`), banner objektif dihilangkan, jam permainan kembali berjalan normal.
+

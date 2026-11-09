@@ -13,7 +13,7 @@ import { NPCManager } from '../npc.js';
 import { createHUD } from '../../ui/hud.js';
 import { createCashbookModal } from '../../ui/cashbook.js';
 import { createBudgetModal } from '../../ui/budgetPanel.js';
-import { createShopModal } from '../../ui/shopPanel.js';
+import { createShopModal, closeShopModal } from '../../ui/shopPanel.js';
 import { createSettingsModal } from '../../ui/settings.js';
 import { createCreditsModal } from '../../ui/credits.js';
 import { createProceduralTiles } from '../../assets-gen/groundTiles.js';
@@ -917,6 +917,22 @@ export class World extends Phaser.Scene {
       getState: () => this.game.registry.get('store')?.getState(),
       getLedger: () => this.game.registry.get('store')?.getState()?.ledger,
       getCash: () => getCash(this.game.registry.get('store')?.getState()?.ledger),
+      grantAllowance: () => {
+        const s = this.game.registry.get('store');
+        if (!s) return null;
+        const st = s.getState();
+        const clock = st.clock || {};
+        const entry = createAllowanceEntry(clock.day || 1, clock.month || 1, clock.timeOfDay || 360);
+        const res = addEntry(st.ledger, entry);
+        if (!res.error) {
+          const missions = (st.missions || []).map(m => m.id === 'M1' ? { ...m, completed: true } : m);
+          s.setState({ ledger: res.ledger, missions });
+          emit(DOMAIN_EVENTS.ALLOWANCE_GRANTED, { amount: 1000000 });
+          emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(res.ledger));
+          return res.ledger;
+        }
+        return null;
+      },
       chooseOption: (i) => chooseOption(i),
       getPlayer: () => this._player,
       getMapManager: () => this._mapManager,
@@ -990,8 +1006,9 @@ export class World extends Phaser.Scene {
       useHotbarItem: (idx) => this._useHotbarItem(idx),
       openShop: (locId) => {
         const uiContainer = document.getElementById('ui-container') || document.body;
-        createShopModal(uiContainer, this.game.registry.get('store'), locId, config, null);
+        return createShopModal(uiContainer, this.game.registry.get('store'), locId);
       },
+      closeShop: () => closeShopModal(),
       toggleVehicle: () => this._toggleVehicle(),
       isMounted: () => Boolean(this._player?.isMounted),
       measureSpeed: () => this._player ? this._player.measureSpeed() : 0,
