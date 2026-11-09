@@ -4,6 +4,9 @@
  * Tahap A walking bounce animation, collision, and gasoline drain.
  */
 
+import { changeEnergy } from '../domain/energy.js';
+import { emit, DOMAIN_EVENTS } from '../domain/events.js';
+
 export class PlayerController {
   constructor(scene, x, y, config) {
     this.scene = scene;
@@ -280,8 +283,12 @@ export class PlayerController {
   measureSpeed() {
     let effSpeed = this.speed;
     const st = this._store ? this._store.getState() : null;
-    if (st?.energy && st.energy.current === 0) {
-      effSpeed *= (this.config.energy?.exhaustedSpeedMultiplier ?? 0.7);
+    if (st?.energy) {
+      if (st.energy.current === 0) {
+        effSpeed *= (this.config.energy?.exhaustedSpeedMultiplier ?? 0.7);
+      } else if (st.energy.current <= 10) {
+        effSpeed *= (this.config.energy?.veryLowSpeedMultiplier ?? 0.85);
+      }
     }
     if (this.isMounted) {
       effSpeed *= (this.config.vehicle?.speedMultiplier ?? 1.8);
@@ -292,7 +299,36 @@ export class PlayerController {
   update(delta, colliders) {
     this._handleInput(delta, colliders);
     this._drainGasoline(delta);
+    this._drainWalkEnergy(delta);
     this._animate(delta);
+  }
+
+  _drainWalkEnergy(delta) {
+    if (!this.moving || this.isMounted || !this._store) return;
+    this._walkTimeAccumulator = (this._walkTimeAccumulator || 0) + (delta / 1000);
+    // 0.03% per moving second (Rule 83 §1)
+    if (this._walkTimeAccumulator >= 1.0) {
+      const seconds = Math.floor(this._walkTimeAccumulator);
+      this._walkTimeAccumulator -= seconds;
+      const drain = seconds * 0.03;
+      this._energySubFraction = (this._energySubFraction || 0) + drain;
+      if (this._energySubFraction >= 1.0) {
+        const intDrain = Math.floor(this._energySubFraction);
+        this._energySubFraction -= intDrain;
+        const st = this._store.getState();
+        if (st.energy && st.energy.current > 0) {
+          const res = changeEnergy(st.energy, -intDrain);
+          this._store.setState({ energy: res.state });
+          emit(DOMAIN_EVENTS.ENERGY_CHANGED, res.state.current);
+          if (res.showWarn50) {
+            this.scene?._showEnergy50Toast?.();
+          }
+          if (res.nowExhausted) {
+            this.scene?._triggerExhaustionSequence?.();
+          }
+        }
+      }
+    }
   }
 
   _handleInput(delta, colliders) {
@@ -311,8 +347,12 @@ export class PlayerController {
 
     let effSpeed = this.speed;
     const st = this._store ? this._store.getState() : null;
-    if (st?.energy && st.energy.current === 0) {
-      effSpeed *= (this.config.energy?.exhaustedSpeedMultiplier ?? 0.7);
+    if (st?.energy) {
+      if (st.energy.current === 0) {
+        effSpeed *= (this.config.energy?.exhaustedSpeedMultiplier ?? 0.7);
+      } else if (st.energy.current <= 10) {
+        effSpeed *= (this.config.energy?.veryLowSpeedMultiplier ?? 0.85);
+      }
     }
     if (this.isMounted) {
       effSpeed *= (this.config.vehicle?.speedMultiplier ?? 1.8);

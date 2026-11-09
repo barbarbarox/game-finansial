@@ -265,8 +265,10 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
     energyFill.style.width = `${energyPct}%`;
     if (energyPct <= 25) {
       energyFill.style.backgroundColor = '#C0654A';
+      energyFill.classList.add('danger');
     } else {
       energyFill.style.backgroundColor = '#6F9262';
+      energyFill.classList.remove('danger');
     }
 
     // Time & Calendar updates
@@ -353,15 +355,17 @@ export function createHUD(container, store, onOpenCashbook, onOpenBudget, onOpen
   });
 
   subscribe(DOMAIN_EVENTS.ENERGY_CHANGED, (payload) => {
-    const current = payload.current ?? 100;
-    const max = payload.max ?? 100;
+    const current = typeof payload === 'number' ? payload : (payload?.current ?? 100);
+    const max = (typeof payload === 'object' && payload?.max !== undefined) ? payload.max : 100;
     const energyPct = max > 0 ? Math.max(0, Math.min(100, Math.round((current / max) * 100))) : 0;
     energyText.textContent = `${energyPct}%`;
     energyFill.style.width = `${energyPct}%`;
     if (energyPct <= 25) {
       energyFill.style.backgroundColor = '#C0654A';
+      energyFill.classList.add('danger');
     } else {
       energyFill.style.backgroundColor = '#6F9262';
+      energyFill.classList.remove('danger');
     }
   });
 

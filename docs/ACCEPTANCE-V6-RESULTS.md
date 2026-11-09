@@ -13,9 +13,9 @@
 | B7 | Tekan E dekat Ibu → bicara dengan Ibu (bukan furnitur) | Dari titik berdiri dekat Ibu, tekan E nyata | Dialog Ibu terbuka; `findBestInteractionTarget` +20px NPC bonus | PASS | `tools/test_j1_green.py` · [Laporan](docs/regression/b7-green.md) | `docs/regression/b7_interaksi_dapur_ibu_green.png` |
 | B8 | Rak buku kelas di sudut kiri ruangan | Kelas: posisi di layout + tangkapan layar | Pojok kiri-belakang pada (x=2, y=2), di dalam lantai | PASS | `tools/test_j1_green.py` · [Laporan](docs/regression/b8-green.md) | `docs/regression/b8_rak_buku_kelas_green.png` |
 | B9 | Tidak ada motor di ruang kelas | Bermotor → masuk sekolah → keluar | Interior tanpa motor; motor di hub depan pintu | PASS | `tools/test_j1_green.py` · [Laporan](docs/regression/b9-green.md) | `docs/regression/b9_motor_di_kelas_green.png` |
-| B10 | Energi: pelajaran −20%, game center −20%, aktivitas lain realistis | `advanceTime`/UI: kelas penuh, 1 jam game, tiap baris tabel | Sesuai tabel rule 83 | BELUM | Gerbang J2 berikutnya | `docs/regression/b10_biaya_energi_red.png` |
-| B11 | Peringatan < 50% | Turunkan energi lewat aktivitas nyata | Teks persis "Energi kamu di bawah 50%, silakan makan untuk menambahnya." sekali; aktif lagi ≥ 60% | BELUM | Gerbang J2 berikutnya | `docs/regression/b11_peringatan_energi_50_red.png` |
-| B12 | Energi habis → bangun kesiangan hari berikutnya | Habiskan energi lewat UI | Bangun di kasur 10:00 hari berikutnya, energi 50%, kehadiran terlewat tercatat | BELUM | Gerbang J2 berikutnya | `docs/regression/b12_bangun_kesiangan_red.png` |
+| B10 | Energi: pelajaran −20%, game center −20%, aktivitas lain realistis | `advanceTime`/UI: kelas penuh, 1 jam game, tiap baris tabel | Sesuai tabel rule 83 | PASS | `tools/test_j2_green.py` · [Laporan](docs/regression/b10-green.md) | `docs/regression/b10_biaya_energi_green.png` |
+| B11 | Peringatan < 50% | Turunkan energi lewat aktivitas nyata | Teks persis "Energi kamu di bawah 50%, silakan makan untuk menambahnya." sekali; aktif lagi ≥ 60% | PASS | `tools/test_j2_green.py` · [Laporan](docs/regression/b11-green.md) | `docs/regression/b11_peringatan_energi_50_green.png` |
+| B12 | Energi habis → bangun kesiangan hari berikutnya | Habiskan energi lewat UI | Bangun di kasur 10:00 hari berikutnya, energi 50%, kehadiran terlewat tercatat | PASS | `tools/test_j2_green.py` · [Laporan](docs/regression/b12-green.md) | `docs/regression/b12_bangun_kesiangan_green.png` |
 | B13 | Budi bergaya piksel, lebih menarik, bukan kartun | Audit gaya NPC + tinjauan visual | Ukuran piksel ±25% pemain, tanpa alfa parsial, konsisten potret | BELUM | Menunggu Gate J3 & J4 | `docs/regression/b13_sprite_budi_kartun_red.png` |
 | B14 | Katalog toko punya tombol keluar | Tiap toko: X, Esc, klik luar | Panel menutup; input dan jam melanjutkan | PASS | `tools/test_j1_green.py` · [Laporan](docs/regression/b14-green.md) | `docs/regression/b14_katalog_minimarket_exit_green.png` |
 | B15 | Katalog menampilkan NPC kasir (kantin, minimarket, kosmetik, game center, SPBU) | Buka tiap toko | Potret vendor benar + sapaan/reaksi | PASS | `tools/test_j1_green.py` · [Laporan](docs/regression/b15-green.md) | `docs/regression/b15_vendor_minimarket_green.png` |
@@ -23,6 +23,6 @@
 | B17 | Regresi nol | Semua tes lama + V5 + E2E multi-hari UI nyata | Hijau; daftar tes berhook dilaporkan | BELUM | Menunggu seluruh gerbang selesai | - |
 
 **Ringkasan Status Saat Ini:**
-- **PASS (6/17):** B4, B7, B8, B9, B14, B15
-- **BELUM (11/17):** B1, B2, B3, B5, B6, B10, B11, B12, B13, B16, B17
-- Gerbang J1 SELESAI (100% perbaikan non-aset terverifikasi hijau). Gerbang J2 (Energi v2) siap dijalankan.
+- **PASS (9/17):** B4, B7, B8, B9, B10, B11, B12, B14, B15
+- **BELUM (8/17):** B1, B2, B3, B5, B6, B13, B16, B17
+- Gerbang J2 SELESAI (100% sistem Energi v2 terverifikasi hijau). Siap lanjut ke Gerbang J3 & J4 (Audit & Regenerasi Aset -> Checkpoint E).

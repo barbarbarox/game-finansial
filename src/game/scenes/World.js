@@ -31,6 +31,7 @@ import { ITEMS_MAP } from '../../domain/itemsCatalog.js';
 import { canMountVehicle } from '../../domain/vehicle.js';
 import { NavigationGrid } from '../navigationGrid.js';
 import { findBestInteractionTarget } from '../interactionTarget.js';
+import { emit, DOMAIN_EVENTS } from '../../domain/events.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -182,6 +183,7 @@ export class World extends Phaser.Scene {
   }
 
   update(time, delta) {
+    if (this._isExhaustionSequenceRunning) return;
     if (this._player) {
       if (this.keyV && Phaser.Input.Keyboard.JustDown(this.keyV)) {
         this._toggleVehicle();
@@ -328,6 +330,139 @@ export class World extends Phaser.Scene {
     this.showPromptFeedback(`Mengonsumsi ${res.item.label} (+${res.item.energy} Energi)`);
   }
 
+  _showEnergy50Toast() {
+    this.showPromptFeedback('Energi kamu di bawah 50%, silakan makan untuk menambahnya.', 3500);
+    const track = document.querySelector('.hm-energy-track');
+    if (track) {
+      track.classList.add('pulse-warn');
+      setTimeout(() => track.classList.remove('pulse-warn'), 1500);
+    }
+
+    const toast = document.createElement('div');
+    toast.className = 'energy-warn-toast';
+    toast.style.position = 'fixed';
+    toast.style.top = '72px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.backgroundColor = '#D9A441';
+    toast.style.color = '#0A0F1A';
+    toast.style.padding = '8px 18px';
+    toast.style.borderRadius = '6px';
+    toast.style.fontFamily = 'monospace';
+    toast.style.fontWeight = 'bold';
+    toast.style.fontSize = '13px';
+    toast.style.zIndex = '9999';
+    toast.style.boxShadow = '0 4px 16px rgba(0,0,0,0.6)';
+    toast.style.border = '1px solid #FFE7A0';
+    toast.textContent = 'Energi kamu di bawah 50%, silakan makan untuk menambahnya.';
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      toast.style.transition = 'opacity 0.4s ease';
+      toast.style.opacity = '0';
+      setTimeout(() => toast.remove(), 400);
+    }, 3200);
+  }
+
+  _triggerExhaustionSequence() {
+    if (this._isExhaustionSequenceRunning) return;
+    this._isExhaustionSequenceRunning = true;
+
+    const store = this.game.registry.get('store');
+    const state = store ? store.getState() : {};
+    const clock = state.clock || {};
+
+    // 1. If mounted on motor, auto-dismount and park motor in town_hub
+    if (this._player?.isMounted) {
+      this._player.dismount();
+      if (store) {
+        store.setState({
+          vehicle: {
+            mounted: false,
+            parked: { mapId: 'town_hub', x: 19 * 32, y: 15 * 32 }
+          }
+        });
+      }
+      this._removeParkedMotor();
+    }
+
+    // 2. Blackout overlay with text "Kamu kelelahan dan tertidur…"
+    const overlay = document.createElement('div');
+    overlay.className = 'exhaustion-blackout-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.backgroundColor = '#000000';
+    overlay.style.zIndex = '99999';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.color = '#F7EEDA';
+    overlay.style.fontSize = '20px';
+    overlay.style.fontFamily = 'monospace';
+    overlay.style.opacity = '0';
+    overlay.style.transition = 'opacity 0.6s ease';
+    overlay.textContent = 'Kamu kelelahan dan tertidur…';
+    document.body.appendChild(overlay);
+
+    requestAnimationFrame(() => {
+      overlay.style.opacity = '1';
+    });
+
+    setTimeout(async () => {
+      // 3. Advance time to next day 10:00 (minute 600)
+      const curState = store.getState();
+      const curClock = curState.clock || {};
+      const currentMinuteOfDay = curClock.timeOfDay ?? (curClock.gameMinutes ? curClock.gameMinutes % 1440 : 360);
+      const minutesToMidnight = 1440 - currentMinuteOfDay;
+      const minutesTo10AM = minutesToMidnight + 600; // 10:00 = 600 mins
+
+      if (window.__LJ__?.advanceTime) {
+        window.__LJ__.advanceTime(minutesTo10AM, 'exhaustion_wake');
+      }
+      this._clockTimerMs = 0;
+
+      // 4. Record attendanceMissed++ & reset energy to 50%
+      const postState = store.getState();
+      const updatedSchool = {
+        ...(postState.school || {}),
+        attendanceMissed: (postState.school?.attendanceMissed || 0) + 1
+      };
+
+      store.setState({
+        school: updatedSchool,
+        energy: {
+          current: 50,
+          max: postState.energy?.max || 100,
+          exhaustionCount: (postState.energy?.exhaustionCount || 0) + 1,
+          warn50Triggered: false,
+          warn25Triggered: false
+        }
+      });
+
+      emit(DOMAIN_EVENTS.ENERGY_CHANGED, 50);
+
+      // 5. Load home map at bed position (x=5, y=5)
+      await this._mapManager.loadMap('home', 'default');
+      if (this._player) {
+        this._player.sprite.x = 5 * 32;
+        this._player.sprite.y = 5 * 32;
+        this._player.facing = 'down';
+      }
+
+      // 6. Fade out blackout overlay
+      setTimeout(() => {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+          overlay.remove();
+          this._isExhaustionSequenceRunning = false;
+          this.showPromptFeedback('Kamu bangun kesiangan karena kelelahan.', 3500);
+        }, 600);
+      }, 800);
+    }, 1200);
+  }
+
   _updateEnergyDrain(minutes, reason) {
     const store = this.game.registry.get('store');
     if (!store) return;
@@ -339,12 +474,14 @@ export class World extends Phaser.Scene {
       const rec = Math.round((DEFAULT_ENERGY_CONFIG.sleepRecoveryPerHour * minutes) / 60);
       const res = changeEnergy(energyState, Math.max(rec, 50));
       store.setState({ energy: res.state });
+      emit(DOMAIN_EVENTS.ENERGY_CHANGED, res.state.current);
       return;
     }
 
     if (reason === 'makan_rumah') {
       const res = changeEnergy(energyState, 40);
       store.setState({ energy: res.state });
+      emit(DOMAIN_EVENTS.ENERGY_CHANGED, res.state.current);
       return;
     }
 
@@ -352,35 +489,53 @@ export class World extends Phaser.Scene {
       const rec = Math.round((DEFAULT_ENERGY_CONFIG.restRecoveryPerHour * minutes) / 60);
       const res = changeEnergy(energyState, rec);
       store.setState({ energy: res.state });
+      emit(DOMAIN_EVENTS.ENERGY_CHANGED, res.state.current);
       return;
     }
 
-    // Activity drain
-    const rates = DEFAULT_ENERGY_CONFIG.activityEnergyCostPerHour;
-    if (rates[reason] !== undefined) {
-      const drain = calculateActivityDrain(reason, minutes);
+    if (reason === 'exhaustion_wake') {
+      return;
+    }
+
+    // Activity drain (Rule 83)
+    const drain = calculateActivityDrain(reason, minutes);
+    if (drain > 0) {
       const res = changeEnergy(energyState, -drain);
       store.setState({ energy: res.state });
-      if (res.nowExhausted && !res.wasExhausted) {
-        this.showPromptFeedback('Kamu kelelahan (Energi 0%)! Kecepatan berkurang.', 3000);
-      } else if (res.state.current <= 25 && energyState.current > 25) {
-        this.showPromptFeedback('Energi rendah (<= 25%). Makan atau istirahatlah!', 2500);
+      emit(DOMAIN_EVENTS.ENERGY_CHANGED, res.state.current);
+
+      if (res.nowExhausted) {
+        this._triggerExhaustionSequence();
+        return;
+      }
+
+      if (res.showWarn50) {
+        this._showEnergy50Toast();
+      } else if (res.showWarn25) {
+        this.showPromptFeedback('Energi kamu hampir habis!', 2500);
       }
       return;
     }
 
-    // Normal tick passive drain (2 per game hour)
+    // Normal tick passive drain (1.5 per game hour -> 1 per 40 game minutes)
     if (reason === 'tick') {
-      this._passiveMinuteAccumulator += minutes;
-      if (this._passiveMinuteAccumulator >= 30) {
-        const drain = Math.floor(this._passiveMinuteAccumulator / 30);
-        this._passiveMinuteAccumulator %= 30;
-        const res = changeEnergy(energyState, -drain);
+      this._passiveMinuteAccumulator = (this._passiveMinuteAccumulator || 0) + minutes;
+      if (this._passiveMinuteAccumulator >= 40) {
+        const pDrain = Math.floor(this._passiveMinuteAccumulator / 40);
+        this._passiveMinuteAccumulator %= 40;
+        const res = changeEnergy(energyState, -pDrain);
         store.setState({ energy: res.state });
-        if (res.nowExhausted && !res.wasExhausted) {
-          this.showPromptFeedback('Kamu kelelahan (Energi 0%)! Kecepatan berkurang.', 3000);
-        } else if (res.state.current <= 25 && energyState.current > 25) {
-          this.showPromptFeedback('Energi rendah (<= 25%). Makan atau istirahatlah!', 2500);
+        emit(DOMAIN_EVENTS.ENERGY_CHANGED, res.state.current);
+
+        if (res.nowExhausted) {
+          this._triggerExhaustionSequence();
+          return;
+        }
+
+        if (res.showWarn50) {
+          this._showEnergy50Toast();
+        } else if (res.showWarn25) {
+          this.showPromptFeedback('Energi kamu hampir habis!', 2500);
         }
       }
     }
@@ -741,7 +896,9 @@ export class World extends Phaser.Scene {
         const s = this.game.registry.get('store');
         if (s) {
           const cur = s.getState()?.energy?.current ?? 100;
-          s.setState({ energy: changeEnergy(s.getState()?.energy || { current: 100, max: 100 }, val - cur).state });
+          const nextState = changeEnergy(s.getState()?.energy || { current: 100, max: 100 }, val - cur).state;
+          s.setState({ energy: nextState });
+          emit(DOMAIN_EVENTS.ENERGY_CHANGED, nextState);
         }
       },
       getInventory: () => this.game.registry.get('store')?.getState()?.inventory,

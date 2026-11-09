@@ -1826,6 +1826,17 @@ body.lj-light .time-bar-track {
   overflow: hidden;
   border: 1px solid var(--color-border, #34456B);
   position: relative;
+  transition: box-shadow 0.3s ease;
+}
+
+@keyframes energyPulseWarn {
+  0% { box-shadow: 0 0 0 0 rgba(217, 164, 65, 0.8); }
+  50% { box-shadow: 0 0 10px 3px rgba(217, 164, 65, 0.95); }
+  100% { box-shadow: 0 0 0 0 rgba(217, 164, 65, 0); }
+}
+
+.hm-energy-track.pulse-warn {
+  animation: energyPulseWarn 1.2s ease-in-out;
 }
 
 .hm-energy-fill {
@@ -1833,6 +1844,10 @@ body.lj-light .time-bar-track {
   background-color: #6F9262;
   transition: width 0.3s ease, background-color 0.3s ease;
   position: relative;
+}
+
+.hm-energy-fill.danger {
+  background-color: #C0654A !important;
 }
 
 .hm-energy-text {
