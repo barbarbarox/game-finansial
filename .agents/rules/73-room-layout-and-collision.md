@@ -63,3 +63,9 @@ Untuk tiap peta: (a) semua objek di dalam batas; (b) kelas `wall_back`/`counter_
 - Setiap interactable memiliki **zona pendekatan** bebas kolisi, minimal `layout.approachZoneMinTiles` (default 2 lebar × 1 dalam tile) di sisi tempat pemain berinteraksi (default: depan/selatan), dan zona itu **terjangkau dari pintu ruangan** lewat BFS/pathfinding dengan collider kaki pemain yang sebenarnya.
 - Furnitur samping (nakas, rak kecil, tanaman) **tidak boleh** berada di zona pendekatan atau menyempitkan lorong menuju interactable di bawah 1 tile. **Kasur:** kepala di dinding belakang; nakas menempel dinding belakang di samping kepala kasur; jalur ke kaki dan sisi kasur tetap lega. Perbaiki posisi nakas di kamar pemain (dan temuan serupa di ruang lain).
 - Validator `approachCheck` (di `layout-check.html`) berjalan untuk semua interactable di 7 peta dan melaporkan: zona bebas, terjangkau, jarak jalur dari pintu. Tes jalan dari pintu kamar ke titik interaksi kasur dijalankan dengan pathfinding rule 81.
+
+## 9. Pembaruan v6
+- **Batas ruang:** footprint semua objek non-dekoratif harus di dalam lantai ruangnya; tidak ada piksel sprite non-`wall_decor` yang melintasi tepi ruang atau dinding samping/bawah (validator di rule 85 §3). Bangku/meja tidak boleh melintasi garis dinding atau ambang pintu (pelanggaran terlihat di kantin dan perpustakaan).
+- **Ruang kelas:** meja siswa dalam grid rapi menghadap papan tulis (komposit meja + kursi dari belakang); **rak buku kelas di pojok kiri ruangan** (menempel dinding belakang di ujung kiri); papan tulis dan meja guru frontal.
+- **Dapur:** Ibu tidak berdiri di depan furnitur yang dapat berinteraksi; counter kompor bukan interactable; lihat rule 84.
+- Penargetan interaksi dan penempatan NPC mengikuti rule 84; set meja+kursi memakai sprite komposit (rule 85).

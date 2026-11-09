@@ -1,0 +1,1052 @@
+{
+ "version": 1,
+ "note": "Dipakai rule 85 §2: keterangan visual tiap aset harus mengandung mustShow dan tidak mengandung mustNotShow. Pelanggaran memicu penukaran nama atau regenerasi. Agen memetakan idPattern ke id aktual.",
+ "items": {
+  "kasur_single": {
+   "idPattern": "furn_kasur_single(_v4|_v6)?",
+   "label": "Kasur single",
+   "mustShow": [
+    "bed",
+    "pillow",
+    "blanket"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "nakas_lampu": {
+   "idPattern": "furn_nakas_lampu(_v4|_v6)?",
+   "label": "Nakas dengan lampu",
+   "mustShow": [
+    "bedside table",
+    "lamp"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "lemari_pakaian": {
+   "idPattern": "furn_lemari_pakaian(_v4|_v6)?",
+   "label": "Lemari pakaian",
+   "mustShow": [
+    "wardrobe",
+    "tall cabinet"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_buku": {
+   "idPattern": "furn_rak_buku(_v4|_v6)?",
+   "label": "Rak buku",
+   "mustShow": [
+    "bookshelf",
+    "books"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "meja_belajar": {
+   "idPattern": "furn_meja_belajar(_v4|_v6)?",
+   "label": "Meja belajar",
+   "mustShow": [
+    "desk",
+    "study"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kursi_belajar": {
+   "idPattern": "furn_kursi_belajar(_v4|_v6)?",
+   "label": "Kursi belajar",
+   "mustShow": [
+    "chair"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "celengan_ayam": {
+   "idPattern": "furn_celengan_ayam(_v4|_v6)?",
+   "label": "Celengan ayam",
+   "mustShow": [
+    "piggy bank",
+    "rooster"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "cermin_berdiri": {
+   "idPattern": "furn_cermin_berdiri(_v4|_v6)?",
+   "label": "Cermin berdiri",
+   "mustShow": [
+    "standing mirror"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "keranjang_baju": {
+   "idPattern": "furn_keranjang_baju(_v4|_v6)?",
+   "label": "Keranjang baju",
+   "mustShow": [
+    "basket"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "tempat_sampah": {
+   "idPattern": "furn_tempat_sampah(_v4|_v6)?",
+   "label": "Tempat sampah kecil",
+   "mustShow": [
+    "trash bin",
+    "waste bin"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "karpet_kecil": {
+   "idPattern": "furn_karpet_kecil(_v4|_v6)?",
+   "label": "Karpet kecil",
+   "mustShow": [
+    "rug",
+    "carpet"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "jendela": {
+   "idPattern": "furn_jendela(_v4|_v6)?",
+   "label": "Jendela bergorden",
+   "mustShow": [
+    "window",
+    "curtains"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "poster_kosong": {
+   "idPattern": "furn_poster_kosong(_v4|_v6)?",
+   "label": "Poster kosong",
+   "mustShow": [
+    "poster",
+    "blank"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "jam_dinding": {
+   "idPattern": "furn_jam_dinding(_v4|_v6)?",
+   "label": "Jam dinding",
+   "mustShow": [
+    "wall clock",
+    "clock"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kasur_besar": {
+   "idPattern": "furn_kasur_besar(_v4|_v6)?",
+   "label": "Kasur besar",
+   "mustShow": [
+    "double bed"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "lemari_besar": {
+   "idPattern": "furn_lemari_besar(_v4|_v6)?",
+   "label": "Lemari besar",
+   "mustShow": [
+    "large wardrobe"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "meja_rias": {
+   "idPattern": "furn_meja_rias(_v4|_v6)?",
+   "label": "Meja rias",
+   "mustShow": [
+    "dressing table",
+    "vanity",
+    "mirror"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kursi_rias": {
+   "idPattern": "furn_kursi_rias(_v4|_v6)?",
+   "label": "Kursi rias",
+   "mustShow": [
+    "stool",
+    "chair"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kipas_berdiri": {
+   "idPattern": "furn_kipas_berdiri(_v4|_v6)?",
+   "label": "Kipas berdiri",
+   "mustShow": [
+    "standing fan",
+    "fan"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "karpet_besar": {
+   "idPattern": "furn_karpet_besar(_v4|_v6)?",
+   "label": "Karpet",
+   "mustShow": [
+    "rug"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "bingkai_kosong": {
+   "idPattern": "furn_bingkai_kosong(_v4|_v6)?",
+   "label": "Bingkai kosong",
+   "mustShow": [
+    "picture frame",
+    "frame"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "tv_dan_rak": {
+   "idPattern": "furn_tv_dan_rak(_v4|_v6)?",
+   "label": "TV dengan rak",
+   "mustShow": [
+    "television",
+    "cabinet"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "sofa_3dudukan": {
+   "idPattern": "furn_sofa_3dudukan(_v4|_v6)?",
+   "label": "Sofa 3 dudukan",
+   "mustShow": [
+    "three-seat sofa",
+    "sofa"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "sofa_single": {
+   "idPattern": "furn_sofa_single(_v4|_v6)?",
+   "label": "Sofa single",
+   "mustShow": [
+    "armchair",
+    "single sofa"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "meja_tamu": {
+   "idPattern": "furn_meja_tamu(_v4|_v6)?",
+   "label": "Meja tamu",
+   "mustShow": [
+    "coffee table",
+    "low table"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_pajangan": {
+   "idPattern": "furn_rak_pajangan(_v4|_v6)?",
+   "label": "Rak pajangan",
+   "mustShow": [
+    "display shelf",
+    "ornaments"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "tanaman_pot": {
+   "idPattern": "furn_tanaman_pot(_v4|_v6)?",
+   "label": "Tanaman pot",
+   "mustShow": [
+    "potted plant",
+    "plant"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_sepatu": {
+   "idPattern": "furn_rak_sepatu(_v4|_v6)?",
+   "label": "Rak sepatu",
+   "mustShow": [
+    "shoe rack",
+    "shoes"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "karpet_tamu": {
+   "idPattern": "furn_karpet_tamu(_v4|_v6)?",
+   "label": "Karpet ruang tamu",
+   "mustShow": [
+    "rug",
+    "woven"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kulkas": {
+   "idPattern": "furn_kulkas(_v4|_v6)?",
+   "label": "Kulkas 2 pintu",
+   "mustShow": [
+    "refrigerator",
+    "fridge"
+   ],
+   "mustNotShow": [
+    "window"
+   ],
+   "facing": null
+  },
+  "counter_polos": {
+   "idPattern": "furn_counter_polos(_v4|_v6)?",
+   "label": "Counter polos",
+   "mustShow": [
+    "kitchen counter",
+    "cabinet"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "counter_kompor": {
+   "idPattern": "furn_counter_kompor(_v4|_v6)?",
+   "label": "Counter kompor + rice cooker",
+   "mustShow": [
+    "stove",
+    "counter",
+    "rice cooker"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "counter_wastafel": {
+   "idPattern": "furn_counter_wastafel(_v4|_v6)?",
+   "label": "Counter wastafel",
+   "mustShow": [
+    "sink",
+    "faucet",
+    "counter"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "dispenser_galon": {
+   "idPattern": "furn_dispenser_galon(_v4|_v6)?",
+   "label": "Dispenser galon",
+   "mustShow": [
+    "water dispenser",
+    "gallon"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_piring_dinding": {
+   "idPattern": "furn_rak_piring_dinding(_v4|_v6)?",
+   "label": "Rak piring dinding",
+   "mustShow": [
+    "dish rack",
+    "plates",
+    "bowls"
+   ],
+   "mustNotShow": [
+    "window",
+    "curtains",
+    "bathtub"
+   ],
+   "facing": null
+  },
+  "rak_bumbu_dinding": {
+   "idPattern": "furn_rak_bumbu_dinding(_v4|_v6)?",
+   "label": "Rak bumbu dinding",
+   "mustShow": [
+    "spice shelf",
+    "jars"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "jendela_dapur": {
+   "idPattern": "furn_jendela_dapur(_v4|_v6)?",
+   "label": "Jendela dapur",
+   "mustShow": [
+    "window"
+   ],
+   "mustNotShow": [
+    "plates",
+    "dish rack",
+    "bathtub"
+   ],
+   "facing": null
+  },
+  "meja_makan": {
+   "idPattern": "furn_meja_makan(_v4|_v6)?",
+   "label": "Meja makan bertaplak",
+   "mustShow": [
+    "dining table",
+    "tablecloth"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kursi_makan_kiri": {
+   "idPattern": "furn_kursi_makan_kiri(_v4|_v6)?",
+   "label": "Kursi makan (samping kiri)",
+   "mustShow": [
+    "chair",
+    "side view"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kursi_makan_kanan": {
+   "idPattern": "furn_kursi_makan_kanan(_v4|_v6)?",
+   "label": "Kursi makan (samping kanan)",
+   "mustShow": [
+    "chair",
+    "side view"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kursi_makan_depan": {
+   "idPattern": "furn_kursi_makan_depan(_v4|_v6)?",
+   "label": "Kursi makan (depan)",
+   "mustShow": [
+    "chair"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "toilet": {
+   "idPattern": "furn_toilet(_v4|_v6)?",
+   "label": "Toilet duduk",
+   "mustShow": [
+    "toilet"
+   ],
+   "mustNotShow": [
+    "sink",
+    "plates"
+   ],
+   "facing": null
+  },
+  "bak_mandi": {
+   "idPattern": "furn_bak_mandi(_v4|_v6)?",
+   "label": "Bak mandi + gayung",
+   "mustShow": [
+    "water basin",
+    "tub",
+    "scoop",
+    "tiled"
+   ],
+   "mustNotShow": [
+    "dish rack",
+    "plates",
+    "window",
+    "curtains"
+   ],
+   "facing": null
+  },
+  "wastafel_cermin": {
+   "idPattern": "furn_wastafel_cermin(_v4|_v6)?",
+   "label": "Wastafel + cermin",
+   "mustShow": [
+    "washbasin",
+    "mirror",
+    "sink"
+   ],
+   "mustNotShow": [
+    "dish rack"
+   ],
+   "facing": null
+  },
+  "rak_handuk": {
+   "idPattern": "furn_rak_handuk(_v4|_v6)?",
+   "label": "Rak handuk",
+   "mustShow": [
+    "towel rack",
+    "towel"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "ember": {
+   "idPattern": "furn_ember(_v4|_v6)?",
+   "label": "Ember",
+   "mustShow": [
+    "bucket"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "keset": {
+   "idPattern": "furn_keset(_v4|_v6)?",
+   "label": "Keset",
+   "mustShow": [
+    "doormat",
+    "mat"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "jendela_ventilasi": {
+   "idPattern": "furn_jendela_ventilasi(_v4|_v6)?",
+   "label": "Jendela ventilasi",
+   "mustShow": [
+    "small window",
+    "ventilation"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "pintu_depan": {
+   "idPattern": "furn_pintu_depan(_v4|_v6)?",
+   "label": "Pintu depan",
+   "mustShow": [
+    "door"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "papan_tulis": {
+   "idPattern": "furn_papan_tulis(_v4|_v6)?",
+   "label": "Papan tulis",
+   "mustShow": [
+    "blackboard",
+    "green board"
+   ],
+   "mustNotShow": [
+    "bed"
+   ],
+   "facing": null
+  },
+  "meja_guru": {
+   "idPattern": "furn_meja_guru(_v4|_v6)?",
+   "label": "Meja guru",
+   "mustShow": [
+    "teacher desk",
+    "desk"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kursi_guru": {
+   "idPattern": "furn_kursi_guru(_v4|_v6)?",
+   "label": "Kursi guru",
+   "mustShow": [
+    "chair"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "meja_siswa_kursi": {
+   "idPattern": "furn_meja_siswa_kursi(_v4|_v6)?",
+   "label": "Meja siswa + kursi",
+   "mustShow": [
+    "student desk",
+    "chair"
+   ],
+   "mustNotShow": [
+    "diagonal"
+   ],
+   "facing": null
+  },
+  "lemari_kelas": {
+   "idPattern": "furn_lemari_kelas(_v4|_v6)?",
+   "label": "Lemari kelas",
+   "mustShow": [
+    "cabinet",
+    "cupboard"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_buku_kelas": {
+   "idPattern": "furn_rak_buku_kelas(_v4|_v6)?",
+   "label": "Rak buku kelas",
+   "mustShow": [
+    "bookshelf"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "counter_kantin_etalase": {
+   "idPattern": "furn_counter_kantin_etalase(_v4|_v6)?",
+   "label": "Counter kantin + etalase",
+   "mustShow": [
+    "food counter",
+    "glass display",
+    "snacks"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kulkas_minuman": {
+   "idPattern": "furn_kulkas_minuman(_v4|_v6)?",
+   "label": "Kulkas minuman",
+   "mustShow": [
+    "drinks refrigerator",
+    "glass door"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_snack": {
+   "idPattern": "furn_rak_snack(_v4|_v6)?",
+   "label": "Rak snack",
+   "mustShow": [
+    "snack rack",
+    "packages"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "wastafel_cuci_tangan": {
+   "idPattern": "furn_wastafel_cuci_tangan(_v4|_v6)?",
+   "label": "Wastafel cuci tangan",
+   "mustShow": [
+    "sink",
+    "washbasin"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "papan_menu_kosong": {
+   "idPattern": "furn_papan_menu_kosong(_v4|_v6)?",
+   "label": "Papan menu kosong",
+   "mustShow": [
+    "menu board",
+    "chalkboard"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "meja_kantin_panjang": {
+   "idPattern": "furn_meja_kantin_panjang(_v4|_v6)?",
+   "label": "Meja kantin panjang",
+   "mustShow": [
+    "long table",
+    "canteen table"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "bangku_kantin": {
+   "idPattern": "furn_bangku_kantin(_v4|_v6)?",
+   "label": "Bangku kantin",
+   "mustShow": [
+    "bench"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_buku_perpus": {
+   "idPattern": "furn_rak_buku_perpus(_v4|_v6)?",
+   "label": "Rak buku perpustakaan",
+   "mustShow": [
+    "library bookshelf",
+    "books"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "meja_baca": {
+   "idPattern": "furn_meja_baca(_v4|_v6)?",
+   "label": "Meja baca",
+   "mustShow": [
+    "reading table",
+    "table"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kursi_baca": {
+   "idPattern": "furn_kursi_baca(_v4|_v6)?",
+   "label": "Kursi baca",
+   "mustShow": [
+    "chair"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "counter_pustakawan": {
+   "idPattern": "furn_counter_pustakawan(_v4|_v6)?",
+   "label": "Counter pustakawan",
+   "mustShow": [
+    "librarian counter",
+    "desk"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "komputer_meja": {
+   "idPattern": "furn_komputer_meja(_v4|_v6)?",
+   "label": "Komputer + meja kecil",
+   "mustShow": [
+    "computer",
+    "small desk"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "papan_info": {
+   "idPattern": "furn_papan_info(_v4|_v6)?",
+   "label": "Papan info kosong",
+   "mustShow": [
+    "notice board"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "vas_tanaman": {
+   "idPattern": "furn_vas_tanaman(_v4|_v6)?",
+   "label": "Vas tanaman",
+   "mustShow": [
+    "potted plant",
+    "vase"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "papan_pengumuman": {
+   "idPattern": "furn_papan_pengumuman(_v4|_v6)?",
+   "label": "Papan pengumuman kosong",
+   "mustShow": [
+    "notice board",
+    "cork board"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "bangku_tunggu": {
+   "idPattern": "furn_bangku_tunggu(_v4|_v6)?",
+   "label": "Bangku tunggu",
+   "mustShow": [
+    "bench",
+    "waiting"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_piala": {
+   "idPattern": "furn_rak_piala(_v4|_v6)?",
+   "label": "Rak piala",
+   "mustShow": [
+    "trophy cabinet",
+    "trophies"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_gondola": {
+   "idPattern": "furn_rak_gondola(_v4|_v6)?",
+   "label": "Rak gondola",
+   "mustShow": [
+    "aisle shelf",
+    "shelf",
+    "packages"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_dinding_snack": {
+   "idPattern": "furn_rak_dinding_snack(_v4|_v6)?",
+   "label": "Rak snack dinding",
+   "mustShow": [
+    "snack shelf"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kulkas_minuman_besar": {
+   "idPattern": "furn_kulkas_minuman_besar(_v4|_v6)?",
+   "label": "Kulkas minuman besar",
+   "mustShow": [
+    "drinks refrigerator"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_mie_instan": {
+   "idPattern": "furn_rak_mie_instan(_v4|_v6)?",
+   "label": "Rak mie instan",
+   "mustShow": [
+    "instant noodle shelf"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_roti": {
+   "idPattern": "furn_rak_roti(_v4|_v6)?",
+   "label": "Rak roti",
+   "mustShow": [
+    "bread rack",
+    "bread"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "etalase_makanan_siap_saji": {
+   "idPattern": "furn_etalase_makanan_siap_saji(_v4|_v6)?",
+   "label": "Etalase makanan siap saji",
+   "mustShow": [
+    "food display",
+    "hot food"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_alat_tulis": {
+   "idPattern": "furn_rak_alat_tulis(_v4|_v6)?",
+   "label": "Rak alat tulis",
+   "mustShow": [
+    "stationery rack",
+    "notebooks"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "mesin_fotokopi": {
+   "idPattern": "furn_mesin_fotokopi(_v4|_v6)?",
+   "label": "Mesin fotokopi",
+   "mustShow": [
+    "photocopier",
+    "copier"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kasir_counter": {
+   "idPattern": "furn_kasir_counter(_v4|_v6)?",
+   "label": "Kasir counter",
+   "mustShow": [
+    "cashier counter",
+    "register"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "keranjang_belanja": {
+   "idPattern": "furn_keranjang_belanja(_v4|_v6)?",
+   "label": "Tumpukan keranjang",
+   "mustShow": [
+    "shopping baskets"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "galon_tumpuk": {
+   "idPattern": "furn_galon_tumpuk(_v4|_v6)?",
+   "label": "Tumpukan galon",
+   "mustShow": [
+    "gallon",
+    "water jugs"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "etalase_kaca": {
+   "idPattern": "furn_etalase_kaca(_v4|_v6)?",
+   "label": "Etalase kaca",
+   "mustShow": [
+    "glass display",
+    "cosmetics"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_dinding_kosmetik": {
+   "idPattern": "furn_rak_dinding_kosmetik(_v4|_v6)?",
+   "label": "Rak dinding kosmetik",
+   "mustShow": [
+    "wall shelf",
+    "cosmetics"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "meja_cermin": {
+   "idPattern": "furn_meja_cermin(_v4|_v6)?",
+   "label": "Meja cermin",
+   "mustShow": [
+    "vanity table",
+    "mirror"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kursi_cermin": {
+   "idPattern": "furn_kursi_cermin(_v4|_v6)?",
+   "label": "Kursi meja cermin",
+   "mustShow": [
+    "chair",
+    "stool"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kasir_kecil": {
+   "idPattern": "furn_kasir_kecil(_v4|_v6)?",
+   "label": "Kasir kecil",
+   "mustShow": [
+    "cashier counter"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "sofa_tunggu": {
+   "idPattern": "furn_sofa_tunggu(_v4|_v6)?",
+   "label": "Sofa tunggu",
+   "mustShow": [
+    "sofa",
+    "waiting"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "dispenser_bbm": {
+   "idPattern": "furn_dispenser_bbm(_v4|_v6)?",
+   "label": "Dispenser BBM",
+   "mustShow": [
+    "fuel pump",
+    "dispenser",
+    "hose"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kiosk_spbu": {
+   "idPattern": "furn_kiosk_spbu(_v4|_v6)?",
+   "label": "Kiosk SPBU + kasir",
+   "mustShow": [
+    "kiosk",
+    "booth"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "rak_oli": {
+   "idPattern": "furn_rak_oli(_v4|_v6)?",
+   "label": "Rak oli",
+   "mustShow": [
+    "oil shelf",
+    "cans"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "bangku_spbu": {
+   "idPattern": "furn_bangku_spbu(_v4|_v6)?",
+   "label": "Bangku tunggu",
+   "mustShow": [
+    "bench"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "tiang_kanopi": {
+   "idPattern": "furn_tiang_kanopi(_v4|_v6)?",
+   "label": "Tiang kanopi",
+   "mustShow": [
+    "pillar",
+    "canopy post"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kompresor_angin": {
+   "idPattern": "furn_kompresor_angin(_v4|_v6)?",
+   "label": "Kompresor angin",
+   "mustShow": [
+    "air compressor"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "tong_pemadam": {
+   "idPattern": "furn_tong_pemadam(_v4|_v6)?",
+   "label": "Tabung pemadam",
+   "mustShow": [
+    "fire extinguisher"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "arcade_a": {
+   "idPattern": "furn_arcade_a(_v4|_v6)?",
+   "label": "Mesin arcade A",
+   "mustShow": [
+    "arcade cabinet"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "arcade_b": {
+   "idPattern": "furn_arcade_b(_v4|_v6)?",
+   "label": "Mesin arcade B",
+   "mustShow": [
+    "arcade cabinet"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "mesin_capit": {
+   "idPattern": "furn_mesin_capit(_v4|_v6)?",
+   "label": "Mesin capit",
+   "mustShow": [
+    "claw machine"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "counter_kafe": {
+   "idPattern": "furn_counter_kafe(_v4|_v6)?",
+   "label": "Counter kafe",
+   "mustShow": [
+    "cafe counter",
+    "cups"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "meja_kafe": {
+   "idPattern": "furn_meja_kafe(_v4|_v6)?",
+   "label": "Meja kafe bulat",
+   "mustShow": [
+    "round table",
+    "cafe table"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "kursi_kafe": {
+   "idPattern": "furn_kursi_kafe(_v4|_v6)?",
+   "label": "Kursi kafe",
+   "mustShow": [
+    "chair"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "tv_besar": {
+   "idPattern": "furn_tv_besar(_v4|_v6)?",
+   "label": "TV besar + stand",
+   "mustShow": [
+    "large tv",
+    "television"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  },
+  "sofa_nonton": {
+   "idPattern": "furn_sofa_nonton(_v4|_v6)?",
+   "label": "Sofa nonton",
+   "mustShow": [
+    "sofa"
+   ],
+   "mustNotShow": [],
+   "facing": null
+  }
+ }
+}

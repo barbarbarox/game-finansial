@@ -1,0 +1,405 @@
+{
+ "version": 1,
+ "styleRef": [
+  "docs/STYLE-BIBLE.md",
+  "docs/STYLE-BIBLE-INTERIOR.md",
+  "docs/STYLE-BIBLE-V4.md",
+  "docs/STYLE-BIBLE-V6.md"
+ ],
+ "defaults": {
+  "maxRetries": 3,
+  "chromaKey": "#FF00FF",
+  "rawDir": "assets/_raw",
+  "rejectedDir": "assets/_rejected",
+  "uniformScalePerSheet": true
+ },
+ "generationOrder": [
+  "audit_first",
+  "npc_sheet_budi_v6",
+  "furn_sheet_kelas_v6",
+  "furn_sheet_kantin_v6",
+  "furn_sheet_perpus_v6",
+  "furn_sheet_kamar_mandi_v6",
+  "furn_sheet_dapur_v6",
+  "audit_offenders",
+  "CHECKPOINT_E"
+ ],
+ "perspectiveClauses": {
+  "front": "STRICT FRONT ELEVATION: camera slightly above (about 20-25 degrees), the object's main face is parallel to the picture plane, perfectly left-right symmetrical, NOT diagonal, NOT isometric, NOT rotated, no oblique angle.",
+  "back": "Chairs are seen from DIRECTLY BEHIND (backrest toward the camera), perfectly left-right symmetrical, NOT diagonal."
+ },
+ "notes": "Aset baru bersufiks _v6. Jalankan audit (rule 85) LEBIH DULU untuk menemukan semua pelanggar; daftar ini adalah minimum yang sudah diketahui.",
+ "assets": [
+  {
+   "id": "furn_sheet_kelas_v6",
+   "group": "school",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_meja_siswa_kursi_a_v6",
+    "furn_meja_siswa_kursi_b_v6",
+    "furn_meja_guru_v6",
+    "furn_kursi_guru_v6",
+    "furn_papan_tulis_v6",
+    "furn_rak_buku_kelas_v6"
+   ],
+   "final": {
+    "sizes": {
+     "furn_meja_siswa_kursi_a_v6": [
+      64,
+      80
+     ],
+     "furn_meja_siswa_kursi_b_v6": [
+      64,
+      80
+     ],
+     "furn_meja_guru_v6": [
+      96,
+      64
+     ],
+     "furn_kursi_guru_v6": [
+      32,
+      48
+     ],
+     "furn_papan_tulis_v6": [
+      128,
+      64
+     ],
+     "furn_rak_buku_kelas_v6": [
+      64,
+      96
+     ]
+    },
+    "facing": {
+     "furn_meja_siswa_kursi_a_v6": "composite: desk front + chair back",
+     "furn_meja_siswa_kursi_b_v6": "composite: desk front + chair back",
+     "furn_meja_guru_v6": "front",
+     "furn_kursi_guru_v6": "front",
+     "furn_papan_tulis_v6": "front (wall decor)",
+     "furn_rak_buku_kelas_v6": "front"
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six classroom items for an Indonesian senior high school. 1 and 2: a student desk (wooden, front elevation) with its wooden chair directly in front of the camera seen from behind (backrest toward the camera) overlapping the lower part of the desk, two slightly different wood tones. 3: teacher desk, front elevation, with a few abstract papers. 4: teacher's wooden chair, front view. 5: wide green blackboard with a wooden frame, front elevation, completely blank (no writing). 6: tall wooden bookshelf with abstract colored books. STRICT FRONT ELEVATION: camera slightly above (about 20-25 degrees), the object's main face is parallel to the picture plane, perfectly left-right symmetrical, NOT diagonal, NOT isometric, NOT rotated, no oblique angle. Items arranged left to right in EXACTLY the listed order, clearly separated, consistent real-world scale and the same visible pixel size, whole items visible, flat solid magenta #FF00FF background, no shadows on the background, no text, all screens/labels/frames blank. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "frontalityMin": 0.8,
+    "identityCheck": true,
+    "dimsMultipleOf": 16,
+    "note": "Verifikasi identitas tiap potongan (rule 85 §2) sebelum menamai; jangan menamai hanya berdasar urutan."
+   }
+  },
+  {
+   "id": "furn_sheet_kantin_v6",
+   "group": "school",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_meja_kantin_set_a_v6",
+    "furn_meja_kantin_set_b_v6",
+    "furn_bangku_dinding_v6"
+   ],
+   "final": {
+    "sizes": {
+     "furn_meja_kantin_set_a_v6": [
+      128,
+      80
+     ],
+     "furn_meja_kantin_set_b_v6": [
+      128,
+      80
+     ],
+     "furn_bangku_dinding_v6": [
+      96,
+      32
+     ]
+    },
+    "facing": {
+     "furn_meja_kantin_set_a_v6": "composite: table front + near bench back + far bench",
+     "furn_meja_kantin_set_b_v6": "composite",
+     "furn_bangku_dinding_v6": "front"
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Three school canteen items. 1 and 2: a long wooden canteen table in front elevation with a wooden bench in front of it seen from directly behind and a second bench partly visible behind the table, a few generic cups and a water bottle (no labels), two slightly different wood tones. 3: a long wooden bench against a wall, front elevation. STRICT FRONT ELEVATION: camera slightly above (about 20-25 degrees), the object's main face is parallel to the picture plane, perfectly left-right symmetrical, NOT diagonal, NOT isometric, NOT rotated, no oblique angle. Chairs are seen from DIRECTLY BEHIND (backrest toward the camera), perfectly left-right symmetrical, NOT diagonal. Items arranged left to right in EXACTLY the listed order, clearly separated, consistent real-world scale and the same visible pixel size, whole items visible, flat solid magenta #FF00FF background, no shadows on the background, no text, all screens/labels/frames blank. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "frontalityMin": 0.8,
+    "identityCheck": true,
+    "dimsMultipleOf": 16,
+    "note": "Verifikasi identitas tiap potongan (rule 85 §2) sebelum menamai; jangan menamai hanya berdasar urutan."
+   }
+  },
+  {
+   "id": "furn_sheet_perpus_v6",
+   "group": "school",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_meja_baca_set_a_v6",
+    "furn_meja_baca_set_b_v6",
+    "furn_kursi_baca_back_v6"
+   ],
+   "final": {
+    "sizes": {
+     "furn_meja_baca_set_a_v6": [
+      112,
+      80
+     ],
+     "furn_meja_baca_set_b_v6": [
+      112,
+      80
+     ],
+     "furn_kursi_baca_back_v6": [
+      32,
+      48
+     ]
+    },
+    "facing": {
+     "furn_meja_baca_set_a_v6": "composite: table front + 2 chairs back",
+     "furn_meja_baca_set_b_v6": "composite",
+     "furn_kursi_baca_back_v6": "back"
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Three library items. 1 and 2: a wooden reading table in front elevation with two wooden chairs in front of it seen from directly behind, a few abstract books on top, two slightly different wood tones. 3: a single wooden chair seen from directly behind. STRICT FRONT ELEVATION: camera slightly above (about 20-25 degrees), the object's main face is parallel to the picture plane, perfectly left-right symmetrical, NOT diagonal, NOT isometric, NOT rotated, no oblique angle. Chairs are seen from DIRECTLY BEHIND (backrest toward the camera), perfectly left-right symmetrical, NOT diagonal. Items arranged left to right in EXACTLY the listed order, clearly separated, consistent real-world scale and the same visible pixel size, whole items visible, flat solid magenta #FF00FF background, no shadows on the background, no text, all screens/labels/frames blank. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "frontalityMin": 0.8,
+    "identityCheck": true,
+    "dimsMultipleOf": 16,
+    "note": "Verifikasi identitas tiap potongan (rule 85 §2) sebelum menamai; jangan menamai hanya berdasar urutan."
+   }
+  },
+  {
+   "id": "furn_sheet_kamar_mandi_v6",
+   "group": "home",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_bak_mandi_v6",
+    "furn_toilet_v6",
+    "furn_wastafel_cermin_v6",
+    "furn_rak_handuk_v6",
+    "furn_ember_v6"
+   ],
+   "final": {
+    "sizes": {
+     "furn_bak_mandi_v6": [
+      64,
+      64
+     ],
+     "furn_toilet_v6": [
+      32,
+      48
+     ],
+     "furn_wastafel_cermin_v6": [
+      64,
+      80
+     ],
+     "furn_rak_handuk_v6": [
+      32,
+      64
+     ],
+     "furn_ember_v6": [
+      32,
+      32
+     ]
+    },
+    "facing": {
+     "furn_bak_mandi_v6": "front",
+     "furn_toilet_v6": "front",
+     "furn_wastafel_cermin_v6": "front",
+     "furn_rak_handuk_v6": "front",
+     "furn_ember_v6": "front"
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Five bathroom items, neutral and tasteful. 1: a tiled water basin (bak mandi), a rectangular tiled tub of water with a plastic scoop (gayung) resting on the rim. 2: a plain ceramic seated toilet with a tank, front view. 3: a washbasin on a short stand with a faucet and a blank rectangular mirror above, front view. 4: a standing towel rack with a folded towel. 5: a plastic bucket. Each object must clearly be what it is described as. STRICT FRONT ELEVATION: camera slightly above (about 20-25 degrees), the object's main face is parallel to the picture plane, perfectly left-right symmetrical, NOT diagonal, NOT isometric, NOT rotated, no oblique angle. Items arranged left to right in EXACTLY the listed order, clearly separated, consistent real-world scale and the same visible pixel size, whole items visible, flat solid magenta #FF00FF background, no shadows on the background, no text, all screens/labels/frames blank. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "frontalityMin": 0.8,
+    "identityCheck": true,
+    "dimsMultipleOf": 16,
+    "note": "Verifikasi identitas tiap potongan (rule 85 §2) sebelum menamai; jangan menamai hanya berdasar urutan."
+   }
+  },
+  {
+   "id": "furn_sheet_dapur_v6",
+   "group": "home",
+   "priority": 1,
+   "kind": "furniture_sheet",
+   "generate": {
+    "aspectRatio": "16:9",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "furn_rak_piring_dinding_v6",
+    "furn_jendela_dapur_v6",
+    "furn_kursi_makan_front_v6",
+    "furn_kursi_makan_back_v6",
+    "furn_kursi_makan_kiri_v6",
+    "furn_kursi_makan_kanan_v6"
+   ],
+   "final": {
+    "sizes": {
+     "furn_rak_piring_dinding_v6": [
+      64,
+      48
+     ],
+     "furn_jendela_dapur_v6": [
+      64,
+      48
+     ],
+     "furn_kursi_makan_front_v6": [
+      32,
+      48
+     ],
+     "furn_kursi_makan_back_v6": [
+      32,
+      48
+     ],
+     "furn_kursi_makan_kiri_v6": [
+      32,
+      48
+     ],
+     "furn_kursi_makan_kanan_v6": [
+      32,
+      48
+     ]
+    },
+    "facing": {
+     "furn_rak_piring_dinding_v6": "front (wall decor)",
+     "furn_jendela_dapur_v6": "front (wall decor)",
+     "furn_kursi_makan_front_v6": "front",
+     "furn_kursi_makan_back_v6": "back",
+     "furn_kursi_makan_kiri_v6": "left",
+     "furn_kursi_makan_kanan_v6": "right"
+    },
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "uniformScalePerSheet": true,
+    "scaleTolerance": 0.2
+   },
+   "subject": "Six kitchen and dining items. 1: a wall-mounted wooden dish rack holding green and cream plates and bowls, front elevation. 2: a small kitchen window with a wooden frame and green curtains, front elevation. 3: a wooden dining chair front view (seat facing the camera). 4: the same chair seen from directly behind. 5: the same chair in pure left side view. 6: the same chair in pure right side view. Each object must clearly be what it is described as. STRICT FRONT ELEVATION: camera slightly above (about 20-25 degrees), the object's main face is parallel to the picture plane, perfectly left-right symmetrical, NOT diagonal, NOT isometric, NOT rotated, no oblique angle. Items arranged left to right in EXACTLY the listed order, clearly separated, consistent real-world scale and the same visible pixel size, whole items visible, flat solid magenta #FF00FF background, no shadows on the background, no text, all screens/labels/frames blank. Match the art style, pixel size, outline weight and palette of the reference image exactly.",
+   "refs": [
+    "bld_sekolah",
+    "char_player_m_casual"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "noText": true,
+    "frontalityMin": 0.8,
+    "identityCheck": true,
+    "dimsMultipleOf": 16,
+    "note": "Verifikasi identitas tiap potongan (rule 85 §2) sebelum menamai; jangan menamai hanya berdasar urutan."
+   }
+  },
+  {
+   "id": "npc_sheet_budi_v6",
+   "group": "npc",
+   "priority": 1,
+   "kind": "npc_sheet",
+   "candidates": 2,
+   "generate": {
+    "aspectRatio": "3:2",
+    "background": "#FF00FF"
+   },
+   "subjects": [
+    "front",
+    "back",
+    "left"
+   ],
+   "final": {
+    "frameWidth": 32,
+    "frameHeight": 64,
+    "rightView": "mirror_of_left",
+    "anchor": [
+     0.5,
+     1.0
+    ],
+    "replaces": "npc_budi"
+   },
+   "subject": "Character reference sheet of ONE friendly Indonesian high-school boy named Budi, about 16, chibi-ish RPG proportion (about 3 heads tall, width to height about 1:2), drawn in the SAME crisp pixel-art style, pixel size, outline weight and shading as the reference protagonist sprite sheets (NOT cartoon, NOT smooth, NOT vector, no anti-aliasing). Short spiky black hair with a small cowlick, white short-sleeve school shirt with rolled-up sleeves, light grey trousers (#9AA0AA), a mustard (#D9A441) messenger bag across the body, white sneakers, relaxed friendly standing pose, slightly taller than the protagonist. Exactly THREE views of the SAME character in one horizontal row, evenly spaced, identical scale: front, back, left-side. Flat solid magenta #FF00FF background.",
+   "refs": [
+    "char_player_m_casual",
+    "char_player_f_casual",
+    "portrait_teman_l"
+   ],
+   "maxRetries": 3,
+   "qa": {
+    "pixelScaleToleranceVsPlayer": 0.25,
+    "antiAliasAlphaRatio": 0,
+    "viewsHeightTolerance": 0.06,
+    "noText": true,
+    "note": "Pilih kandidat terbaik lewat QA + tinjauan visual; konsisten dengan potret teman laki-laki."
+   }
+  },
+  {
+   "id": "audit_offenders_template",
+   "group": "audit",
+   "priority": 2,
+   "kind": "furniture_sheet_template",
+   "subject_template": "[STYLE BLOCK] {itemDescriptionsInOrder}. STRICT FRONT ELEVATION: camera slightly above (about 20-25 degrees), the object's main face is parallel to the picture plane, perfectly left-right symmetrical, NOT diagonal, NOT isometric, NOT rotated, no oblique angle. Items arranged left to right in exactly the listed order on flat solid magenta #FF00FF, consistent scale, no text. [NEGATIVE BLOCK]",
+   "note": "Dipakai untuk setiap aset yang gagal validator frontalitas/identitas/batas ruang atau gaya NPC (rule 85 §3-4)."
+  }
+ ]
+}

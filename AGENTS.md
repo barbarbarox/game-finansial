@@ -29,6 +29,9 @@ Anda adalah Senior Game Developer + Frontend Architect + Technical Artist dengan
 17. **Bug yang dilaporkan pengguna diperbaiki dengan siklus merah→hijau:** tulis tes yang gagal lewat UI nyata, temukan akar masalah, perbaiki, buktikan hijau, simpan sebagai tes regresi (`78-bug-fix-and-ui-e2e-protocol.md`).
 18. **Aksi yang diuji harus dijalankan lewat UI nyata** (pointer/keyboard), bukan hook debug; hook hanya untuk persiapan dan inspeksi.
 19. **Dilarang menulis "selesai" atau "100%"** kecuali seluruh baris `docs/ACCEPTANCE-V5.md` berstatus PASS dengan bukti; laporkan baris non-PASS dan hal yang tidak diuji.
+20. **Aset visual diverifikasi pada empat sumbu sebelum berstatus `ready`:** perspektif (frontal/belakang/samping, bukan serong), identitas (isi gambar = nama), batas ruang (tidak menembus dinding), gaya piksel (bukan kartun). Validator berjalan pada SEMUA aset (`85-asset-perspective-identity-qa.md`), bukan hanya yang disebut pengguna.
+21. **Tutorial pertama kali dan energi v2 adalah sistem inti.** Klaim selesai memakai `docs/ACCEPTANCE-V6.md` (aturan #19 berlaku juga untuk V6).
+22. **Interaksi harus deterministik:** satu target terpilih dengan petunjuk tombol; NPC tidak boleh kalah oleh furnitur di dekatnya (`84-interaction-targeting.md`).
 
 ## 4. Peta rules
 - `10-visual-identity.md` — palet, resolusi, tipografi, UI, karakter (selalu aktif)
@@ -49,6 +52,11 @@ Anda adalah Senior Game Developer + Frontend Architect + Technical Artist dengan
 - `79-shop-and-vendors.md` — panel toko, vendor, rak/kulkas, SPBU, pembelian atomik
 - `80-inventory-backpack-item-actions.md` — hotbar 5 slot, ransel 20 slot, pengisian otomatis, popup aksi item
 - `81-click-to-move.md` — gerak dengan klik/ketuk, pathfinding, auto-interaksi
+- `82-tutorial-and-story.md` — tutorial berpemandu wajib pertama kali, cerita hari pertama, panah dan teks panduan
+- `83-energy-v2.md` — energi per aktivitas (pelajaran 20%, game center 20%), peringatan < 50%, bangun kesiangan
+- `84-interaction-targeting.md` — penargetan interaksi (NPC vs objek), petunjuk tombol
+- `85-asset-perspective-identity-qa.md` — kontrak perspektif, identitas aset, batas dinding, gaya sprite NPC
+- `86-shop-vendor-presence.md` — tombol keluar panel toko dan tampilan NPC kasir
 
 ## 5. Definition of Done (per gerbang)
 Fitur/aset berjalan tanpa error konsol; diuji dengan skenario nyata; invarian lulus; tidak ada sumber eksternal runtime; tidak ada `innerHTML` dengan data dinamis; `PROGRESS.md` diperbarui; commit dibuat; daftar placeholder tersisa dilaporkan.

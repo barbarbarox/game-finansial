@@ -37,3 +37,6 @@ Penguras pasif dan biaya aktivitas benar per jam (belajar 1 jam → −10 − pa
 
 ## 7. Pembaruan v5
 Bagian inventaris (§3) **digantikan oleh `80-inventory-backpack-item-actions.md`** (hotbar 5 + ransel 20, pengisian otomatis, popup aksi). Bagian katalog item (§4) dilengkapi `79-shop-and-vendors.md` dan `data/items-types.v5.json`; katalog **harus selaras dengan ikon yang ada**. Pembelian wajib masuk ke inventaris lewat `inventory.add` (atomik dengan ledger).
+
+## 8. Pembaruan v6
+Bagian energi (§1) **digantikan oleh `83-energy-v2.md`**: biaya per aktivitas (pelajaran −20%, game center −20%/jam), peringatan teks di bawah 50%, dan energi 0 = pingsan lalu bangun kesiangan di hari berikutnya (bukan penonaktifan aktivitas). Bagian inventaris tetap mengikuti rule 80.

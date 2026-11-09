@@ -37,3 +37,6 @@ Alat tulis Rp15.000, fotokopi Rp5.000, paket kuota hemat Rp15.000 / besar Rp35.0
 
 ## 7. Uji wajib (UI nyata, rule 78)
 Untuk tiap vendor: berjalan/klik ke NPC → tekan E → pilih "Beli sesuatu" → panel terbuka → beli ≥ 2 item berbeda → cek ledger (jumlah tepat), saldo, hotbar/ransel (DOM + state), jam maju. Dari rak/kulkas minimarket yang sama. Negatif: saldo kurang, tas penuh (saldo tetap), toko tutup. SPBU: tiap preset + isi penuh + tangki penuh; bar bensin berubah sesuai, juga setelah muat ulang. Setiap item yang dijual punya ikon (uji katalog-ikon). Tangkapan layar tiap panel toko.
+
+## 8. Pembaruan v6
+Panel toko wajib memiliki tombol keluar (X, Selesai, Esc, klik luar) dan menampilkan karakter NPC vendor, sesuai `86-shop-vendor-presence.md`. Berlaku untuk kantin, minimarket, toko kosmetik, kafe game center, dan menu SPBU.

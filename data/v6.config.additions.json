@@ -1,0 +1,118 @@
+{
+ "energy": {
+  "passiveDrainPerGameHour": 1.5,
+  "warnBelowPercent": 50,
+  "warnRearmAbovePercent": 60,
+  "warnText": "Energi kamu di bawah 50%, silakan makan untuk menambahnya.",
+  "criticalAtPercent": 25,
+  "veryLowAtPercent": 10,
+  "veryLowSpeedMultiplier": 0.85,
+  "confirmIfProjectedBelowPercent": 10,
+  "walkDrainPerMovingSecond": 0.03,
+  "sleepRecoveryPerHour": 10,
+  "restRecoveryPerHour": 5,
+  "activityCosts": {
+   "ikut_pelajaran": {
+    "totalPercent": 20,
+    "sessions": {
+     "sesi1": {
+      "hours": 3
+     },
+     "sesi2": {
+      "hours": 4
+     }
+    }
+   },
+   "main_game": {
+    "percentPerHour": 20,
+    "durationOptionsHours": [
+     1,
+     2
+    ]
+   },
+   "belajar_mandiri": {
+    "percentPerHour": 8
+   },
+   "baca_perpustakaan": {
+    "percentPerHour": 3
+   },
+   "nongkrong_kafe": {
+    "percentPerHour": 4
+   },
+   "nonton_mini": {
+    "percentPerHour": 2
+   },
+   "nonton_tv": {
+    "percentPerHour": 1
+   },
+   "mandi": {
+    "flatPercent": 1
+   }
+  },
+  "exhausted": {
+   "wakeHour": 10,
+   "wakeEnergyPercent": 50,
+   "attendanceMissedIncrement": 1,
+   "message": "Kamu bangun kesiangan karena kelelahan."
+  }
+ },
+ "school": {
+  "sessions": {
+   "sesi1": [
+    "07:00",
+    "10:00"
+   ],
+   "istirahat": [
+    "10:00",
+    "10:30"
+   ],
+   "sesi2": [
+    "10:30",
+    "14:30"
+   ]
+  },
+  "openDays": [
+   "Sen",
+   "Sel",
+   "Rab",
+   "Kam",
+   "Jum"
+  ],
+  "hours": [
+   "06:30",
+   "15:30"
+  ],
+  "kantinHours": [
+   "06:30",
+   "14:30"
+  ]
+ },
+ "tutorial": {
+  "enabled": true,
+  "firstTimeOnly": true,
+  "realtimeClock": "paused",
+  "eventsEnabled": false,
+  "showSkipAfterSeconds": 180,
+  "newGameFuelPercent": 60
+ },
+ "interaction": {
+  "interactRangePx": 44,
+  "npcBonusPx": 20,
+  "objectiveBonusPx": 40,
+  "facingPenaltyMaxPx": 12,
+  "cycleKey": "Tab",
+  "npcClearanceTiles": 1.5,
+  "npcSelectedMinRatio": 0.9
+ },
+ "shop": {
+  "vendorSide": "left",
+  "closeOnEsc": true,
+  "closeOnOutsideClick": true
+ },
+ "audit": {
+  "frontalityMin": 0.8,
+  "pixelSizeToleranceVsPlayer": 0.25,
+  "alphaPartialRatioMax": 0
+ },
+ "notes": "Gabungkan ke data/phase1.config.json tanpa menimpa nilai pengguna."
+}

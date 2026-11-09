@@ -1,0 +1,471 @@
+{
+ "version": 1,
+ "title": "Hari Pertama Bulan Baru",
+ "note": "Id target (ref) adalah nama logis; agen memetakan ke id objek/NPC/peta nyata dan mencatat pemetaan di DECISIONS.md. Kondisi selesai hanya dari event domain.",
+ "settings": {
+  "realtimeClock": "paused",
+  "eventsEnabled": false,
+  "softLockBuildings": true,
+  "showSkipAfterSeconds": 180,
+  "firstTimeOnly": true,
+  "replayFromSettings": true
+ },
+ "newGame": {
+  "fuelPercent": 60,
+  "energyPercent": 100,
+  "startDay": 1,
+  "startWeekday": "Senin",
+  "startHour": 6
+ },
+ "guidance": {
+  "worldArrow": true,
+  "edgeArrow": true,
+  "pathTrail": false,
+  "keyPrompts": true,
+  "hudHighlight": true,
+  "objectivePanel": true
+ },
+ "dayTimeline": {
+  "school": {
+   "sesi1": [
+    "07:00",
+    "10:00"
+   ],
+   "istirahat": [
+    "10:00",
+    "10:30"
+   ],
+   "sesi2": [
+    "10:30",
+    "14:30"
+   ]
+  }
+ },
+ "steps": [
+  {
+   "id": "T01",
+   "act": "rumah",
+   "title": "Bangun dan bergerak",
+   "instruction": "Gerakkan karakter dengan WASD/panah, atau klik lantai untuk berjalan ke sana.",
+   "hint": "Klik titik di lantai atau tekan WASD.",
+   "target": {
+    "type": "none"
+   },
+   "complete": {
+    "event": "playerMoved",
+    "minDistanceTiles": 3
+   },
+   "story_before": [
+    [
+     "narasi",
+     "Senin pagi, hari pertama bulan baru. Kamu terbangun di kamarmu."
+    ]
+   ],
+   "highlights": []
+  },
+  {
+   "id": "T02",
+   "act": "rumah",
+   "title": "Temui Ibu di dapur",
+   "instruction": "Ibu menunggumu di dapur. Ikuti panah, lalu tekan E atau klik Ibu untuk berbicara.",
+   "hint": "Dekati Ibu sampai muncul petunjuk 'E · Bicara'.",
+   "target": {
+    "type": "npc",
+    "ref": "npc_ibu",
+    "map": "home"
+   },
+   "complete": {
+    "event": "dialogueOpened",
+    "npc": "npc_ibu"
+   },
+   "guideArrow": true
+  },
+  {
+   "id": "T03",
+   "act": "rumah",
+   "title": "Terima uang saku",
+   "instruction": "Dengarkan Ibu dan terima uang saku bulananmu.",
+   "hint": "Pilih 'Terima uang saku' pada dialog.",
+   "target": {
+    "type": "npc",
+    "ref": "npc_ibu",
+    "map": "home"
+   },
+   "complete": {
+    "event": "allowanceGranted"
+   },
+   "highlights": [
+    "hud.kas"
+   ],
+   "story_after": [
+    [
+     "npc_ibu",
+     "Ini uang sakumu Rp1.000.000. Cukup-cukupkan untuk satu bulan, ya."
+    ],
+    [
+     "player",
+     "Siap, Bu. Aku akan atur baik-baik."
+    ]
+   ],
+   "mapsMission": "M1"
+  },
+  {
+   "id": "T04",
+   "act": "rumah",
+   "title": "Sarapan di dapur",
+   "instruction": "Makan di meja makan agar energimu terisi. Kamu perlu energi untuk beraktivitas.",
+   "hint": "Dekati meja makan lalu tekan E atau klik meja.",
+   "target": {
+    "type": "interactable",
+    "ref": "meja_makan",
+    "map": "home"
+   },
+   "complete": {
+    "event": "activityCompleted",
+    "activity": "makan_rumah"
+   },
+   "highlights": [
+    "hud.energi"
+   ],
+   "teach": "Makan di rumah gratis karena ditanggung orang tua. Jajan di luar memakai uangmu."
+  },
+  {
+   "id": "T05",
+   "act": "rumah",
+   "title": "Susun anggaran",
+   "instruction": "Buka tombol Anggaran, lalu tekan 'Gunakan saran' agar uang saku terbagi ke beberapa kategori.",
+   "hint": "Klik tombol Anggaran di kanan atas.",
+   "target": {
+    "type": "hud",
+    "ref": "hud.anggaran"
+   },
+   "complete": {
+    "event": "budgetSet"
+   },
+   "highlights": [
+    "hud.anggaran"
+   ],
+   "mapsMission": "M2",
+   "teach": "Anggaran membantumu membedakan kebutuhan dan keinginan."
+  },
+  {
+   "id": "T06",
+   "act": "rumah",
+   "title": "Sisihkan tabungan",
+   "instruction": "Masukkan minimal Rp100.000 ke celengan ayam di kamarmu.",
+   "hint": "Dekati celengan lalu pilih 'Tabung'.",
+   "target": {
+    "type": "interactable",
+    "ref": "celengan_ayam",
+    "map": "home"
+   },
+   "complete": {
+    "event": "savingsDeposited",
+    "minAmount": 100000
+   },
+   "highlights": [
+    "hud.tabungan"
+   ],
+   "mapsMission": "M4",
+   "teach": "Menabung dulu, baru belanja."
+  },
+  {
+   "id": "T07",
+   "act": "rumah",
+   "title": "Keluar rumah",
+   "instruction": "Saatnya berangkat. Keluar lewat pintu depan.",
+   "hint": "Ikuti panah ke pintu depan.",
+   "target": {
+    "type": "exit",
+    "ref": "home->town_hub",
+    "map": "home"
+   },
+   "complete": {
+    "event": "mapChanged",
+    "map": "town_hub"
+   },
+   "guideArrow": true
+  },
+  {
+   "id": "T08",
+   "act": "sekolah",
+   "title": "Pergi ke sekolah",
+   "instruction": "Ikuti panah menuju Sekolah. Kamu bisa berjalan dengan WASD atau mengklik jalan.",
+   "hint": "Klik jalan di depan untuk berjalan otomatis.",
+   "target": {
+    "type": "exit",
+    "ref": "town_hub->school",
+    "map": "town_hub"
+   },
+   "complete": {
+    "event": "mapChanged",
+    "map": "school"
+   },
+   "guideArrow": true,
+   "story_before": [
+    [
+     "narasi",
+     "Jalan menuju sekolah tidak jauh. Bel pertama berbunyi pukul 07.00."
+    ]
+   ]
+  },
+  {
+   "id": "T09",
+   "act": "sekolah",
+   "title": "Kelas: Sesi 1",
+   "instruction": "Masuk ruang kelas dan duduk di bangkumu untuk mengikuti Sesi 1 (07.00-10.00).",
+   "hint": "Klik bangku atau tekan E. Belajar menguras energi.",
+   "target": {
+    "type": "interactable",
+    "ref": "meja_siswa_kursi",
+    "map": "school"
+   },
+   "complete": {
+    "event": "activityCompleted",
+    "activity": "ikut_pelajaran_sesi1"
+   },
+   "highlights": [
+    "hud.energi",
+    "hud.jam"
+   ],
+   "teach": "Satu hari belajar penuh menguras sekitar 20% energi.",
+   "story_after": [
+    [
+     "npc_budi",
+     "Hei {player}, istirahat nanti ke kantin bareng, yuk!"
+    ]
+   ]
+  },
+  {
+   "id": "T10",
+   "act": "sekolah",
+   "title": "Istirahat: belanja di kantin",
+   "instruction": "Pergi ke kantin dan beli satu makanan atau minuman. Pilih 'Bungkus' agar masuk ke tasmu.",
+   "hint": "Bicara dengan Bu Sri lalu pilih 'Beli sesuatu'.",
+   "target": {
+    "type": "npc",
+    "ref": "npc_penjual_kantin",
+    "map": "school"
+   },
+   "complete": {
+    "event": "purchaseCompleted",
+    "shop": "kantin_sekolah"
+   },
+   "guideArrow": true,
+   "teach": "Bedakan kebutuhan (makan siang) dan keinginan (camilan)."
+  },
+  {
+   "id": "T11",
+   "act": "sekolah",
+   "title": "Pakai item dari tas",
+   "instruction": "Klik item di hotbar bawah layar, lalu pilih 'Gunakan' untuk menambah energi.",
+   "hint": "Klik item di bagian bawah tengah layar.",
+   "target": {
+    "type": "hud",
+    "ref": "hud.hotbar"
+   },
+   "complete": {
+    "event": "itemUsed"
+   },
+   "highlights": [
+    "hud.hotbar"
+   ],
+   "hotkeys": "Tombol 1-5 memakai item dengan cepat."
+  },
+  {
+   "id": "T12",
+   "act": "sekolah",
+   "title": "Kelas: Sesi 2",
+   "instruction": "Kembali ke kelas untuk Sesi 2 (10.30-14.30).",
+   "hint": "Klik bangkumu lagi.",
+   "target": {
+    "type": "interactable",
+    "ref": "meja_siswa_kursi",
+    "map": "school"
+   },
+   "complete": {
+    "event": "activityCompleted",
+    "activity": "ikut_pelajaran_sesi2"
+   },
+   "highlights": [
+    "hud.energi"
+   ]
+  },
+  {
+   "id": "T13",
+   "act": "sekolah",
+   "title": "Perpustakaan",
+   "instruction": "Baca buku di perpustakaan selama satu jam. Membaca menguras sedikit energi dan gratis.",
+   "hint": "Dekati meja baca lalu tekan E.",
+   "target": {
+    "type": "interactable",
+    "ref": "meja_baca",
+    "map": "school"
+   },
+   "complete": {
+    "event": "activityCompleted",
+    "activity": "baca_perpustakaan"
+   },
+   "teach": "Tidak semua hiburan harus mengeluarkan uang."
+  },
+  {
+   "id": "T14",
+   "act": "kota",
+   "title": "Minimarket",
+   "instruction": "Pergi ke Minimarket, beli satu item, lalu buka tas (tombol ransel atau B) untuk melihat isinya.",
+   "hint": "Jika hotbar penuh, item masuk ke ransel.",
+   "target": {
+    "type": "npc",
+    "ref": "npc_kasir_minimarket",
+    "map": "minimarket"
+   },
+   "complete": {
+    "allOf": [
+     {
+      "event": "purchaseCompleted",
+      "shop": "minimarket"
+     },
+     {
+      "event": "backpackOpened"
+     }
+    ]
+   },
+   "highlights": [
+    "hud.ransel"
+   ],
+   "guideArrow": true
+  },
+  {
+   "id": "T15",
+   "act": "kota",
+   "title": "Toko kosmetik",
+   "instruction": "Masuk Toko Kosmetik dan beli satu barang. Tanyakan pada dirimu: kebutuhan atau keinginan?",
+   "hint": "Bicara dengan Kak Cindy atau klik etalase.",
+   "target": {
+    "type": "npc",
+    "ref": "npc_penjaga_kosmetik",
+    "map": "toko_kosmetik"
+   },
+   "complete": {
+    "event": "purchaseCompleted",
+    "shop": "toko_kosmetik"
+   },
+   "guideArrow": true,
+   "teach": "Keinginan boleh dibeli setelah kebutuhan dan tabungan aman."
+  },
+  {
+   "id": "T16",
+   "act": "kota",
+   "title": "Naik motor",
+   "instruction": "Tekan tombol Motor (atau V) untuk naik motor ke SPBU. Motor lebih cepat, tetapi memakai bensin.",
+   "hint": "Tombol Motor ada di kanan atas.",
+   "target": {
+    "type": "hud",
+    "ref": "hud.motor"
+   },
+   "complete": {
+    "event": "vehicleMounted"
+   },
+   "highlights": [
+    "hud.motor",
+    "hud.bensin"
+   ],
+   "story_before": [
+    [
+     "narasi",
+     "Bensin motormu tinggal sedikit. Mampir ke SPBU."
+    ]
+   ]
+  },
+  {
+   "id": "T17",
+   "act": "kota",
+   "title": "Isi bensin",
+   "instruction": "Di SPBU, isi bensin sebesar Rp10.000 atau lebih.",
+   "hint": "Dekati dispenser atau bicara dengan Mas Doni.",
+   "target": {
+    "type": "npc",
+    "ref": "npc_petugas_spbu",
+    "map": "spbu"
+   },
+   "complete": {
+    "event": "refueled",
+    "minAmount": 10000
+   },
+   "highlights": [
+    "hud.bensin"
+   ],
+   "mapsMission": "M3",
+   "guideArrow": true
+  },
+  {
+   "id": "T18",
+   "act": "kota",
+   "title": "Game center",
+   "instruction": "Main game selama 1 jam di Game Center. Hiburan seru, tetapi menguras energi dan uang.",
+   "hint": "Klik mesin arcade lalu pilih 1 jam.",
+   "target": {
+    "type": "interactable",
+    "ref": "arcade_a",
+    "map": "game_center"
+   },
+   "complete": {
+    "event": "activityCompleted",
+    "activity": "main_game"
+   },
+   "highlights": [
+    "hud.energi",
+    "hud.kas"
+   ],
+   "mapsMission": "M5",
+   "guideArrow": true
+  },
+  {
+   "id": "T19",
+   "act": "kota",
+   "title": "Isi ulang energi",
+   "instruction": "Energimu di bawah 50%. Makan atau minum item dari tasmu untuk menambahnya.",
+   "hint": "Klik item di hotbar lalu 'Gunakan'.",
+   "target": {
+    "type": "hud",
+    "ref": "hud.hotbar"
+   },
+   "complete": {
+    "event": "itemUsed"
+   },
+   "condition": {
+    "energyBelowPercent": 50
+   },
+   "skipIfConditionFalse": true,
+   "highlights": [
+    "hud.energi",
+    "hud.hotbar"
+   ]
+  },
+  {
+   "id": "T20",
+   "act": "penutup",
+   "title": "Pulang dan tidur",
+   "instruction": "Pulanglah ke rumah dan tidur di kasur untuk mengakhiri hari.",
+   "hint": "Ikuti panah ke rumah, lalu klik kasur.",
+   "target": {
+    "type": "interactable",
+    "ref": "kasur_single",
+    "map": "home"
+   },
+   "complete": {
+    "event": "activityCompleted",
+    "activity": "tidur"
+   },
+   "guideArrow": true,
+   "story_after": [
+    [
+     "narasi",
+     "Hari pertama selesai. Lihat ringkasan keuanganmu dan rencanakan sisa bulan ini."
+    ]
+   ],
+   "showSummary": true,
+   "setsFlag": "tutorialCompleted"
+  }
+ ]
+}

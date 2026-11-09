@@ -28,3 +28,6 @@ Durasi `mountAnimationMs` (default 350): lompatan kecil −6 px (ease-out/in), g
 
 ## 5. Uji wajib
 Toggle on/off via tombol dan V; kecepatan terukur ≥ 1,6× jalan (hook `measureSpeed`); bensin turun tepat tiap 5 detik simulasi (akumulator diuji dengan jam palsu, bukan menunggu nyata); bensin 0% memaksa turun dan menonaktifkan tombol; masuk bangunan memicu turun otomatis dan motor terparkir; isi bensin lalu naik lagi; save/load mempertahankan bensin dan posisi motor parkir; tangkapan layar frame animasi pada t=0/120/240/350 ms; tidak ada tembus kolisi saat bermotor (probe rule 73).
+
+## 6. Pembaruan v6: motor parkir terikat peta
+Posisi motor parkir menyimpan `mapId` dan **hanya dirender/berkolisi di peta itu**. Saat masuk gedung dalam keadaan bermotor, pemain turun otomatis dan motor diparkir di **peta hub di depan pintu bangunan tersebut**, bukan di interior. Bug yang dilaporkan: sprite motor muncul di ruang kelas. Uji (UI nyata): bermotor → masuk sekolah → ruang kelas tidak memuat motor; keluar → motor ada di depan pintu sekolah; simpan/muat mempertahankan `mapId` parkir.

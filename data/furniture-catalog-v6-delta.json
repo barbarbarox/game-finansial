@@ -1,0 +1,31 @@
+{
+ "version": 1,
+ "note": "Perubahan terhadap furniture-catalog-v4.json (rule 85, 73). Gantikan item lama; aset lama dipertahankan sampai E2E lulus.",
+ "replace": {
+  "school.kelas.meja_siswa_kursi": "furn_meja_siswa_kursi_{a,b}_v6 (komposit meja depan + kursi dari belakang), grid 6x4 rapi, menghadap papan tulis",
+  "school.kelas.meja_guru": "furn_meja_guru_v6 + furn_kursi_guru_v6",
+  "school.kelas.papan_tulis": "furn_papan_tulis_v6 (frontal, menempel dinding belakang)",
+  "school.kantin.meja_kantin_panjang": "furn_meja_kantin_set_{a,b}_v6 (komposit meja + bangku)",
+  "school.kantin.bangku_kantin": "furn_bangku_dinding_v6 (menempel dinding, di dalam lantai)",
+  "school.perpustakaan.meja_baca+kursi_baca": "furn_meja_baca_set_{a,b}_v6",
+  "home.kamar_mandi.*": "furn_sheet_kamar_mandi_v6 (bak mandi, toilet, wastafel+cermin, rak handuk, ember)",
+  "home.dapur_makan.rak_piring_dinding+jendela_dapur+kursi_makan_*": "furn_sheet_dapur_v6"
+ },
+ "placementFixes": {
+  "school.kelas.rak_buku_kelas": "pojok KIRI ruangan: menempel dinding belakang di ujung kiri (barat laut), seluruh footprint di dalam lantai",
+  "school.kantin": "bangku/meja tidak melintasi garis dinding atau ambang pintu; semua footprint di dalam lantai kantin",
+  "home.dapur_makan.ibu": "Ibu berdiri di area bebas (bukan di depan kompor); counter kompor bukan interactable; tidak ada interactable lain dalam radius 1,5 tile dari Ibu (rule 84)",
+  "motor_parkir": "terikat peta; hanya dirender di peta tempatnya; auto-dismount saat masuk gedung memarkir motor di HUB di depan pintu bangunan"
+ },
+ "facingDefault": "front",
+ "facingBack": [
+  "kursi_baca_back",
+  "kursi_makan_back",
+  "kursi_siswa(komposit)",
+  "bangku_kantin_depan(komposit)"
+ ],
+ "facingSide": {
+  "kursi_makan_kiri": "left",
+  "kursi_makan_kanan": "right"
+ }
+}
