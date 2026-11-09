@@ -115,6 +115,10 @@ export class MapManager {
     if (this.scene._initNavGrid) {
       this.scene._initNavGrid();
     }
+
+    if (this.scene._syncParkedMotor) {
+      this.scene._syncParkedMotor();
+    }
   }
 
   /**
@@ -166,6 +170,9 @@ export class MapManager {
    * Must be called before rendering a new map.
    */
   clearCurrentMap() {
+    if (this.scene && this.scene._removeParkedMotor) {
+      this.scene._removeParkedMotor();
+    }
     for (const obj of this._mapObjects) {
       if (obj && !obj.destroyed) {
         try { obj.destroy(); } catch (_) {}

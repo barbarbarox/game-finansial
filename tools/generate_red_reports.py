@@ -122,3 +122,4 @@ for fname, text in reports.items():
     with open(os.path.join(reg_dir, fname), 'w') as f:
         f.write(text)
 print('Generated all red reports successfully.')
+

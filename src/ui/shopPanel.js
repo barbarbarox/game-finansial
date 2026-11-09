@@ -1,7 +1,10 @@
 /**
- * shopPanel.js — Unified Shop & Vendor System for Life Journey (Rule 79).
+ * shopPanel.js — Unified Shop & Vendor System for Life Journey (Rules 79 & 86).
  * Supports Kantin, Minimarket, Kafe Game Center, Toko Kosmetik, and SPBU.
- * Anti-XSS: textContent only, no innerHTML.
+ * Featuring:
+ * - Vendor presence (192x256 scaled portraits, nameplates, dynamic speech bubbles)
+ * - Multiple exit paths (Top-right X, Footer 'Selesai' button, Outside backdrop click, Esc key)
+ * - Anti-XSS (textContent only, no innerHTML)
  */
 
 import { getCash, addEntry, createExpenseEntry } from '../domain/ledger.js';
@@ -10,8 +13,78 @@ import { refuelPercent, refuelAmount, calculateFillCost } from '../domain/vehicl
 import { emit, DOMAIN_EVENTS } from '../domain/events.js';
 
 let activeBackdrop = null;
+let activeKeydownHandler = null;
 let shopsCache = null;
 let itemsCache = null;
+
+const VENDOR_PROFILES = {
+  kantin_sekolah: {
+    name: 'Bu Sri',
+    role: 'Penjual Kantin',
+    portrait: 'assets/portraits/portrait_penjual_kantin.png',
+    greeting: 'Halo! Mau jajan apa hari ini?',
+    bought: 'Terima kasih sudah beli, selamat menikmati ya!',
+    noCash: 'Waduh, uang saku kamu belum cukup nih.',
+    bagFull: 'Wah, tas atau kantong kamu sudah penuh!'
+  },
+  minimarket: {
+    name: 'Mbak Maya',
+    role: 'Kasir Minimarket',
+    portrait: 'assets/portraits/portrait_kasir_minimarket.png',
+    greeting: 'Selamat datang di Minimarket! Ada yang bisa dibantu?',
+    bought: 'Terima kasih sudah berbelanja di Minimarket!',
+    noCash: 'Maaf, uangnya belum mencukupi untuk item ini.',
+    bagFull: 'Ransel dan hotbar kamu sudah penuh nih!'
+  },
+  toko_kosmetik: {
+    name: 'Kak Cindy',
+    role: 'Penjaga Toko',
+    portrait: 'assets/portraits/portrait_penjaga_kosmetik.png',
+    greeting: 'Hai! Selamat datang di Toko Kosmetik. Silakan dipilih!',
+    bought: 'Pilihan yang bagus! Semoga harimu menyenangkan!',
+    noCash: 'Maaf ya, saldo kamu belum cukup untuk barang ini.',
+    bagFull: 'Ranselmu sudah penuh, simpan dulu barangmu ya!'
+  },
+  game_center_kafe: {
+    name: 'Kak Riko',
+    role: 'Operator Game Center',
+    portrait: 'assets/portraits/portrait_penjaga_game.png',
+    greeting: 'Yo! Mau beli camilan atau minuman?',
+    bought: 'Sip! Nikmati jajananmu ya!',
+    noCash: 'Uangnya kurang nih bro, kumpulin lagi ya!',
+    bagFull: 'Kantongmu sudah penuh bro!'
+  },
+  spbu: {
+    name: 'Mas Doni',
+    role: 'Petugas SPBU',
+    portrait: 'assets/portraits/portrait_petugas_spbu.png',
+    greeting: 'Mulai dari nol ya! Mau isi Pertalite berapa?',
+    bought: 'Bensin sudah terisi. Hati-hati di jalan ya!',
+    noCash: 'Uang kasnya belum cukup untuk nominal ini Mas/Mbak.',
+    tankFull: 'Tangki motor sudah penuh 100%!'
+  }
+};
+
+function getVendorProfile(shopId) {
+  let id = shopId || '';
+  if (id === 'kantin') id = 'kantin_sekolah';
+  if (id === 'gamecenter' || id === 'game_center') id = 'game_center_kafe';
+  if (id === 'kosmetik') id = 'toko_kosmetik';
+
+  if (VENDOR_PROFILES[id]) return VENDOR_PROFILES[id];
+  for (const key of Object.keys(VENDOR_PROFILES)) {
+    if (id.includes(key) || key.includes(id)) return VENDOR_PROFILES[key];
+  }
+  return {
+    name: 'Kasir Toko',
+    role: 'Penjaga',
+    portrait: 'assets/portraits/portrait_kasir_minimarket.png',
+    greeting: 'Selamat datang! Silakan pilih belanjaan Anda.',
+    bought: 'Terima kasih atas pembeliannya!',
+    noCash: 'Saldo kas Anda tidak mencukupi.',
+    bagFull: 'Kapasitas inventaris Anda sudah penuh!'
+  };
+}
 
 async function loadData() {
   if (!shopsCache) {
@@ -39,6 +112,10 @@ export function closeShopModal() {
   if (activeBackdrop) {
     activeBackdrop.remove();
     activeBackdrop = null;
+  }
+  if (activeKeydownHandler) {
+    document.removeEventListener('keydown', activeKeydownHandler);
+    activeKeydownHandler = null;
   }
 }
 
@@ -71,11 +148,20 @@ export async function createShopModal(container, store, shopId, options = {}) {
     };
   }
 
+  const vendor = getVendorProfile(targetShopId);
   const rupiah = new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', maximumFractionDigits: 0 });
 
   // 1. Modal backdrop & panel
   activeBackdrop = document.createElement('div');
   activeBackdrop.className = 'lj-modal-backdrop';
+
+  // Outside click closes modal (Rule 86 §2)
+  activeBackdrop.addEventListener('click', (e) => {
+    if (e.target === activeBackdrop) {
+      closeShopModal();
+      if (options.onClose) options.onClose();
+    }
+  });
 
   const modal = document.createElement('div');
   modal.className = 'lj-panel shop-modal-panel';
@@ -83,7 +169,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
   modal.setAttribute('aria-modal', 'true');
   modal.setAttribute('aria-label', shopDef.label);
 
-  // 2. Header
+  // 2. Header: Title + Close [X] Button (Rule 86 §2)
   const header = document.createElement('div');
   header.className = 'panel-header';
 
@@ -95,6 +181,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
   closeBtn.type = 'button';
   closeBtn.className = 'btn-close';
   closeBtn.textContent = '✕';
+  closeBtn.setAttribute('aria-label', 'Tutup Katalog');
   closeBtn.addEventListener('click', () => {
     closeShopModal();
     if (options.onClose) options.onClose();
@@ -104,34 +191,75 @@ export async function createShopModal(container, store, shopId, options = {}) {
   header.appendChild(closeBtn);
   modal.appendChild(header);
 
-  // 3. Subheader: Vendor meta + Kas + Kapasitas
-  const subhead = document.createElement('div');
-  subhead.className = 'shop-subhead';
+  // 3. Body layout: 2 columns (Vendor Left + Content Right) (Rule 86 §3)
+  const bodyLayout = document.createElement('div');
+  bodyLayout.className = 'shop-body-layout';
 
-  const vendorMeta = document.createElement('div');
-  vendorMeta.className = 'shop-vendor-meta';
+  // --- Vendor Column (Left) ---
+  const vendorCol = document.createElement('div');
+  vendorCol.className = 'shop-vendor-col';
 
-  let portraitSrc = 'assets/portraits/portrait_penjual_kantin.png';
-  if (targetShopId.includes('mini')) portraitSrc = 'assets/portraits/portrait_kasir_minimarket.png';
-  else if (targetShopId.includes('spbu')) portraitSrc = 'assets/portraits/portrait_petugas_spbu.png';
-  else if (targetShopId.includes('game')) portraitSrc = 'assets/portraits/portrait_petugas_game_center.png';
-  else if (targetShopId.includes('kosmetik')) portraitSrc = 'assets/portraits/portrait_penjaga_toko_kosmetik.png';
-
-  const portrait = document.createElement('img');
-  portrait.className = 'shop-vendor-img';
-  portrait.src = portraitSrc;
-  portrait.alt = '';
-  vendorMeta.appendChild(portrait);
+  const vendorNameplate = document.createElement('div');
+  vendorNameplate.className = 'shop-vendor-nameplate';
 
   const vendorName = document.createElement('span');
-  vendorName.textContent = shopDef.label;
-  vendorMeta.appendChild(vendorName);
+  vendorName.className = 'shop-vendor-name';
+  vendorName.textContent = vendor.name;
 
-  const statusRight = document.createElement('div');
-  statusRight.style.display = 'flex';
-  statusRight.style.flexDirection = 'column';
-  statusRight.style.alignItems = 'flex-end';
-  statusRight.style.gap = '2px';
+  const vendorRole = document.createElement('span');
+  vendorRole.className = 'shop-vendor-role';
+  vendorRole.textContent = vendor.role;
+
+  vendorNameplate.appendChild(vendorName);
+  vendorNameplate.appendChild(vendorRole);
+  vendorCol.appendChild(vendorNameplate);
+
+  const portraitWrap = document.createElement('div');
+  portraitWrap.className = 'shop-vendor-portrait-wrap';
+
+  const portraitImg = document.createElement('img');
+  portraitImg.className = 'shop-vendor-portrait-img';
+  portraitImg.src = vendor.portrait;
+  portraitImg.alt = vendor.name;
+
+  const portraitPlaceholder = document.createElement('div');
+  portraitPlaceholder.className = 'shop-vendor-placeholder hidden';
+  portraitPlaceholder.textContent = vendor.name;
+
+  portraitImg.onerror = () => {
+    console.warn(`[ShopPanel] Vendor portrait not found: ${vendor.portrait}`);
+    portraitImg.classList.add('hidden');
+    portraitPlaceholder.classList.remove('hidden');
+  };
+
+  portraitWrap.appendChild(portraitImg);
+  portraitWrap.appendChild(portraitPlaceholder);
+  vendorCol.appendChild(portraitWrap);
+
+  const speechBubble = document.createElement('div');
+  speechBubble.className = 'shop-vendor-speech';
+
+  const speechText = document.createElement('p');
+  speechText.className = 'shop-vendor-speech-text';
+  speechText.textContent = vendor.greeting;
+  speechBubble.appendChild(speechText);
+  vendorCol.appendChild(speechBubble);
+
+  function setVendorSpeech(msg) {
+    if (speechText) {
+      speechText.textContent = msg;
+    }
+  }
+
+  bodyLayout.appendChild(vendorCol);
+
+  // --- Content Column (Right) ---
+  const contentCol = document.createElement('div');
+  contentCol.className = 'shop-content-col';
+
+  // Status Bar: Kas + Kapasitas Ransel
+  const statusBar = document.createElement('div');
+  statusBar.className = 'shop-status-bar';
 
   const cashBadge = document.createElement('span');
   cashBadge.className = 'shop-cash-badge';
@@ -144,18 +272,49 @@ export async function createShopModal(container, store, shopId, options = {}) {
   capBadge.id = 'shop-cap-badge';
   capBadge.textContent = `Hotbar ${invNorm.hotbar.filter(s => s).length}/5 · Ransel ${invNorm.backpack.filter(s => s).length}/20`;
 
-  statusRight.appendChild(cashBadge);
-  statusRight.appendChild(capBadge);
+  statusBar.appendChild(cashBadge);
+  statusBar.appendChild(capBadge);
+  contentCol.appendChild(statusBar);
 
-  subhead.appendChild(vendorMeta);
-  subhead.appendChild(statusRight);
-  modal.appendChild(subhead);
+  function updateStatusBadges() {
+    const curState = store.getState();
+    const curInv = normalizeInventory(curState.inventory);
+    cashBadge.textContent = rupiah.format(getCash(curState.ledger));
+    capBadge.textContent = `Hotbar ${curInv.hotbar.filter(s => s).length}/5 · Ransel ${curInv.backpack.filter(s => s).length}/20`;
+  }
 
   // 4. Special Mode: SPBU Fuel Refuel
   if (shopDef.kind === 'fuel' || targetShopId === 'spbu') {
-    renderFuelPanel(modal, store, shopDef, rupiah);
+    renderFuelPanel(contentCol, store, shopDef, rupiah, setVendorSpeech, vendor, updateStatusBadges);
+    bodyLayout.appendChild(contentCol);
+    modal.appendChild(bodyLayout);
+
+    // Footer with "Selesai" button (Rule 86 §2)
+    const footer = document.createElement('div');
+    footer.className = 'panel-footer shop-modal-footer';
+
+    const doneBtn = document.createElement('button');
+    doneBtn.type = 'button';
+    doneBtn.className = 'shop-btn-done';
+    doneBtn.textContent = 'Selesai';
+    doneBtn.addEventListener('click', () => {
+      closeShopModal();
+      if (options.onClose) options.onClose();
+    });
+    footer.appendChild(doneBtn);
+    modal.appendChild(footer);
+
     activeBackdrop.appendChild(modal);
     container.appendChild(activeBackdrop);
+
+    // Esc closes modal
+    activeKeydownHandler = (e) => {
+      if (e.key === 'Escape') {
+        closeShopModal();
+        if (options.onClose) options.onClose();
+      }
+    };
+    document.addEventListener('keydown', activeKeydownHandler);
     return;
   }
 
@@ -186,24 +345,17 @@ export async function createShopModal(container, store, shopId, options = {}) {
     tabBtns.push(btn);
     tabsContainer.appendChild(btn);
   });
-  modal.appendChild(tabsContainer);
+  contentCol.appendChild(tabsContainer);
 
   // 6. Items list container
   const itemsContainer = document.createElement('div');
   itemsContainer.className = 'shop-items-container';
-  modal.appendChild(itemsContainer);
+  contentCol.appendChild(itemsContainer);
 
   // Filter items matching shop
   const shopSellAt = shopDef.sellAt || targetShopId;
   const availableItems = items.filter(it => it.sellAt && it.sellAt.includes(shopSellAt));
   const availableGoods = shopDef.goods || [];
-
-  function updateStatusBadges() {
-    const curState = store.getState();
-    const curInv = normalizeInventory(curState.inventory);
-    cashBadge.textContent = rupiah.format(getCash(curState.ledger));
-    capBadge.textContent = `Hotbar ${curInv.hotbar.filter(s => s).length}/5 · Ransel ${curInv.backpack.filter(s => s).length}/20`;
-  }
 
   function renderItems() {
     itemsContainer.innerHTML = '';
@@ -353,6 +505,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
           const freshCash = getCash(freshState.ledger);
 
           if (freshCash < totalCost) {
+            setVendorSpeech(vendor.noCash);
             alert('Uang kas tidak mencukupi!');
             return;
           }
@@ -360,6 +513,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
           if (mode === 'bungkus') {
             const addCheck = canAdd(freshState.inventory, item.id, qty);
             if (!addCheck.canAdd) {
+              setVendorSpeech(vendor.bagFull);
               alert(addCheck.reason || 'Tas penuh! Kapasitas hotbar dan ransel sudah mencapai batas maksimal.');
               return;
             }
@@ -381,27 +535,25 @@ export async function createShopModal(container, store, shopId, options = {}) {
             }
 
             const invRes = addItem(freshState.inventory, item.id, qty);
-            if (!invRes.ok) {
-              alert(invRes.reason);
+            if (!invRes.success) {
+              alert(invRes.reason || 'Gagal menambahkan item ke tas!');
               return;
-            }
-
-            // Advance time 5 minutes per purchase
-            if (window.__LJ__?.advanceTime) {
-              window.__LJ__.advanceTime(5, `Beli ${item.label}`);
             }
 
             store.setState({
               ledger: ledgerRes.ledger,
               inventory: invRes.inventory
             });
-            emit(DOMAIN_EVENTS.INVENTORY_CHANGED, invRes.inventory);
-            emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(ledgerRes.ledger));
 
+            emit(DOMAIN_EVENTS.ITEM_ACQUIRED, { itemId: item.id, count: qty });
+            emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(ledgerRes.ledger));
+            emit(DOMAIN_EVENTS.INVENTORY_CHANGED, invRes.inventory);
+
+            setVendorSpeech(vendor.bought);
             updateStatusBadges();
-            updateBuyButton();
+            renderItems();
           } else {
-            // Makan di tempat
+            // Makan di tempat: consume immediately
             const clock = freshState.clock || {};
             const expEntry = createExpenseEntry(
               clock.day || 1,
@@ -417,26 +569,28 @@ export async function createShopModal(container, store, shopId, options = {}) {
               return;
             }
 
-            const curEnergy = freshState.energy || { current: 100, max: 100 };
-            const addedEnergy = (item.energy || 15) * qty;
-            const newEnergyState = {
-              ...curEnergy,
-              current: Math.min(curEnergy.max || 100, (curEnergy.current || 0) + addedEnergy)
-            };
+            const curEnergy = freshState.energy?.current || 100;
+            const energyAdd = (item.energy || 15) * qty;
+            const newEnergy = Math.min(100, curEnergy + energyAdd);
 
-            const minutes = (item.consumeMinutes || 5) * qty;
             if (window.__LJ__?.advanceTime) {
-              window.__LJ__.advanceTime(minutes, `Makan ${item.label}`);
+              window.__LJ__.advanceTime((item.consumeMinutes || 3) * qty, `Makan ${item.label}`);
             }
 
             store.setState({
               ledger: ledgerRes.ledger,
-              energy: newEnergyState
+              energy: {
+                ...(freshState.energy || { max: 100, exhaustionCount: 0 }),
+                current: newEnergy
+              }
             });
 
-            emit(DOMAIN_EVENTS.ENERGY_CHANGED, newEnergyState);
+            emit(DOMAIN_EVENTS.ENERGY_CHANGED, newEnergy);
+            emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(ledgerRes.ledger));
+
+            setVendorSpeech(vendor.bought);
             updateStatusBadges();
-            updateBuyButton();
+            renderItems();
           }
         });
 
@@ -447,7 +601,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
       });
     }
 
-    // Goods / non-consumables
+    // Goods / Activities / Non-consumables
     if (activeTab === 'Semua' || activeTab === 'Lainnya') {
       availableGoods.forEach(good => {
         const card = document.createElement('div');
@@ -455,6 +609,11 @@ export async function createShopModal(container, store, shopId, options = {}) {
 
         const left = document.createElement('div');
         left.className = 'shop-item-left';
+
+        const icon = document.createElement('img');
+        icon.className = 'shop-item-icon';
+        icon.src = good.icon || 'assets/items/item_buku.png';
+        icon.alt = good.label;
 
         const info = document.createElement('div');
         info.className = 'shop-item-info';
@@ -465,7 +624,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
 
         const desc = document.createElement('span');
         desc.className = 'shop-item-desc';
-        desc.textContent = `${good.category || 'Barang'} · ${good.minutes || 10} mnt`;
+        desc.textContent = good.desc || good.category || '';
 
         const price = document.createElement('span');
         price.className = 'shop-item-price';
@@ -474,6 +633,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
         info.appendChild(name);
         info.appendChild(desc);
         info.appendChild(price);
+        left.appendChild(icon);
         left.appendChild(info);
         card.appendChild(left);
 
@@ -492,6 +652,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
           const freshState = store.getState();
           const cash = getCash(freshState.ledger);
           if (cash < good.price) {
+            setVendorSpeech(vendor.noCash);
             alert('Uang kas tidak mencukupi!');
             return;
           }
@@ -527,6 +688,7 @@ export async function createShopModal(container, store, shopId, options = {}) {
 
           store.setState(updates);
           emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(ledgerRes.ledger));
+          setVendorSpeech(vendor.bought);
           updateStatusBadges();
           renderItems();
         });
@@ -538,22 +700,51 @@ export async function createShopModal(container, store, shopId, options = {}) {
   }
 
   renderItems();
+  bodyLayout.appendChild(contentCol);
+  modal.appendChild(bodyLayout);
+
+  // 7. Footer with "Selesai" button (Rule 86 §2)
+  const footer = document.createElement('div');
+  footer.className = 'panel-footer shop-modal-footer';
+
+  const doneBtn = document.createElement('button');
+  doneBtn.type = 'button';
+  doneBtn.className = 'shop-btn-done';
+  doneBtn.textContent = 'Selesai';
+  doneBtn.addEventListener('click', () => {
+    closeShopModal();
+    if (options.onClose) options.onClose();
+  });
+  footer.appendChild(doneBtn);
+  modal.appendChild(footer);
+
   activeBackdrop.appendChild(modal);
   container.appendChild(activeBackdrop);
 
   // Esc closes
-  const onKeyDown = (e) => {
+  activeKeydownHandler = (e) => {
     if (e.key === 'Escape') {
       closeShopModal();
-      document.removeEventListener('keydown', onKeyDown);
+      if (options.onClose) options.onClose();
     }
   };
-  document.addEventListener('keydown', onKeyDown);
+  document.addEventListener('keydown', activeKeydownHandler);
 }
 
-function renderFuelPanel(modal, store, shopDef, rupiah) {
+function renderFuelPanel(contentCol, store, shopDef, rupiah, setVendorSpeech, vendor, updateStatusBadges) {
   const container = document.createElement('div');
   container.className = 'shop-items-container';
+
+  const infoNotice = document.createElement('div');
+  infoNotice.style.padding = '8px 12px';
+  infoNotice.style.background = 'rgba(217, 164, 65, 0.15)';
+  infoNotice.style.border = '1px solid #D9A441';
+  infoNotice.style.borderRadius = '6px';
+  infoNotice.style.fontSize = '12px';
+  infoNotice.style.color = '#F7EEDA';
+  infoNotice.style.marginBottom = '12px';
+  infoNotice.textContent = 'Pilih nominal pengisian bahan bakar motor Anda (Pertalite).';
+  container.appendChild(infoNotice);
 
   const presetsGrid = document.createElement('div');
   presetsGrid.className = 'shop-fuel-presets';
@@ -602,7 +793,15 @@ function renderFuelPanel(modal, store, shopDef, rupiah) {
       const freshState = store.getState();
       const freshGas = freshState.gasoline ?? 100;
       if (freshGas >= 100) {
+        setVendorSpeech(vendor.tankFull);
         alert('Tangki bensin sudah penuh 100%!');
+        return;
+      }
+
+      const freshCash = getCash(freshState.ledger);
+      if (freshCash < cost) {
+        setVendorSpeech(vendor.noCash);
+        alert('Uang kas tidak mencukupi!');
         return;
       }
 
@@ -641,6 +840,8 @@ function renderFuelPanel(modal, store, shopDef, rupiah) {
         emit(DOMAIN_EVENTS.FUEL_CHANGED, { gasoline: res.newGasoline, percent: res.newGasoline });
         emit(DOMAIN_EVENTS.CASH_CHANGED, getCash(ledgerRes.ledger));
 
+        setVendorSpeech(vendor.bought);
+        updateStatusBadges();
         closeShopModal();
       }
     });
@@ -649,7 +850,7 @@ function renderFuelPanel(modal, store, shopDef, rupiah) {
   });
 
   container.appendChild(presetsGrid);
-  modal.appendChild(container);
+  contentCol.appendChild(container);
 }
 
 // Global listener for 'lj:openShop' custom event

@@ -30,6 +30,7 @@ import { useItem, createInventory, addItem as domainAddItem } from '../../domain
 import { ITEMS_MAP } from '../../domain/itemsCatalog.js';
 import { canMountVehicle } from '../../domain/vehicle.js';
 import { NavigationGrid } from '../navigationGrid.js';
+import { findBestInteractionTarget } from '../interactionTarget.js';
 
 export class World extends Phaser.Scene {
   constructor() {
@@ -94,6 +95,7 @@ export class World extends Phaser.Scene {
     this.keySpace = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
     this.keyV = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.V);
     this.keyEsc = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+    this.keyTab = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.TAB);
 
     // 5. Ambient Day-Night Lighting Overlay
     const viewW = this.cameras.main.width || 960;
@@ -395,18 +397,12 @@ export class World extends Phaser.Scene {
 
     if (this._player.isMounted) {
       this._player.dismount(null, () => {
-        if (this._mapManager?.currentMapId === 'town_hub') {
+        const currentMap = this._mapManager?.currentMapId || 'town_hub';
+        if (currentMap === 'town_hub') {
           const spawnX = this._player.x + (this._player.facing === 'left' ? 24 : -24);
-          this._spawnParkedMotor(spawnX, this._player.y);
-          if (store) {
-            store.setState({
-              vehicle: {
-                mounted: false,
-                parked: { mapId: 'town_hub', x: Math.round(spawnX), y: Math.round(this._player.y) }
-              }
-            });
-          }
+          this._spawnParkedMotor(spawnX, this._player.y, 'town_hub');
         } else {
+          this._removeParkedMotor();
           if (store) {
             store.setState({ vehicle: { mounted: false, parked: null } });
           }
@@ -430,9 +426,31 @@ export class World extends Phaser.Scene {
     }
   }
 
-  _spawnParkedMotor(x, y) {
+  _syncParkedMotor() {
     this._removeParkedMotor();
-    if (this.textures.exists('prop_motor_parkir')) {
+    const store = this.game.registry.get('store');
+    const parked = store?.getState()?.vehicle?.parked;
+    const currentMapId = this._mapManager?.currentMapId;
+    if (parked && parked.mapId === currentMapId && this.textures.exists('prop_motor_parkir')) {
+      this._parkedMotorProp = this.add.sprite(parked.x, parked.y, 'prop_motor_parkir');
+      this._parkedMotorProp.setOrigin(0.5, 1.0);
+      this._parkedMotorProp.setDepth(parked.y);
+    }
+  }
+
+  _spawnParkedMotor(x, y, mapId = null) {
+    this._removeParkedMotor();
+    const targetMap = mapId || this._mapManager?.currentMapId || 'town_hub';
+    const store = this.game.registry.get('store');
+    if (store) {
+      store.setState({
+        vehicle: {
+          mounted: false,
+          parked: { mapId: targetMap, x: Math.round(x), y: Math.round(y) }
+        }
+      });
+    }
+    if (this._mapManager?.currentMapId === targetMap && this.textures.exists('prop_motor_parkir')) {
       this._parkedMotorProp = this.add.sprite(x, y, 'prop_motor_parkir');
       this._parkedMotorProp.setOrigin(0.5, 1.0);
       this._parkedMotorProp.setDepth(y);
@@ -453,37 +471,44 @@ export class World extends Phaser.Scene {
 
     const px = this._player.x;
     const py = this._player.y;
-    const ts = this._tileSize;
+    const facing = this._player.facing || 'down';
     const camW = this.cameras.main.width || 960;
     const camH = this.cameras.main.height || 540;
 
-    let nearby = null;
-    for (const int of (this._interactables || [])) {
-      const rx0 = (int.x || 0) * ts;
-      const ry0 = (int.y || 0) * ts;
-      const rx1 = rx0 + (int.w || 1) * ts;
-      const ry1 = ry0 + (int.h || 1) * ts;
-      const closestX = Math.max(rx0, Math.min(px, rx1));
-      const closestY = Math.max(ry0, Math.min(py, ry1));
-      const dist = Phaser.Math.Distance.Between(px, py, closestX, closestY);
-      if (dist < 50) {
-        nearby = int;
-        break;
-      }
-    }
+    const npcs = this._mapManager?.currentLayout?.npcs || (this._mapManager ? this._mapManager.getLayout(this._mapManager.currentMapId)?.npcs : []) || [];
+    const store = this.game.registry.get('store');
+    const tutorial = store?.getState()?.tutorial;
+    const activeTargetId = tutorial?.active ? tutorial.targetId : null;
 
-    if (nearby) {
-      this._currentInteractable = nearby;
-      // Prompt sits at bottom-center of screen (scrollFactor=0 text)
+    const best = findBestInteractionTarget(
+      { x: px, y: py, facing },
+      this._interactables || [],
+      npcs || [],
+      activeTargetId
+    );
+
+    if (best) {
+      this._currentInteractable = best.target;
+      this._currentCandidateMeta = best;
+
+      // Position prompt at bottom-center of screen
       this._promptText.setPosition(camW / 2, camH - 20);
-      this._promptText.setText(nearby.prompt || 'Tekan [E]');
+      this._promptText.setText(best.prompt || 'Tekan [E]');
       this._promptText.setVisible(true);
 
       if (Phaser.Input.Keyboard.JustDown(this.keyE) || Phaser.Input.Keyboard.JustDown(this.keySpace)) {
-        this._openInteraction(nearby);
+        if (best.entityType === 'npc') {
+          const npc = best.target;
+          if (npc.dialogId) {
+            startDialogue(npc.dialogId, npc.id);
+          }
+        } else {
+          this._openInteraction(best.target);
+        }
       }
     } else {
       this._currentInteractable = null;
+      this._currentCandidateMeta = null;
       this._promptText.setVisible(false);
     }
   }
@@ -496,20 +521,21 @@ export class World extends Phaser.Scene {
     // 1. Door / Exit transition
     if (int.type === 'door' || int.type === 'exit') {
       if (int.targetMap && this._mapManager) {
-        // Auto-dismount and park motor outside when entering building (Rule 75 §1)
+        // Auto-dismount and park motor outside when entering building (Rule 75 §1 & §6)
         if (this._player?.isMounted) {
           this._player.dismount('Motor diparkir di depan pintu');
           const parkX = Math.round(this._player.x);
           const parkY = Math.round(this._player.y);
-          this._spawnParkedMotor(parkX, parkY);
+          const fromMap = this._mapManager?.currentMapId || 'town_hub';
           if (store) {
             store.setState({
               vehicle: {
                 mounted: false,
-                parked: { mapId: 'town_hub', x: parkX, y: parkY }
+                parked: { mapId: fromMap, x: parkX, y: parkY }
               }
             });
           }
+          this._removeParkedMotor();
         }
         this._mapManager.transitionTo(int.targetMap, int.targetSpawn, int.openingHoursId);
         return;

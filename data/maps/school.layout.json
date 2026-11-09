@@ -216,7 +216,7 @@
       "label": "Meja Siswa 1",
       "class_": "grid",
       "x": 4,
-      "y": 6,
+      "y": 5,
       "w": 3,
       "h": 1.5,
       "collidable": true
@@ -227,9 +227,9 @@
       "label": "Kursi 1A",
       "class_": "grid",
       "x": 4.5,
-      "y": 7.5,
+      "y": 6.2,
       "w": 1,
-      "h": 1.5,
+      "h": 1.2,
       "collidable": false
     },
     {
@@ -238,9 +238,9 @@
       "label": "Kursi 1B",
       "class_": "grid",
       "x": 6,
-      "y": 7.5,
+      "y": 6.2,
       "w": 1,
-      "h": 1.5,
+      "h": 1.2,
       "collidable": false
     },
     {
@@ -250,7 +250,7 @@
       "label": "Meja Siswa 2",
       "class_": "grid",
       "x": 9,
-      "y": 6,
+      "y": 5,
       "w": 3,
       "h": 1.5,
       "collidable": true
@@ -261,9 +261,9 @@
       "label": "Kursi 2A",
       "class_": "grid",
       "x": 9.5,
-      "y": 7.5,
+      "y": 6.2,
       "w": 1,
-      "h": 1.5,
+      "h": 1.2,
       "collidable": false
     },
     {
@@ -272,9 +272,9 @@
       "label": "Kursi 2B",
       "class_": "grid",
       "x": 11,
-      "y": 7.5,
+      "y": 6.2,
       "w": 1,
-      "h": 1.5,
+      "h": 1.2,
       "collidable": false
     },
     {
@@ -284,7 +284,7 @@
       "label": "Meja Siswa 3",
       "class_": "grid",
       "x": 4,
-      "y": 9,
+      "y": 7.5,
       "w": 3,
       "h": 1.5,
       "collidable": true
@@ -295,9 +295,9 @@
       "label": "Kursi 3A",
       "class_": "grid",
       "x": 4.5,
-      "y": 10.5,
+      "y": 8.7,
       "w": 1,
-      "h": 1.5,
+      "h": 1.2,
       "collidable": false
     },
     {
@@ -306,9 +306,9 @@
       "label": "Kursi 3B",
       "class_": "grid",
       "x": 6,
-      "y": 10.5,
+      "y": 8.7,
       "w": 1,
-      "h": 1.5,
+      "h": 1.2,
       "collidable": false
     },
     {
@@ -318,7 +318,7 @@
       "label": "Meja Siswa 4",
       "class_": "grid",
       "x": 9,
-      "y": 9,
+      "y": 7.5,
       "w": 3,
       "h": 1.5,
       "collidable": true
@@ -329,9 +329,9 @@
       "label": "Kursi 4A",
       "class_": "grid",
       "x": 9.5,
-      "y": 10.5,
+      "y": 8.7,
       "w": 1,
-      "h": 1.5,
+      "h": 1.2,
       "collidable": false
     },
     {
@@ -340,9 +340,9 @@
       "label": "Kursi 4B",
       "class_": "grid",
       "x": 11,
-      "y": 10.5,
+      "y": 8.7,
       "w": 1,
-      "h": 1.5,
+      "h": 1.2,
       "collidable": false
     },
     {
@@ -351,7 +351,7 @@
       "label": "Rak Buku Kelas",
       "class_": "wall_back",
       "x": 2,
-      "y": 4,
+      "y": 2,
       "w": 2,
       "h": 3,
       "collidable": true
@@ -431,9 +431,9 @@
       "label": "Meja Kantin 1",
       "class_": "free",
       "x": 18,
-      "y": 8,
+      "y": 6.5,
       "w": 3,
-      "h": 2,
+      "h": 1.5,
       "collidable": true
     },
     {
@@ -442,7 +442,7 @@
       "label": "Bangku 1A",
       "class_": "free",
       "x": 18,
-      "y": 7,
+      "y": 5.2,
       "w": 3,
       "h": 1,
       "collidable": false
@@ -453,7 +453,7 @@
       "label": "Bangku 1B",
       "class_": "free",
       "x": 18,
-      "y": 10,
+      "y": 8.2,
       "w": 3,
       "h": 1,
       "collidable": false
@@ -464,9 +464,9 @@
       "label": "Meja Kantin 2",
       "class_": "free",
       "x": 23,
-      "y": 8,
+      "y": 6.5,
       "w": 3,
-      "h": 2,
+      "h": 1.5,
       "collidable": true
     },
     {
@@ -475,7 +475,7 @@
       "label": "Bangku 2A",
       "class_": "free",
       "x": 23,
-      "y": 7,
+      "y": 5.2,
       "w": 3,
       "h": 1,
       "collidable": false
@@ -486,7 +486,7 @@
       "label": "Bangku 2B",
       "class_": "free",
       "x": 23,
-      "y": 10,
+      "y": 8.2,
       "w": 3,
       "h": 1,
       "collidable": false
@@ -497,7 +497,7 @@
       "label": "Tempat Sampah",
       "class_": "free",
       "x": 28,
-      "y": 9,
+      "y": 8,
       "w": 1,
       "h": 1,
       "collidable": true

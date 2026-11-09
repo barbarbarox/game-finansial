@@ -414,6 +414,35 @@
             detail: checkJ ? `Semua ${(layout.interactables || []).length} interactable memiliki akses bebas` : `Terblokir: ${approachFailed.join(', ')}`
           });
 
+          // (k) Batas Ruangan: Semua furnitur non-wall_decor berada di dalam batas lantai dan tidak menembus dinding (Rule 85 §4, B4)
+          let roomBoundaryViolations = [];
+          const floors = layout.floors || layout.ground || [];
+          for (const f of nonDecorFurniture) {
+            const fx0 = f.x;
+            const fy0 = f.y;
+            const fx1 = f.x + (f.w || 1);
+            const fy1 = f.y + (f.h || 1);
+            const fcx = (fx0 + fx1) / 2;
+            const fcy = (fy0 + fy1) / 2;
+            const onFloor = floors.length === 0 || floors.some(fl => fcx >= fl.x && fcx <= fl.x + fl.w && fcy >= fl.y && fcy <= fl.y + fl.h);
+            let hitsWall = false;
+            for (const wl of (layout.walls || [])) {
+              if (computeIoU(f, wl) > 0.05) {
+                hitsWall = true;
+                break;
+              }
+            }
+            if (!onFloor || hitsWall) {
+              roomBoundaryViolations.push(f.id || f.label);
+            }
+          }
+          const checkK = roomBoundaryViolations.length === 0;
+          mapChecks.push({
+            name: '(k) Batas Ruangan: Semua furnitur non-wall_decor berada di dalam batas lantai dan tidak menembus dinding (Rule 85 §4, B4)',
+            pass: checkK,
+            detail: checkK ? `Semua ${nonDecorFurniture.length} objek berada di dalam batas ruangan` : `Menembus dinding/luar lantai: ${roomBoundaryViolations.join(', ')}`
+          });
+
           // Append rows to card
           for (const chk of mapChecks) {
             if (!chk.pass) allPass = false;
